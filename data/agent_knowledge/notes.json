@@ -1,0 +1,205 @@
+[
+  {
+    "note_id": "e411607b81",
+    "subject_type": "part",
+    "subject_id": "39613",
+    "text": "Plate 3x3 Heart Shape - stud grid is 3x3 at (-20,0,20) spacing. Its seats are at the same offsets. A 2x2 brick supports it at offset (10,10) where four seats (0,0 and the four corners of the inner 2x2 pattern) align with the brick's studs.",
+    "created_at": "2026-08-02T13:01:49+00:00"
+  },
+  {
+    "note_id": "79ce2ce2a7",
+    "subject_type": "creation",
+    "subject_id": "Red Heart",
+    "text": "Built from two 39613 heart plates stacked, topped with 39739 heart tile. Mounted on a stand of 3020 plate + 3003 brick (dark bluish grey). The heart is offset to (10,-32,10) to seat the 3x3 grid onto a 2x2 brick.",
+    "created_at": "2026-08-02T13:01:49+00:00"
+  },
+  {
+    "note_id": "552eada56b",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A 4x4 stud tower can be built from four 2x2 bricks (3003) per layer arranged at (±10, ±10) in both x and z. Each brick's studs at (±10, ±10) mate cleanly with the brick above/below.",
+    "created_at": "2026-08-02T16:12:32+00:00"
+  },
+  {
+    "note_id": "4ea82065e7",
+    "subject_type": "creation",
+    "subject_id": "4x4 tower six bricks tall red top",
+    "text": "Two 2x4 bricks (3001) side by side along Z at ±20 make a 4x4 footprint. The validator flags two disconnected columns as fragmented (2 pieces), but this is a legitimate construction — the bricks sit next to each other and are held together by the weight of the stack and friction. Misalignment=0, unverified=0.",
+    "created_at": "2026-08-02T16:14:34+00:00"
+  },
+  {
+    "note_id": "2a5f948c84",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Bricks placed edge-to-edge on the same Y level (flat layout) show up as fragmented in validation because the checker only sees vertical stud connections. 0 misaligned is the real pass condition for these layouts.",
+    "created_at": "2026-08-02T16:28:26+00:00"
+  },
+  {
+    "note_id": "38e88ec7c4",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Minifig arms (3818/3819) and hands (3820) attach via friction clips to the torso, not to studs. The validator always flags these as misaligned or unverified — this is expected and not a build error. Misaligned=0 is the real bar; unverified for clip/peg parts is fine.",
+    "created_at": "2026-08-02T16:34:01+00:00"
+  },
+  {
+    "note_id": "d9df96f161",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Minifig head-to-torso and hair-to-head connections are clip/bar joints, not standard stud connections. The validator reports them as misaligned (~15.76 LDU gap) but they are correct buildable connections. Minifig submodels will always show 4 misaligned parts (2 per fig: head + hair) unless the head has no hair attached.",
+    "created_at": "2026-08-02T16:44:36+00:00"
+  },
+  {
+    "note_id": "5728225acb",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Minifig heads (3626cp01) and hair (3901) connect via non-standard studs (neck stud, hair stud) that the standard brick stud-grid validator cannot model. Misalignments on these parts are expected in minifigure builds.",
+    "created_at": "2026-08-02T16:58:22+00:00"
+  },
+  {
+    "note_id": "e43cd0137c",
+    "subject_type": "creation",
+    "subject_id": "minifigure with hair",
+    "text": "Placed on a staircase's top step (brick 2x4 at y=-216, z=180): submodel offset (10, -224, 190) lands legs on brick stud at (10, -220, 190). Hips and torso remain misaligned per checker (minifig joints).",
+    "created_at": "2026-08-02T18:13:17+00:00"
+  },
+  {
+    "note_id": "825f226936",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "2x1 slopes (3040b) have seats at (0, ±10) relative to origin. To seat on a 2x2 brick's studs at (±10, ±10), the slope's seats need to land on those exact coords. A 3040b at (10, y, 0) seats on (10, -10) and (10, 10) ✅, but the checker flagged it. Using a 2x2 plate as a foliage platform then stacking 1x1 plates on top is a simpler, fully-valid tree approach.",
+    "created_at": "2026-08-03T10:19:00+00:00"
+  },
+  {
+    "note_id": "296d88091b",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Dog build: 3003 (2x2 brick) legs must be at x=-20/20, not -30/30, to align studs with 3020 (2x4 plate) body seats at x=0. Head 3003 bricks also need half-stud offset (x=-20/20, z=20/40) to align with body 3001 stud grid. 3022 plates as paws at y=0 work as ground contact.",
+    "created_at": "2026-08-03T10:55:42+00:00"
+  },
+  {
+    "note_id": "a4b7493a3d",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A tree canopy made from 6141 round plates stacked in a 2x2 pattern, 4 layers tall. Each layer mates cleanly because 6141 has a single centre stud at 0,0 offset. Works well for a cup-shaped tree canopy.",
+    "created_at": "2026-08-03T12:48:17+00:00"
+  },
+  {
+    "note_id": "02ca998eea",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A cup-shaped canopy works as: 6x6 plate base, 3x3 bricks, plus-shape, single brick, 2x2 plate cap — every layer fully supported.",
+    "created_at": "2026-08-03T18:56:05+00:00"
+  },
+  {
+    "note_id": "cae2bc49df",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "For a tiny house on a 6x6 footprint (3958 base+roof), the cleanest roof is a 6x6 plate at y=-56 seated flush on 2-brick walls (top at y=-48) — a gable of 3040b slopes doesn't seat on 1-stud walls and misaligns.",
+    "created_at": "2026-08-03T20:27:40+00:00"
+  },
+  {
+    "note_id": "679a8a2c7c",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A 2x2 hollow cabin box built from four 1x2 bricks always overlaps at the corners (each 1x2 spans the full 20-LDU side, so the corners share plastic). Build the cabin as two parallel walls (front + rear) with the roof spanning between them instead.",
+    "created_at": "2026-08-03T20:58:05+00:00"
+  },
+  {
+    "note_id": "62a2d98a90",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "2x2 bricks in a tier/block must be 40 LDU apart centre-to-centre (10*(2+2)); spacing them 20 LDU apart makes them overlap. A 3x3 block of 2x2 bricks needs centres -40,0,40 to cover 6 studs.",
+    "created_at": "2026-08-05T19:36:23+00:00"
+  },
+  {
+    "note_id": "da83ec02e0",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "For tiny stones scattered flat on the ground, use 1x1 round tiles (98138) and round plates (6141) in grey and brown — rectangular bricks read as LEGO bricks, round parts read as pebbles.",
+    "created_at": "2026-08-05T20:01:37+00:00"
+  },
+  {
+    "note_id": "b8fc251bf9",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A small chibi dog face on a 2-deep head reads best as a 4-wide tan 2x4 brick: eyes as 1x1 round plates on the front-row studs (±10), nose as a 1x1 round plate at the centre-of-four studs (0,-20), ears as 1x1 bricks on the back corners. At 4x4 scale a cube with a matching-colour head reads as a block — contrast the head colour (tan vs red body).",
+    "created_at": "2026-08-05T20:19:48+00:00"
+  },
+  {
+    "note_id": "b015015017",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A bonsai tree: 6x6 green plate pot (2 stacked for rim), dark tan 6x6 soil plate, dark-brown trunk of a 2x2 brick topped with 3062b round bricks, and a canopy of 6141 round green plates filling a 6x6 base with 3062b bricks rising to a centre apex. Reads well and validates.",
+    "created_at": "2026-08-05T21:19:13+00:00"
+  },
+  {
+    "note_id": "c1786f5998",
+    "subject_type": "part",
+    "subject_id": "3847",
+    "text": "Classic minifig shortsword; bar handle grips into a 3820 minifig hand. Sword blade points up when placed at the hand position with identity rotation.",
+    "created_at": "2026-08-09T19:17:25+00:00"
+  },
+  {
+    "note_id": "de8b6720b1",
+    "subject_type": "part",
+    "subject_id": "6143",
+    "text": "Brick 2x2 round (6143) makes a much rounder tree canopy and trunk than square 3003 at the same stud grid — swapping square canopy/trunk bricks to 6143 keeps geometry valid but gives a proper organic tree silhouette.",
+    "created_at": "2026-08-09T19:38:49+00:00"
+  },
+  {
+    "note_id": "f4bb565b3a",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A rounded tree canopy builds cleanly as concentric layers of 2x2 round bricks (3941): 9-brick 3x3 layer, then a 5-brick cross, then a 1-brick cap — all sitting on a 4x4 plate platform over a 2x2 trunk. The 3941's four studs line up so each smaller layer seats directly on the one below.",
+    "created_at": "2026-08-09T20:09:30+00:00"
+  },
+  {
+    "note_id": "53e298a7e4",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Small 6x6 house gable: 2x2 slope 3039 rows (3 across, unrotated for one bank, 180° for the other) rise to a ridge row at the centre; 3 rows = eaves at deck edge, ridge over the middle. Seats cleanly on a 3958 deck.",
+    "created_at": "2026-08-09T21:22:16+00:00"
+  },
+  {
+    "note_id": "b4d6ab11c2",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Gable roof on a 6x6 plate (studs at odd 20-positions -50,-30,...): build both banks on the odd grid — left -50,-30,-10 and right +10,+30,+50 — each bank's rows meeting near the seam. A shared centre ridge at z=0 sits off-grid (gap 10) because 0 is an even position on an odd-stud plate; let the two banks meet instead of adding a ridge row.",
+    "created_at": "2026-08-09T21:58:23+00:00"
+  },
+  {
+    "note_id": "e87c18bc29",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "When building one object of a multi-object scene (tree here, man elsewhere), validate_model's reference comparison will demand the OTHER objects too. Those are the other builder's share — only build yours.",
+    "created_at": "2026-08-09T22:16:59+00:00"
+  },
+  {
+    "note_id": "aae2b7c7fb",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "Both minifig legs (3816/3817) go at the SAME coordinate (0,+44 from torso); their internal geometry separates them into left/right. The arms also both sit at the same (0,+9 from torso) x=0 — do not push them outward, the shoulder moulding does that. Keep the documented offsets exactly.",
+    "created_at": "2026-08-10T21:49:36+00:00"
+  },
+  {
+    "note_id": "187f19ee1a",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A double-bitted minifig axe is best built as a bar 62113 handle with a 22407 axe head on each end (all clip/bar connections), held across both hands. Keep the handle at the raised-arm hand height (about y=-53.6, arms angled forward) — placing it at chest height makes renders read it as a fence/frame around the figure.",
+    "created_at": "2026-08-11T06:56:20+00:00"
+  },
+  {
+    "note_id": "df8bf5c74a",
+    "subject_type": "general",
+    "subject_id": "",
+    "text": "A 2x2 slope (3039) only seats on the 4 studs of ONE underlying 2x2 brick; to place one as a wedge face, put its origin centred over that brick's own stud block (e.g. origin -20,-48,-10 for a brick at -20,-24,-20). Off by half a stud otherwise.",
+    "created_at": "2026-08-11T07:08:05+00:00"
+  },
+  {
+    "note_id": "02a49811ba",
+    "subject_type": "part",
+    "subject_id": "22407",
+    "text": "Minifig Axe Head 22407 (bar 0.5L) is held in a hand as a tool (grip_y -10.3). For a long-handled two-hand axe, pair it with a bar 4095 through both hands; the head reads best placed on the forward hand's grip axis at the bar's end.",
+    "created_at": "2026-08-14T10:43:08+00:00"
+  }
+]

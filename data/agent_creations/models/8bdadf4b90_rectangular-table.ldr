@@ -1,0 +1,22 @@
+0 FILE model.ldr
+0 Rectangular Table with Four Legs
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // Table top - Plate 4 x 8 in reddish brown (colour 70)
+1 70 0 0 0 1 0 0 0 1 0 0 0 1 3035.dat
+
+0 // Four legs - Brick 1 x 1 in dark bluish grey (colour 72)
+0 // Leg 1: front-left corner
+1 72 -70 8 -30 1 0 0 0 1 0 0 0 1 3005.dat
+
+0 // Leg 2: front-right corner
+1 72 70 8 -30 1 0 0 0 1 0 0 0 1 3005.dat
+
+0 // Leg 3: back-left corner
+1 72 -70 8 30 1 0 0 0 1 0 0 0 1 3005.dat
+
+0 // Leg 4: back-right corner
+1 72 70 8 30 1 0 0 0 1 0 0 0 1 3005.dat

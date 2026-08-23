@@ -1,0 +1,26 @@
+0 FILE model.ldr
+0 Police Officer
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+1 14      0  -96    0  1 0 0 0 1 0 0 0 1  3626bp01.dat
+1  1      0  -96    0  1 0 0 0 1 0 0 0 1  3624.dat
+1  1      0  -72    0  1 0 0 0 1 0 0 0 1  973.dat
+1  1  -15.6  -63    0  0.985 -0.17 0 0.17 0.985 0 0 0 1  3818.dat
+1  1   15.6  -63    0  0.985 0.17 0 -0.17 0.985 0 0 0 1  3819.dat
+1 14  -23.9 -45.4 -10.3  0.985 -0.12 0.12 0.17 0.696 -0.696 0 0.707 0.707  3820.dat
+1 14   23.9 -45.4 -10.3  0.985 0.12 -0.12 -0.17 0.696 -0.696 0 0.707 0.707  3820.dat
+1  1      0  -40    0  1 0 0 0 1 0 0 0 1  3815.dat
+1  1      0  -28    0  1 0 0 0 1 0 0 0 1  3816.dat
+1  1      0  -28    0  1 0 0 0 1 0 0 0 1  3817.dat
+1 7 23.9 -45.4 -25.147 0.1542 -0.0862 -0.9848 -0.8471 0.4997 -0.1771 0.5069 0.8625 0.0042 3847.dat
+1 7 -23.9 -45.4 -25.147 0.1542 0.0862 0.9848 0.8471 0.4997 -0.1771 -0.5069 0.8625 0.0042 3847.dat
+0 Untitled Model
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // Empty project. Ask the agent to build something.

@@ -1,0 +1,50 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+
+# ---- Secrets ----
+# The HuggingFace token is read from here if present. Never commit it.
+.env
+
+# ---- Agent output ----
+# Every build the agent runs writes here: model files, renders, contact sheets,
+# instruction booklets, per-project chat history. Regenerated on demand and
+# routinely gigabytes.
+out/
+
+# ---- Downloaded corpora (see README > Data) ----
+# The LDraw parts library (~570 MB, 26k .dat files) and the OMR set corpus
+# (~363 MB, 1.8k .mpd files). Both are third-party, both are fetched by
+# scripts/fetch_data.sh, and neither belongs in this repo.
+data/lego_pieces/
+data/ldraw_omr_sets/
+
+# ---- Derived indexes ----
+# Built from the CSVs in data/parts/ and the JSON in data/agent_*/ by
+# `python -m maister.retrieval.build_indexes`. Always reproducible.
+data/vector_db/
+data/ldraw_library_root/
+
+# ---- Third-party binaries ----
+# LeoCAD and LPub3D AppImages. Not redistributable here; see simulator/README.md.
+*.AppImage
+*.jar
+
+# ---- Frontend ----
+node_modules/
+app/frontend/dist/
+.vite/
+
+# ---- Editor / OS ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

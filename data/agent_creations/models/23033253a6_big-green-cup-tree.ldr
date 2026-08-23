@@ -1,0 +1,45 @@
+0 Big Green Cup Tree
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // Trunk - 3 x 2x2 reddish brown bricks
+1 70 0 0 0 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+1 70 0 -24 0 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+1 70 0 -48 0 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+
+0 // Canopy base - 6x6 green plate
+1 2 0 -56 0 1 0 0 0 1 0 0 0 1 3958.dat
+0 STEP
+
+0 // Canopy row 1 - 3x3 of 2x2 green bricks (fills the 6x6 plate)
+1 2 -40 -80 -40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 -40 -80 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 -40 -80 40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -80 -40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -80 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -80 40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -80 -40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -80 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -80 40 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+
+0 // Canopy row 2 - plus shape
+1 2 0 -104 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -104 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 -40 -104 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -104 40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -104 -40 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+
+0 // Canopy row 3 - centre
+1 2 0 -128 0 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+
+0 // Cup cap - 2x2 green plate
+1 2 0 -136 0 1 0 0 0 1 0 0 0 1 3022.dat
+0 STEP

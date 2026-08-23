@@ -1,0 +1,47 @@
+0 FILE model.ldr
+0 LEGO Minifigure with Hair
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAmeade.txt
+
+0 // === LEGS ===
+0 // Standard left and right legs, bottom at y=32 (ground)
+0 // Both legs centered under the hips; their asymmetrical bboxes place them side by side
+1 4 0 4 0 1 0 0 0 1 0 0 0 1 3816.dat
+1 4 0 4 0 1 0 0 0 1 0 0 0 1 3817.dat
+0 STEP
+
+0 // === HIPS ===
+0 // Hips sit above legs; legs insert into the hip cavity
+1 4 0 -8 0 1 0 0 0 1 0 0 0 1 3815b.dat
+0 STEP
+
+0 // === TORSO ===
+0 // Torso sits on hips studs: bottom at y=-8, top at y=-40
+1 4 0 -40 0 1 0 0 0 1 0 0 0 1 973.dat
+0 STEP
+
+0 // === ARMS ===
+0 // Arms clip onto shoulder pegs of the torso (non-stud connections)
+1 14 -15.552 -31 0 0.985 -0.17 0 0.17 0.985 0 0 0 1 3818.dat
+1 14 15.552 -31 0 0.985 0.17 0 -0.17 0.985 0 0 0 1 3819.dat
+0 STEP
+
+0 // === HANDS ===
+0 // Hands clip into arm holes (non-stud connections)
+0 // Right hand
+1 14 -23.863 -13.404 -10.321 0.985 -0.12019 0.12019 0.17 0.696395 -0.696395 0 0.707 0.707 3820.dat
+0 // Left hand
+1 14 23.863 -13.404 -10.321 0.985 0.12019 -0.12019 -0.17 0.696395 -0.696395 0 0.707 0.707 3820.dat
+0 STEP
+
+0 // === HEAD ===
+0 // Head sits on torso neck stud: bottom at y=-40, top at y=-64
+1 14 0 -64 0 1 0 0 0 1 0 0 0 1 3626cp01.dat
+0 STEP
+
+0 // === HAIR ===
+0 // Classic male hair sits lower on the head stud
+1 0 0 -65 0 1 0 0 0 1 0 0 0 1 3901.dat
+0 STEP

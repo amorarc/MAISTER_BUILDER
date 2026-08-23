@@ -1,0 +1,268 @@
+[
+  {
+    "creation_id": "2859851d59",
+    "created_at": "2026-08-02T12:41:18+00:00",
+    "model_file": "2859851d59_red-2x2-tower-three-bricks-tall.ldr",
+    "name": "red 2x2 tower three bricks tall",
+    "description": "Simple tower: three 2x2 bricks (3003) stacked directly, each offset by -24 on Y. Minimal example of stacking bricks on the stud grid.",
+    "tags": [
+      "tower",
+      "brick",
+      "simple",
+      "2x2",
+      "red"
+    ],
+    "updated_at": "2026-08-02T12:41:18+00:00",
+    "total_pieces": 3,
+    "unique_pieces": 1,
+    "unique_pieces_by_color": 1,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and no submodel is fragmented."
+  },
+  {
+    "creation_id": "75a2c4cd44",
+    "created_at": "2026-08-02T12:46:22+00:00",
+    "model_file": "75a2c4cd44_yellow-2x2-brick.ldr",
+    "name": "yellow 2x2 brick",
+    "description": "A single yellow 2x2 brick at the origin. Starting point for building upward.",
+    "tags": [
+      "simple",
+      "brick",
+      "yellow"
+    ],
+    "updated_at": "2026-08-02T12:46:22+00:00",
+    "total_pieces": 1,
+    "unique_pieces": 1,
+    "unique_pieces_by_color": 1,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and no submodel is fragmented."
+  },
+  {
+    "creation_id": "a59e7ab2d3",
+    "created_at": "2026-08-02T13:01:49+00:00",
+    "model_file": "a59e7ab2d3_red-heart.ldr",
+    "name": "Red Heart",
+    "description": "A red heart model built from two stacked 3x3 heart-shaped plates (39613) with a 1x1 heart tile (39739) on top, mounted on a dark bluish grey stand (2x4 plate + 2x2 brick). The heart submodel is offset 10,10 in x,z so its 3x3 seat grid aligns with the 2x2 brick's studs. Clean, valid build.",
+    "tags": [
+      "heart",
+      "red",
+      "decorative",
+      "small"
+    ],
+    "updated_at": "2026-08-02T13:01:49+00:00",
+    "total_pieces": 5,
+    "unique_pieces": 4,
+    "unique_pieces_by_color": 4,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and no submodel is fragmented."
+  },
+  {
+    "creation_id": "b29553a447",
+    "created_at": "2026-08-02T16:12:32+00:00",
+    "model_file": "b29553a447_4x4-tower-six-bricks-tall-red-top.ldr",
+    "name": "4x4 tower six bricks tall red top",
+    "description": "4x4 footprint tower, six bricks tall (6 layers × 24 LDU = 144 LDU). Each layer is two 2x4 bricks (3001) placed side by side along Z at z=-20 and z=+20. Bottom 5 layers in dark bluish grey (72), top layer in red (4). The two vertical columns are not laterally connected but are held together by stacking — a valid simple tower build.",
+    "tags": [
+      "tower",
+      "brick",
+      "4x4",
+      "red"
+    ],
+    "updated_at": "2026-08-02T16:14:29+00:00",
+    "total_pieces": 12,
+    "unique_pieces": 1,
+    "unique_pieces_by_color": 2,
+    "validated": false,
+    "verdict": "FAIL - fix misaligned_parts first, then fragmented_submodels."
+  },
+  {
+    "creation_id": "41397aae2a",
+    "created_at": "2026-08-02T17:06:27+00:00",
+    "model_file": "41397aae2a_minifigure-with-hair.ldr",
+    "name": "minifigure with hair",
+    "description": "Standard LEGO minifigure assembled from official parts: red legs (3816/3817), red hips (3815b), red torso (973), yellow head (3626cp01), black classic male hair (3901), yellow arms (3818/3819), and yellow hands (3820). Hair placed at y=-65 to sit low on the head stud. All connections use minifig-specific joints (neck stud, clip pegs, hand clips) rather than standard brick studs.",
+    "tags": [
+      "minifigure",
+      "minifig",
+      "person",
+      "figure",
+      "complete"
+    ],
+    "updated_at": "2026-08-02T17:06:27+00:00",
+    "total_pieces": 10,
+    "unique_pieces": 9,
+    "unique_pieces_by_color": 9,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid."
+  },
+  {
+    "creation_id": "8bdadf4b90",
+    "created_at": "2026-08-02T17:10:20+00:00",
+    "model_file": "8bdadf4b90_rectangular-table.ldr",
+    "name": "rectangular table",
+    "description": "A rectangular table with a reddish brown 4x8 plate top and four dark bluish grey 1x1 brick legs at the corners. Simple coffee-table build, good starting point for furniture.",
+    "tags": [
+      "furniture",
+      "table",
+      "small"
+    ],
+    "updated_at": "2026-08-02T17:10:20+00:00",
+    "total_pieces": 5,
+    "unique_pieces": 2,
+    "unique_pieces_by_color": 2,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid."
+  },
+  {
+    "creation_id": "535f0c961d",
+    "created_at": "2026-08-02T17:14:11+00:00",
+    "model_file": "535f0c961d_2x4-brick-tree.ldr",
+    "name": "2x4 brick tree",
+    "description": "A tree built entirely from 3001 (2x4 bricks). Reddish brown trunk (3 bricks tall) supports a green 5-tier pyramid crown. Bottom tier uses a cross shape (center + left + right + front + back rotated 90°) giving the tree depth, then tapers 3-2-1-1. Totals 15 bricks.",
+    "tags": [
+      "tree",
+      "nature",
+      "brick-only",
+      "medium"
+    ],
+    "updated_at": "2026-08-02T17:17:15+00:00",
+    "total_pieces": 15,
+    "unique_pieces": 1,
+    "unique_pieces_by_color": 2,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid."
+  },
+  {
+    "creation_id": "92668545c8",
+    "created_at": "2026-08-02T17:24:22+00:00",
+    "model_file": "92668545c8_table-with-four-minifigs.ldr",
+    "name": "table with four minifigs",
+    "description": "Rectangular table (4x8 plate, 1x1 brick legs) with four minifigures facing the table. Each has a different coloured t-shirt (red, green, yellow, white) and trousers (black, dark bluish grey, blue, reddish brown). Minifigs stand on the floor at y=32, same level as the leg bottoms.",
+    "tags": [
+      "furniture",
+      "table",
+      "minifigures",
+      "scene"
+    ],
+    "updated_at": "2026-08-02T17:24:36+00:00",
+    "total_pieces": 41,
+    "unique_pieces": 10,
+    "unique_pieces_by_color": 28,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid."
+  },
+  {
+    "creation_id": "23033253a6",
+    "created_at": "2026-08-03T20:51:02+00:00",
+    "model_file": "23033253a6_big-green-cup-tree.ldr",
+    "name": "big green cup tree",
+    "description": "A classic tiered LEGO tree: three 2x2 reddish-brown bricks form the trunk, topped by a green 6x6 plate and a narrowing green canopy (3x3 block, then a plus shape, then a single centre brick) finished with a 2x2 green plate cap. Built entirely from 3003 bricks, a 3958 plate and a 3022 plate. Good starting point for tree/cup-tiered builds.",
+    "tags": [
+      "nature",
+      "tree",
+      "small"
+    ],
+    "updated_at": "2026-08-03T20:51:02+00:00",
+    "total_pieces": 20,
+    "unique_pieces": 3,
+    "unique_pieces_by_color": 4,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and nothing overlaps."
+  },
+  {
+    "creation_id": "58a681db6a",
+    "created_at": "2026-08-05T19:38:06+00:00",
+    "model_file": "58a681db6a_tiered-tree.ldr",
+    "name": "tiered tree",
+    "description": "A blocky LEGO tree: reddish-brown 2x2 brick trunk (4 tall) on an 8x8 baseplate, with a 6x6 support plate and a three-tier green canopy (3x3 brick block, plus of 5 bricks, single brick) capped by a 2x2 plate. Good starting point for a simple landscape tree.",
+    "tags": [
+      "nature",
+      "tree",
+      "small"
+    ],
+    "updated_at": "2026-08-05T19:38:06+00:00",
+    "total_pieces": 22,
+    "unique_pieces": 4,
+    "unique_pieces_by_color": 5,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and nothing overlaps."
+  },
+  {
+    "creation_id": "370c4e4593",
+    "created_at": "2026-08-05T21:37:44+00:00",
+    "model_file": "370c4e4593_bonsai-tree.ldr",
+    "name": "bonsai tree",
+    "description": "A bonsai tree in a green pot. Green 6x6 plate pot with rim, dark-tan soil surface, dark-brown trunk stepping from a 2x2 brick base into round 1x1 bricks, a low side branch with round-plate foliage, and a green cloud canopy: a 6x6 base plate topped with two layers of round 1x1 plates and a round-brick dome capped with round plates. Good small display-piece build.",
+    "tags": [
+      "nature",
+      "display",
+      "plant"
+    ],
+    "updated_at": "2026-08-05T21:37:44+00:00",
+    "total_pieces": 76,
+    "unique_pieces": 4,
+    "unique_pieces_by_color": 6,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and nothing overlaps."
+  },
+  {
+    "creation_id": "e3105ab8eb",
+    "created_at": "2026-08-09T22:01:04+00:00",
+    "model_file": "e3105ab8eb_little-house-with-door.ldr",
+    "name": "little house with door",
+    "description": "A small red house (6x8 studs) with three courses of walls in red, a white door in the back wall, a grey baseplate, and a steep grey gabled roof of 3039 slopes with overhang. Good simple house for a minifigure.",
+    "tags": [
+      "house",
+      "building",
+      "minifig-scale"
+    ],
+    "updated_at": "2026-08-09T22:01:04+00:00",
+    "total_pieces": 40,
+    "unique_pieces": 6,
+    "unique_pieces_by_color": 6,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and nothing overlaps."
+  },
+  {
+    "creation_id": "2ae0fcc923",
+    "created_at": "2026-08-10T22:33:02+00:00",
+    "model_file": "2ae0fcc923_blue-police-officer-minifigure.ldr",
+    "name": "Blue police officer minifigure",
+    "description": "A blue police officer minifigure with two swords, one held in each hand. The build relies on the standard minifigure torso, legs, and head assembly, with the arms positioned at a slight outward angle to accommodate the sword hilts, which are attached to the hands via the 3820.dat pieces. The two 3847.dat swords are placed symmetrically, angled outward and downward from the hands, so the figure reads clearly as armed and ready for action",
+    "tags": [],
+    "updated_at": "2026-08-10T22:33:02+00:00",
+    "total_pieces": 12,
+    "unique_pieces": 10,
+    "unique_pieces_by_color": 10,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and nothing overlaps."
+  },
+  {
+    "creation_id": "2b2897e63e",
+    "created_at": "2026-08-15T10:03:11+00:00",
+    "model_file": "2b2897e63e_gnarled-moss-bonsai.ldr",
+    "name": "Gnarled moss bonsai",
+    "description": "Gnarled moss bonsai is a compact, low-part-count model of a bonsai tree in a shallow blue pot, built from alternating stacked 3941.dat cylinders to form a tapering trunk and a separate supporting branch that rises to a wide flat canopy. The canopy is a 3028.dat plate covered with 54200.dat cheese slopes arranged in a grid to suggest moss tufts, while the soil is a single 3795.dat plate set atop the pot base. Useful as a starting point for any small decorative tree, topiary, or alien plant that needs a sturdy trunk and canopy silhouette without detailed branching, since the repeating cylinder stack and slope grid are easily swapped for other shapes",
+    "tags": [],
+    "updated_at": "2026-08-15T10:03:11+00:00",
+    "total_pieces": 128,
+    "unique_pieces": 9,
+    "unique_pieces_by_color": 12,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid and nothing overlaps."
+  },
+  {
+    "creation_id": "971dfd2f3b",
+    "created_at": "2026-08-16T21:00:14+00:00",
+    "model_file": "971dfd2f3b_simple-oak-tree-with-blossom.ldr",
+    "name": "Simple oak tree with blossom",
+    "description": "Simple oak tree with blossom: a small display tree with a four-stud square trunk and a roughly spherical crown, useful as a starting point for dioramas, bases, or landscape vignettes. The trunk stacks four 1x1 bricks on a root flare of five side-by-side 1x2 plates, and the crown is built from eleven 2x2 round bricks arranged in two cross-shaped rings around a central brick, all seated on squared base plates; the blossom is suggested by five studs on the top ring. Height is about 23 studs, and the crown width spans 7 studs",
+    "tags": [],
+    "updated_at": "2026-08-16T21:00:14+00:00",
+    "total_pieces": 27,
+    "unique_pieces": 5,
+    "unique_pieces_by_color": 6,
+    "validated": true,
+    "verdict": "PASS - every part is on the stud grid, nothing overlaps."
+  }
+]

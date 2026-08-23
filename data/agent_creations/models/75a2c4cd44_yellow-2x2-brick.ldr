@@ -1,0 +1,8 @@
+0 Yellow 2x2 Brick
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // A single yellow 2x2 brick placed at the origin
+1 14 0 -24 0 1 0 0 0 1 0 0 0 1 3003.dat

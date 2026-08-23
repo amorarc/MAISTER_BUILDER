@@ -1,0 +1,42 @@
+0 FILE model.ldr
+0 Brick Tree — larger, with brown trunk and green crown
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // Trunk — reddish brown, 3 bricks tall
+1 70 0 0 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 70 0 -24 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 70 0 -48 0 1 0 0 0 1 0 0 0 1 3001.dat
+0 STEP
+
+0 // Crown — green, 5-tier pyramid
+0 // Tier 1 (widest): cross shape — 5 bricks
+0 // Center, left, right
+1 2 0 -72 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 2 -40 -72 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 2 40 -72 0 1 0 0 0 1 0 0 0 1 3001.dat
+0 // Front and back (rotated 90 degrees)
+1 2 0 -72 -40 0 0 1 0 1 0 -1 0 0 3001.dat
+1 2 0 -72 40 0 0 -1 0 1 0 1 0 0 3001.dat
+0 STEP
+
+0 // Tier 2: three bricks side by side
+1 2 -40 -96 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 2 0 -96 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 2 40 -96 0 1 0 0 0 1 0 0 0 1 3001.dat
+0 STEP
+
+0 // Tier 3: two bricks
+1 2 -20 -120 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 2 20 -120 0 1 0 0 0 1 0 0 0 1 3001.dat
+0 STEP
+
+0 // Tier 4: one brick
+1 2 0 -144 0 1 0 0 0 1 0 0 0 1 3001.dat
+0 STEP
+
+0 // Tier 5 (top): one brick
+1 2 0 -168 0 1 0 0 0 1 0 0 0 1 3001.dat
+0 STEP

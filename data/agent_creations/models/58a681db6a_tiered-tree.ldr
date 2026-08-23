@@ -1,0 +1,41 @@
+0 Tree
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // Ground baseplate (8 x 8)
+1 2 0 0 0 1 0 0 0 1 0 0 0 1 41539.dat
+
+0 // Trunk - 4 reddish brown 2x2 bricks
+1 70 0 -24 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 70 0 -48 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 70 0 -72 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 70 0 -96 0 1 0 0 0 1 0 0 0 1 3003.dat
+
+0 // Canopy support plate (6 x 6)
+1 2 0 -104 0 1 0 0 0 1 0 0 0 1 3958.dat
+
+0 // Canopy tier 1 - 3x3 block of green bricks (6 studs across)
+1 2 -40 -128 -40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -128 -40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -128 -40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 -40 -128 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -128 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -128 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 -40 -128 40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -128 40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -128 40 1 0 0 0 1 0 0 0 1 3003.dat
+
+0 // Canopy tier 2 - plus shape of 5 green bricks
+1 2 0 -152 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 -40 -152 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 40 -152 0 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -152 -40 1 0 0 0 1 0 0 0 1 3003.dat
+1 2 0 -152 40 1 0 0 0 1 0 0 0 1 3003.dat
+
+0 // Canopy tier 3 - single green brick
+1 2 0 -176 0 1 0 0 0 1 0 0 0 1 3003.dat
+
+0 // Treetop cap plate (2 x 2)
+1 2 0 -184 0 1 0 0 0 1 0 0 0 1 3022.dat

@@ -1,0 +1,122 @@
+0 FILE model.ldr
+0 Rectangular Table with Four Legs and Four Minifigures
+0 Name: model.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // === TABLE ===
+0 // Table top - Plate 4 x 8 in reddish brown (colour 70)
+1 70 0 0 0 1 0 0 0 1 0 0 0 1 3035.dat
+
+0 // Four legs - Brick 1 x 1 in dark bluish grey (colour 72)
+1 72 -70 8 -30 1 0 0 0 1 0 0 0 1 3005.dat
+1 72 70 8 -30 1 0 0 0 1 0 0 0 1 3005.dat
+1 72 -70 8 30 1 0 0 0 1 0 0 0 1 3005.dat
+1 72 70 8 30 1 0 0 0 1 0 0 0 1 3005.dat
+
+0 === MINIFIGURES ===
+
+0 // Minifig on front short side — red torso, black legs
+1 16 0 32 -50 -1 0 0 0 1 0 0 0 -1 minifig1.ldr
+
+0 // Minifig on back short side — green torso, dark bluish grey legs
+1 16 0 32 50 1 0 0 0 1 0 0 0 1 minifig2.ldr
+
+0 // Minifig on left long side — yellow torso, blue legs
+1 16 -90 32 0 0 0 -1 0 1 0 1 0 0 minifig3.ldr
+
+0 // Minifig on right long side — white torso, reddish brown legs
+1 16 90 32 0 0 0 1 0 1 0 -1 0 0 minifig4.ldr
+
+0 FILE minifig1.ldr
+0 Minifigure — red torso, black legs
+0 Name: minifig1.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadte.txt
+
+0 // Head (yellow)
+1 14 0 -96 0 1 0 0 0 1 0 0 0 1 3626bp01.dat
+0 // Torso (red 4)
+1 4 0 -72 0 1 0 0 0 1 0 0 0 1 973.dat
+0 // Arms (red)
+1 4 15.5 -64 0 1 0.17 0 -0.17 1 0 0 0 1 3819.dat
+1 4 -15.5 -64 0 1 -0.17 0 0.17 1 0 0 0 1 3818.dat
+0 // Hands (yellow)
+1 14 23.658 -46.127 -10 1 0.12 -0.12 -0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+1 14 -23.658 -46.127 -10 1 -0.12 0.12 0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+0 // Hips (black 0)
+1 0 0 -40 0 1 0 0 0 1 0 0 0 1 3815b.dat
+0 // Legs (black)
+1 0 0 -28 0 1 0 0 0 1 0 0 0 1 3817.dat
+1 0 0 -28 0 1 0 0 0 1 0 0 0 1 3816.dat
+
+0 FILE minifig2.ldr
+0 Minifigure — green torso, dark bluish grey legs
+0 Name: minifig2.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadte.txt
+
+0 // Head (yellow)
+1 14 0 -96 0 1 0 0 0 1 0 0 0 1 3626bp01.dat
+0 // Torso (green 2)
+1 2 0 -72 0 1 0 0 0 1 0 0 0 1 973.dat
+0 // Arms (green)
+1 2 15.5 -64 0 1 0.17 0 -0.17 1 0 0 0 1 3819.dat
+1 2 -15.5 -64 0 1 -0.17 0 0.17 1 0 0 0 1 3818.dat
+0 // Hands (yellow)
+1 14 23.658 -46.127 -10 1 0.12 -0.12 -0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+1 14 -23.658 -46.127 -10 1 -0.12 0.12 0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+0 // Hips (dark bluish grey 72)
+1 72 0 -40 0 1 0 0 0 1 0 0 0 1 3815b.dat
+0 // Legs (dark bluish grey)
+1 72 0 -28 0 1 0 0 0 1 0 0 0 1 3817.dat
+1 72 0 -28 0 1 0 0 0 1 0 0 0 1 3816.dat
+
+0 FILE minifig3.ldr
+0 Minifigure — yellow torso, blue legs
+0 Name: minifig3.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadte.txt
+
+0 // Head (yellow)
+1 14 0 -96 0 1 0 0 0 1 0 0 0 1 3626bp01.dat
+0 // Torso (yellow 14)
+1 14 0 -72 0 1 0 0 0 1 0 0 0 1 973.dat
+0 // Arms (yellow)
+1 14 15.5 -64 0 1 0.17 0 -0.17 1 0 0 0 1 3819.dat
+1 14 -15.5 -64 0 1 -0.17 0 0.17 1 0 0 0 1 3818.dat
+0 // Hands (yellow)
+1 14 23.658 -46.127 -10 1 0.12 -0.12 -0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+1 14 -23.658 -46.127 -10 1 -0.12 0.12 0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+0 // Hips (blue 1)
+1 1 0 -40 0 1 0 0 0 1 0 0 0 1 3815b.dat
+0 // Legs (blue)
+1 1 0 -28 0 1 0 0 0 1 0 0 0 1 3817.dat
+1 1 0 -28 0 1 0 0 0 1 0 0 0 1 3816.dat
+
+0 FILE minifig4.ldr
+0 Minifigure — white torso, reddish brown legs
+0 Name: minifig4.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadte.txt
+
+0 // Head (yellow)
+1 14 0 -96 0 1 0 0 0 1 0 0 0 1 3626bp01.dat
+0 // Torso (white 15)
+1 15 0 -72 0 1 0 0 0 1 0 0 0 1 973.dat
+0 // Arms (white)
+1 15 15.5 -64 0 1 0.17 0 -0.17 1 0 0 0 1 3819.dat
+1 15 -15.5 -64 0 1 -0.17 0 0.17 1 0 0 0 1 3818.dat
+0 // Hands (yellow)
+1 14 23.658 -46.127 -10 1 0.12 -0.12 -0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+1 14 -23.658 -46.127 -10 1 -0.12 0.12 0.17 0.697 -0.697 0 0.707 0.707 3820.dat
+0 // Hips (reddish brown 70)
+1 70 0 -40 0 1 0 0 0 1 0 0 0 1 3815b.dat
+0 // Legs (reddish brown)
+1 70 0 -28 0 1 0 0 0 1 0 0 0 1 3817.dat
+1 70 0 -28 0 1 0 0 0 1 0 0 0 1 3816.dat

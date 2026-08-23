@@ -1,0 +1,33 @@
+0 FILE main.ldr
+0 Red Heart
+0 Name: main.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // Base stand
+1 72 0 0 0 1 0 0 0 1 0 0 0 1 3020.dat
+0 STEP
+0 // Support pillar
+1 72 0 -24 0 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+0 // Heart on top, offset so its bottom seats align with the brick's studs
+1 4 10 -32 10 1 0 0 0 1 0 0 0 1 heart.ldr
+0 STEP
+
+0 FILE heart.ldr
+0 Heart Submodel
+0 Name: heart.ldr
+0 Author: Maister Builder
+0 !LDRAW_ORG Model
+0 !LICENSE Licensed under CC BY 4.0 : see CAreadme.txt
+
+0 // Bottom layer - Heart-shaped plate
+1 4 0 0 0 1 0 0 0 1 0 0 0 1 39613.dat
+0 STEP
+0 // Top layer - Heart-shaped plate
+1 4 0 -8 0 1 0 0 0 1 0 0 0 1 39613.dat
+0 STEP
+0 // Heart tile centerpiece
+1 4 0 -16 0 1 0 0 0 1 0 0 0 1 39739.dat
+0 STEP
