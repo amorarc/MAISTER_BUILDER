@@ -9,7 +9,7 @@ import { thumbnailForPart } from "../thumbnail";
  * gallery of things it has built.
  *
  * Every card is a real render of the part rather than a photograph or an icon,
- * drawn from the same LDraw library the viewer uses — so what you are looking
+ * drawn from the same LDraw library the viewer uses - so what you are looking
  * at is the geometry the checker measures and the builder places, not an
  * artist's impression of it. They are produced one at a time off-screen (see
  * thumbnail.js) and arrive as images.
@@ -73,7 +73,7 @@ const ROLE_WORDS = {
   female: "offers the socket",
 };
 
-/** How a part joins to anything else — the half of a description that decides
+/** How a part joins to anything else - the half of a description that decides
  *  whether a placement is even possible. */
 function Connections({ part, families }) {
   const joins = part.connections || [];
@@ -88,7 +88,7 @@ function Connections({ part, families }) {
           <li key={c.id}>
             <div className="part-join-head">
               <strong>{c.name}</strong>
-              {/* what it does once built — "rigid" is every part, so it is
+              {/* what it does once built - "rigid" is every part, so it is
                   only worth saying when the joint actually moves */}
               {c.motion && c.motion !== "rigid" && (
                 <span className="chip chip--join">{c.does}</span>
@@ -146,7 +146,7 @@ function PartSheet({ part, families, onClose, onCopy, copied, onOpenPart, onBack
       part.top_studs == null
         ? null
         : part.top_studs === 0
-          ? "None — nothing stacks on this"
+          ? "None - nothing stacks on this"
           : plural(part.top_studs, "stud"),
     ],
     // what has to already be in the model for this part to have anywhere to go
@@ -155,7 +155,7 @@ function PartSheet({ part, families, onClose, onCopy, copied, onOpenPart, onBack
       "Used in",
       part.set_count
         ? `${plural(part.set_count, "set")}, ${part.total_uses} times` +
-          (part.commonness ? ` — ${part.commonness.band}` : "")
+          (part.commonness ? ` - ${part.commonness.band}` : "")
         : null,
     ],
     ["File", part.dat_name],
@@ -457,7 +457,7 @@ export default function PartsGallery() {
           <option value="">How it connects…</option>
           {(vocabulary.groups || []).map((g) => (
             <optgroup key={g.id} label={g.name}>
-              <option value={g.id}>All — {g.name.toLowerCase()}</option>
+              <option value={g.id}>All - {g.name.toLowerCase()}</option>
               {g.families.map((fid) => (
                 <option key={fid} value={fid}>
                   {"  "}
@@ -535,7 +535,7 @@ export default function PartsGallery() {
           <h3>No part like that</h3>
           <p>
             Nothing in the catalogue matches all of that at once. Drop a filter, or try the
-            word the LDraw catalogue would use — “slope”, “bracket”, “tile”.
+            word the LDraw catalogue would use - “slope”, “bracket”, “tile”.
           </p>
         </div>
       )}
@@ -568,8 +568,8 @@ export default function PartsGallery() {
                 {part.category && <span className="chip">{part.category}</span>}
                 {studs(part) && <span className="chip">{studs(part)}</span>}
                 {/* Only the connections worth noticing: every brick has studs.
-                    A family whose name is already the category — a Turntable in
-                    Turntable — is dropped rather than printed twice. */}
+                    A family whose name is already the category - a Turntable in
+                    Turntable - is dropped rather than printed twice. */}
                 {(part.special_connections || [])
                   .filter((id) => familyName(id) !== part.category)
                   .map((id) => (

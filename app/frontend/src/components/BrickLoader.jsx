@@ -6,11 +6,11 @@ import { BRICK } from "../brick";
  *
  * It covers the canvas outright rather than sitting beside it. The viewer keeps
  * the previous project's model on screen until the new one finishes parsing, and
- * a stale build that looks like the real thing is worse than an honest wait — so
+ * a stale build that looks like the real thing is worse than an honest wait - so
  * this hides it until there is something true to show.
  */
 
-// grid order — top-left, top-right, bottom-left, bottom-right — each with the
+// grid order - top-left, top-right, bottom-left, bottom-right - each with the
 // corner it flies in from. The order they arrive in is the CSS's business
 // (.brick-loader-stack i:nth-child), not this list's.
 const BRICKS = [

@@ -95,7 +95,7 @@ class Reranker:
 
 
 def get_reranker():
-    """The one reranker, built on first use — locked for the same reason as the
+    """The one reranker, built on first use - locked for the same reason as the
     encoder: parallel builders must not each load their own copy of it."""
     global _reranker
     if _reranker is None:

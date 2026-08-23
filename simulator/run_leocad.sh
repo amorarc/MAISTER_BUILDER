@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# run_leocad.sh — drive LeoCAD against an LDraw .mpd model.
+# run_leocad.sh - drive LeoCAD against an LDraw .mpd model.
 #
 # Default model: the first .mpd in data/ldraw_omr_sets/, else the first
 # model in out/. Pass a path to use a specific one.

@@ -1,8 +1,8 @@
 """Measure whether the design brief actually produces different designs.
 
 Every other checker in this project has a number. The brief has not had one,
-which means each of the things done to it — the variation angle, the stance, the
-verbalized sampling, naming `avoid` first — has been an argument rather than a
+which means each of the things done to it - the variation angle, the stance, the
+verbalized sampling, naming `avoid` first - has been an argument rather than a
 result. This is the measurement that settles them.
 
     python tools/brief_diversity.py "a house" --runs 12
@@ -16,18 +16,18 @@ configurations, so `--runs 12 --compare` is 48 calls. Start small.
 The briefs are embedded with the same local Qwen3 encoder the retrieval indexes
 use, and two numbers are reported over the resulting vectors:
 
-* **mean pairwise distance** — 1 minus the average cosine similarity between
+* **mean pairwise distance** - 1 minus the average cosine similarity between
   every pair. Easy to read, and it says how far apart the answers are on
   average.
-* **Vendi score** — the exponential of the Shannon entropy of the eigenvalues of
+* **Vendi score** - the exponential of the Shannon entropy of the eigenvalues of
   the similarity matrix, which is the metric the diversity literature reports.
   It reads as an *effective number of distinct answers*: twelve briefs that are
   all the same score about 1, twelve genuinely different ones score near 12. It
   is the more honest of the two, because mean distance can be held up by one
   outlier while eleven briefs agree.
 
-Only the fields that describe the model are embedded — `reads_as`, `signature`,
-`avoid`, the palette — never the stance or the sampling note. Those differ by
+Only the fields that describe the model are embedded - `reads_as`, `signature`,
+`avoid`, the palette - never the stance or the sampling note. Those differ by
 construction, and scoring them would be measuring the thermometer.
 """
 
@@ -97,7 +97,7 @@ def collect(subject, runs, candidates, use_stance, use_angle, verbose=True):
     """``runs`` briefs for ``subject``, each from its own call.
 
     Always run as an INVITED request, whatever the subject reads as. This tool
-    measures the diversity machinery — the angle, the stance, the tail — and a
+    measures the diversity machinery - the angle, the stance, the tail - and a
     plain subject like "a house" would otherwise take the mode every time and
     report the machinery as doing nothing, which would be a measurement of the
     licence rather than of what it is switched on for. Real runs decide the
@@ -143,7 +143,7 @@ def score(documents, encoder):
 
 def report(label, result):
     if result is None:
-        print(f"  {label:34} — too few briefs came back to score")
+        print(f"  {label:34} - too few briefs came back to score")
         return
     print(f"  {label:34} Vendi {result['vendi']:5.2f} / {result['briefs']:<3}"
           f"  distance {result['distance']:.3f}"
@@ -169,7 +169,7 @@ def main():
             ("direct (1 brief, no cues)", 1, False, False),
             ("+ angle", 1, False, True),
             ("+ angle + stance", 1, True, True),
-            (f"+ sampling ({BRIEF_CANDIDATES}) — shipped",
+            (f"+ sampling ({BRIEF_CANDIDATES}) - shipped",
              BRIEF_CANDIDATES, True, True),
         ]
     else:
@@ -191,7 +191,7 @@ def main():
         results.append((label, score(documents, encoder)))
         print()
 
-    print(f"{args.subject!r} — higher is more varied\n")
+    print(f"{args.subject!r} - higher is more varied\n")
     for label, result in results:
         report(label, result)
 

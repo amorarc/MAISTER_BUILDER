@@ -107,7 +107,7 @@ def get_encoder():
 
     Locked because subconstructions are built in parallel and each searches for
     parts. Without it, three builders reaching a cold encoder together each see
-    `None` and each load a transformer — three copies of the same weights, three
+    `None` and each load a transformer - three copies of the same weights, three
     times the load, and on a GPU that is where the run runs out of memory.
     """
     global _encoder

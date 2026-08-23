@@ -1,7 +1,7 @@
 /**
  * The agent answers in light markdown. This renders the subset it actually
- * emits — headings, bullet and numbered lists, fenced and inline code, bold and
- * italic — as React elements rather than raw HTML, so nothing the model writes
+ * emits - headings, bullet and numbered lists, fenced and inline code, bold and
+ * italic - as React elements rather than raw HTML, so nothing the model writes
  * can inject markup.
  */
 

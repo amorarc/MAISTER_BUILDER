@@ -6,7 +6,7 @@ import * as THREE from "three";
  * LDrawLoader resolves a colour code against LDConfig.ldr and, when the code is
  * not defined there, leaves the object's material null rather than substituting
  * anything. three.js reads `material.visible` on every object it projects, so a
- * single null throws inside the render loop — and because the throw happens
+ * single null throws inside the render loop - and because the throw happens
  * while the render list is being built, *nothing* is drawn. One undefined colour
  * on one internal subpart takes the whole model with it.
  *

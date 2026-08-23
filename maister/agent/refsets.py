@@ -1,4 +1,4 @@
-"""Real sets, handed to the builder before it starts — with their construction.
+"""Real sets, handed to the builder before it starts - with their construction.
 
 The corpus holds 1,801 official models. A builder was told to go and find them
 (`search_reference(kind="sets")`, then `get_set_details`, then `read_model`,
@@ -11,11 +11,11 @@ the shape.
 This turns that around. Before a subconstruction is built, the harness finds the
 sets that match it and puts them **in the task**, already opened:
 
-* which sets they are — number, name, theme, year, size;
-* **what each is assembled out of** — the named blocks and their part counts,
+* which sets they are - number, name, theme, year, size;
+* **what each is assembled out of** - the named blocks and their part counts,
   because that is the unit `copy_from_set` grafts and the unit a real designer
   thinks in;
-* **the actual LDraw of the assembly most worth copying** — real coordinates,
+* **the actual LDraw of the assembly most worth copying** - real coordinates,
   real rotations, real stacking. This is the part that was missing: a list of
   the parts a set uses is a shopping list, and a shopping list does not tell you
   that the bonnet is two wedge slopes at 24 LDU meeting a windscreen laid back
@@ -33,7 +33,7 @@ from . import sets
 
 # How many sets are handed over per subconstruction. Two is deliberate: one is a
 # single opinion about what the subject looks like, and four is more LDraw than
-# anyone reads before starting. Two lets the builder mix — which is the whole
+# anyone reads before starting. Two lets the builder mix - which is the whole
 # point of grafting from several.
 MAX_SETS = 2
 
@@ -43,7 +43,7 @@ SOURCE_LINES = 60
 
 # The assembly worth showing, in parts. Below the floor it is a hinge or a pair
 # of tiles rather than a construction. Above GOOD_BLOCK_FULL there is no more
-# credit for being bigger — the excerpt is clipped long before that.
+# credit for being bigger - the excerpt is clipped long before that.
 GOOD_BLOCK_MIN = 12
 GOOD_BLOCK_FULL = 120
 
@@ -54,7 +54,7 @@ MIN_PIECES = 12
 MAX_PIECES = 300
 
 # An assembly whose parts are mostly NOT on the stud lattice is not a lesson in
-# stud building — it is a flexible hose approximated in forty segments, a rubber
+# stud building - it is a flexible hose approximated in forty segments, a rubber
 # band, a chain. Copying one teaches the builder to write fractional
 # coordinates, which is the exact fault the whole harness exists to prevent.
 MIN_STUD_SHARE = 0.55
@@ -63,7 +63,7 @@ MIN_STUD_SHARE = 0.55
 #
 # A semantic search always answers: ask it for "a quantum chromodynamics
 # lecture" and it hands back an Ice Hockey Goal, because something has to come
-# first. Handing that over is worse than handing over nothing — a weak
+# first. Handing that over is worse than handing over nothing - a weak
 # reference pulls the design towards the wrong subject, and the builder has been
 # told to start from what it is given.
 #
@@ -71,7 +71,7 @@ MIN_STUD_SHARE = 0.55
 # 0.97; "a pine tree" scores 0.48 for the Christmas tree and 0.10 for a
 # waterfall base that happens to have foliage on it; nonsense scores 0.04. The
 # floor sits in the gap. Without a reranker the vector score is all there is,
-# and it compresses — 0.71 for the car against 0.39 for the nonsense — so the
+# and it compresses - 0.71 for the car against 0.39 for the nonsense - so the
 # fallback floor is set against that spread instead.
 MIN_RERANK = 0.15
 MIN_VECTOR = 0.50
@@ -86,7 +86,7 @@ _PART = re.compile(r"^1\s+\S+\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s")
 
 # A block whose name says it is the thing being built beats a bigger one that
 # does not. A rainforest diorama holds a WaterfallBase of 15 parts and a TreeBig
-# of 13, and asked for a tree the harness handed over the waterfall — bigger, on
+# of 13, and asked for a tree the harness handed over the waterfall - bigger, on
 # the lattice, and about the wrong object. Designers name their submodels after
 # what they are, which is free relevance nobody was reading.
 NAME_MATCH_BONUS = 3.0
@@ -111,7 +111,7 @@ def _retrieval():
 def find(subject, requirements=None, limit=MAX_SETS, max_pieces=MAX_PIECES):
     """The best real sets for a subject, opened up. Never raises.
 
-    Returns a list of digests — see ``as_text`` for what a builder is shown.
+    Returns a list of digests - see ``as_text`` for what a builder is shown.
     An empty list when the index is not built, nothing matches, or anything at
     all goes wrong: a reference is a gift to the build, never a precondition.
     """
@@ -190,7 +190,7 @@ def _legend(lines):
 
     Without it the geometry is unreadable to anyone who does not already know
     the catalogue by heart: `2436a` is a bracket and `3788` is a mudguard, and a
-    builder that cannot tell them apart cannot adapt what it is copying — it can
+    builder that cannot tell them apart cannot adapt what it is copying - it can
     only paste it. Most used first, because that is the part the assembly is
     made of.
     """
@@ -229,7 +229,7 @@ _MOVED = re.compile(r"~?moved to (\S+)", re.I)
 def _plain(description):
     """A catalogue description as a person would read it.
 
-    LDraw marks aliases and superseded parts in the description itself — a
+    LDraw marks aliases and superseded parts in the description itself - a
     leading `~`, `=` or `_`, or the whole thing replaced by "Moved to 3023b".
     A set legitimately uses the old number and it still resolves, so the number
     stays; the marker does not, and a redirect is spelled out rather than shown
@@ -238,7 +238,7 @@ def _plain(description):
     text = " ".join(str(description or "").split())
     moved = _MOVED.match(text)
     if moved:
-        return (f"an older number for {moved.group(1)} — it still resolves, "
+        return (f"an older number for {moved.group(1)} - it still resolves, "
                 f"and {moved.group(1)} is the current one")
     return text.lstrip("~=_ ").strip()
 
@@ -248,7 +248,7 @@ def _target(part_line):
 
     Split on a fixed field count rather than on the last token, because a
     submodel reference is a *file name* and file names in an MPD have spaces in
-    them — `1 16 0 -48 20 … 41590 - 1.ldr`. Taking the last word gave "1.ldr",
+    them - `1 16 0 -48 20 … 41590 - 1.ldr`. Taking the last word gave "1.ldr",
     which matches no block, so every reference counted as a real part and a
     five-line table of contents looked like a five-part assembly.
     """
@@ -295,7 +295,7 @@ def _worth_copying(blocks, lines, keywords=()):
     """The assembly to show the source of, scored rather than sized.
 
     "The biggest block" is the obvious rule and it is wrong. The biggest block
-    in a Technic set is the generated hose path — forty segments at fractional
+    in a Technic set is the generated hose path - forty segments at fractional
     coordinates and rotations to eleven decimal places, which is the least
     instructive thing in the file and the most misleading thing to copy. So a
     block is judged on whether it is *stud-built* first, then on being a
@@ -328,7 +328,7 @@ def _worth_copying(blocks, lines, keywords=()):
 def _stud_share(lines):
     """How much of an assembly sits on the stud lattice.
 
-    The x and z of a part placed on studs land on a multiple of 10 LDU — 20 for
+    The x and z of a part placed on studs land on a multiple of 10 LDU - 20 for
     a full stud, 10 for a jumper's half. A block where that is true of most
     parts was built the way this project builds; one where it is not is a hose,
     a chain, or something posed at an angle.
@@ -357,8 +357,8 @@ def _size_weight(parts):
     a penalty for being large, and the penalty kept choosing scenery: asked for
     a fire truck, set 4208 offered its 167-part `car.ldr` and its 20-part
     `tree.ldr`, and the window handed over the tree. The source is clipped to
-    sixty lines whatever is chosen, so a large assembly costs nothing to prefer
-    — and its first sixty lines are the base and the first courses, which is
+    sixty lines whatever is chosen, so a large assembly costs nothing to prefer -
+    and its first sixty lines are the base and the first courses, which is
     exactly the part worth reading.
     """
     if parts < GOOD_BLOCK_MIN:
@@ -381,7 +381,7 @@ def _worth_reading(lines):
         elif stripped[:7].upper().startswith("0 FILE "):
             kept.append(stripped)
         if len(kept) >= SOURCE_LINES:
-            kept.append("… (clipped — read_model gives you all of it)")
+            kept.append("… (clipped - read_model gives you all of it)")
             break
     return kept
 
@@ -392,7 +392,7 @@ def as_text(digests, subject=None):
     Reads the grafting setting rather than taking it as an argument, because
     every caller would have to pass the same answer and one of them would
     eventually not. With grafting off the sets are still worth every line of
-    this — what changes is that they are here to be *read* rather than lifted,
+    this - what changes is that they are here to be *read* rather than lifted,
     so the `copy_from_set` calls come out and the advice inverts.
     """
     if not digests:
@@ -404,19 +404,19 @@ def as_text(digests, subject=None):
 
     lines = [
         "**Real LEGO sets that already built this.** They were found for you "
-        "and opened — you do not have to go looking, and you should not start "
+        "and opened - you do not have to go looking, and you should not start "
         "from nothing while these are on the page.",
         "",
         "What is below is not a picture and not a parts list. It is **how the "
         "set is actually put together**: which assemblies it comes apart into, "
         "how big each one is, and the real LDraw of "
         + ("the one worth copying" if grafting else "the one worth studying")
-        + " — real part numbers, real coordinates, real rotations. That is the "
+        + " - real part numbers, real coordinates, real rotations. That is the "
         "information you cannot derive and they already paid for.",
     ]
 
     for digest in digests:
-        head = f"## {digest['set_number']} — {digest.get('set_name') or 'untitled'}"
+        head = f"## {digest['set_number']} - {digest.get('set_name') or 'untitled'}"
         facts = [f for f in (digest.get("theme"), str(digest.get("year") or ""),
                              f"{digest.get('pieces')} pieces"
                              if digest.get("pieces") else None) if f]
@@ -426,11 +426,11 @@ def as_text(digests, subject=None):
         if assemblies:
             lines.append("")
             lines.append(
-                "It comes apart into these assemblies — each one is something "
+                "It comes apart into these assemblies - each one is something "
                 "`copy_from_set` can graft whole:" if grafting else
                 "It comes apart into these assemblies, which is itself worth "
                 "reading: it is how a designer divided this subject up.")
-            lines += [f"- `{a['name']}` — {a['parts']} parts"
+            lines += [f"- `{a['name']}` - {a['parts']} parts"
                       for a in assemblies if a["parts"]]
 
         if digest.get("shows"):
@@ -442,9 +442,9 @@ def as_text(digests, subject=None):
 
         legend = digest.get("legend") or []
         if legend:
-            lines += ["", "The parts it does that with — these are real part "
+            lines += ["", "The parts it does that with - these are real part "
                           "numbers and they are yours to use:"]
-            lines += [f"- `{p['part']}` ×{p['count']} — {p['what']}"
+            lines += [f"- `{p['part']}` ×{p['count']} - {p['what']}"
                       for p in legend]
 
         if grafting:
@@ -460,7 +460,7 @@ def as_text(digests, subject=None):
             "### What to do with them",
             "",
             "**Copy first, design second.** Take the assembly that is closest "
-            "to what you need — `copy_from_set` — recolour it, then spend your "
+            "to what you need - `copy_from_set` - recolour it, then spend your "
             "build on what makes this model different from that one. A model "
             "that could have borrowed and did not is a worse model and a "
             "longer build.",
@@ -472,7 +472,7 @@ def as_text(digests, subject=None):
             "",
             "Read them even where you do not copy. The stacking, the offsets, "
             "the way a curve is made out of straight bricks, how many plates a "
-            "real designer spends on a wheel arch — that is what these are "
+            "real designer spends on a wheel arch - that is what these are "
             "here for. `read_model('set:<number>', submodel='<name>')` gives "
             "you the whole of any of them.",
         ]
@@ -506,7 +506,7 @@ def as_text(digests, subject=None):
         "",
         "These were found by searching for the subject, and a search always "
         "answers. Sometimes what comes back is close to what you are building "
-        "and sometimes it is a set that happens to share a word with it — a "
+        "and sometimes it is a set that happens to share a word with it - a "
         "rainforest diorama for a tree, a mini tractor for a windmill.",
         "",
         ("**Look before you graft.** If the assembly is not a version of the "
@@ -514,12 +514,12 @@ def as_text(digests, subject=None):
          "for instead, and read them only for technique."
          if grafting else
          "**Check what you are reading.** If the assembly is not a version of "
-         "the thing you were asked for, take not even the technique from it — "
+         "the thing you were asked for, take not even the technique from it - "
          "how a tractor's bonnet is built has nothing to teach a windmill. "
          "Build what was asked for."),
         "",
         "The failure to avoid is putting a set's own features into a model "
-        "nobody asked for them in — a minifigure, a sticker, a trailer, the "
+        "nobody asked for them in - a minifigure, a sticker, a trailer, the "
         "themed bits a set carries because of what it was. A model with the "
         "wrong set's furniture on it is worse than the plain version of the "
         "right shape, and it is a fault nothing downstream can see: it "
@@ -530,7 +530,7 @@ def as_text(digests, subject=None):
         lines += ["",
                   f"None of this makes them **the** answer: you are building "
                   f"{subject}, not a copy of a set. Where the request and the "
-                  f"set disagree, the request wins — and where there is a "
+                  f"set disagree, the request wins - and where there is a "
                   f"reference picture, the picture wins over both. Build what "
                   f"is in the picture. Nothing goes into the model because a "
                   f"set had one."]

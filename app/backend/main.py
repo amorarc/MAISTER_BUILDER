@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Maister Builder — backend API.
+Maister Builder - backend API.
 
 Wraps the LDraw agent (maister/agent) and serves:
   * project CRUD over .ldr files
@@ -161,7 +161,7 @@ def _apply_model(model_id):
     """Point everything that talks to the router at `model_id`.
 
     Agents are cached per project and hold the conversation so far, so they are
-    retargeted rather than dropped — changing the model should not silently end
+    retargeted rather than dropped - changing the model should not silently end
     every open chat. The LLM is replaced wholesale instead of having its `model`
     reassigned: it carries flags negotiated against the previous model (whether
     it accepted tools, whether it would stream), and none of those transfer.
@@ -182,13 +182,13 @@ def _apply_vision_model(model_id):
 
     Nothing to retarget and nothing cached: the critic builds its request per
     call, so this is a single module-level choice. Naming one here also turns
-    off the fallback chain — a model someone chose is not a model to work
+    off the fallback chain - a model someone chose is not a model to work
     around.
 
     Which is why the default is passed through as None instead. The settings
     file always holds a vision model, whether or not anybody ever opened the
-    dialog, so pinning whatever it says would mean the app never has a fallback
-    — and the chain exists precisely for the default nobody picked. A vision
+    dialog, so pinning whatever it says would mean the app never has a fallback -
+    and the chain exists precisely for the default nobody picked. A vision
     call that cannot be made costs the run its eyes, so the untouched default
     keeps its alternatives and only a real choice loses them.
     """
@@ -200,10 +200,10 @@ def _apply_vision_model(model_id):
 def _apply_copy_from_set(enabled):
     """Give or withhold `copy_from_set` for the whole process.
 
-    One line, and no cached agent to chase — which is worth saying, because
+    One line, and no cached agent to chase - which is worth saying, because
     `_apply_model` above does have to chase them. The difference is where the
     tool list is decided: an agent is *handed* its LLM once and keeps it, but
-    its tools are rebuilt from `tools.agent_tools()` every turn — by
+    its tools are rebuilt from `tools.agent_tools()` every turn - by
     `_tools_for` on the chat path and by `_tools` on the build path. So the
     flag is read after this call, by everything, including the agents that were
     already open when the user changed it.
@@ -262,12 +262,12 @@ def put_settings(body: SettingsUpdate):
 
     Two models are configurable: the one that builds, and the one that looks at
     the renders and says whether the build resembles what was asked for. They
-    are separate choices — the builder is text-only and the critic has to be
+    are separate choices - the builder is text-only and the critic has to be
     multimodal, so one id could never serve both.
 
     Plus one switch: whether the agent may graft assemblies out of released
     sets. It is here rather than in an env var because it is a thing to change
-    between one build and the next — grafting on to get a good model, off to
+    between one build and the next - grafting on to get a good model, off to
     find out what the agent designs by itself.
 
     No value is checked against a list. The router gains models and providers
@@ -366,7 +366,7 @@ def delete_project(project_id: str):
     import shutil
     # rmtree takes the reference/ directory with it: the images live inside the
     # project, which is the whole point of storing them there.
-    # rmtree takes chat.json and the traces with it too — everything about a
+    # rmtree takes chat.json and the traces with it too - everything about a
     # project lives inside the project.
     shutil.rmtree(project_dir(project_id))
     with _lock:
@@ -549,7 +549,7 @@ def delete_creation(creation_id: str):
 # The parts catalogue
 #
 # The other library: not what the agent built but what it builds out of. Every
-# part in data/parts/parts_catalog.csv, with what the catalogue knows about it —
+# part in data/parts/parts_catalog.csv, with what the catalogue knows about it -
 # what it is called, how big it is in studs and in millimetres, which categories
 # it belongs to, how many real sets have used it.
 # --------------------------------------------------------------------------
@@ -559,7 +559,7 @@ def _warm_stud_counts():
 
     Whether a part has studs on top is read from its geometry rather than
     guessed from its bounding box, which means opening a file per part. Doing
-    that catalogue-wide takes a few seconds — nothing at startup, where there is
+    that catalogue-wide takes a few seconds - nothing at startup, where there is
     no one waiting, and a stall long enough to look broken if it happens under
     the first click of the filter instead.
     """
@@ -584,7 +584,7 @@ def part_categories():
 def part_connection_families():
     """The connection vocabulary: systems, motions, and the families in each.
 
-    Three levels, because a builder arrives with whichever one they have —
+    Three levels, because a builder arrives with whichever one they have -
     the family ("a turntable"), the system it belongs to ("something Technic"),
     or only the behaviour they need ("something that spins").
     """
@@ -647,7 +647,7 @@ def part_details(part_id: str):
 
 
 # A part on its own is a .dat with no colour of its own, and LDrawLoader wants
-# a model. This is that model: one line, one part, one colour — which is what
+# a model. This is that model: one line, one part, one colour - which is what
 # lets the gallery draw a part with exactly the pipeline that draws a build.
 @app.get("/api/parts/{part_id}/model.ldr", response_class=PlainTextResponse)
 def part_model(part_id: str, colour: int = 4):
@@ -665,7 +665,7 @@ def part_model(part_id: str, colour: int = 4):
 #
 # 1,800 official models sit in data/ldraw_omr_sets, and until now the only way
 # to see one was to ask the agent for it. They are the best material in the
-# project — real designs, real coordinates — and a person browsing them finds
+# project - real designs, real coordinates - and a person browsing them finds
 # things a semantic search never surfaces, so they get the same treatment the
 # parts catalogue gets: a gallery, filters, and a way in.
 #
@@ -743,7 +743,7 @@ class ProjectFromSet(BaseModel):
 def project_from_set(number: str, body: ProjectFromSet | None = None):
     """Start a new project with this set as its starting point.
 
-    A copy, always. The corpus is reference and stays read-only — what lands in
+    A copy, always. The corpus is reference and stays read-only - what lands in
     the project is the set's own source under the project's own name, which the
     user is then free to take apart.
     """
@@ -775,7 +775,7 @@ def project_from_set(number: str, body: ProjectFromSet | None = None):
 # Reference images
 #
 # A picture the user attached to the project: what they want the model to look
-# like. It belongs to the project rather than to the message that carried it —
+# like. It belongs to the project rather than to the message that carried it -
 # "make it taller" three turns later still means "and still like the picture".
 # --------------------------------------------------------------------------
 
@@ -817,7 +817,7 @@ def get_reference(project_id: str, image_id: str):
     # and does. Without this the browser may hand either cached copy to the
     # other, and the copy with no `Access-Control-Allow-Origin` fails the CORS
     # check of whatever asked for it. CORSMiddleware sets the header itself on
-    # the responses it decorates — which is exactly the half of the pair that
+    # the responses it decorates - which is exactly the half of the pair that
     # did not need it.
     return FileResponse(path, headers={"Cache-Control": "public, max-age=86400",
                                        "Vary": "Origin"})
@@ -841,7 +841,7 @@ def _project_files(project_id):
 
     A scene is not built into ``model.ldr``. Each subconstruction is built into
     its own file under ``parts/`` and they are composed at the end, so while
-    the build is running — and they run at the same time now — the model file
+    the build is running - and they run at the same time now - the model file
     is still the blank template and everything that is actually being written
     is somewhere the Source view could not see.
     """
@@ -888,7 +888,7 @@ def list_project_files(project_id: str):
 # to swallow anything meant to come after it.
 @app.get("/api/projects/{project_id}/file", response_class=PlainTextResponse)
 def read_project_file(project_id: str, name: str = "model.ldr"):
-    """One file of this project, as text — for the editor and the viewer both."""
+    """One file of this project, as text - for the editor and the viewer both."""
     return _project_file(project_id, name).read_text(encoding="utf-8",
                                                      errors="replace")
 
@@ -933,7 +933,7 @@ def build_instructions(project_id: str):
     d = project_dir(project_id)
     text = model_path(project_id).read_text(encoding="utf-8")
     if not any(line.lstrip().startswith("1 ") for line in text.splitlines()):
-        raise HTTPException(400, "there are no parts in this model yet — build "
+        raise HTTPException(400, "there are no parts in this model yet - build "
                                  "something first")
 
     name = _read_meta(d, "name.txt", d.name)
@@ -968,7 +968,7 @@ def _get_agent(project_id, model_name):
             agent = LDrawAgent(llm=llm, verbose=False)
             # A restarted server builds this agent with an empty head. The
             # conversation on disk is what it said last time, so it is put back
-            # — otherwise the transcript on screen shows an exchange the model
+            # - otherwise the transcript on screen shows an exchange the model
             # itself was never part of, and "make it taller" has no referent.
             try:
                 agent.messages += conversation.as_messages(
@@ -989,7 +989,7 @@ def _remember(project_id, role, text, **extra):
     """Add one turn to a project's conversation, on disk.
 
     The build path runs a fresh sub-agent per subconstruction, so none of them
-    carries a conversation of its own. This is the conversation — and it is
+    carries a conversation of its own. This is the conversation - and it is
     also the transcript the browser reads, so the two cannot disagree.
     """
     text = (text or "").strip()
@@ -1005,7 +1005,7 @@ def _record_reply(project_id, run):
     """Write this run's answer into the conversation, once.
 
     Carries the run id and the handful of events the transcript draws, so a
-    reply reloaded tomorrow shows the same tool rows it showed live — and the
+    reply reloaded tomorrow shows the same tool rows it showed live - and the
     run id is the way from a message to its full trace.
     """
     if run.get("recorded"):
@@ -1060,7 +1060,7 @@ def _push(run, event):
     Streamed content is the exception: one event per token would be thousands
     of events for a single reply. It accumulates into ``run["partial"]``
     instead, which every poll returns in full and which is cleared as soon as
-    a real event lands — by then the same text has arrived as a `text` event.
+    a real event lands - by then the same text has arrived as a `text` event.
     """
     event = dict(event)
 
@@ -1072,7 +1072,7 @@ def _push(run, event):
         recorder.event(event)
 
     # The agent's standing prompt: tens of KB, and the chat panel has no use
-    # for it. It goes to the trace and no further — a live event stream that
+    # for it. It goes to the trace and no further - a live event stream that
     # carried it would re-send it on every poll.
     if event.get("type") == "context":
         return
@@ -1149,7 +1149,7 @@ def _tool_detail(tool, arguments):
         subject = args.get("subject_type", "")
         if args.get("subject_id"):
             subject = f"{subject}:{args['subject_id']}"
-        return _clip(f"{subject} — {args.get('text', '')}", 90)
+        return _clip(f"{subject} - {args.get('text', '')}", 90)
     if tool in ("validate_model", "edit_model"):
         path = str(args.get("path", ""))
         if tool == "edit_model":
@@ -1265,7 +1265,7 @@ def _clip(text, limit):
 
 # "Save this to my gallery" is a request to press a button, not to build
 # anything, so it must not go through the build harness. The agent has no save
-# tool any more — the button does it — but the phrasing still has to be routed
+# tool any more - the button does it - but the phrasing still has to be routed
 # away from decomposition.
 _SAVE_REQUEST = re.compile(
     r"\b(save|keep|store|archive|bookmark)\b.{0,40}\b(it|this|that|model|build|creation|gallery|library)\b"
@@ -1289,7 +1289,7 @@ def _is_build(message):
 
     The harness is what reads the workbench before it touches anything, splits
     the request into free-standing objects, and holds each one to a checklist.
-    The conversational path has none of that — so what this decides is not
+    The conversational path has none of that - so what this decides is not
     "chat or build" but "surveyed and split, or neither".
 
     It used to require a build verb, and that was the wrong test: `a house`,
@@ -1298,7 +1298,7 @@ def _is_build(message):
     were built, badly, by a single agent that had never been told what was
     already on the bench.
 
-    So the question is now the other way round — see `planner.wants_model`.
+    So the question is now the other way round - see `planner.wants_model`.
     Everything is a build except the two things that certainly are not: a
     question about the model, and "save this", which is a request to press a
     button.
@@ -1312,8 +1312,8 @@ def _settle(run, **fields):
     """Record how a run ended, unless it has already been settled.
 
     Stop settles a run from the request thread and leaves the worker to unwind
-    in its own time. Whatever the worker concludes afterwards — an answer, a
-    step count, an exception raised on the way out — is about a run the user
+    in its own time. Whatever the worker concludes afterwards - an answer, a
+    step count, an exception raised on the way out - is about a run the user
     was already told was over, so it is dropped rather than allowed to
     resurrect it.
     """
@@ -1326,7 +1326,7 @@ def _settle(run, **fields):
 
 # How long the settled run waits for a name that is not back yet. The call is
 # started alongside the build and takes a second or two, so this is only ever
-# reached when the provider is having a bad minute — and a name is never worth
+# reached when the provider is having a bad minute - and a name is never worth
 # making someone wait for.
 NAMING_GRACE = 3.0
 
@@ -1334,7 +1334,7 @@ NAMING_GRACE = 3.0
 # The two tools that are the first to know what is actually being built. The
 # builder calls ask_about_image before it plans anything when a reference
 # picture is attached, and plan_construction before it writes anything when
-# there is not one — so whichever of the two comes back first is the earliest
+# there is not one - so whichever of the two comes back first is the earliest
 # moment the project can be called something better than the request was.
 NAMING_TRIGGERS = ("ask_about_image", "plan_construction")
 
@@ -1361,7 +1361,7 @@ def _naming_context(tool, result):
             return None
         said = summary or ", ".join(objects)
         if objects and len(objects) > 1:
-            said = f"{said} — it is being built as: {', '.join(objects[:6])}"
+            said = f"{said} - it is being built as: {', '.join(objects[:6])}"
         return f"What the request was understood to be: {said[:600]}"
 
     if tool == "ask_about_image":
@@ -1375,7 +1375,7 @@ def _naming_context(tool, result):
             whole = described.get("whole")
             if isinstance(whole, dict):
                 bits.append(whole.get("dominant_colours"))
-            said = " — ".join(str(b).strip() for b in bits if b)
+            said = " - ".join(str(b).strip() for b in bits if b)
         else:
             said = str(described or "")
         return (f"The reference picture they attached shows: {said}"
@@ -1384,7 +1384,7 @@ def _naming_context(tool, result):
     plan = data.get("plan")
     goal = plan.get("goal") if isinstance(plan, dict) else None
     subject = data.get("subject")
-    said = " — ".join(str(b).strip() for b in (subject, goal) if b)
+    said = " - ".join(str(b).strip() for b in (subject, goal) if b)
     return f"The construction plan is for: {said}" if said.strip() else None
 
 
@@ -1392,7 +1392,7 @@ def _start_naming(project_id, message, llm, context=None):
     """Begin naming an untitled project, in parallel with the build.
 
     Started the moment the run works out what it is building rather than up
-    front, because up front all there is to go on is the request — and "build
+    front, because up front all there is to go on is the request - and "build
     this" beside a photograph names nothing at all. It still runs on its own
     thread alongside the build, which is what keeps it off the clock the user
     is watching. Returns None when there is nothing to name: a project the user
@@ -1431,12 +1431,12 @@ def _watch_for_name(run, project_id, llm, event):
     Hung off the event stream rather than called from the build: the builder
     and the orchestrator both run these tools, at a depth neither of them
     reports upward, and the events are the one place both are already visible.
-    Fires at most once — the first trigger wins, and it is the earliest.
+    Fires at most once - the first trigger wins, and it is the earliest.
     """
     if run.get("namer") is not None:
         return
 
-    # The split is the first moment anything knows what is being built — it is
+    # The split is the first moment anything knows what is being built - it is
     # the very first pass of a run, before a brief is written or a brick is
     # placed, and it produces the one-line summary of the request. Naming from
     # it means the project is titled while the build is still starting, rather
@@ -1494,7 +1494,7 @@ def _run_agent(run_id, project_id, message, model_name, max_steps):
     handover = _agent_lock(project_id)
     if not handover.acquire(timeout=HANDOVER_TIMEOUT):
         _settle(run, status="error",
-                error="the previous run has not finished yet — give it a "
+                error="the previous run has not finished yet - give it a "
                       "moment, or start a new conversation")
         run["finished"] = now()
         return
@@ -1558,13 +1558,13 @@ def _run_agent(run_id, project_id, message, model_name, max_steps):
             )
         else:
             # The conversational path: a question, a comment, "save this".
-            # One agent, its own history, no decomposition and no gate — there
+            # One agent, its own history, no decomposition and no gate - there
             # is nothing here to finish.
             task = (
                 f"The current project file is `{rel}` (relative to the out/ "
                 f"directory, which is what edit_model and "
                 f"validate_model expect).\n\n"
-                f"Its current contents are, with line numbers — those are the "
+                f"Its current contents are, with line numbers - those are the "
                 f"numbers `edit_model` takes, so change this model by editing "
                 f"the lines that change rather than by writing the file "
                 f"out again:\n```\n{numbered_lines(current)}\n```\n\n"
@@ -1582,7 +1582,7 @@ def _run_agent(run_id, project_id, message, model_name, max_steps):
             try:
                 namer = run.get("namer")
                 if namer is None:
-                    # Nothing described the picture and nothing planned — a
+                    # Nothing described the picture and nothing planned - a
                     # small edit, usually. There is still a finished model to
                     # name it after, so name it from that. Started here rather
                     # than in parallel because this case is rare and is almost
@@ -1613,7 +1613,7 @@ def _run_agent(run_id, project_id, message, model_name, max_steps):
     finally:
         # A run that crashed or was stopped may still have written the model,
         # and a half-built model is the thing the user most wants to look at.
-        # Report the file as it stands whatever happened to the run — this one
+        # Report the file as it stands whatever happened to the run - this one
         # is recorded even on a settled run, because it is about the file on
         # disk rather than about the run's outcome.
         if before is not None:
@@ -1642,7 +1642,7 @@ def _run_agent(run_id, project_id, message, model_name, max_steps):
             pass
 
         # Seal the trace with how it ended. Everything that happened is already
-        # on disk — this is the outcome, which is only known here.
+        # on disk - this is the outcome, which is only known here.
         recorder = run.get("trace")
         if recorder is not None:
             try:
@@ -1659,7 +1659,7 @@ def chat(project_id: str, body: ChatMessage):
     run_id = uuid.uuid4().hex[:12]
     _runs[run_id] = {"id": run_id, "status": "running", "started": now(),
                      # Which project this belongs to, so a page that has
-                     # forgotten the run can find it again — see
+                     # forgotten the run can find it again - see
                      # `active_run`. Without it a reload left a build running
                      # with no way to watch it and no way to stop it.
                      "project": project_id,
@@ -1693,7 +1693,7 @@ def active_run(project_id: str):
 
     The composer keeps the run it started in React state, and React state does
     not survive a reload, a switch to another project and back, or a second tab.
-    The build survives all three — it is a thread on the backend — so without
+    The build survives all three - it is a thread on the backend - so without
     this the user is left watching a model change under a Send button, with the
     Stop button gone and no way to ask for it back.
 
@@ -1729,7 +1729,7 @@ def stop_run(run_id: str):
     The flag alone was not enough. It is only read between chunks, tool calls
     and steps, so a Stop pressed while the model was composing its first token
     or while a slow tool was in flight did nothing visible for as long as that
-    took — which reads as a button that does not work.
+    took - which reads as a button that does not work.
 
     So the run is settled here instead: it is marked stopped immediately and
     reported that way on the very next poll, and the worker thread is left to
@@ -1749,13 +1749,13 @@ def stop_run(run_id: str):
             run["stopped"] = True
             # what the agent had written by the time the user gave up on it
             run["answer"] = (run.get("partial") or {}).get("text", "").strip()
-            run["warning"] = "stopped on request — the model may be half-built"
+            run["warning"] = "stopped on request - the model may be half-built"
             run["finished"] = now()
     return {"ok": True, "run": run_id, "status": run.get("status")}
 
 
 # Keys a run carries for its own bookkeeping, which never go over the wire.
-# `namer` is the naming thread and its holder — a Thread has a lock inside it,
+# `namer` is the naming thread and its holder - a Thread has a lock inside it,
 # and handing one to the JSON encoder fails the whole response. `trace` is the
 # open recorder, and holds a lock for the same reason.
 _PRIVATE_RUN_KEYS = {"events", "namer", "trace"}
@@ -1843,7 +1843,7 @@ def save_to_gallery(project_id: str, body: SaveCreation):
 
 
 # --------------------------------------------------------------------------
-# The conversation — one record, on disk, read by every window
+# The conversation - one record, on disk, read by every window
 # --------------------------------------------------------------------------
 
 @app.get("/api/projects/{project_id}/messages")
@@ -1859,7 +1859,7 @@ def put_messages(project_id: str, body: Messages):
 
     Only for carrying a conversation over from the browser storage this used
     to live in, once, the first time a project is opened after the upgrade.
-    Nothing else writes this way — two windows doing so is exactly the race
+    Nothing else writes this way - two windows doing so is exactly the race
     that lost people their conversations in the first place.
     """
     model_path(project_id)
@@ -1868,7 +1868,7 @@ def put_messages(project_id: str, body: Messages):
 
 
 # --------------------------------------------------------------------------
-# Traces — what the agent did, kept after the run that did it
+# Traces - what the agent did, kept after the run that did it
 # --------------------------------------------------------------------------
 
 @app.get("/api/projects/{project_id}/traces")
@@ -1884,7 +1884,7 @@ def project_traces(project_id: str):
 def trace_image(project_id: str, name: str):
     """One picture a run rendered or was shown, as it was at that moment.
 
-    Content-addressed and never rewritten, so it can be cached hard — that is
+    Content-addressed and never rewritten, so it can be cached hard - that is
     the point of keeping a copy rather than pointing at out/renders, where the
     next build overwrites the file this trace is talking about.
     """
@@ -1900,7 +1900,7 @@ def trace_image(project_id: str, name: str):
 def project_trace(project_id: str, run_id: str):
     """One run as a graph: nodes, edges, and what went into and out of each.
 
-    Readable while the run is still going — the events are appended to disk as
+    Readable while the run is still going - the events are appended to disk as
     they happen, so polling this gives a graph that grows.
     """
     model_path(project_id)
@@ -1941,7 +1941,7 @@ _library = ensure_library_root()
 # served directly. data/lego_pieces is a *merged* library: parts, primitives and
 # the s/, 48/ and 8/ subfolders all sit at the top level, with no parts/ or p/
 # split. LDrawLoader assumes the official split layout and probes for a subfile
-# in a fixed order — for "s\3003s01.dat" it rewrites the name to
+# in a fixed order - for "s\3003s01.dat" it rewrites the name to
 # "parts/s/3003s01.dat" and then asks for
 #
 #   /ldraw/parts/parts/s/3003s01.dat   /ldraw/p/parts/s/3003s01.dat

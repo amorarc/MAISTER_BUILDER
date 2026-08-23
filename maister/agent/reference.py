@@ -1,6 +1,6 @@
 """Reference images: the picture the user wants the model to look like.
 
-A text request says what to build. A picture says what it should *be* — the
+A text request says what to build. A picture says what it should *be* - the
 proportions, the colour scheme, the arrangement of the parts, all the things a
 sentence leaves out and a builder would otherwise invent. So a reference image
 is not decoration on the request: it is the specification, and it outranks the
@@ -8,7 +8,7 @@ builder's own taste wherever the two disagree.
 
 Two things happen with one:
 
-* It is **described**, once, in detail — by a vision model, since the builder
+* It is **described**, once, in detail - by a vision model, since the builder
   cannot see it. That description travels with the request from then on.
 * It is **compared** against the renders of what was actually built, which is
   the only check that can tell whether the model resembles the thing that was
@@ -16,7 +16,7 @@ Two things happen with one:
   wanted; only the comparison says whether one became the other.
 
 Images live with the project rather than with the run. A reference given once
-is still the reference three requests later — "make it taller" means taller and
+is still the reference three requests later - "make it taller" means taller and
 *still like the picture*.
 
 There can be several, up to ``MAX_IMAGES``, and **all of them are the
@@ -70,7 +70,7 @@ MAX_EDGE = 1600
 # The UI draws a reference as a brick moulded from the picture: each stud takes
 # the average of the pixels above it, and the lip under it the average of the
 # pixels it stands on. That is two rows of colour, and it is a property of the
-# picture — it cannot change once the file is written.
+# picture - it cannot change once the file is written.
 #
 # It is measured here, on the way in, and kept in the record. It used to be
 # measured in the browser instead, by fetching the image back and averaging it
@@ -129,7 +129,7 @@ def active(project_id, projects_dir=None):
 
     All of them, not the last one. A user who attaches four pictures has told
     you four things about what they want built, and reading only the fourth
-    throws three of them away — which is what happened before this existed.
+    throws three of them away - which is what happened before this existed.
     Capped in case an index written by an older version holds more.
     """
     return load(project_id, projects_dir)[-MAX_IMAGES:]
@@ -153,7 +153,7 @@ def paths(records, project_id=None, projects_dir=None):
 def described(records):
     """The description in force across these pictures, or None.
 
-    None when any of them has not been described, and — the case that matters —
+    None when any of them has not been described, and - the case that matters -
     when what is stored was written from a *different* set of pictures. A fifth
     photograph attached after the fact changes the specification, and a
     description of the other four is no longer it, so this asks for the reading
@@ -219,7 +219,7 @@ def edge_colours(path):
     """The two edge bands of a picture, as rows of ``[r, g, b]``.
 
     ``{"top": [...], "bottom": [...]}``, ``EDGE_SAMPLES`` columns each, or None
-    if the file cannot be read — an unmeasured chip falls back to the frame's
+    if the file cannot be read - an unmeasured chip falls back to the frame's
     grey, which is what it looked like before any of this.
 
     Sampled from the same square the chip shows. The visible image is
@@ -279,7 +279,7 @@ def add(project_id, data, content_type=None, filename=None, projects_dir=None):
     """Store an image against a project. Returns its record.
 
     Big images are downscaled on the way in. The point of the picture is its
-    composition and its colours, and neither needs twelve megapixels — but a
+    composition and its colours, and neither needs twelve megapixels - but a
     vision call is billed by them.
     """
     if not data:
@@ -288,7 +288,7 @@ def add(project_id, data, content_type=None, filename=None, projects_dir=None):
         raise ValueError(f"image too large (max {MAX_BYTES // 1_000_000} MB)")
     if len(load(project_id, projects_dir)) >= MAX_IMAGES:
         raise ValueError(f"a project takes at most {MAX_IMAGES} reference "
-                         f"images — remove one before attaching another")
+                         f"images - remove one before attaching another")
 
     suffix = SUFFIXES.get((content_type or "").lower().split(";")[0].strip())
     if suffix is None and filename:
@@ -347,7 +347,7 @@ def add(project_id, data, content_type=None, filename=None, projects_dir=None):
 
 
 def set_description(project_id, image_id, description, projects_dir=None):
-    """Remember what a picture — or a set of them — was described as.
+    """Remember what a picture - or a set of them - was described as.
 
     ``image_id`` may be one id or several. A description written from four
     pictures at once belongs to all four, and it is stored on each: any record
@@ -378,7 +378,7 @@ def add_qa(project_id, image_id, entries, projects_dir=None):
     Kept with the image rather than with the run for the same reason the
     description is: a picture does not change, so an answer about it does not
     either. Each subbuild gets a fresh agent with no memory, and every one of
-    them is building against this picture — the second should not have to spend
+    them is building against this picture - the second should not have to spend
     its one set of questions rediscovering what the first was told.
 
     ``image_id`` may be one id or several. A question is put to all the
@@ -447,7 +447,7 @@ def summarize(record):
         "height": record.get("height"),
         "described": bool(record.get("description")),
         "questions_answered": len(record.get("qa") or []),
-        # Two rows of [r, g, b] — how the chip paints its studs and its lip.
+        # Two rows of [r, g, b] - how the chip paints its studs and its lip.
         # Sent with the record precisely so the browser never has to fetch the
         # picture a second time to work them out for itself.
         "edges": record.get("edges"),

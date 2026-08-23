@@ -4,12 +4,12 @@ The collision checker reports every pair of parts whose boxes overlap. Most of
 those are not defects: LEGO connects *by* overlapping. A stud stands 4 LDU
 proud and sits that far inside the part above it, so every correctly stacked
 brick in a model overlaps the one below. That is why the raw count was only
-ever reported as a number to be ignored — and why a brick genuinely buried
+ever reported as a number to be ignored - and why a brick genuinely buried
 inside another one went unmentioned along with it.
 
 What separates the two is how deep the overlap goes. Push two parts together
-and the smallest distance that would pull them apart again — the shallowest of
-the three axes — is the depth of engagement:
+and the smallest distance that would pull them apart again - the shallowest of
+the three axes - is the depth of engagement:
 
     a plate resting on a brick     4 LDU   (the studs, and nothing more)
     a brick one stud too far east  20 LDU  (a whole stud of solid plastic)
@@ -19,8 +19,8 @@ So an overlap deeper than a stud's engagement, on every axis, is two parts
 occupying the same space. That is a defect, it is reported as one, and it comes
 with the move that would fix it.
 
-Deep engagements that are real do exist — an axle through a wheel, a bar in a
-clip, a neck in a torso — but every one of them is a part that does not fill its
+Deep engagements that are real do exist - an axle through a wheel, a bar in a
+clip, a neck in a torso - but every one of them is a part that does not fill its
 own box, and those are excluded before any of this is measured (see
 ``_solid_shapes``). What is left are plain rectangular bricks and plates, and
 for two of those, depth is the whole story: 10 LDU of shared plastic between two
@@ -33,11 +33,11 @@ Everything described here is a box, plus a list of words guessing whether the
 box resembles the part. Both halves fail on the parts a good model is made of,
 and the cost was measured rather than suspected: only 141 of 5,878 catalogue
 parts could ever be judged, and across the project models on disk **633 of 797
-overlaps deeper than a contact were never looked at** — two 2x2 slopes sharing
+overlaps deeper than a contact were never looked at** - two 2x2 slopes sharing
 a full stud, a 2x4 brick buried inside a double slope, a bracket driven through
 a brick, every one of them answered "nothing overlaps".
 
-So the decision is made by measuring the plastic instead — see ``occupancy``,
+So the decision is made by measuring the plastic instead - see ``occupancy``,
 which rasterises each part's real mesh once and counts the voxels two
 placements share. It needs no exemptions at all, because correctly assembled
 LEGO parts share no material: a stud goes *into* a tube, a bracket holds a
@@ -50,15 +50,15 @@ What survives here, and why it is not deleted:
 * ``_describe``, which turns an overlap into the move that resolves it. That is
   arithmetic on boxes and is as good as it ever was.
 * this whole reading as the **fallback**, for a caller with no library to read
-  geometry out of — see ``classify_pair``'s ``measure`` argument.
+  geometry out of - see ``classify_pair``'s ``measure`` argument.
 * **how much shared plastic is too much**, which is a policy rather than a
-  measurement and so lives here rather than in ``occupancy`` — see
+  measurement and so lives here rather than in ``occupancy`` - see
   ``SHARED_FRACTION``, which is what makes the check as sensitive on a slope
   or a 1x1 as it always was on a 2x4.
 
 There used to be one. A pair also had to share 18% of the smaller part's volume,
 and that hid a whole class of real defect, because the fraction is not a
-property of the overlap — it is a property of how *long* the other part happens
+property of the overlap - it is a property of how *long* the other part happens
 to be. A tank's track plate laid a stud too far inboard shares its full length
 with the hull course beside it, 10 LDU deep along the seam, and comes to 11% of
 a 2x12 plate: invisible. The same seam against a 2x2 brick would have been 60%
@@ -66,7 +66,7 @@ and reported at once. Two placements, identically wrong, and the checker's
 answer depended on which was the bigger piece. Measured across seventeen
 official sets, dropping the test changed nothing in fifteen of them and found
 sixteen more full-stud interpenetrations in one already known to be badly
-modelled — so what it was holding back was not false alarms.
+modelled - so what it was holding back was not false alarms.
 """
 
 import math
@@ -81,7 +81,7 @@ STUD_ENGAGEMENT = 4.0
 CONTACT_LDU = 7.0
 
 # Above this share of the smaller part's volume, a part is not overlapping its
-# neighbour so much as inside it. Only ever used to word the report — never to
+# neighbour so much as inside it. Only ever used to word the report - never to
 # decide whether there is a defect, which is what depth is for.
 BURIED_FRACTION = 0.75
 
@@ -109,17 +109,17 @@ PLATE = 8.0
 # because 1,200 is the right number for two bricks and far too big for these.
 #
 # What separates them is not the volume but the *share*: how much of the
-# smaller part's own plastic is inside the other one. On the same cases —
+# smaller part's own plastic is inside the other one. On the same cases -
 #
 #     correct builds        at most  2.2% of the smaller part
 #     the three defects     at least 12.5%
 #
-# — which is a 5.7x band where the absolute reading has 1.3x. So a pair is also
+# - which is a 5.7x band where the absolute reading has 1.3x. So a pair is also
 # a defect when it shares more than SHARED_FRACTION of the smaller part.
 #
 # The share on its own is not enough, and the case that proves it is a
 # *correct* one: a 1x1 plate carried on a bracket's upstand shares 435 cubic
-# LDU with the bracket, which is 19.7% of the plate — a bigger share than any
+# LDU with the bracket, which is 19.7% of the plate - a bigger share than any
 # of the three defects above. Nothing is wrong with it. The stud of the upstand
 # sits inside the plate's tube, and at 1 LDU voxels with one voxel of erosion
 # that interface leaves a skin behind; on a part as small as a 1x1 plate the
@@ -132,21 +132,21 @@ PLATE = 8.0
 #   the corpus's legitimate small-part pairs (16 and 48 cubic LDU at 27% and
 #   11%) by an order of magnitude.
 # * **Both parts must seat on studs.** Almost every remaining false positive was
-#   a Technic pin, axle, gear or bar — parts that thread *through* what they
+#   a Technic pin, axle, gear or bar - parts that thread *through* what they
 #   connect to, whose fit is drawn as an interference and which are small
 #   enough that the skin is a large share. They keep the absolute rule alone,
 #   which is what `catalog.seats_on_studs` is already used for in `_shapes`.
 #
 # What the floor costs, and it is a real cost: the cheese slope at 289 cubic
 # LDU stays missed. It sits below every value a correct connection can also
-# reach, so no threshold on these two numbers separates it — see the KNOWN GAP
+# reach, so no threshold on these two numbers separates it - see the KNOWN GAP
 # in run_agent.py's checks, where it is recorded rather than quietly dropped.
 # Catching it needs a measurement that tells a connection interface from an
 # interpenetration, which the voxel count does not.
 #
 # Cost of the rule over 150 official sets, which are correct by construction:
 # 9 reports before, 11 after. Both additions are the same pair in one 1962
-# model hand-converted to LDraw — a 2x1 slope sharing 1,049 cubic LDU with a
+# model hand-converted to LDraw - a 2x1 slope sharing 1,049 cubic LDU with a
 # 1x4 plate, which is more likely a fault in that file than a fault in this.
 #
 # It only ever *adds* reports: the allowance is capped at SHARED_LDU3, so a
@@ -159,7 +159,7 @@ FRACTION_MIN_LDU3 = 600.0
 #
 # Both rules above are volumes, and a volume is the wrong shape for the thing
 # they are trying to exclude. What a correct pair shares is the quantisation
-# skin along the face where the two parts meet — and a skin is a *surface*.
+# skin along the face where the two parts meet - and a skin is a *surface*.
 # occupancy.py says so in as many words: "that skin scales with the area they
 # touch". Compared against a constant, the same skin therefore reads as
 # harmless on a small contact and alarming on a big one, and a real
@@ -175,12 +175,12 @@ FRACTION_MIN_LDU3 = 600.0
 #     two cheese slopes                       572 ldu3 /  600 allowed   15.6 LDU deep
 #
 # Twenty LDU is a whole stud. Every one of those is two parts a full stud
-# inside each other, and every one came back "nothing overlaps" — because the
+# inside each other, and every one came back "nothing overlaps" - because the
 # parts are small enough that a full stud of interpenetration still does not
 # reach an allowance sized for two 2x4 bricks.
 #
 # So the shared volume is also divided by the area of the face the two parts
-# present to each other — the two overlap axes that are not the shallowest —
+# present to each other - the two overlap axes that are not the shallowest -
 # giving the MEAN THICKNESS of the shared plastic in LDU. A skin is thin by
 # definition however wide it is; an interpenetration is thick.
 #
@@ -199,16 +199,16 @@ FRACTION_MIN_LDU3 = 600.0
 # 0.45-0.60 is a plateau at four, so the value sits in the middle of it rather
 # than on either edge. The four are a 1x1 round plate inside a ladder plate, a
 # headlight brick inside a wheel-clip plate and a cheese slope inside a grille
-# tile, twice — near-misses in hand-converted files of the same kind the corpus
+# tile, twice - near-misses in hand-converted files of the same kind the corpus
 # was already known to contain, rather than a class of correct build this
 # refuses.
 #
 # Two gates keep it there, and both were measured rather than assumed:
 #
 # * **Both parts must seat on studs.** Everything this rule would otherwise
-#   have added is a part that threads *through* what it connects to — a Technic
+#   have added is a part that threads *through* what it connects to - a Technic
 #   pin, a gear on an axle, a tyre round a rim, a bar through a minifigure's
-#   head — where an interference fit is how the part is drawn. Without this
+#   head - where an interference fit is how the part is drawn. Without this
 #   gate the same threshold adds 14 rather than 4.
 # * **Both parts must be real catalogue entries.** A "~Moved to" redirect or an
 #   "=" alias carries the geometry of nothing, and seven of the worst pairs in
@@ -222,7 +222,7 @@ SHARED_SKIN_LDU = 0.5
 # the one case this project has pinned as a must-pass.
 #
 # A 1x1 plate carried on a bracket's upstand shares 435 cubic LDU across a
-# contact face of only 240, which is a skin 1.81 LDU thick — thicker than any
+# contact face of only 240, which is a skin 1.81 LDU thick - thicker than any
 # of the real defects above, all of which are between 0.29 and 1.43. The reason
 # is the one already written down at FRACTION_MIN_LDU3: the upstand's stud sits
 # inside the plate's tube, and on a part as small as a 1x1 plate the voxel skin
@@ -235,8 +235,8 @@ SHARED_SKIN_LDU = 0.5
 #     the bracket carrying a plate, correct        435 ldu3
 #     the smallest of the eight real defects       562 ldu3
 #
-# so 500 sits between them. It is a narrow band — 1.29x, where the rest of this
-# file works with bands of five and nine — and it is narrow because both
+# so 500 sits between them. It is a narrow band - 1.29x, where the rest of this
+# file works with bands of five and nine - and it is narrow because both
 # quantities are near the resolution limit of a 1 LDU voxel grid. It is set
 # here rather than hidden inside the skin number so that the tightness is
 # visible, and `run_agent`'s checks pin both sides of it.
@@ -245,7 +245,7 @@ SHARED_SKIN_MIN_LDU3 = 500.0
 
 # A box tells you nothing about what is inside it. A tyre's box contains the
 # whole wheel, a helmet's contains the head, a window frame's contains its
-# pane — and in every one of those the parts are correctly assembled and share
+# pane - and in every one of those the parts are correctly assembled and share
 # no plastic at all. Real sets are full of them, so a check that trusts boxes
 # alone reports hundreds of defects in models that are known to be right.
 #
@@ -253,7 +253,7 @@ SHARED_SKIN_MIN_LDU3 = 500.0
 # solid, stud-topped, its bounding box its actual shape. Those are what the
 # agent builds with, and where it buries one part inside another. So two parts
 # are only ever judged against each other when the catalogue says both are
-# that shape — everything else is left to the connectivity checker.
+# that shape - everything else is left to the connectivity checker.
 _SOLID_KINDS = ("brick", "plate")
 
 # Words that mean the part does not fill its own box: an L, a wedge, a curve,
@@ -267,16 +267,16 @@ _NOT_A_BOX = (
     # space its own upstand holds parts *in*, so every part it is doing its job
     # on reads as buried inside it. 41682 alone was a third of every overlap
     # left in the reference corpus, against plates it was correctly carrying.
-    # Most brackets were already exempt here by accident — their boxes are not
-    # a whole number of studs, so `part_geometry` gave them no footprint — and
+    # Most brackets were already exempt here by accident - their boxes are not
+    # a whole number of studs, so `part_geometry` gave them no footprint - and
     # 41682's happens to be, which is not a distinction worth having.
     "bracket",
     # A curved shell over a wheel: the arch underneath is where the wheel goes.
     "mudguard",
     # Hollow bodies: the box is the outside of a shell, and everything stowed
     # inside it is correctly inside the box and touching none of the plastic.
-    # Between them these two words name four parts in the whole catalogue —
-    # three boat bases and one folding case — so the exemption is as narrow as
+    # Between them these two words name four parts in the whole catalogue -
+    # three boat bases and one folding case - so the exemption is as narrow as
     # the problem is.
     "boat", "container",
 )
@@ -284,11 +284,11 @@ _NOT_A_BOX = (
 # Round bricks and plates are the exception this list used to get wrong.
 #
 # "round" sat in _NOT_A_BOX above, which exempted every one of them from
-# collision checking entirely — and a round brick is not like a tyre or a
+# collision checking entirely - and a round brick is not like a tyre or a
 # window frame. It is a *solid cylinder*: it fills its box everywhere except
 # the four corners. Exempting it let a canopy of twenty 2x2 round bricks be
 # placed on a one-stud pitch, each pair sharing a full stud of plastic, and a
-# 2x4 brick be buried inside three of them — and `validate_model` answered
+# 2x4 brick be buried inside three of them - and `validate_model` answered
 # "nothing overlaps", because none of those pairs was ever looked at.
 #
 # So they are checked, as cylinders rather than as boxes: the shape is shrunk
@@ -304,7 +304,7 @@ _NOT_A_BOX = (
 #
 # Measured before it landed, the same way the volume test was measured out: 170
 # official sets chosen for being full of round parts were checked with the rule
-# and without it. One set changed — 21047 Las Vegas, three pairs — and all three
+# and without it. One set changed - 21047 Las Vegas, three pairs - and all three
 # are a 1x1 round plate sharing a level with a plate it half sits inside, which
 # is not buildable as boxes either and was invisible only because round parts
 # were exempt wholesale. Against the build that prompted this, the same rule
@@ -315,8 +315,8 @@ _INSCRIBED = 1.0 / math.sqrt(2.0)
 # Qualifiers that describe a round part's *stud or top face* and say nothing
 # about its body, which is still a full cylinder underneath.
 #
-# The " with " in _NOT_A_BOX is what catches a part carrying something — a clip,
-# a handle, an axlehole — and it also caught these, which are the commonest
+# The " with " in _NOT_A_BOX is what catches a part carrying something - a clip,
+# a handle, an axlehole - and it also caught these, which are the commonest
 # round parts there are: `3062b` "Brick 1 x 1 Round with Hollow Stud" is what
 # this agent builds every tree trunk out of, sixty at a time. A hollow stud is
 # a hollow *stud*; the brick under it is as solid as any other.
@@ -328,7 +328,7 @@ def _shapes(names):
     """What shape each of these parts is: ``{name: "box" | "cylinder" | None}``.
 
     None means the box does not describe the part and it is left to the
-    connectivity checker. "cylinder" means it does, once shrunk — see
+    connectivity checker. "cylinder" means it does, once shrunk - see
     ``_ROUND_SOLID``.
     """
     catalogue = {(row.get("part_id") or "").lower(): row
@@ -358,7 +358,7 @@ def _shapes(names):
             # A part that does not seat on studs is not a box of solid plastic
             # however its bounding box measures. A Technic axle is 12 LDU tall
             # and so reads as a "plate" here, and it is a cross-section shaft
-            # that *threads through* the holes in every beam it passes — which
+            # that *threads through* the holes in every beam it passes - which
             # is exactly the overlap this check would otherwise report. Same
             # for a pin in its hole and a bar in its clip. See
             # catalog.seats_on_studs.
@@ -419,8 +419,8 @@ def _shrink_to_cylinder(box, axis):
 def _axis_aligned(instance, tolerance=1e-3):
     """Whether the part sits square to the grid.
 
-    A rotated part's bounding box is bigger than the part — a plate turned 45
-    degrees claims a box 41% wider than itself — so the box stops describing
+    A rotated part's bounding box is bigger than the part - a plate turned 45
+    degrees claims a box 41% wider than itself - so the box stops describing
     the shape and any overlap read from it is a guess. Those are left alone.
     """
     for value in instance.matrix:
@@ -450,8 +450,8 @@ def _skin_ldu(overlap, volume):
 
     The shallowest overlap axis is how far they are into each other; the other
     two are the face they present to each other. Dividing by that area turns a
-    volume — which says as much about how big the parts are as about how wrong
-    they are — into a depth, which does not. See SHARED_SKIN_LDU.
+    volume - which says as much about how big the parts are as about how wrong
+    they are - into a depth, which does not. See SHARED_SKIN_LDU.
     """
     face = sorted(overlap)[1] * sorted(overlap)[2]
     return volume / face if face > 0 else 0.0
@@ -460,7 +460,7 @@ def _skin_ldu(overlap, volume):
 def _too_thick(inst_a, inst_b, overlap, volume):
     """Whether the shared plastic is an interpenetration rather than a skin."""
     if volume < SHARED_SKIN_MIN_LDU3:
-        return False    # below the bracket's own 435 — see the note
+        return False    # below the bracket's own 435 - see the note
     if min(overlap) <= CONTACT_LDU:
         # Outside the population this was calibrated on: only pairs deeper than
         # a legal engagement were measured, and a plate correctly on a brick is
@@ -468,7 +468,7 @@ def _too_thick(inst_a, inst_b, overlap, volume):
         return False
     names = (inst_a.src.part_name, inst_b.src.part_name)
     if any(catalog.seats_on_studs(n) is False for n in names):
-        return False    # threads through rather than sits on — see the note
+        return False    # threads through rather than sits on - see the note
     if not all(_catalogued(n) for n in names):
         return False
     return _skin_ldu(overlap, volume) > SHARED_SKIN_LDU
@@ -494,7 +494,7 @@ def _snap(depth, axis):
     Sideways the parts have to end up clear of each other. Vertically they must
     not: a part above another belongs *on* it, engaged by its studs, so the
     move that fixes a brick sunk into the one below is the one that leaves
-    exactly that engagement behind — not the one that lifts it clear into the
+    exactly that engagement behind - not the one that lifts it clear into the
     air.
     """
     if axis == "y":
@@ -520,7 +520,7 @@ def _describe(part_a, part_b, overlap, box_a, box_b):
     depth, axis = min(zip(overlap, "xyz"))
 
     # The cheapest way apart is not always the right way. Two bricks in one
-    # course overlapping half a brick escape most cheaply upwards — but lifting
+    # course overlapping half a brick escape most cheaply upwards - but lifting
     # one onto the other builds a different model, where sliding it along
     # builds the intended one. So parts on the same level are separated on the
     # level they share.
@@ -583,12 +583,12 @@ def build_scene(coll, model, library_root):
                                           cache, model=model)
         # True boxes, unshrunk. The checker's shrink factor exists to hide
         # legitimate interlock, and it hides a fifth of every part along with
-        # it — a brick can be a third of a stud inside another and go unseen.
+        # it - a brick can be a third of a stud inside another and go unseen.
         box = coll.world_aabb(inst, points or coll.GENERIC_POINTS, 1.0)
         # A round brick's box is a square and the part is a circle inside it.
         # Judged as the box it would collide with its neighbours' corners;
         # judged as the inscribed square it collides only where there really is
-        # plastic. Only for placements square to the grid — the axis of a part
+        # plastic. Only for placements square to the grid - the axis of a part
         # turned to some arbitrary angle is not one of the world's.
         if shapes.get(inst.src.part_name) == "cylinder" and _axis_aligned(inst):
             box = _shrink_to_cylinder(box, _cylinder_axis(inst))
@@ -601,12 +601,12 @@ def build_scene(coll, model, library_root):
 def classify_pair(inst_a, inst_b, box_a, box_b, overlap, solid, measure=None):
     """What two overlapping boxes are to each other.
 
-    Returns ``(kind, detail)``. ``kind`` is None when the overlap is a contact —
-    parts touching as they should — "unchecked" when nothing here can say, and
+    Returns ``(kind, detail)``. ``kind`` is None when the overlap is a contact -
+    parts touching as they should - "unchecked" when nothing here can say, and
     one of "duplicate", "buried" or "overlap" when it is two parts in one space.
 
     ``measure`` is a callable taking the two instances and returning
-    ``(shared_ldu3, allowed_ldu3)``, or None where it cannot tell — see
+    ``(shared_ldu3, allowed_ldu3)``, or None where it cannot tell - see
     ``measurer``. When it is given it decides, and every exemption below is
     bypassed: it measures the parts rather than guessing at them from their
     descriptions, so a slope, a bracket and a dish are as answerable as a 2x4
@@ -630,7 +630,7 @@ def classify_pair(inst_a, inst_b, box_a, box_b, overlap, solid, measure=None):
         detail["shared_skin_ldu"] = round(_skin_ldu(overlap, volume), 2)
         # Two readings of the same measurement, and a pair has to clear both.
         # The allowance asks how much plastic is shared; the skin asks how
-        # thickly — which is what tells a full stud of interpenetration between
+        # thickly - which is what tells a full stud of interpenetration between
         # two small parts from the quantisation edge along a wide correct
         # contact. See SHARED_SKIN_LDU for why one of them is not enough.
         if volume <= allowed and not _too_thick(inst_a, inst_b, overlap, volume):
@@ -646,7 +646,7 @@ def classify_pair(inst_a, inst_b, box_a, box_b, overlap, solid, measure=None):
     #
     # This used to be "wrong whatever its shape", and that clause was the single
     # largest source of false collisions in the reference corpus: 613 of 616.
-    # A *flexible* element — a rubber band, a rope, a hose, a chain — is not one
+    # A *flexible* element - a rubber band, a rope, a hose, a chain - is not one
     # part in LDraw. It is a generated run of dozens of copies of one primitive,
     # each a fraction of a degree round from the last and each therefore within
     # a millimetre of its neighbour's centre. Set 8001's rubber band alone is
@@ -676,7 +676,7 @@ def _allowance(inst_a, inst_b, library_root, coll, store, model):
     """How much shared plastic this particular pair is allowed.
 
     ``SHARED_LDU3`` where the fractional reading does not apply, and the
-    smaller of the two where it does — see SHARED_FRACTION above for the
+    smaller of the two where it does - see SHARED_FRACTION above for the
     reasoning and the measurements.
     """
     names = (inst_a.src.part_name, inst_b.src.part_name)
@@ -701,7 +701,7 @@ def measurer(coll, library_root, model=None, cache=None):
     """A callable measuring what two placed parts share, and what they may.
 
     Returns ``(shared_ldu3, allowed_ldu3)``, or None where at least one of the
-    pair has no geometry to measure — which is a third answer and the caller
+    pair has no geometry to measure - which is a third answer and the caller
     has to keep it that way.
 
     The allowance travels with the measurement because it is a property of the
@@ -739,7 +739,7 @@ def inspect(coll, model, library_root, max_listed=8, scene=None, measure=None):
     saves building it twice: validation wants the same world boxes to work out
     what is standing on the ground and what is hanging in the air.
 
-    ``measure`` measures shared plastic — see ``measurer``. One is made here
+    ``measure`` measures shared plastic - see ``measurer``. One is made here
     when the caller did not pass one, so that the accurate reading is what a
     plain call gets rather than something you have to know to ask for.
     """
@@ -770,7 +770,7 @@ def inspect(coll, model, library_root, max_listed=8, scene=None, measure=None):
         buried = detail.pop("fraction") >= BURIED_FRACTION
         if duplicate:
             kind, advice = "duplicate", (
-                f"{inst_a.src.part_name} is placed twice in the same spot — "
+                f"{inst_a.src.part_name} is placed twice in the same spot - "
                 f"delete the one on line {inst_b.src.line_no}")
         elif buried:
             kind, advice = "buried", (
@@ -782,7 +782,7 @@ def inspect(coll, model, library_root, max_listed=8, scene=None, measure=None):
         else:
             kind, advice = "overlap", (
                 f"these two share {detail['depth_ldu']:.0f} LDU of solid "
-                f"plastic along {detail['axis']} — move line "
+                f"plastic along {detail['axis']} - move line "
                 f"{inst_b.src.line_no} by {detail['suggested_move']['ldu']:+.0f} "
                 f"on {detail['axis']}")
 

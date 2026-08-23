@@ -7,13 +7,13 @@ import { thumbnailForSet } from "../thumbnail";
 /**
  * The shelf: 1,800 official LEGO models, browsable.
  *
- * These are the best material in the project — real designs with real
+ * These are the best material in the project - real designs with real
  * coordinates, which is what the builder learns from and grafts out of. Until
  * now the only way to see one was to ask the agent, which meant you could not
  * find anything you did not already know the name of.
  *
  * Every card is a live render of the set's own LDraw source, drawn by the same
- * off-screen renderer that draws the part swatches (see thumbnail.js) — so a
+ * off-screen renderer that draws the part swatches (see thumbnail.js) - so a
  * card is the model, not a photograph of the box. They are queued one at a
  * time and cached by set number, because the corpus never changes.
  */
@@ -157,7 +157,7 @@ function SetSheet({ number, onClose, onStart }) {
             </div>
             <p className="part-company-note">
               A copy opens as a new project. The set on the shelf is never
-              changed — take it apart, recolour it, build onto it.
+              changed - take it apart, recolour it, build onto it.
             </p>
           </div>
 
@@ -176,8 +176,8 @@ function SetSheet({ number, onClose, onStart }) {
                   ))}
                 </ul>
                 <p className="part-company-note">
-                  These are the assemblies the agent can graft from — a wing, a
-                  cab, a head — with <code>copy_from_set</code>.
+                  These are the assemblies the agent can graft from - a wing, a
+                  cab, a head - with <code>copy_from_set</code>.
                 </p>
               </>
             )}
@@ -271,7 +271,7 @@ export default function SetsGallery({ onOpenProject }) {
           <h2 className="gallery-title">The set shelf</h2>
           <p className="gallery-sub">
             {page.total.toLocaleString()} official {plural(page.total, "model")} in
-            LDraw — real designs, real coordinates. Open one to start a project
+            LDraw - real designs, real coordinates. Open one to start a project
             from it, or leave them here for the builder to graft from.
           </p>
         </div>

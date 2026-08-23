@@ -7,7 +7,7 @@ number a language model typed out from a sentence, and the sentence came from
     "placements": "one plate 6 x 12 at x = 0, z = 0"
 
 That is prose. Turning it into ``1 2 40 -216 0 1 0 0 0 1 0 0 0 1 3941.dat``,
-five times, with the spacing right, is arithmetic — and it is where the builds
+five times, with the spacing right, is arithmetic - and it is where the builds
 actually break. The tree that prompted this has five 2x2 round bricks in a row
 at x = 40, 60, 80, 100, 120. A 2x2 brick is 40 LDU across. At a 20 LDU pitch
 every pair shares a full stud of plastic, and the model is unbuildable.
@@ -31,8 +31,8 @@ kernel" pattern, in the only form that means anything for LEGO. There is no
 sketch-and-extrude here and there never will be: a LEGO model is not swept
 geometry, it is a bill of real parts on a lattice, and the catalogue of 5,879
 elements *is* the primitive set. The op vocabulary below is therefore the one
-the domain actually has — place, repeat along a line, repeat over a grid,
-repeat upward — rather than one borrowed from mechanical CAD.
+the domain actually has - place, repeat along a line, repeat over a grid,
+repeat upward - rather than one borrowed from mechanical CAD.
 
 What does carry over exactly:
 
@@ -48,7 +48,7 @@ What does carry over exactly:
 
 Ops lay parts down in the regular arrangements that make up most of a build.
 Moving one brick, recolouring a line, deleting a part someone changed their
-mind about — that is line surgery and ``edit_model`` remains the tool for it.
+mind about - that is line surgery and ``edit_model`` remains the tool for it.
 A build normally uses both.
 """
 
@@ -73,7 +73,7 @@ MAX_TOTAL = 2000
 LEAF_OPS = ("place", "row", "grid", "stack", "ring", "mirror", "wall", "box",
             "fill")
 # Ops that place nothing themselves and instead say what happens to the ops
-# inside them. Expanded away before anything is compiled — see `_expand`.
+# inside them. Expanded away before anything is compiled - see `_expand`.
 GROUP_OPS = ("repeat", "reflect", "define", "call")
 
 OPS = LEAF_OPS + GROUP_OPS
@@ -92,20 +92,20 @@ MAX_GROUP_DEPTH = 6
 # The four ops above were the ones the domain obviously has. These two are the
 # ones it turned out to need, and both were found the same way: by reading what
 # the builder actually wrote. Across 43 models, two thirds of every op was
-# `place` — this module being used as a typewriter — and inside those hand-laid
+# `place` - this module being used as a typewriter - and inside those hand-laid
 # runs the same two shapes kept appearing.
 #
 # **A ring.** Three groups of four parts, each at a different right angle,
 # arranged round a centre: the slopes that finish a tower roof. Two of those
 # three groups are interpenetration defects, sitting a full stud inside each
-# other. That is the canopy bug again in a different costume — the spacing was
-# typed rather than derived — and it is not expressible in `row` or `grid`,
+# other. That is the canopy bug again in a different costume - the spacing was
+# typed rather than derived - and it is not expressible in `row` or `grid`,
 # because what varies round a ring is the rotation as well as the position.
 #
 # **A mirror.** Thirty hand-placed symmetric pairs. The acceptance requirements
 # ask for symmetry by name and call a detail landing a stud off on one side
 # "the difference between a model that reads as finished and one that reads as
-# a first draft" — and there was no op that produced one. Mirroring by hand is
+# a first draft" - and there was no op that produced one. Mirroring by hand is
 # exactly where that error comes from.
 #
 # Neither op mirrors the *geometry*. A negative determinant is a part that
@@ -116,14 +116,14 @@ MAX_GROUP_DEPTH = 6
 # Which way a ring's first part sits from the centre, as a unit vector in
 # (x, z). -Z is the direction an unturned part looks along, so index 0 is at
 # the front and the rest go round from there. What matters is not the handedness
-# but that each part is turned by the same angle its position is — which is
+# but that each part is turned by the same angle its position is - which is
 # what makes every one of them face outward.
 _RING_START = (0.0, -1.0)
 
 # Rotation matrices, row-major, by (axis, degrees). Only right angles: an
 # arbitrary angle takes a part off the lattice, which is the one thing every
 # other check in this project exists to prevent. These are the same matrices
-# the reference corpus uses — see build_technique_notes.py, which counts them.
+# the reference corpus uses - see build_technique_notes.py, which counts them.
 _ROTATIONS = {
     ("x", 0): (1, 0, 0, 0, 1, 0, 0, 0, 1),
     ("x", 90): (1, 0, 0, 0, 0, -1, 0, 1, 0),
@@ -146,13 +146,13 @@ _ROTATIONS = {
 # The eight ops above each place one part n times, and between them they cover
 # a row, a grid, a stack, a ring, a pair and a course. What they cannot do is
 # say "and again, four bricks higher", or "and the same thing on the other
-# side", or "that window, six times" — because there is no way to talk about a
+# side", or "that window, six times" - because there is no way to talk about a
 # *group* of ops at all.
 #
 # Measured across the 1,938 ops on disk, that gap is where the whole tool
 # leaks: 81.6% of every op written is `place`. Not because the builder wants
-# to type coordinates, but because the thing it is building — four identical
-# courses of wall, a pair of wings, a row of windows — is a group, and the
+# to type coordinates, but because the thing it is building - four identical
+# courses of wall, a pair of wings, a row of windows - is a group, and the
 # vocabulary had no word for one. `mirror` was called once in 1,938 ops for
 # exactly this reason: mirroring a single part is rarely what anybody means,
 # and mirroring an assembly is what symmetry actually is.
@@ -180,7 +180,7 @@ _ROTATIONS = {
 #
 # The assumption underneath is the one `mirror` has always made: a part with a
 # facing direction is symmetric about its own local x = 0. That is true of
-# slopes, wedges, arches, tiles and brackets — the parts anyone reflects. It is
+# slopes, wedges, arches, tiles and brackets - the parts anyone reflects. It is
 # not true of a handful of deliberately handed parts, which is why the reflected
 # copy is a copy of the same part number rather than its left-handed twin.
 
@@ -268,7 +268,7 @@ def _geometry(part):
     row = catalog.get_part(name)
     if row is None:
         raise BuildError(
-            f"`{name}` is not in the parts catalogue, so it does not exist — "
+            f"`{name}` is not in the parts catalogue, so it does not exist - "
             f"search_parts for the shape you meant and use the part_id it "
             f"returns")
 
@@ -282,7 +282,7 @@ def _geometry(part):
     if not geometry.get("bbox"):
         raise BuildError(
             f"`{name}` has no measured geometry in the catalogue, so its "
-            f"spacing cannot be worked out — place it with edit_model instead")
+            f"spacing cannot be worked out - place it with edit_model instead")
     return row, geometry
 
 
@@ -315,7 +315,7 @@ def _extents(geometry, matrix):
 
     Rotations here are all right angles, so this permutes the bounding box
     rather than approximating it. Snapped to the lattice because a bounding box
-    runs a few tenths wide — a curved slope overhangs its own studs — and an
+    runs a few tenths wide - a curved slope overhangs its own studs - and an
     unsnapped pitch would put every part after the first slightly off the grid.
     """
     box = geometry["bbox"]
@@ -341,7 +341,7 @@ def _extents(geometry, matrix):
 def _place_height(geometry, axis, degrees):
     """How far up the next part in a stack goes, in LDU.
 
-    Upright, that is the catalogue's stacking height — 24 for a brick, 8 for a
+    Upright, that is the catalogue's stacking height - 24 for a brick, 8 for a
     plate, which is the figure the whole project counts in. On its side it is
     the part's rotated height instead, since the thing being stacked is no
     longer the part's own top face.
@@ -376,7 +376,7 @@ def _colour(op):
     colour = op.get("colour", op.get("color"))
     if colour is None:
         raise BuildError(
-            "every op needs a `colour` — an LDraw colour code. 16 means "
+            "every op needs a `colour` - an LDraw colour code. 16 means "
             "'inherit', which on a part resolves to whatever the viewer "
             "defaults to and is why models come out looking uncoloured.")
     try:
@@ -402,7 +402,7 @@ def _count(op, key="count"):
 def _pitch(op, extents, index, geometry):
     """Centre-to-centre spacing along an axis, in LDU.
 
-    Derived from the part, never from the op — which is the entire point of
+    Derived from the part, never from the op - which is the entire point of
     this module. ``gap_studs`` opens a deliberate gap; ``pitch_ldu`` overrides
     outright and is checked, because an override smaller than the part is the
     exact mistake this exists to prevent.
@@ -448,7 +448,7 @@ def _positions(op, extents, geometry):
         axis = str(op.get("axis", "x")).lower()
         if axis not in ("x", "z"):
             raise BuildError(
-                f"`row.axis` must be x or z, not {axis!r} — a row going up is "
+                f"`row.axis` must be x or z, not {axis!r} - a row going up is "
                 f"a `stack`")
         index = 0 if axis == "x" else 2
         pitch = _pitch(op, extents, index, geometry)
@@ -487,14 +487,14 @@ def _positions(op, extents, geometry):
         # answer with positions alone. `_turned_positions` produces the pairs.
         return [point for point, _ in _turned_positions(op, extents, geometry)]
 
-    raise BuildError(f"unknown op `{kind}` — the ops are {', '.join(OPS)}")
+    raise BuildError(f"unknown op `{kind}` - the ops are {', '.join(OPS)}")
 
 
 def _ring_radius(op, extents):
     """Centre-to-part distance for a ring, in LDU.
 
     Defaults to the part's own depth, which puts four parts edge to edge around
-    a square — the arrangement that finishes a roof. Snapped to the lattice,
+    a square - the arrangement that finishes a roof. Snapped to the lattice,
     because a radius off the grid takes every part in the ring off it.
     """
     given = op.get("radius_ldu")
@@ -523,7 +523,7 @@ def _mirror_turn(degrees, about):
     """The right-angle turn that reads as the mirror image of ``degrees``.
 
     A true reflection has a negative determinant, which is a part that was
-    never moulded — so the far copy is *turned* instead. About the x = 0 plane
+    never moulded - so the far copy is *turned* instead. About the x = 0 plane
     a turn of t reads as -t; about z = 0 it reads as 180 - t. Both keep the
     part on the lattice and both keep the determinant positive.
     """
@@ -541,13 +541,13 @@ def _turned_positions(op, extents, geometry):
         # 2 and 4 are the whole list, because 360/count has to be a right
         # angle: a ring of three is 120 degrees apart, which takes every part
         # off the stud grid. It is not an arbitrary restriction, it is the
-        # lattice — and 3 divides 360 evenly, so the test has to be the angle
+        # lattice - and 3 divides 360 evenly, so the test has to be the angle
         # rather than the division.
         if count not in (2, 4):
             raise BuildError(
                 f"a ring of {count} puts {360 / count:g} degrees between "
                 f"parts, which is not a right angle and would take them off "
-                f"the stud grid — a ring is 2 or 4 parts. For anything else, "
+                f"the stud grid - a ring is 2 or 4 parts. For anything else, "
                 f"place them individually with `place`.")
         radius = _ring_radius(op, extents)
         out = []
@@ -566,8 +566,8 @@ def _turned_positions(op, extents, geometry):
     about = str(op.get("about", "x")).lower()
     if about not in ("x", "z"):
         raise BuildError(
-            f"`mirror.about` must be x or z — the plane the pair is symmetric "
-            f"about — not {about!r}")
+            f"`mirror.about` must be x or z - the plane the pair is symmetric "
+            f"about - not {about!r}")
     try:
         plane = float(op.get("plane", 0.0))
     except (TypeError, ValueError):
@@ -579,7 +579,7 @@ def _turned_positions(op, extents, geometry):
     if abs(far[index] - origin[index]) < 0.01:
         raise BuildError(
             f"this part already sits on the {about} = {plane:g} plane, so its "
-            f"mirror image is itself — use `place` for a part on the centre "
+            f"mirror image is itself - use `place` for a part on the centre "
             f"line")
     return [(tuple(origin), base % 360),
             (tuple(far), _mirror_turn(base, about))]
@@ -593,8 +593,8 @@ def _turned_positions(op, extents, geometry):
 # they are the only ops here that choose their own parts.
 #
 # The failure they answer is the one every other check in this project reports
-# after the fact. A builder asked for a wall reaches for the brick it knows —
-# 3001, the 2x4 — and lays it in rows: 3003 has been 26% of every part this
+# after the fact. A builder asked for a wall reaches for the brick it knows -
+# 3001, the 2x4 - and lays it in rows: 3003 has been 26% of every part this
 # agent places, and style.py flags one model in eight for being built out of a
 # single size of part. Each of those rows is also a straight vertical joint
 # running the full height of the wall, which is the one thing a real bricklayer
@@ -604,7 +604,7 @@ def _turned_positions(op, extents, geometry):
 # Both faults have the same cause and it is not ignorance. The builder knows
 # what a bonded wall is. It is that laying one by hand means choosing a
 # different brick for every course and offsetting each one by hand, which is
-# forty numbers and thirty-nine chances to be a stud out — so it lays 2x4s in
+# forty numbers and thirty-nine chances to be a stud out - so it lays 2x4s in
 # rows instead, and that is a rational response to the cost.
 #
 # So the cost goes away. `wall` takes a run and a height:
@@ -614,19 +614,19 @@ def _turned_positions(op, extents, geometry):
 #
 # and lays three bonded courses: longest brick that fits, seams offset course
 # to course, no vertical joint anywhere in the wall. **The lengths are not an
-# input and neither are the offsets** — same rule as the spacing in `row`, for
+# input and neither are the offsets** - same rule as the spacing in `row`, for
 # the same reason. There is nowhere to type the wrong number.
 #
 # It also breaks the monotony for free, which is the part worth noticing. A
 # bonded 12-stud course is 1x8 + 1x4; the course above it is 1x2 + 1x8 + 1x2.
 # Three shapes rather than one, and ten parts rather than the twelve 2x4s the
-# same wall costs laid in rows — without anybody having decided to vary
+# same wall costs laid in rows - without anybody having decided to vary
 # anything. That is the distinction 20_pieces.md draws between variety earned
 # and variety pursued: the shapes differ because the bond needed them to.
 #
 # It does *not* fix the size mix on its own, and it should not be read as
 # doing so. A wall is structure and comes out structural and medium with no
-# detail in it at all, which is correct — detail is what goes on the wall, and
+# detail in it at all, which is correct - detail is what goes on the wall, and
 # putting it there is a separate act. See style.SIZE_CLASS_SHARE.
 #
 # `box` is the same thing closed into a rectangle, which is the other half of
@@ -636,7 +636,7 @@ def _turned_positions(op, extents, geometry):
 # Brick ladders, longest first. Hardcoded rather than searched: these are the
 # parts 20_pieces.md already tells the builder it knows without a lookup, and a
 # wall whose parts depend on how a search ranked that day is not reproducible.
-# Verified against the catalogue — see _ladder, which refuses rather than
+# Verified against the catalogue - see _ladder, which refuses rather than
 # guessing if one is ever retired.
 LADDERS = {
     ("brick", 1): ((8, "3008"), (6, "3009"), (4, "3010"),
@@ -648,7 +648,7 @@ LADDERS = {
     ("plate", 2): ((8, "3034"), (6, "3795"), (4, "3020"),
                    (3, "3021"), (2, "3022")),
 }
-# Course rise, in LDU. A brick is 24 and a plate 8 — the two numbers the whole
+# Course rise, in LDU. A brick is 24 and a plate 8 - the two numbers the whole
 # project counts in.
 COURSE_RISE = {"brick": 24.0, "plate": 8.0}
 # Leads tried when staggering a course, in order. The first that puts no seam
@@ -664,21 +664,21 @@ def _ladder(kind, thickness):
             f"`kind` must be brick or plate, not {kind!r}")
     if thickness not in (1, 2):
         raise BuildError(
-            f"`thickness_studs` must be 1 or 2, not {thickness} — a wall "
+            f"`thickness_studs` must be 1 or 2, not {thickness} - a wall "
             f"thicker than two studs is two walls side by side")
     rungs = LADDERS[(kind, thickness)]
     for _, part_id in rungs:
         if catalog.get_part(part_id) is None:
             raise BuildError(
                 f"`{part_id}` is not in the parts catalogue, so the {kind} "
-                f"ladder cannot be used — build this wall with `row` instead")
+                f"ladder cannot be used - build this wall with `row` instead")
     return rungs
 
 
 def _fill(length, lead, sizes):
     """Partition a run of ``length`` studs, opening with a stub of ``lead``.
 
-    Longest-first, which is what 20_pieces.md asks for — one 1x8 rather than
+    Longest-first, which is what 20_pieces.md asks for - one 1x8 rather than
     two 1x4s, because every extra joint is a seam that shows and a coordinate
     that can be wrong. The one refinement is that a size which would strand a
     single stud is passed over: a 9-stud run is 6 + 3, never 8 + 1.
@@ -747,7 +747,7 @@ def _bond(length, courses, sizes, forbid=()):
 def _bond_wall(spans, sizes, forbid=()):
     """Bond one wall over its own courses, in absolute stud positions.
 
-    ``spans`` is ``[(offset, length)]``, one per course — a box wall is the
+    ``spans`` is ``[(offset, length)]``, one per course - a box wall is the
     full side on the courses where it runs corner to corner and the inset
     stretch on the courses where the other pair does, so its offset and its
     length both change course to course.
@@ -757,7 +757,7 @@ def _bond_wall(spans, sizes, forbid=()):
     at stud 4 and the 5-stud course above it starting at stud 1 and breaking
     after 3 both break at stud 4. The wall is then two stacks side by side that
     happen to touch, and the box falls into four pieces with nothing overlapping
-    and nothing off the grid — which is exactly the fault that is invisible in
+    and nothing off the grid - which is exactly the fault that is invisible in
     a render.
     """
     forbid = set(forbid)
@@ -788,7 +788,7 @@ def _course_placements(run, start, along, y, thickness, rungs):
     ``start`` is the (x, z) of the first *stud* of the course; ``along`` is the
     direction it runs. A part's origin sits at the centre of its own footprint,
     so a brick ``n`` studs long opening at that stud has its origin ``10 * (n -
-    1)`` further along — the same arithmetic ``stud_offsets`` does, and the
+    1)`` further along - the same arithmetic ``stud_offsets`` does, and the
     reason none of it is an input to the op.
     """
     by_length = {length: part_id for length, part_id in rungs}
@@ -803,7 +803,7 @@ def _course_placements(run, start, along, y, thickness, rungs):
         part_id = by_length.get(length)
         if part_id is None:
             raise BuildError(
-                f"no {length}-stud part in the ladder — _fill returned a "
+                f"no {length}-stud part in the ladder - _fill returned a "
                 f"length it was not given, which is a bug")
         long_offset = 10.0 * (length - 1)
         if along == "x":
@@ -821,7 +821,7 @@ def _wall_placements(op):
     axis = str(op.get("axis", "x")).lower()
     if axis not in ("x", "z"):
         raise BuildError(
-            f"`wall.axis` must be x or z — the direction the wall runs — not "
+            f"`wall.axis` must be x or z - the direction the wall runs - not "
             f"{axis!r}")
     kind = str(op.get("kind", "brick")).lower()
     try:
@@ -836,7 +836,7 @@ def _wall_placements(op):
 
     if length < 1:
         raise BuildError(
-            f"`length_studs` must be at least 1, not {length} — it is how many "
+            f"`length_studs` must be at least 1, not {length} - it is how many "
             f"studs the wall runs for")
     if courses < 1:
         raise BuildError(f"`courses` must be at least 1, not {courses}")
@@ -864,7 +864,7 @@ def _box_placements(op, ladder=None):
     """Four bonded walls, with the corners interlocked course by course.
 
     ``ladder`` is ``(rungs, thickness, rise)`` when the caller has already
-    chosen the bricks — which is what `fill` does with the parts the builder
+    chosen the bricks - which is what `fill` does with the parts the builder
     named. Left out, the ladder comes from `kind` and `thickness_studs` exactly
     as it always has.
     """
@@ -872,7 +872,7 @@ def _box_placements(op, ladder=None):
     size = op.get("size_studs") or [op.get("width_studs"), op.get("depth_studs")]
     if not isinstance(size, (list, tuple)) or len(size) != 2:
         raise BuildError(
-            f"`{op['op']}.size_studs` must be [along_x, along_z] — the outside "
+            f"`{op['op']}.size_studs` must be [along_x, along_z] - the outside "
             "footprint in studs")
     kind = str(op.get("kind", "brick")).lower()
     try:
@@ -893,7 +893,7 @@ def _box_placements(op, ladder=None):
     if width < least or depth < least:
         raise BuildError(
             f"a {width} x {depth} box with {thickness}-stud walls leaves an "
-            f"inside stretch too short to fill — the shortest {thickness}-wide "
+            f"inside stretch too short to fill - the shortest {thickness}-wide "
             f"{kind} is {min(sizes)} studs, so each side must be at least "
             f"{least}. Make it bigger, or lay a solid slab with `grid`.")
     # One course of a box is four walls that touch at the corners and are
@@ -917,7 +917,7 @@ def _box_placements(op, ladder=None):
 
     # Which pair of walls runs the full span alternates course by course, and
     # that alternation is what bonds a corner. Laid the same way every course,
-    # the four corners are four straight vertical joints — the fault `wall`
+    # the four corners are four straight vertical joints - the fault `wall`
     # exists to prevent, rotated into the corners where it is harder to see.
     #
     # Each of the four walls is bonded over its own courses, in absolute stud
@@ -959,14 +959,14 @@ def _box_placements(op, ladder=None):
 # `fill`
 #
 # `wall` and `box` bond course-work out of a ladder of bricks nobody chose, and
-# across 1,938 recorded ops they were called three times between them — `wall`
+# across 1,938 recorded ops they were called three times between them - `wall`
 # never once. The reading that fits the evidence is that taking no `part` is
 # the reason rather than an incidental: a builder that has just been handed a
 # palette and a design brief will not use the one op that ignores both.
 #
 # So `fill` is those two with the ladder handed over. It takes a region and the
-# parts to tile it with, bonds them the same way — longest first, no seam above
-# or beside another — and covers the case neither of the others does: a solid
+# parts to tile it with, bonds them the same way - longest first, no seam above
+# or beside another - and covers the case neither of the others does: a solid
 # volume. A floor, a slab, a solid mass, a hollow room, a tower, all in one op
 # with the arithmetic still nowhere near the builder.
 #
@@ -989,8 +989,8 @@ def _ladder_from_parts(parts):
         parts = [parts]
     if not isinstance(parts, (list, tuple)) or not parts:
         raise BuildError(
-            "`parts` must be a list of part ids to tile the region with — "
-            "['3001', '3004'] — or leave it out to use the standard brick "
+            "`parts` must be a list of part ids to tile the region with - "
+            "['3001', '3004'] - or leave it out to use the standard brick "
             "ladder")
 
     rungs, widths, rises, topless = [], set(), set(), []
@@ -1004,10 +1004,10 @@ def _ladder_from_parts(parts):
         if not width or not depth:
             raise BuildError(
                 f"`{part_id}` has no measured footprint, so it cannot tile a "
-                f"region — place it with `place` or `row`")
+                f"region - place it with `place` or `row`")
         # The long side runs along the fill; the short side is the course's
         # thickness. The catalogue draws every rectangular part with its long
-        # side on x, which is the orientation `_course_placements` turns from —
+        # side on x, which is the orientation `_course_placements` turns from -
         # so a part measured the other way round is one this cannot lay without
         # guessing which way it was drawn.
         width, depth = int(width), int(depth)
@@ -1025,13 +1025,13 @@ def _ladder_from_parts(parts):
     if len(widths) > 1:
         raise BuildError(
             f"the parts given are {sorted(widths)} studs wide and a course is "
-            f"one width — a {min(widths)}-wide beside a {max(widths)}-wide "
+            f"one width - a {min(widths)}-wide beside a {max(widths)}-wide "
             f"leaves a stripe of bare studs down the run. Fill in one width, "
             f"then fill the next stretch in the other.")
     if len(rises) > 1:
         raise BuildError(
             f"the parts given stack {sorted(rises)} LDU high and a course is "
-            f"one height — mixing a brick with a plate leaves a step in the "
+            f"one height - mixing a brick with a plate leaves a step in the "
             f"middle of the course. Fill the brick courses and the plate "
             f"courses separately.")
 
@@ -1039,7 +1039,7 @@ def _ladder_from_parts(parts):
     if len(set(lengths)) != len(lengths):
         raise BuildError(
             f"two of those parts are the same length ({sorted(lengths)}), so "
-            f"one of them can never be chosen — give one part per length")
+            f"one of them can never be chosen - give one part per length")
     rise = rises.pop()
     if rise <= 0:
         raise BuildError(
@@ -1055,7 +1055,7 @@ def _bond_area(length, rows, courses, sizes):
 
     `_bond` staggers a stack of courses and `_bond_wall` staggers one wall over
     its own courses. A solid fill is neither: it is a grid, and a seam in it has
-    two neighbours rather than one — the run beside it in the same course and
+    two neighbours rather than one - the run beside it in the same course and
     the run under it in the course below. A slab bonded only in one of those
     directions splits along the other, and every part of it validates.
     """
@@ -1089,7 +1089,7 @@ def _fill_placements(op):
     size = op.get("size_studs") or [op.get("width_studs"), op.get("depth_studs")]
     if not isinstance(size, (list, tuple)) or len(size) != 2:
         raise BuildError(
-            "`fill.size_studs` must be [along_x, along_z] — the region to "
+            "`fill.size_studs` must be [along_x, along_z] - the region to "
             "cover, in studs")
     try:
         width, depth = int(size[0]), int(size[1])
@@ -1105,20 +1105,20 @@ def _fill_placements(op):
     axis = str(op.get("axis", "x")).lower()
     if axis not in ("x", "z"):
         raise BuildError(
-            f"`fill.axis` must be x or z — the direction the courses run — "
+            f"`fill.axis` must be x or z - the direction the courses run - "
             f"not {axis!r}")
 
     if op.get("parts"):
         rungs, thickness, rise, topless = _ladder_from_parts(op["parts"])
         # A part with no studs on its top is a part nothing can be laid on. One
-        # course of them is a perfectly good surface — a field of tiles, a run
-        # of slopes — and two courses is a second course resting on smooth
+        # course of them is a perfectly good surface - a field of tiles, a run
+        # of slopes - and two courses is a second course resting on smooth
         # plastic, which no checker downstream can see because every part is on
         # the grid and none of them overlap.
         if topless and courses > 1:
             raise BuildError(
                 f"`{topless[0]}` has no studs on top, so nothing can be built "
-                f"on it — {courses} courses of it would be stacked on smooth "
+                f"on it - {courses} courses of it would be stacked on smooth "
                 f"plastic. Fill one course of these, or fill the courses "
                 f"underneath with bricks and lay these on the top.")
     else:
@@ -1141,7 +1141,7 @@ def _fill_placements(op):
     if across % thickness:
         raise BuildError(
             f"a {across}-stud stretch cannot be covered by {thickness}-stud-"
-            f"wide parts — it is not a whole number of them. Make the region "
+            f"wide parts - it is not a whole number of them. Make the region "
             f"{across - across % thickness} or {across + thickness - across % thickness} "
             f"studs across, or fill it with parts one stud wide.")
     if along < min(sizes):
@@ -1203,7 +1203,7 @@ def _snap_to_phase(op_origin, positions, part_id, matrix, target):
 
     A part's studs sit at a fixed offset from its origin that depends on the
     part, so two ops can both land on multiples of 20 and still be half a stud
-    apart — see lattice.py. Until this existed the compiler laid ops down in
+    apart - see lattice.py. Until this existed the compiler laid ops down in
     whatever phase the `at` implied and the clash was only discovered
     afterwards, by the write gate, which then refused the whole call.
 
@@ -1212,7 +1212,7 @@ def _snap_to_phase(op_origin, positions, part_id, matrix, target):
     10*sqrt(2), which is the same half stud on a turned part.
 
     So the phase is corrected here instead, per op, before anything is written.
-    Per op rather than per call is the point — the gate downstream could only
+    Per op rather than per call is the point - the gate downstream could only
     fix a slip that was uniform across every op in the call, and a call that
     mixed a right op with a wrong one was rejected outright.
 
@@ -1234,8 +1234,8 @@ def _snap_to_phase(op_origin, positions, part_id, matrix, target):
 class _Leaf:
     """One op that places parts, and the motion it inherited from its groups.
 
-    ``where`` names where in the source it came from — "op 3", or
-    "op 3 > repeat 2/4 > op 1" — so a fault inside a group points at the op the
+    ``where`` names where in the source it came from - "op 3", or
+    "op 3 > repeat 2/4 > op 1" - so a fault inside a group points at the op the
     builder actually wrote rather than at a position in a list nobody typed.
     """
 
@@ -1253,7 +1253,7 @@ def _group_ops(op, where):
     body = op.get("ops")
     if not isinstance(body, list) or not body:
         raise BuildError(
-            f"{where}: `{op['op']}` needs an `ops` list — the ops it applies "
+            f"{where}: `{op['op']}` needs an `ops` list - the ops it applies "
             f"to. It places nothing by itself.")
     return body
 
@@ -1263,7 +1263,7 @@ def _step_vector(op, where):
     step = op.get("step") or op.get("by") or op.get("offset")
     if not isinstance(step, (list, tuple)) or len(step) != 3:
         raise BuildError(
-            f"{where}: `repeat.step` must be [dx, dy, dz] in LDU — how far "
+            f"{where}: `repeat.step` must be [dx, dy, dz] in LDU - how far "
             f"each copy moves from the one before it")
     try:
         step = tuple(float(v) for v in step)
@@ -1272,13 +1272,13 @@ def _step_vector(op, where):
     if not any(step):
         raise BuildError(
             f"{where}: `repeat.step` is [0, 0, 0], so every copy would land on "
-            f"top of the last one. Give the direction the copies go in — "
+            f"top of the last one. Give the direction the copies go in - "
             f"[0, -24, 0] is one brick course upward.")
     for index, axis in ((0, "x"), (2, "z")):
         if step[index] % LATTICE:
             raise BuildError(
                 f"{where}: `repeat.step` moves {step[index]:g} LDU along {axis}, "
-                f"which is not a multiple of {LATTICE:g} — every copy after "
+                f"which is not a multiple of {LATTICE:g} - every copy after "
                 f"the first would land off the stud grid")
     return step
 
@@ -1288,8 +1288,8 @@ def _mirror_transform(op, where):
     about = str(op.get("about", "x")).lower()
     if about not in ("x", "z"):
         raise BuildError(
-            f"{where}: `reflect.about` must be x or z — the plane the group is "
-            f"symmetric about — not {about!r}. Reflecting about y would turn "
+            f"{where}: `reflect.about` must be x or z - the plane the group is "
+            f"symmetric about - not {about!r}. Reflecting about y would turn "
             f"the build upside down; use `rotate` on the ops for that.")
     try:
         plane = float(op.get("plane", 0.0))
@@ -1299,7 +1299,7 @@ def _mirror_transform(op, where):
     if (2 * plane) % LATTICE:
         raise BuildError(
             f"{where}: a mirror plane at {plane:g} LDU reflects the stud grid "
-            f"off itself — every part in the copy would land off the grid. "
+            f"off itself - every part in the copy would land off the grid. "
             f"Put the plane on a multiple of {LATTICE / 2:g}.")
     index = 0 if about == "x" else 2
     linear = list(_IDENTITY3)
@@ -1315,7 +1315,7 @@ def _call_transform(op, where):
     if axis != "y" and degrees:
         raise BuildError(
             f"{where}: `call` turns the whole assembly about Y, so it cannot "
-            f"be given a rotation about {axis} — that would lay the assembly "
+            f"be given a rotation about {axis} - that would lay the assembly "
             f"on its side and every part in it with it")
     transform = _Transform(matrix, tuple(_at(op)))
     if op.get("mirror"):
@@ -1333,7 +1333,7 @@ def _expand(ops, transform=IDENTITY, where="", defined=None, depth=0,
     Every group op resolves to its children carrying a motion; nothing else
     changes. The leaves that come out of here go through exactly the same
     geometry, phase snapping and grid check as an op written flat, which is the
-    property the whole tool rests on — the compiler still checks every
+    property the whole tool rests on - the compiler still checks every
     placement it writes.
     """
     if out is None:
@@ -1353,7 +1353,7 @@ def _expand(ops, transform=IDENTITY, where="", defined=None, depth=0,
         here = f"{where} > op {number}" if where else f"op {number}"
         if kind not in OPS:
             raise BuildError(
-                f"{here}: unknown op `{op.get('op')}` — the ops are "
+                f"{here}: unknown op `{op.get('op')}` - the ops are "
                 f"{', '.join(OPS)}")
 
         if kind not in GROUP_OPS:
@@ -1361,7 +1361,7 @@ def _expand(ops, transform=IDENTITY, where="", defined=None, depth=0,
                 raise BuildError(
                     f"{here}: these ops expand to more than "
                     f"{MAX_EXPANDED_OPS} operations. Check the `times` on the "
-                    f"repeats — build it in sections rather than in one call.")
+                    f"repeats - build it in sections rather than in one call.")
             note = str(op.get("note") or "").strip()
             out.append(_Leaf(op, transform, here, [note] if note else []))
             continue
@@ -1379,7 +1379,7 @@ def _expand(ops, transform=IDENTITY, where="", defined=None, depth=0,
             name = str(op.get("name") or "").strip()
             if not name:
                 raise BuildError(
-                    f"{here}: `define` needs a `name` — what to call this "
+                    f"{here}: `define` needs a `name` - what to call this "
                     f"assembly, so a `call` can ask for it")
             if name in defined:
                 raise BuildError(
@@ -1398,7 +1398,7 @@ def _expand(ops, transform=IDENTITY, where="", defined=None, depth=0,
                 raise BuildError(
                     f"{here}: nothing called `{name}` has been defined "
                     f"(defined so far: {known}). `define` it earlier in this "
-                    f"same call — definitions do not carry from one build_ops "
+                    f"same call - definitions do not carry from one build_ops "
                     f"to the next.")
             if name in expanding:
                 raise BuildError(
@@ -1418,7 +1418,7 @@ def _expand(ops, transform=IDENTITY, where="", defined=None, depth=0,
         else:                                       # reflect
             body = _group_ops(op, here)
             mirrored = _mirror_transform(op, here).then(transform)
-            # The original stays unless the caller only wants the far side —
+            # The original stays unless the caller only wants the far side -
             # "and the same on the other side" is what this op is for, and a
             # reflect that swallowed its own input would be a surprise.
             if op.get("keep", True):
@@ -1438,7 +1438,7 @@ def _expand(ops, transform=IDENTITY, where="", defined=None, depth=0,
 def compile_ops(ops, phase=None):
     """Turn a list of ops into LDraw lines. Returns ``(lines, report)``.
 
-    Raises ``BuildError`` naming the op and what is wrong with it — the ops are
+    Raises ``BuildError`` naming the op and what is wrong with it - the ops are
     a program, and a program that will not compile should say which statement
     failed rather than producing a model that is subtly wrong.
 
@@ -1462,7 +1462,7 @@ def compile_ops(ops, phase=None):
     leaves = _expand(ops)
     if not leaves:
         raise BuildError(
-            "these ops place nothing — a `define` on its own defines an "
+            "these ops place nothing - a `define` on its own defines an "
             "assembly and does not build it. Add the `call` that puts it "
             "somewhere.")
 
@@ -1487,8 +1487,8 @@ def compile_ops(ops, phase=None):
                     raise BuildError(
                         f"`{kind}` lays a ladder of bricks chosen to bond, so "
                         f"it takes no `part`."
-                        + (" Give it `parts` — the list to tile the region "
-                           "with — or leave that out for the standard brick "
+                        + (" Give it `parts` - the list to tile the region "
+                           "with - or leave that out for the standard brick "
                            "ladder." if kind == "fill" else
                            " Use `fill` with `parts` to say which bricks, or "
                            "`row` to lay one named part repeatedly."))
@@ -1528,7 +1528,7 @@ def compile_ops(ops, phase=None):
                 if axis != "y" and degrees:
                     raise BuildError(
                         f"`{kind}` turns each copy about Y, so it cannot also "
-                        f"be given a rotation about {axis} — place those parts "
+                        f"be given a rotation about {axis} - place those parts "
                         f"individually")
                 op["_degrees"] = degrees
                 turned = _turned_positions(op, extents, geometry)
@@ -1563,7 +1563,7 @@ def compile_ops(ops, phase=None):
             raise BuildError(
                 f"{number} ({kind} {geometry['part_id']}): "
                 f"x = {off_grid[0][0]:g}, z = {off_grid[0][2]:g} is not on the "
-                f"stud grid — x and z must be multiples of {LATTICE:g} LDU")
+                f"stud grid - x and z must be multiples of {LATTICE:g} LDU")
 
         placed += len(positions)
         if placed > MAX_TOTAL:
@@ -1585,7 +1585,7 @@ def compile_ops(ops, phase=None):
                 "parts_placed": len(positions),
                 "bricks_used": used,
                 "colour": colour,
-                "bonded": ("no vertical joint runs through two courses — the "
+                "bonded": ("no vertical joint runs through two courses - the "
                            "lengths and the offsets were chosen to break every "
                            "seam"),
                 **({"courses_laid": [list(run) for run in masonry]}
@@ -1595,7 +1595,7 @@ def compile_ops(ops, phase=None):
                 steps[-1]["snapped_to_lattice"] = {
                     **snapped,
                     "why": ("moved onto the stud lattice the model already "
-                            "stands on — its studs line up now."),
+                            "stands on - its studs line up now."),
                 }
             continue
 
@@ -1614,7 +1614,7 @@ def compile_ops(ops, phase=None):
             steps[-1]["snapped_to_lattice"] = {
                 **snapped,
                 "why": ("moved onto the stud lattice the model already stands "
-                        "on — its studs line up now. Take this offset into "
+                        "on - its studs line up now. Take this offset into "
                         "account for the next op rather than repeating it."),
             }
         if kind in ("row", "grid") and len(positions) > 1:

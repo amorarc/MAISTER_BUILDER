@@ -5,7 +5,7 @@ an arrangement, and the difference between treating it as three and treating it
 as one is the difference between three models that work and one pile that
 does not. So a run has four beats:
 
-1. **Split.** The petition becomes atomic subconstructions — one per
+1. **Split.** The petition becomes atomic subconstructions - one per
    free-standing object (see ``decompose``). A request for one object splits
    into one, and the rest of this is a straight line.
 2. **Build each one, alone.** Every subconstruction gets its own agent with its
@@ -19,8 +19,8 @@ does not. So a run has four beats:
    told.
 
 Every beat reports as it happens. A run that dies in beat 2 still leaves two
-finished subbuilds and a picture of each, because the alternative — nothing at
-all until everything works — is the failure mode this whole design is against.
+finished subbuilds and a picture of each, because the alternative - nothing at
+all until everything works - is the failure mode this whole design is against.
 """
 
 import json
@@ -60,18 +60,18 @@ ASSEMBLY_STEPS = DEFAULT_MAX_STEPS
 
 # Tools a subbuild has no business calling. It builds one object into one file,
 # and assembling the scene out of those files is the harness's job. (Saving to
-# the gallery used to be listed here too; there is no tool for it any more —
+# the gallery used to be listed here too; there is no tool for it any more -
 # the user presses a button.)
 SUBBUILD_EXCLUDED = frozenset(("assemble_model", "move_submodel",
                                "rotate_submodel"))
 # The assembly pass arranges finished objects. Two ways to move a whole one,
-# and — since the objects do not always come apart cleanly at the joins —
+# and - since the objects do not always come apart cleanly at the joins -
 # `edit_model` for the work that moving cannot do: taking out the two bricks
 # where one object passes through another, adding the plate that ties them
 # together, dropping a duplicate placement.
 #
 # It was withheld before, because handing it over invited the pass to go into
-# a finished tree and rearrange bricks — which is how a correct subconstruction
+# a finished tree and rearrange bricks - which is how a correct subconstruction
 # gets taken apart to fix a spacing problem. That risk is real and it is now
 # answered where it can actually be enforced rather than in the prompt: see
 # `_assembly_guard` in tools.py, which counts the part lines an edit moves and
@@ -79,8 +79,8 @@ SUBBUILD_EXCLUDED = frozenset(("assemble_model", "move_submodel",
 # rebuild a component is not.
 #
 # `assemble_model` is deliberately not in this list, though it used to be. The
-# harness has already called it by the time this agent runs — that is what
-# produced the scene it is repairing — so the only thing calling it again could
+# harness has already called it by the time this agent runs - that is what
+# produced the scene it is repairing - so the only thing calling it again could
 # do is compose the components afresh and throw the repair away. Across 41 runs
 # it was never called once, which is the agent agreeing: it was a tool that
 # could only do harm, occupying a slot in a ten-step budget.
@@ -137,21 +137,21 @@ class Orchestrator:
         # The reference pictures in force for this project, if the user
         # attached any. They are the specification, so they reach every
         # subbuild. `reference` is the first of them and carries the
-        # description and the answered questions for all of them — see
+        # description and the answered questions for all of them - see
         # reference.py, where they are written to every record.
         self.references = []
         self.reference = None
         # The petition, the design brief per object, and the snapshot of a
-        # previous stopped run — everything a stop needs to write down so the
+        # previous stopped run - everything a stop needs to write down so the
         # next run can carry on rather than start again. See resume.py.
         self.petition = None
         self.briefs = {}
         self.resumed = None
         self.already_built = set()
         # Objects whose look has already been re-decided once after coming out
-        # unrecognisable. One each, and no more — see `_replan`.
+        # unrecognisable. One each, and no more - see `_replan`.
         self._replanned = set()
-        # What was already on the workbench when this run started — read,
+        # What was already on the workbench when this run started - read,
         # measured, checked and looked at before anything is split or built.
         # See survey.py.
         self.workbench = None
@@ -175,7 +175,7 @@ class Orchestrator:
 
         Takes the event as a dict rather than being spread over ``_emit``'s
         signature: a sub-agent's event already carries its own ``type`` key,
-        and ``_emit(**event)`` would be a TypeError — swallowed by the caller's
+        and ``_emit(**event)`` would be a TypeError - swallowed by the caller's
         own try/except, so every event from every subbuild would vanish with no
         sign of why.
         """
@@ -215,7 +215,7 @@ class Orchestrator:
 
         ``history`` is the conversation so far, as text. Sub-agents are built
         fresh for each subconstruction and have no memory of their own, so
-        continuity across turns has to be handed to them — this is where it
+        continuity across turns has to be handed to them - this is where it
         comes in.
         """
         project = project or Path(project_dir).name
@@ -243,7 +243,7 @@ class Orchestrator:
 
         # Every picture attached, not the last one. They are read together and
         # the description is written to all of them, so any single record
-        # answers "what is this project's reference" — which is why the rest of
+        # answers "what is this project's reference" - which is why the rest of
         # this file can go on holding one.
         self.references = reference.active(project)
         self.reference = self.references[0] if self.references else None
@@ -260,7 +260,7 @@ class Orchestrator:
         # Before the request is split, before a brief is written, before a
         # single part is placed: look at the file. It may be empty, it may hold
         # last turn's build, it may hold an official set the user opened as a
-        # starting point — and each of those is a different job. Deciding any
+        # starting point - and each of those is a different job. Deciding any
         # of it from the request alone is deciding it blind.
         self.workbench = self._survey(main_path, project)
 
@@ -284,13 +284,13 @@ class Orchestrator:
 
         # Objects the stopped run already finished keep their files and are not
         # built again. Matched by name against the split, which is stable for
-        # the same petition — and where it is not, the worst case is that an
+        # the same petition - and where it is not, the worst case is that an
         # object is built a second time, which is what happened every time
         # before any of this existed.
         self.already_built = (resume.finished(self.resumed)
                               if self.resumed else set())
         # An object built *in place* wrote to the project's own model file, and
-        # that file always exists — so it would look finished on every resume
+        # that file always exists - so it would look finished on every resume
         # and the change would never be made. Only objects with a file of their
         # own can be recognised as already done.
         if self.already_built and self.resumed:
@@ -324,7 +324,7 @@ class Orchestrator:
 
         # Is this a change to the model that is already there, rather than a
         # new build? "Add a chimney" must come back as the house it already had
-        # with a chimney on its roof — one model. Building the chimney into a
+        # with a chimney on its roof - one model. Building the chimney into a
         # file of its own and standing it next to the house is the single most
         # wrong thing this harness could do with that request.
         modifying = planner.is_modification(petition, current_model)
@@ -370,7 +370,7 @@ class Orchestrator:
     def _survey(self, main_path, project):
         """Read the model file as it stands, before this run changes anything.
 
-        Costs nothing on an empty workbench — the common case, and the one that
+        Costs nothing on an empty workbench - the common case, and the one that
         short-circuits before any renderer is started. On a file with parts in
         it, it costs six renders and one vision call, and buys the run the one
         fact nothing else in the pipeline had: *what the thing already is*.
@@ -401,14 +401,14 @@ class Orchestrator:
         """Have the pictures read, if there are any and nobody has read them.
 
         Costs one vision call at the start of a run and saves the same call
-        being made by the first builder to need it — the description is stored
+        being made by the first builder to need it - the description is stored
         against the images, so every subbuild after this one gets it for free.
         Best effort: a picture that cannot be described must not stop the build,
         it only leaves the run working from the request alone, as it used to.
 
         One call however many pictures there are. Describing them one at a time
         would come back with one subject each, and four descriptions of four
-        photographs of one car are four cars to everything downstream — the
+        photographs of one car are four cars to everything downstream - the
         decomposer would split the run into four builds and stand them in a row.
         """
         if not self.references or reference.described(self.references):
@@ -440,7 +440,7 @@ class Orchestrator:
 
         The description and the answered questions are the same on every
         record, so the first of them is the whole specification. ``count`` is
-        the one thing it cannot carry by itself, and the builder needs it —
+        the one thing it cannot carry by itself, and the builder needs it -
         "the picture" and "the four pictures" ask for different reading.
         """
         if not self.reference:
@@ -455,7 +455,7 @@ class Orchestrator:
         This is the case that cannot be shared out, and the reason the split
         exists. When the request is an edit, or is a single object, every
         subconstruction writes to the *project's own model file* and each one
-        is handed that file as the one before it left it — that is what makes
+        is handed that file as the one before it left it - that is what makes
         "add a chimney and paint the door" two changes to one house rather than
         two houses. Run those at the same time and both builders read the same
         starting model, both write the whole file back, and the one that
@@ -509,7 +509,7 @@ class Orchestrator:
                                 whole_build=total == 1)
             except Exception as exc:
                 # _build_one already handles a builder that raises. This is the
-                # backstop for anything else — one subconstruction going down
+                # backstop for anything else - one subconstruction going down
                 # must not take the other three with it, because three objects
                 # and a gap is a result and an exception is not.
                 sub.status = "failed"
@@ -521,7 +521,7 @@ class Orchestrator:
         with ThreadPoolExecutor(max_workers=workers,
                                 thread_name_prefix="subbuild") as pool:
             # Exceptions are handled inside `build`, so the futures are only
-            # waited on — which the context manager does on the way out.
+            # waited on - which the context manager does on the way out.
             for index, sub in enumerate(subs, start=1):
                 pool.submit(build, index, sub)
 
@@ -534,11 +534,11 @@ class Orchestrator:
         so this re-derives it from the file instead of carrying it. Local, no
         API call, and it describes the model as it is now rather than as it was
         when somebody last looked at it. A clean model, a missing file or a
-        checker that will not run all come back as None — the brief says
+        checker that will not run all come back as None - the brief says
         nothing rather than something reassuring it has not verified.
         """
         # A subconstruction is given its file when the harness decides where it
-        # goes, which is after the brief can first be built — so "no path yet"
+        # goes, which is after the brief can first be built - so "no path yet"
         # is a normal state here and not a mistake to raise on.
         if not path:
             return None
@@ -565,27 +565,27 @@ class Orchestrator:
         """What the file this builder writes to holds: one object, or several.
 
         The builder is always given exactly one object to make. The question is
-        only whether the *file* holds only that — because when it does, "every
+        only whether the *file* holds only that - because when it does, "every
         part in here is joined to the rest" is a fact worth failing a build
         over, and when it does not, joining everything would be the fault.
 
         Decided by reading the file rather than from what kind of run this is,
         because the two come apart. A scene's subbuilds each own an empty
-        `parts/<name>.ldr`, and an edit inherits whatever was on the workbench —
+        `parts/<name>.ldr`, and an edit inherits whatever was on the workbench -
         but so does a *new* object built straight into a project that already
         holds an assembled scene, and keying this on "is it an edit" would then
         demand the new house be joined to the tree and the car.
 
         So: a file with more than one block in it is a scene, and a file without
         is one object. That second half is the case that matters, and it is the
-        one the orchestrator has always cared about — "add a chimney" must come
+        one the orchestrator has always cared about - "add a chimney" must come
         back as one house with a chimney on it, not a house standing beside a
         chimney.
 
         The inference is only ever made in the direction that cannot do harm.
         "blocks" reports and does not fail (see validation._disconnected), so an
-        opened official set — whose blocks are instruction steps rather than
-        objects — costs a noisy line in the report and never a rejected build.
+        opened official set - whose blocks are instruction steps rather than
+        objects - costs a noisy line in the report and never a rejected build.
         """
         try:
             text = Path(_abs(path)).read_text(encoding="utf-8", errors="replace")
@@ -600,7 +600,7 @@ class Orchestrator:
                    modifying=False, whole_build=True):
         """One agent, one object, its own conversation."""
         # Already finished before the last run was stopped. Its file is on disk
-        # and it goes into the scene as it is — rebuilding it would spend the
+        # and it goes into the scene as it is - rebuilding it would spend the
         # whole point of having stopped.
         if sub.name in getattr(self, "already_built", ()):
             self._log(f"--- [{index}/{total}] {sub.name}: kept from the "
@@ -665,7 +665,7 @@ class Orchestrator:
         """One builder, one conversation, one go at this object.
 
         Returns ``(result, state, report)``, or ``(None, None, None)`` when the
-        run died in a way that leaves nothing to report — the caller returns
+        run died in a way that leaves nothing to report - the caller returns
         without emitting, exactly as it did when this was inline.
         """
         state = RunState(subject=subject, requirements=sub.requirements,
@@ -680,7 +680,7 @@ class Orchestrator:
         state.requirements = checklist
         # The same, for the sets found for this object. The plan is the one
         # call that decides what gets built, and it used to be shown a parts
-        # list — "a car uses four tyres and two grille tiles" — which is a
+        # list - "a car uses four tyres and two grille tiles" - which is a
         # shopping list rather than a construction, and planned from it every
         # vehicle came out a box on wheels. Now it sees the geometry the
         # builder sees, and names the assembly to start from.
@@ -713,7 +713,7 @@ class Orchestrator:
                                                    design_brief, real_sets,
                                                    checklist, state.recalled))
         except Exception as exc:
-            # The builder died mid-run — the connection dropped, the provider
+            # The builder died mid-run - the connection dropped, the provider
             # gave up, something raised. What it had already written is still on
             # disk, and it is the only thing anyone has to show for the time
             # that was spent: a run that reported "not built" while leaving
@@ -753,7 +753,7 @@ class Orchestrator:
         elif in_pieces and Path(_abs(sub.path)).is_file():
             # Passing the fault checks and still a heap of clumps. Kept and
             # shown, like any other build that came out wrong, and not called
-            # finished — the only ways to reach this are a run that died and was
+            # finished - the only ways to reach this are a run that died and was
             # salvaged or one that was interrupted, and neither is the gate
             # having agreed.
             sub.status = "done"
@@ -769,7 +769,7 @@ class Orchestrator:
             #
             # Kept, but never called finished. A run that ends on the step limit
             # skips `finish` entirely, so the gate that would have refused this
-            # never ran — and "done" on a model with parts off the grid is the
+            # never ran - and "done" on a model with parts off the grid is the
             # harness telling the user something the checker just denied.
             sub.status = "done"
             off_grid = len((report.get("connectivity") or {}).get(
@@ -806,7 +806,7 @@ class Orchestrator:
 
         `LDRAW_CRITIQUE_ROUNDS` is 0 and the measurement behind it stands: over
         every trace on disk, handing a critique back to the builder that wrote
-        the model bought nothing — 0 of 4 improved, 3 repeated themselves, 1 got
+        the model bought nothing - 0 of 4 improved, 3 repeated themselves, 1 got
         worse. What that measured, though, is a critique used as a **repair
         list**, and the critiques that kept coming back were of the one kind no
         repair list can carry: *"the hull is a rectangular box, not a boat"*
@@ -815,7 +815,7 @@ class Orchestrator:
 
         So it goes to the pass that aims. The renders and what was seen in them
         go back to `brief.py`, which chooses a different silhouette, and the
-        object is built again from that — rather than the same model being
+        object is built again from that - rather than the same model being
         pushed at until the same remark comes back a third time.
 
         Gated hard, and every gate matters:
@@ -844,14 +844,14 @@ class Orchestrator:
         critique = sub.critique or {}
         if critique.get("recognisable") is not False:
             return None
-        # Nothing was built, so there is no silhouette to have got wrong —
+        # Nothing was built, so there is no silhouette to have got wrong -
         # whatever went wrong was not the brief.
         if not (report.get("parts") or sub.path in state.writes):
             return None
         # And nothing may be re-planned whose file held something before this
-        # run touched it. The second attempt starts from an empty file — that
+        # run touched it. The second attempt starts from an empty file - that
         # is what makes it an attempt rather than a second model built on top
-        # of the first — so a re-plan over a workbench that already had a model
+        # of the first - so a re-plan over a workbench that already had a model
         # on it would clear the user's work. A scene's subbuild owns a fresh
         # `parts/` file and is never in that position; a build straight into
         # the project's own model file can be, and `modifying` does not always
@@ -864,7 +864,7 @@ class Orchestrator:
 
         seen = critique.get("reads_as") or "something else"
         self._log(f"--- {sub.name} came back reading as \"{seen}\", not "
-                  f"{sub.subject} — re-planning the look rather than patching "
+                  f"{sub.subject} - re-planning the look rather than patching "
                   f"the model")
         self._emit("replanning", name=sub.name, reads_as=seen,
                    was=(design_brief or {}).get("reads_as"))
@@ -942,7 +942,7 @@ class Orchestrator:
 
         The first is held in memory and put back if the re-plan came out worse.
         A re-plan follows a build that had already failed and it must not be
-        able to turn a bad model into no model — the floor is what was there.
+        able to turn a bad model into no model - the floor is what was there.
         """
         path = Path(_abs(sub.path))
         try:
@@ -967,12 +967,12 @@ class Orchestrator:
         return self._rewind(first, sub, path, kept)
 
     def _rewind(self, first, sub, path, kept):
-        """Put the first attempt back — the file *and* what is recorded of it.
+        """Put the first attempt back - the file *and* what is recorded of it.
 
         Both halves, because `_attempt` writes its findings onto ``sub`` as it
         goes. Restoring the bytes and leaving ``sub.validation`` and
         ``sub.critique`` holding the second attempt's would describe the model
-        on disk with the report of a model that has just been thrown away —
+        on disk with the report of a model that has just been thrown away -
         which is the one failure mode worse than either attempt, since
         everything downstream believes it.
         """
@@ -1024,7 +1024,7 @@ class Orchestrator:
     def _requirements(self, sub, project, design_brief):
         """The acceptance criteria for one object, written once and kept.
 
-        Read back from disk when they are already there — a resumed run, or a
+        Read back from disk when they are already there - a resumed run, or a
         second turn on the same project, must be held to the list the first
         iteration was judged against. A checklist rewritten each time it is
         applied is not a checklist, it is a moving target, and a build could
@@ -1048,7 +1048,7 @@ class Orchestrator:
                 sub.subject,
                 requirements=sub.requirements,
                 # The brief is deliberately not passed. It is direction for the
-                # builder, not a contract with the user — a sofa was refused for
+                # builder, not a contract with the user - a sofa was refused for
                 # being red because the brief had said white and the request had
                 # said nothing. See requirements.compose.
                 # The room taken out, for the same reason the brief gets it
@@ -1083,7 +1083,7 @@ class Orchestrator:
         pieces = (report.get("connectivity") or {}).get("subassemblies")
         return (f"kept, but it is {pieces} separate pieces on the stud grid "
                 f"and a build may end with at most "
-                f"{runstate.MAX_SUBASSEMBLIES} — the parts are near each other "
+                f"{runstate.MAX_SUBASSEMBLIES} - the parts are near each other "
                 f"rather than joined to each other, so this comes apart when "
                 f"it is picked up")
 
@@ -1119,7 +1119,7 @@ class Orchestrator:
         # object's wording redesign another's.
         #
         # The petition is consulted too, but only where the run is building one
-        # object — "build me a creative table" is an invitation the decomposer
+        # object - "build me a creative table" is an invitation the decomposer
         # may well have dropped on its way to the subject "a table", and losing
         # it there means the one request that did ask for invention silently
         # gets none. With several objects the whole petition is the wrong scope
@@ -1136,7 +1136,7 @@ class Orchestrator:
         # the same model twice.
         angle = brief.variation(project, allowed)
         # Drawn from the same seed as the angle and from different bits of it,
-        # so one scene is written by one designer with one angle — and which
+        # so one scene is written by one designer with one angle - and which
         # designer is not decided by which angle. See brief.PERSONAS.
         stance = brief.persona(project, allowed)
         try:
@@ -1186,8 +1186,8 @@ class Orchestrator:
         """A builder that raised, and what is left of its work.
 
         Returns a stand-in result for a subbuild that wrote something before it
-        died — so the rest of `_build_one` validates it, reports it and lets the
-        scene keep it — or None when there is genuinely nothing there, which is
+        died - so the rest of `_build_one` validates it, reports it and lets the
+        scene keep it - or None when there is genuinely nothing there, which is
         the old behaviour and the honest answer for a run that never started.
         """
         why = f"{type(exc).__name__}: {exc}"
@@ -1223,8 +1223,8 @@ class Orchestrator:
     def _reference_sets(self, sub, modifying=False):
         """Real sets that already built this object, opened before it starts.
 
-        The builder has always had the tools to go and find these — a search, a
-        details call, a read of one submodel — and across run after run it did
+        The builder has always had the tools to go and find these - a search, a
+        details call, a read of one submodel - and across run after run it did
         not: it is four calls between the request and the geometry, and a model
         that believes it knows what a car looks like spends them placing bricks
         instead. So the harness does the looking. It costs no API call (the
@@ -1257,7 +1257,7 @@ class Orchestrator:
     def _recall(self, sub, modifying=False):
         """This agent's own earlier work on this subject, opened before it starts.
 
-        The same move as `_reference_sets` and for the same measured reason —
+        The same move as `_reference_sets` and for the same measured reason -
         see recall.py. The creations library and the notes have always been
         reachable through `search_reference` and `get_part_details`, and are
         therefore reached only by a builder that decided to reach, which across
@@ -1302,8 +1302,8 @@ class Orchestrator:
                 f"numbers you have been shown: replace the lines that change, "
                 f"insert the ones that are new, delete the ones that go. Every "
                 f"part the user did not ask you to touch stays exactly where "
-                f"it is — that is what editing gets you and rewriting does "
-                f"not — and the new work attaches to the build on real studs. "
+                f"it is - that is what editing gets you and rewriting does "
+                f"not - and the new work attaches to the build on real studs. "
                 f"Do not start a fresh model, and do not put the change "
                 f"somewhere beside the model. validate_model to "
                 f"confirm it is still one connected build, then finish.")
@@ -1316,7 +1316,7 @@ class Orchestrator:
                 ("**Start with `copy_from_set`.** Real sets that already built "
                  "this are open in front of you, with the assembly to take and "
                  "the exact call under each one. Graft the closest one in "
-                 "first, recolour it, and build the difference — from more "
+                 "first, recolour it, and build the difference - from more "
                  "than one set where more than one has a piece of the answer. "
                  "Only design from nothing what none of them solved.\n\n")
                 if real_sets else "")
@@ -1325,7 +1325,7 @@ class Orchestrator:
                 f"Plan it, write it to `{sub.path}`, validate it, and "
                 f"validate_model checks that it looks like {sub.subject} too. "
                 f"Everything you build goes in that one file, joined together "
-                f"on the stud grid — never several loose pieces sitting apart. "
+                f"on the stud grid - never several loose pieces sitting apart. "
                 f"Then call finish.")
 
         return build_task_context(
@@ -1388,7 +1388,7 @@ class Orchestrator:
         self._log(f"--- assembled: {report.get('verdict')}")
 
         # A scene that does not validate after a measured layout means two
-        # subbuilds genuinely intersect. Hand it to an agent to nudge apart —
+        # subbuilds genuinely intersect. Hand it to an agent to nudge apart -
         # it has measure_model and assemble_model and nothing else it could
         # waste the steps on.
         if not report.get("passed"):
@@ -1400,7 +1400,7 @@ class Orchestrator:
         state = RunState(subject="the whole scene", project=project,
                          target=main_path, require_render=render.available(),
                          # One block per finished object, and the objects are
-                         # meant to stand apart — so each is checked for being
+                         # meant to stand apart - so each is checked for being
                          # whole and nothing asks them to touch each other.
                          objects="blocks")
         # What makes `edit_model` safe to offer here: the guard in tools.py
@@ -1419,7 +1419,7 @@ class Orchestrator:
         listing = "\n".join(f"- {s.name}: `{s.path}`" for s in built)
         # How the picture said these objects stand together. The assembler
         # places them in a measured row, which never overlaps but is also never
-        # what the picture showed — this is the only description of the
+        # what the picture showed - this is the only description of the
         # arrangement that exists, and moving them into it is exactly what the
         # two tools below are for.
         arrangement = (self.reference or {}).get("description") or {}
@@ -1430,13 +1430,13 @@ class Orchestrator:
                 f"subconstructions:\n{listing}\n\n"
                 f"It does not validate: {report.get('verdict')}\n\n"
                 f"The components themselves are correct. They were each built "
-                f"and validated on their own — do not rebuild them. What is "
+                f"and validated on their own - do not rebuild them. What is "
                 f"wrong is where they stand relative to each other, and "
                 f"moving them is the first thing to reach for: "
                 f"`move_submodel` shifts a whole object, `rotate_submodel` "
                 f"turns one where it stands, and neither can break anything. "
                 f"validate_model names what overlaps what and reports each "
-                f"object's size under `size` — read that, then move the "
+                f"object's size under `size` - read that, then move the "
                 f"overlapping objects apart on the stud grid (multiples of "
                 f"20 LDU).\n\n"
                 f"`edit_model` is here for the join itself, once the objects "
@@ -1444,9 +1444,9 @@ class Orchestrator:
                 f"only spread the scene out: take out the handful of parts "
                 f"that physically pass through another object, or add the "
                 f"plate or tile that ties two of them together so the scene "
-                f"reads as one build. It is limited to that on purpose — a "
+                f"reads as one build. It is limited to that on purpose - a "
                 f"few parts per call and {ASSEMBLY_EDIT_BUDGET} across this "
-                f"pass — and an edit the size of a rebuild is refused. If a "
+                f"pass - and an edit the size of a rebuild is refused. If a "
                 f"component is genuinely wrong, say so in your summary "
                 f"instead of trying to fix it here.\n\n"
                 f"Validate again, then finish."
@@ -1465,15 +1465,15 @@ class Orchestrator:
 
         lines = []
         if len(subs) > 1:
-            lines.append(f"{meta.get('summary') or 'The scene'} — "
+            lines.append(f"{meta.get('summary') or 'The scene'} - "
                          f"{len(done)} of {len(subs)} built.")
 
         # Said first, and said plainly. A model with parts off the grid is not
         # a model with a caveat, it is a model that cannot be built, and
         # burying that under a list of what went well is how a user finds out
         # from the bricks instead of from us.
-        # Two things set this now — parts off the stud grid, and a build the
-        # studs read as loose clumps — so the headline names neither and each
+        # Two things set this now - parts off the stud grid, and a build the
+        # studs read as loose clumps - so the headline names neither and each
         # object's own note says which it was. Claiming the wrong one is worse
         # than claiming none: a user sent looking for off-grid coordinates in a
         # model whose coordinates are all fine finds nothing and concludes the
@@ -1498,7 +1498,7 @@ class Orchestrator:
             if seen:
                 lines.append(f"  {seen}")
         for sub in failed:
-            lines.append(f"- **{sub.name}**: not built — {sub.note or 'unknown'}")
+            lines.append(f"- **{sub.name}**: not built - {sub.note or 'unknown'}")
         return "\n".join(lines)
 
     def _remember(self, petition, main_path, stopped):
@@ -1546,7 +1546,7 @@ class Orchestrator:
             "stopped": stopped,
         }
         if stopped:
-            result["warning"] = "stopped on request — the scene may be unfinished"
+            result["warning"] = "stopped on request - the scene may be unfinished"
         elif report and not report.get("passed"):
             off_grid = len((report.get("connectivity") or {}).get(
                 "misaligned_parts") or [])
@@ -1554,7 +1554,7 @@ class Orchestrator:
             result["warning"] = (
                 f"the finished scene does not validate: "
                 f"{report.get('verdict') or 'unknown fault'}"
-                + (f" — {off_grid} part(s) are off the stud grid, so this "
+                + (f" - {off_grid} part(s) are off the stud grid, so this "
                    f"cannot be built out of real bricks" if off_grid else ""))
         elif report:
             result["buildable"] = True
@@ -1587,7 +1587,7 @@ class Orchestrator:
 def _kept(project, images=(), sheet=None, reference_image=None):
     """Archive pictures beside the run's trace. See ``trace.keep_image``.
 
-    ``reference_image`` is one path or several — a project may have up to four
+    ``reference_image`` is one path or several - a project may have up to four
     reference pictures and the trace should show all of them, not the first.
     """
     kept = []

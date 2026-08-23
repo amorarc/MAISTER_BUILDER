@@ -3,7 +3,7 @@
 The assembly pass needs one thing the checkers never had to expose: the extent
 of a whole model in world space. Three subconstructions become one scene by
 being pushed apart until their boxes stop touching, and that arithmetic needs
-real numbers — a tree that is 9 studs wide has to move 9 studs, not the 4 the
+real numbers - a tree that is 9 studs wide has to move 9 studs, not the 4 the
 agent guessed.
 
 Measured from the same flattened geometry the collision checker uses, so a
@@ -56,7 +56,7 @@ def measure(path):
     """The world-space extent of a model file.
 
     Returns a dict with the box in LDU, its size in LDU and in studs, and the
-    ground level — or ``{"error": ...}`` for a file that holds no parts.
+    ground level - or ``{"error": ...}`` for a file that holds no parts.
     """
     library_root = ensure_library_root()
     library = str(library_root) if library_root else None
@@ -107,7 +107,7 @@ def layout(boxes, spacing=SPACING_LDU):
 
     ``boxes`` is a list of ``(name, measurement)``. They are placed in a row
     along x in the order given, each one's ground level dropped onto y = 0, and
-    every offset snapped to the stud grid — a scene assembled off-grid would
+    every offset snapped to the stud grid - a scene assembled off-grid would
     fail validation for reasons that have nothing to do with how it was built.
 
     Returns ``{name: (dx, dy, dz)}``, the translation to apply to that

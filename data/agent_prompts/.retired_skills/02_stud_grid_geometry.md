@@ -1,7 +1,7 @@
 # Skill: Stud Grid Geometry
 
 This is the skill that decides whether your model is buildable. Work through the
-arithmetic explicitly — do not eyeball placements.
+arithmetic explicitly - do not eyeball placements.
 
 ## Axes
 
@@ -57,7 +57,7 @@ centre-to-centre = 10 × (studs of A + studs of B)   along that axis
 ```
 
 Because a part `w` studs wide spans `20w` LDU and its origin is in the middle,
-each part contributes `10w` — its own half-width — to the gap.
+each part contributes `10w` - its own half-width - to the gap.
 
 | A | B | Along | Centre-to-centre |
 |---|---|---|---|
@@ -68,7 +68,7 @@ each part contributes `10w` — its own half-width — to the gap.
 | plate 6x8 | brick 1x1 | 8-stud vs 1-stud | 10 × (8+1) = **90** |
 
 This is the arithmetic that a row of bricks gets wrong. Two 2x4 bricks at
-`x = 0` and `x = 40` look adjacent — the number is a round two studs — but they
+`x = 0` and `x = 40` look adjacent - the number is a round two studs - but they
 share 40 LDU of solid plastic and validation reports them as an overlap. The
 spacing depends on **both** parts, so recompute it for each pair rather than
 carrying one figure along a row of mixed sizes.
@@ -94,7 +94,7 @@ So a 2x4 brick at the origin has 8 studs at x ∈ {−30,−10,10,30}, z ∈ {�
 
 **A part on top must have its own seat positions land on those coordinates.** For a
 1x1 part (seat at offset 0) that means its centre must be exactly on a stud. For a
-2x2 part (seats at ±10) its centre must be on a stud *corner intersection* —
+2x2 part (seats at ±10) its centre must be on a stud *corner intersection* -
 midway between four studs, i.e. offset by 10 from a stud in both x and z.
 
 ### Worked check
@@ -106,7 +106,7 @@ Try plate centre `(0, −8, 10)`: its seats land at `(−10, 10)` and `(+10, 10)
 Both are real studs. ✅
 
 Try plate centre `(0, −8, 0)`: seats land at `(−10, 0)` and `(+10, 0)`. There is no
-stud at z = 0. ❌ — this is exactly the failure the validator reports as MISALIGNED.
+stud at z = 0. ❌ - this is exactly the failure the validator reports as MISALIGNED.
 
 ## Rotation matrices
 
@@ -122,7 +122,7 @@ Rotation about Y (the vertical axis), written as the nine values `a b c d e f g 
 Upside down (180° about Z): `-1 0 0 0 -1 0 0 0 1`.
 
 Rotating a part by 90° swaps its footprint: a 1x4 becomes 4x1, so its seats move
-from x-offsets to z-offsets. Recompute the grid after rotating — do not assume the
+from x-offsets to z-offsets. Recompute the grid after rotating - do not assume the
 old offsets still apply.
 
 **Never mirror a part** (a matrix with negative determinant, e.g. `-1 0 0 0 1 0 0 0 1`).
@@ -134,7 +134,7 @@ a hinge or a clip joint. Arbitrary angles put the part off the grid.
 ## Building sideways (SNOT)
 
 If you rotate a brick 90° about X or Z, its studs point sideways and the stud grid
-no longer aligns with the vertical one — the vertical pitch is 20 in one direction
+no longer aligns with the vertical one - the vertical pitch is 20 in one direction
 and 24 in the other, so they only meet at specific offsets. Unless you have a
 concrete reason, build everything stud-up. Sideways construction is the fastest
 route to an unbuildable model.

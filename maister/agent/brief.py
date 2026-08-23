@@ -4,18 +4,18 @@ Every pass in this project between the request and the first brick is an
 *engineering* pass. ``decompose`` says how many objects there are.
 ``plan_construction`` says what the levels are and what the parts are and what
 order they go on in. Both are careful, both are grounded, and neither of them
-ever asks what the thing should look like — so nobody does, and the answer
+ever asks what the thing should look like - so nobody does, and the answer
 defaults to whatever satisfies the description with the least effort. That is
 reliably a box.
 
 This is the one pass that asks. It runs between the split and the plan, it has
 no tools, it produces five short fields, and it costs one call:
 
-* **reads_as** — the silhouette, which is what makes a thing recognisable
-* **palette** — three colours as LDraw codes, and where each goes
-* **signature** — the one small detail a person would point at
-* **technique** — one way of joining bricks that is not stacking them
-* **avoid** — the dull version, named out loud so it is not what gets built
+* **reads_as** - the silhouette, which is what makes a thing recognisable
+* **palette** - three colours as LDraw codes, and where each goes
+* **signature** - the one small detail a person would point at
+* **technique** - one way of joining bricks that is not stacking them
+* **avoid** - the dull version, named out loud so it is not what gets built
 
 # Why it is a call of its own
 
@@ -28,24 +28,24 @@ planner stays cold and works out how to build the look it was handed.
 
 **But the temperature is the least of it, and this is worth being exact about,
 because it is the half that reads like the whole reason and is not.** Sampling
-hotter does not move the answer, it re-words it — measured, and the finding is
+hotter does not move the answer, it re-words it - measured, and the finding is
 that temperature and sampling changes alone buy almost no diversity while
 conditioning on a constraint buys a great deal (arXiv:2602.20408). The reason is
 that the first idea is not a sampling accident. It is the *typical* answer, and
 a model returns the typical answer because its preference data was written by
-annotators who preferred familiar text (arXiv:2510.01171) — the distribution is
+annotators who preferred familiar text (arXiv:2510.01171) - the distribution is
 sharpened onto it, and turning the temperature up samples the same sharpened
 peak more noisily.
 
 What actually moves it is the three things below, in rising order of effect:
 
-* **naming the dull answer** so the model is conditioned against it — the
+* **naming the dull answer** so the model is conditioned against it - the
   ``avoid`` field, which is asked for *first* so that everything after it is
   written knowing what it must not be (defixation, arXiv:2606.00875);
-* **a constraint and a stance** to write from, drawn per build — ``VARIATIONS``
+* **a constraint and a stance** to write from, drawn per build - ``VARIATIONS``
   and ``PERSONAS`` below, two independent axes, of which the persona kind is
   the strongest single intervention measured (arXiv:2602.20408);
-* **asking for a distribution instead of an answer** — five briefs with the
+* **asking for a distribution instead of an answer** - five briefs with the
   model's own probabilities, and one taken from the tail. See
   ``BRIEF_CANDIDATES`` in config.py.
 
@@ -56,7 +56,7 @@ median of everything ever written about houses and calling it a decision.
 
 Before ``refsets`` fetches the real sets, and that ordering is not incidental.
 Being shown an example is the single most reliable way to lose the ideas you
-would otherwise have had — generative assistance measurably *increases*
+would otherwise have had - generative assistance measurably *increases*
 fixation on whatever was shown first (arXiv:2403.11164), and models fixate on
 examples the same way people do (arXiv:2502.05870). The brief is written before
 any set is opened, so the sets arrive as evidence about *how to build* a look
@@ -65,16 +65,16 @@ Move this pass after ``_reference_sets`` and it stops working, silently.
 
 # It never overrules the user
 
-A brief adds; it does not decide. Everything the request stated — a colour, a
-size, a feature — passes through untouched, and when a reference picture is
+A brief adds; it does not decide. Everything the request stated - a colour, a
+size, a feature - passes through untouched, and when a reference picture is
 attached the picture's description is the specification and the brief only fills
 what the description left open. This pass exists to stop the model inventing
 nothing, not to let it invent over the top of what it was told.
 
 # How much it invents is the request's decision, not this pass's
 
-Everything above was built to answer one failure — the model returns the median
-of everything ever written about houses — and it answered it at one fixed
+Everything above was built to answer one failure - the model returns the median
+of everything ever written about houses - and it answered it at one fixed
 intensity, on every build, whatever was asked for. That is the second failure,
 and it is the one users actually report: **ask for a table and you get the fifth
 most likely table.** A random angle to push on, a random stance, and a brief
@@ -84,13 +84,13 @@ table" that machine is right. For "a table" it is the whole problem.
 
 So the intensity is read off the request. See ``licence`` below:
 
-* **PLAIN** — the default, and what a bare request gets. The *mode* of the
+* **PLAIN** - the default, and what a bare request gets. The *mode* of the
   distribution rather than the tail, no angle, and a stance fixed at the one
   that means "build the standard version of this well". The brief still runs and
   still does its original job: it still names the dull version in ``avoid``, it
   still sets a palette, it still decides a silhouette. What it stops doing is
   reaching for an answer the model itself rated unlikely.
-* **INVITED** — the request asked for invention in words. Then all of the
+* **INVITED** - the request asked for invention in words. Then all of the
   machinery above applies exactly as it did.
 
 The distinction is worth stating as a rule, because it is what both settings are
@@ -119,7 +119,7 @@ INVITED = "invited"
 #
 # Deliberately a short list of *explicit* invitations rather than an attempt to
 # detect descriptive language in general. "A small red car" is a precise request
-# and gets the plain treatment — precision is the opposite of an invitation to
+# and gets the plain treatment - precision is the opposite of an invitation to
 # invent, and a parser that read every adjective as licence would put us back
 # where we started.
 _INVITES = re.compile(
@@ -136,7 +136,7 @@ def licence(subject=None, requirements=None, reference=None):
     """How much this request licenses the brief to invent: PLAIN or INVITED.
 
     PLAIN unless the request asked for otherwise, and the default is the whole
-    point — a bare noun is a request for the thing that noun names, built well,
+    point - a bare noun is a request for the thing that noun names, built well,
     and every user who has complained about this pass has complained about
     getting something else.
 
@@ -152,13 +152,13 @@ def licence(subject=None, requirements=None, reference=None):
 
 # The stance a plain request is written from. Fixed rather than drawn, so that
 # "a table" is never handed to the sculptor of shape who builds curves "even
-# where it costs parts". A stance is still passed — it is the intervention with
+# where it costs parts". A stance is still passed - it is the intervention with
 # the most evidence behind it, and this one points at the canonical answer
 # rather than away from it.
 PLAIN_STANCE = (
     "a LEGO set designer building the standard version of this: it has to be "
     "recognisable as the thing it is named as, from across a room, before any "
-    "detail resolves — well proportioned and well finished rather than "
+    "detail resolves - well proportioned and well finished rather than "
     "unusual"
 )
 
@@ -167,22 +167,22 @@ PLAIN_STANCE = (
 #
 # The agent is deterministic in the way that matters here: same request, same
 # context, same first idea. Temperature alone does not fix it, because the
-# first idea is not a sampling accident — it is the median of everything ever
+# first idea is not a sampling accident - it is the median of everything ever
 # written about houses. A constraint moves the median.
 #
 # They are deliberately mild. Each one is a nudge that a competent designer
 # could take or leave, not an instruction to build something strange, and the
 # brief is told plainly that the user's own words outrank it.
 VARIATIONS = (
-    "asymmetry — make one side genuinely different from the other",
+    "asymmetry - make one side genuinely different from the other",
     "an unexpected accent colour, somewhere small and deliberate",
     "one part used for something other than its obvious purpose",
     "a diagonal, or something set at an angle to everything else",
-    "texture over smoothness — a surface that is broken up rather than flat",
+    "texture over smoothness - a surface that is broken up rather than flat",
     "exaggerate the proportion that makes this thing recognisable",
-    "a moment of life — something posed, opened, mid-action, or worn",
+    "a moment of life - something posed, opened, mid-action, or worn",
     "one element that overhangs or cantilevers past what holds it up",
-    "layering — a surface that shows two depths rather than one",
+    "layering - a surface that shows two depths rather than one",
     "make one detail unusually fine, and leave the rest plain",
 )
 
@@ -193,8 +193,8 @@ VARIATIONS = (
 # where one list of ten is ten.
 #
 # This axis is the one with the most evidence behind it. Across the
-# interventions measured against LLM idea homogeneity — temperature, sampling,
-# prompt restructuring, chain-of-thought, personas — conditioning on a stance
+# interventions measured against LLM idea homogeneity - temperature, sampling,
+# prompt restructuring, chain-of-thought, personas - conditioning on a stance
 # was the strongest, and it did not cost the ideas any quality
 # (arXiv:2602.20408). The mechanism offered is that a stance partitions what the
 # model knows: asked plainly it averages every house it has ever read about,
@@ -271,13 +271,13 @@ def variation(seed=None, allowed=INVITED):
     """One angle to push on, chosen from ``VARIATIONS``. None for a plain request.
 
     Seeded from the caller's string so a project keeps the same variation while
-    it is being built and a different one next time — a scene whose tree and
+    it is being built and a different one next time - a scene whose tree and
     whose house pulled in two unrelated directions would read as two scenes.
 
     ``allowed`` is the request's licence. None when it is PLAIN, and that is the
     single biggest thing this change does: read the list, and notice that
-    "asymmetry — make one side genuinely different from the other" and "a moment
-    of life — something posed, opened, mid-action, or worn" are instructions to
+    "asymmetry - make one side genuinely different from the other" and "a moment
+    of life - something posed, opened, mid-action, or worn" are instructions to
     build a *different object*, not to build the same one differently. Handed to
     a bare request they are how a table comes out lopsided.
     """
@@ -290,7 +290,7 @@ def persona(seed=None, allowed=INVITED):
     """One stance to write from. ``PLAIN_STANCE`` for a plain request.
 
     Seeded like the angle and from the same string, so a scene is written by one
-    designer throughout — and drawn from different bits of it, so which designer
+    designer throughout - and drawn from different bits of it, so which designer
     is not decided by which angle.
     """
     if allowed != INVITED:
@@ -316,16 +316,16 @@ def _request_text(subject, requirements, reference, angle, size_hint,
     if reference:
         blocks.append(
             "A reference picture is attached and it is the specification. This "
-            "is what it holds — fill the fields from it, and choose only where "
+            "is what it holds - fill the fields from it, and choose only where "
             "it is silent:\n\n" + str(reference))
     elif angle:
         blocks.append(f"Angle to push on for this build: {angle}")
 
     # A build that was made from an earlier brief and came back reading as the
     # wrong thing. This is the whole of proposal 3 as it lands here: the critic
-    # saw a silhouette fault, which is not a fault the *builder* can repair —
+    # saw a silhouette fault, which is not a fault the *builder* can repair -
     # "the hull is a rectangular box, not a boat" names no line and has no edit
-    # — so the complaint comes back to the pass that chose the silhouette
+    # - so the complaint comes back to the pass that chose the silhouette
     # instead. See orchestrator._replan.
     if failed:
         blocks.append(
@@ -333,7 +333,7 @@ def _request_text(subject, requirements, reference, angle, size_hint,
             "and it came back as the wrong thing.** This is what was seen:\n\n"
             + str(failed)
             + "\n\nThat is a fault in what was asked for, not in how it was "
-            "assembled — a build that comes out unrecognisable was aimed at "
+            "assembled - a build that comes out unrecognisable was aimed at "
             "the wrong silhouette. So aim at a different one. Do not restate "
             "the brief that produced it in new words: change what gets built, "
             "starting with `reads_as`, and put what was seen into `avoid` so "
@@ -342,17 +342,17 @@ def _request_text(subject, requirements, reference, angle, size_hint,
     if candidates > 1:
         # The instruction that does the work. Asking for a distribution rather
         # than an answer is what gets at the briefs the model would not have
-        # led with — see BRIEF_CANDIDATES in config.py. The spread is asked for
+        # led with - see BRIEF_CANDIDATES in config.py. The spread is asked for
         # explicitly because a model left to itself will write five briefs that
         # differ in their adjectives and agree on the model.
         blocks.append(
             f"Write {candidates} different briefs for this subject, each with "
             f"the probability that it is the brief you would have given if you "
             f"had been asked for exactly one. They must differ in what gets "
-            f"built — a different silhouette, a different signature, a "
-            f"different palette — not in how the same build is described. "
+            f"built - a different silhouette, a different signature, a "
+            f"different palette - not in how the same build is described. "
             f"Include the obvious one and give it its real probability.\n\n"
-            f"Answer as one JSON object, shaped exactly like this — every "
+            f"Answer as one JSON object, shaped exactly like this - every "
             f"entry carries its own `probability`, and every `brief` has all "
             f"five fields in the order given above:\n\n"
             f'{{"briefs": [\n'
@@ -376,7 +376,7 @@ def _json_objects(text):
     single brief wants. This exists for the case it cannot handle: a reply
     holding a list of candidates that was cut off before its closing brace. The
     outer object never completes, so a scanner that only recognises objects at
-    the top level finds nothing at all — and the four intact briefs sitting
+    the top level finds nothing at all - and the four intact briefs sitting
     inside it are perfectly good. Reading every balanced object, nested ones
     included, salvages those rather than throwing the call away.
 
@@ -438,7 +438,7 @@ def _candidates(text):
             entries = found
             break
     if entries is None:
-        # No wrapper — a truncated list, or a model that answered with one
+        # No wrapper - a truncated list, or a model that answered with one
         # brief. Take the candidate entries where they survived, since those
         # still carry their probabilities, and bare briefs where they did not.
         # An entry is preferred over the brief nested inside it, which is why
@@ -483,7 +483,7 @@ def _as_distribution(candidates):
     A model asked for probabilities will sometimes answer in percentages, and
     sometimes in weights that simply do not add to one. Read literally, "35"
     means a candidate sits far above any sensible tail ceiling, and every
-    candidate would be judged likely — which quietly turns the tail rule into
+    candidate would be judged likely - which quietly turns the tail rule into
     "take the least likely", losing most of what the sampling is for.
 
     Only the obviously-not-a-distribution case is touched, and it is rescaled by
@@ -503,14 +503,14 @@ def _select(candidates, seed=None, allowed=INVITED):
 
     Which end of the distribution is taken is the request's decision:
 
-    **PLAIN takes the mode** — the brief the model would have given if it had
+    **PLAIN takes the mode** - the brief the model would have given if it had
     been asked for exactly one. That sounds like it wastes the call, and it does
     not: the five were still written, and writing five is what made the model
     enumerate rather than answer, so even the mode of five is a considered
     answer rather than a reflex. What it does give up is unlikeliness, which for
     a bare request was never wanted.
 
-    **INVITED takes the tail** — a brief the model itself rates unlikely and
+    **INVITED takes the tail** - a brief the model itself rates unlikely and
     still considers a real answer; it wrote it, so it is one. This is the
     original behaviour and the reason the whole distribution is asked for.
 
@@ -530,7 +530,7 @@ def _select(candidates, seed=None, allowed=INVITED):
             probability, document = max(rated, key=lambda c: c[0])
             return document, probability
         # Nothing rated. There is no mode to take, so the seeded choice below is
-        # the only honest answer — but it is made over everything rather than
+        # the only honest answer - but it is made over everything rather than
         # over the tail, since without probabilities there is no tail either.
         rng = random.Random(str(seed)) if seed is not None else random
         probability, document = rng.choice(candidates)
@@ -539,7 +539,7 @@ def _select(candidates, seed=None, allowed=INVITED):
     tail = [c for c in candidates
             if c[0] is None or c[0] <= BRIEF_TAIL_CEILING]
     if not tail:
-        # Everything came back likely — an even spread, or a model that rated
+        # Everything came back likely - an even spread, or a model that rated
         # its five at 0.9 each. The least likely of them is the same choice
         # made where it can still be made.
         least = min(c[0] for c in candidates)
@@ -556,7 +556,7 @@ def compose(subject, requirements=None, reference=None, angle=None,
     """A design brief for ``subject``, or None if there is not one to be had.
 
     One call. ``candidates`` briefs are asked for in that one reply and one is
-    taken from the probabilities the model gave them — see ``_select``, and
+    taken from the probabilities the model gave them - see ``_select``, and
     ``BRIEF_CANDIDATES`` in config.py for why asking for several beats asking
     once and turning the temperature up.
 
@@ -571,7 +571,7 @@ def compose(subject, requirements=None, reference=None, angle=None,
 
     Best effort throughout. A brief is an improvement to a build, never a
     precondition for one, so every failure here returns None and the run carries
-    on exactly as it did before this pass existed — which is also what makes it
+    on exactly as it did before this pass existed - which is also what makes it
     safe to leave switched on by default.
     """
     if not BRIEF_ENABLED or not subject:
@@ -580,7 +580,7 @@ def compose(subject, requirements=None, reference=None, angle=None,
     if allowed is None:
         allowed = licence(subject, requirements, reference)
     # An angle is only ever an invited request's. A caller that passed one
-    # anyway does not get to smuggle it past the licence — that would be the
+    # anyway does not get to smuggle it past the licence - that would be the
     # same bug in a new place.
     if allowed != INVITED:
         angle = None
@@ -616,7 +616,7 @@ def compose(subject, requirements=None, reference=None, angle=None,
     document, probability = _select(found, seed=seed, allowed=allowed)
 
     if document is None:
-        # Nothing that parsed as a brief. Prose is still a brief — the builder
+        # Nothing that parsed as a brief. Prose is still a brief - the builder
         # reads English, and half a brief beats spending another call to get
         # the braces right.
         document = blueprint.extract_json(text)
@@ -630,7 +630,7 @@ def compose(subject, requirements=None, reference=None, angle=None,
         document["stance"] = stance
     if len(found) > 1:
         # What this was chosen out of, for the trace and for anyone asking
-        # later whether the sampling is doing anything. Ignored by `as_text` —
+        # later whether the sampling is doing anything. Ignored by `as_text` -
         # it is a note about the choice, not part of the brief.
         document["sampling"] = {
             "candidates": len(found),
@@ -638,7 +638,7 @@ def compose(subject, requirements=None, reference=None, angle=None,
             "probabilities": [p for p, _ in found],
             # Which end was taken, and therefore why this brief and not another.
             # Without it a trace showing p=0.45 chosen out of five is unreadable
-            # — it could be a plain request taking its mode or an invited one
+            # - it could be a plain request taking its mode or an invited one
             # whose candidates all came back likely.
             "licence": allowed,
         }
@@ -648,7 +648,7 @@ def compose(subject, requirements=None, reference=None, angle=None,
 # -- rendering it for the passes downstream ---------------------------------
 
 def _colour(entry):
-    """One palette entry as `code — name (where)`, however it was written."""
+    """One palette entry as `code - name (where)`, however it was written."""
     if not isinstance(entry, dict):
         return str(entry)
     code = entry.get("code")
@@ -656,7 +656,7 @@ def _colour(entry):
     where = entry.get("where") or ""
     head = f"`{code}`" if code is not None else ""
     label = " ".join(p for p in (head, name) if p).strip()
-    return f"{label} — {where}" if where else label
+    return f"{label} - {where}" if where else label
 
 
 def colours(document):
@@ -705,7 +705,7 @@ def as_text(document):
 
     # `stance` and `sampling` are deliberately not among these. They are how the
     # brief was arrived at, not what it decided, and the builder is being handed
-    # a decision — told which designer to imagine it is, it starts designing
+    # a decision - told which designer to imagine it is, it starts designing
     # again instead of building what the brief already settled. They stay on the
     # document for the trace and for the diversity measurement.
     for key, label in (("signature", "Signature detail"),

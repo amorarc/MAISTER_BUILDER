@@ -35,7 +35,7 @@ export default class ErrorBoundary extends Component {
         </div>
         <p>
           If this appeared after a code change, the tab may be running stale
-          modules — reload with <code>Ctrl+Shift+R</code>.
+          modules - reload with <code>Ctrl+Shift+R</code>.
         </p>
       </div>
     );

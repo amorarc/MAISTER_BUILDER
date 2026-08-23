@@ -63,7 +63,7 @@ _store_lock = threading.Lock()
 def _store(name, path):
     """Load a database once, remembering failures so we retry at most... never.
 
-    Once, even when several builders ask at the same moment — subconstructions
+    Once, even when several builders ask at the same moment - subconstructions
     run in parallel and each searches. The fast path stays outside the lock,
     because after the first call this is read every time and contended never.
     """
@@ -273,7 +273,7 @@ def _rerank(query, items, instruction, top_k):
 
     Reranking is a refinement on top of a search that already worked: fusion
     has ranked these results and they are usable as they stand. So a reranker
-    that cannot run must not take the search down with it — most often it is
+    that cannot run must not take the search down with it - most often it is
     CUDA out of memory, because the reranker is a second 0.6B model and
     something else on the machine (the app's own backend, say) already has the
     GPU. Losing the refinement costs a little ordering; losing the search makes
@@ -543,7 +543,7 @@ def _part_row(item):
 
     A semantic hit is not a catalogue row: it is the metadata that was frozen
     into the vector index the day the index was built. Anything the catalogue
-    has learned since — how a part connects, how many studs it actually has —
+    has learned since - how a part connects, how many studs it actually has -
     is missing from it, and missing from *only* the hits the semantic side
     found. That is worse than missing everywhere: the agent would see a field
     on some rows and not others, with nothing to say why, and would have to

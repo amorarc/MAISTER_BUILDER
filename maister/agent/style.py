@@ -9,17 +9,17 @@ That gap is measurable, and it does not need a vision model to measure it. Four
 numbers separate what this agent builds from what LEGO ships:
 
 * **how many distinct shapes** are in it,
-* **what share the commonest shape takes** — the one that catches a build made
+* **what share the commonest shape takes** - the one that catches a build made
   out of a single brick,
 * **how many colours**,
-* **what share of parts carry a rotation** — the one that catches a build that
+* **what share of parts carry a rotation** - the one that catches a build that
   is all right angles.
 
 ``BASELINES`` below is those four numbers over the 1,812 models in the OMR
 corpus, bucketed by piece count because a 20-part build and a 2,000-part build
 are not comparable on any of them. So the report can say something specific and
-true — *"3003 is 79% of this model; in real sets its size the commonest part is
-9%"* — which is a fact the builder can act on, and not an opinion it can argue
+true - *"3003 is 79% of this model; in real sets its size the commonest part is
+9%"* - which is a fact the builder can act on, and not an opinion it can argue
 with.
 
 # This never fails a model
@@ -29,20 +29,20 @@ this be built", and nothing here changes its verdict.
 
 That is deliberate, and it is the same reasoning that picked the vision critic
 in config.py: a check that invents problems is worse than no check, because the
-builder goes and "fixes" them. Monotony is sometimes correct — a brick wall is
-made of bricks, a 12-part footbridge has nothing to be varied about — so the
+builder goes and "fixes" them. Monotony is sometimes correct - a brick wall is
+made of bricks, a 12-part footbridge has nothing to be varied about - so the
 thresholds are set at the **tenth percentile** of the real corpus. A model only
 gets a remark when it is duller than nine out of ten real sets its own size,
 and a remark is an invitation, not an error.
 """
 
-# Measured over every .mpd and .ldr in data/ldraw_omr_sets — 1,812 models —
+# Measured over every .mpd and .ldr in data/ldraw_omr_sets - 1,812 models -
 # by tools/style_baselines.py. Regenerate it with that script if the corpus
 # changes; do not hand-edit these numbers.
 #
 # Read at the source-line level: type-1 lines that name a real part, with
 # submodel references excluded. A part sitting inside a submodel that is itself
-# placed rotated therefore counts as unrotated. That undercounts rotation — but
+# placed rotated therefore counts as unrotated. That undercounts rotation - but
 # it undercounts it identically for the corpus and for the model being checked,
 # which is what makes the comparison honest, and it answers the question that
 # actually matters: did whoever wrote this file ever write a rotation.
@@ -82,7 +82,7 @@ BASELINES = {
 
 # Below this the numbers say nothing. A nine-part build made of one brick is a
 # nine-part build made of one brick, and there is no version of it that scores
-# well — remarking on it would be noise on exactly the builds that are already
+# well - remarking on it would be noise on exactly the builds that are already
 # finished and correct.
 MIN_PARTS = 12
 
@@ -90,7 +90,7 @@ MIN_PARTS = 12
 # The size mix
 #
 # The fifth axis, and the one this agent is furthest off. Every part is one of
-# three sizes — see catalog.size_class — and the three do three different jobs:
+# three sizes - see catalog.size_class - and the three do three different jobs:
 # a spine that spans, a body that gives the model its shape, details that make
 # it readable.
 #
@@ -106,7 +106,7 @@ MIN_PARTS = 12
 # fault. The agent's *per-model* distribution is bimodal: 10.7% of its models
 # are 90-100% structural and 52% are under 10%, against a corpus where 97% of
 # sets sit between 0 and 30%. It is not building the wrong mix, it is not
-# mixing — it picks one size of part and builds the entire object out of it.
+# mixing - it picks one size of part and builds the entire object out of it.
 #
 # So the remark is about coverage first and proportion second. A model missing
 # a whole class is the case worth speaking on; a model with all three in
@@ -123,7 +123,7 @@ CLASS_PRESENT = 0.03
 #
 # The percentile alone is not enough, and the corpus proves it: a tenth
 # percentile flags a tenth of real sets by construction, so on the first pass
-# set 40440 — designed by LEGO, built out of real bricks, sold in a box — was
+# set 40440 - designed by LEGO, built out of real bricks, sold in a box - was
 # told its rotation was low. A check that corrects professional work is the
 # failure mode config.py already names for the vision critic, and it costs more
 # than it returns: the builder spends steps "fixing" a model that was right.
@@ -134,7 +134,7 @@ CLASS_PRESENT = 0.03
 #
 # These three were tuned against the corpus itself. At these values 1.6% of
 # real sets between 12 and 60 parts get a remark, and 5.5% of those between 61
-# and 400 — the range this agent builds in — while every model it has produced
+# and 400 - the range this agent builds in - while every model it has produced
 # out of a single repeated brick is still caught.
 #
 # Above 400 parts the rate stays near 11%, and that is left alone: the sets
@@ -171,12 +171,12 @@ def _bare(name):
 def measure(instances, known=None):
     """The four numbers, from parsed type-1 lines.
 
-    ``instances`` is anything with ``.part_name``, ``.color`` and ``.matrix`` —
+    ``instances`` is anything with ``.part_name``, ``.color`` and ``.matrix`` -
     which is what the collision checker's ``PartInstance`` already is, so this
     runs off the parse ``validate`` has already paid for.
 
     ``known`` is the set of real part ids, without ``.dat``. When it is given,
-    anything else is skipped as an LDraw primitive — the internal geometry that
+    anything else is skipped as an LDraw primitive - the internal geometry that
     part definitions are built from, which appears as type-1 lines exactly like
     a part does and is nothing anybody chose. It matters because the corpus the
     baselines came from is filtered the same way; measuring the two differently
@@ -246,7 +246,7 @@ def _pct(value):
 def report(instances, known=None):
     """Measurements plus, when the build is a genuine outlier, what to do.
 
-    Returns None when there is nothing worth saying — too few parts to judge,
+    Returns None when there is nothing worth saying - too few parts to judge,
     or a build already within the range real sets occupy. A key that is not
     there costs the builder no tokens and no attention, which is the point:
     this speaks on the builds where it has something to add and is silent on
@@ -272,7 +272,7 @@ def report(instances, known=None):
             f"model ({found['commonest_count']} of {found['parts']} parts). In "
             f"real sets this size the commonest part is about "
             f"{_pct(base['top_share'])}. Whatever this build is approximating "
-            f"by repeating one brick — a curve, a texture, a slope, foliage — "
+            f"by repeating one brick - a curve, a texture, a slope, foliage - "
             f"there is a part for it: search for the shape instead of stacking "
             f"toward it.")
 
@@ -284,11 +284,11 @@ def report(instances, known=None):
             f"{_pct(found['rotated_share'])} of the parts carry a rotation; in "
             f"real sets this size it is about {_pct(base['rotated_share'])}. "
             f"Slopes facing four ways, a wall turned with brackets, wedges set "
-            f"at an angle — rotation is most of what stops a build reading as "
+            f"at an angle - rotation is most of what stops a build reading as "
             f"a stack of boxes.")
 
     # The size mix. Coverage first: a model missing a whole class is the case
-    # worth speaking on, and it is the one this agent trips — 13% of its models
+    # worth speaking on, and it is the one this agent trips - 13% of its models
     # are built out of a single size of part.
     shares = found.get("size_shares") or {}
     if found.get("sized_parts", 0) >= MIN_PARTS:
@@ -299,15 +299,15 @@ def report(instances, known=None):
                 f"{name} {_pct(shares.get(name, 0.0))}"
                 for name in ("structural", "medium", "detail"))
             wanted = {
-                "structural": ("nothing in this model spans — no part 6 studs "
+                "structural": ("nothing in this model spans - no part 6 studs "
                                "long or 8 studs of footprint. A spine is what "
                                "stops a build coming apart when it is picked "
                                "up, and it is about one part in seven"),
                 "medium": ("there is a spine and there is decoration, and "
-                           "nothing in between — the walls and masses that "
+                           "nothing in between - the walls and masses that "
                            "give a model its shape are 2x2 to 2x4 bricks, and "
                            "they are the largest share of a real set"),
-                "detail": ("nothing here is 1x1 — no tiles, no cheese slopes, "
+                "detail": ("nothing here is 1x1 - no tiles, no cheese slopes, "
                            "no round bricks. Detail is what makes a shape read "
                            "as the thing it is, and it is 43% of a real set"),
             }
@@ -315,7 +315,7 @@ def report(instances, known=None):
                 f"This model is built out of "
                 f"{3 - len(missing)} of the 3 sizes of part ({have}); 98.6% of "
                 f"real sets use all three. Missing: "
-                + "; ".join(f"**{name}** — {wanted[name]}" for name in missing)
+                + "; ".join(f"**{name}** - {wanted[name]}" for name in missing)
                 + ". Real sets run about 15% structural, 42% medium, 43% "
                   "detail.")
         else:
@@ -323,7 +323,7 @@ def report(instances, known=None):
             low, high = STRUCTURAL_BAND
             if spine > high:
                 remarks.append(
-                    f"{_pct(spine)} of this model is structural parts — parts "
+                    f"{_pct(spine)} of this model is structural parts - parts "
                     f"6+ studs long or 8+ studs of footprint. In real sets it "
                     f"is about {_pct(SIZE_CLASS_SHARE['structural'])}, and 97% "
                     f"sit under {_pct(high)}. Big parts are the spine, not the "
@@ -334,7 +334,7 @@ def report(instances, known=None):
                     f"Only {_pct(spine)} of this model spans anything. A build "
                     f"with no structural parts in it is held together by the "
                     f"studs of small parts alone, which is what makes a model "
-                    f"come apart when it is lifted — and every seam between "
+                    f"come apart when it is lifted - and every seam between "
                     f"two short parts is a seam that shows.")
 
     if (found["colours"] < base["colours_p10"]
@@ -366,7 +366,7 @@ def report(instances, known=None):
             "size_mix": SIZE_CLASS_SHARE,
         },
         "observations": remarks,
-        "note": ("This is not a fault and it does not fail the model — it is a "
+        "note": ("This is not a fault and it does not fail the model - it is a "
                  "comparison against the 1,812 official sets in the reference "
                  "corpus, on the axes that separate a designed model from an "
                  "assembled one. Act on it if the build has steps left in it, "

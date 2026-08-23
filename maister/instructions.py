@@ -6,7 +6,7 @@ the assembly so far. This module is what stands between a model the agent wrote
 and a document that is worth opening:
 
 * **Steps.** LPub3D pages a model by its ``0 STEP`` markers, and a model with
-  none is one page showing the finished thing — which is not an instruction. So
+  none is one page showing the finished thing - which is not an instruction. So
   a model without steps gets them, split evenly rather than in fives with a
   single brick left over on the last page. A model that *does* have them keeps
   every one, and gets more inside the long ones: the agent writes a handful of
@@ -45,7 +45,7 @@ INK = "#17191E"
 # so BUILDER takes the bevel shade of the same yellow instead.
 GOLD = "#C69E00"
 
-# 16:9 — the shape of the screen these are read on.
+# 16:9 - the shape of the screen these are read on.
 PAGE_INCHES = (10.6667, 6.0)
 
 # The assembly is the point of the page, so it is drawn well above LPub3D's
@@ -58,7 +58,7 @@ PARTS_LIST_SCALE = 1.5
 #
 # LPub3D sizes each step's assembly image from the model's own extent and then
 # applies MODEL_SCALE on top, so the picture grows with the model. Across the
-# project models on disk the extent spans 60 to 1,940 LDU — 32x — and at a flat
+# project models on disk the extent spans 60 to 1,940 LDU - 32x - and at a flat
 # 2.5 the big end runs clear off all four edges of the page: a 1,940 LDU deck
 # renders as a red close-up with about a third of the model visible and the
 # parts the step is adding somewhere outside the paper. That is a picture of a
@@ -76,7 +76,7 @@ PARTS_LIST_SCALE = 1.5
 # and that product is the whole of what FIT_LDU says.
 #
 # Being a cap, it can only ever zoom out: the crossover is at 2500/2.5 = 1000
-# LDU, so every model below that — which is 80 of the 83 on disk — is rendered
+# LDU, so every model below that - which is 80 of the 83 on disk - is rendered
 # exactly as it was before.
 FIT_LDU = float(os.environ.get("LDRAW_INSTRUCTIONS_FIT_LDU", "2500"))
 # The floor, because the failure has two ends. A model ten thousand LDU across
@@ -90,7 +90,7 @@ MIN_ASSEMBLY_SCALE = 0.55
 # A step's picture is the whole assembly so far, and by page forty that is a
 # hundred bricks with two new ones somewhere in it. Which two is the entire
 # information content of the page, and until now the reader had to find them by
-# comparing against the previous page — which is the puzzle real instructions
+# comparing against the previous page - which is the puzzle real instructions
 # are designed to remove.
 #
 # LPub3D answers it two ways at once, and both are worth having because they
@@ -98,20 +98,20 @@ MIN_ASSEMBLY_SCALE = 0.55
 #
 # * **Fading what came before.** Everything from earlier steps is washed out,
 #   so the new parts are the only things at full strength. This is what LEGO's
-#   own booklets do, and it reads instantly — but it says nothing when the new
+#   own booklets do, and it reads instantly - but it says nothing when the new
 #   part is hidden behind the model.
 # * **Outlining what is new.** The parts this step adds get a coloured edge.
 #   That survives being the same colour as its neighbours, which fading does
 #   not: two red plates onto a red wall are invisible by fade alone.
 #
-# 40% rather than LPub3D's default 50: at 50 a pale model — white, tan, light
-# grey — fades to something still close enough to full strength that the new
+# 40% rather than LPub3D's default 50: at 50 a pale model - white, tan, light
+# grey - fades to something still close enough to full strength that the new
 # part does not separate from it.
 FADE_OPACITY = int(os.environ.get("LDRAW_INSTRUCTIONS_FADE", "40"))
 
 # ...and it is OFF by default, which is not what this section wanted to say.
 #
-# The metas below are right and LPub3D accepts them — it logs "Highlight Step
+# The metas below are right and LPub3D accepts them - it logs "Highlight Step
 # is ON - Set from meta command" and starts work. What it starts is the
 # problem: turning either half on makes it build recoloured copies of the
 # whole parts library first, and the log sits on
@@ -119,8 +119,8 @@ FADE_OPACITY = int(os.environ.get("LDRAW_INSTRUCTIONS_FADE", "40"))
 #     Processing Child Color Parts - Count: 23630
 #
 # On this machine that had not finished after twenty-five minutes, against a
-# booklet that renders in about one. Both halves do it — fade needs a washed-out
-# copy of every part and highlight an outlined one — so neither is usable on
+# booklet that renders in about one. Both halves do it - fade needs a washed-out
+# copy of every part and highlight an outlined one - so neither is usable on
 # its own, and it is a per-process cost, which the parallel renderer in this
 # file would pay once per worker.
 #
@@ -128,10 +128,10 @@ FADE_OPACITY = int(os.environ.get("LDRAW_INSTRUCTIONS_FADE", "40"))
 # turns it on for anyone whose library preparation completes, and the booklet
 # keeps working for everyone else. What would make it a default is warming that
 # library once, outside the render path, and confirming the cost is paid once
-# rather than per run — which is a piece of work, not a constant.
+# rather than per run - which is a piece of work, not a constant.
 HIGHLIGHT_STEPS = os.environ.get(
     "LDRAW_INSTRUCTIONS_HIGHLIGHT_STEPS", "0") not in ("0", "false", "no")
-# Magenta. The meta takes #RRGGBB — the #AARRGGBB the command-line flag
+# Magenta. The meta takes #RRGGBB - the #AARRGGBB the command-line flag
 # documents is that flag's format, not this one. Chosen for not being a colour
 # LEGO makes bricks in: a yellow outline is invisible on the yellow brick it is
 # drawn around, and this whole feature exists for the case where the new part
@@ -143,7 +143,7 @@ HIGHLIGHT_COLOUR = os.environ.get("LDRAW_INSTRUCTIONS_HIGHLIGHT", "#FF00FF")
 # The most parts one step may add. Two, because that is what a step is for:
 # you find the pieces, you see where they go, you turn the page. It was five,
 # which reads fine on a model that came with its own build order and badly on
-# everything this workbench produces — the agent writes very few markers of its
+# everything this workbench produces - the agent writes very few markers of its
 # own, so a step held whatever was between them, and eleven bricks appearing at
 # once on one page is a picture of a result rather than an instruction.
 #
@@ -153,7 +153,7 @@ STEP_SIZE = 2
 # The page resolution, and the one number that decides how sharp a booklet is.
 #
 # LPub3D renders each step's assembly to a raster sized from the page, so the
-# DPI is not a print setting here — it is the pixel budget every picture in the
+# DPI is not a print setting here - it is the pixel budget every picture in the
 # document is drawn with. At LPub3D's default of 150 the page is 1600x900 and a
 # step assembly comes out around 410x330: perfectly legible as a thumbnail, and
 # visibly soft the moment anyone looks at it on a laptop. At 300 the same
@@ -165,7 +165,7 @@ DPI = int(os.environ.get("LDRAW_INSTRUCTIONS_DPI", "300"))
 # The cover is composed here rather than by LPub3D, so it has to be built at
 # exactly the page resolution or the booklet changes shape halfway through.
 COVER_PIXELS = (round(PAGE_INCHES[0] * DPI), round(PAGE_INCHES[1] * DPI))
-# Rendered larger than it is placed, so it stays sharp when scaled down —
+# Rendered larger than it is placed, so it stays sharp when scaled down -
 # capped, because past about 4k a canvas costs real memory for a difference
 # nobody can see.
 COVER_RENDER = (min(4096, round(COVER_PIXELS[0] * 1.25)),
@@ -189,7 +189,7 @@ TIMEOUT = 1800
 # Rendering the pages at the same time
 #
 # LPub3D draws one page at a time in one process, and a page is a render of the
-# whole assembly so far — so a booklet costs roughly a second a page plus three
+# whole assembly so far - so a booklet costs roughly a second a page plus three
 # for the program to start. At two parts per step that is ninety seconds for a
 # 180-part model and it grows with every model that gets bigger.
 #
@@ -201,7 +201,7 @@ TIMEOUT = 1800
 # Two things this depends on, both learned the hard way:
 #
 # * **The page count has to be known before anything starts.** A range that
-#   runs past the end does not stop at the end — asked for 5-9999 of an
+#   runs past the end does not stop at the end - asked for 5-9999 of an
 #   18-page document LPub3D rendered 9,995 blank pages, and took a minute and a
 #   half doing it. Hence `page_count`, and hence `_drop_empty_steps` above,
 #   without which the count is wrong by however many empty steps there were.
@@ -212,7 +212,7 @@ TIMEOUT = 1800
 # --------------------------------------------------------------------------
 
 # 0 means "decide from the machine". One process per core up to the cap, and
-# the cap is low on purpose — it was measured, not guessed. On a 16-core
+# the cap is low on purpose - it was measured, not guessed. On a 16-core
 # machine, a 178-part model at 92 pages:
 #
 #     1 worker    96.0s
@@ -227,8 +227,8 @@ TIMEOUT = 1800
 WORKERS = int(os.environ.get("LDRAW_INSTRUCTIONS_WORKERS", "0"))
 MAX_WORKERS = 4
 
-# Below this, one process wins. Each worker pays LPub3D's startup — about three
-# seconds, and it loads the parts library again — so splitting a six-page
+# Below this, one process wins. Each worker pays LPub3D's startup - about three
+# seconds, and it loads the parts library again - so splitting a six-page
 # booklet spends more on starting than it saves on drawing.
 MIN_PAGES_TO_SPLIT = 10
 # And no worker takes fewer than this, so a 12-page booklet is two processes
@@ -260,7 +260,7 @@ def check_available():
     binary = lpub3d_binary()
     if not binary:
         raise NotAvailable(
-            "LPub3D is not installed. See simulator/README.md — extract the "
+            "LPub3D is not installed. See simulator/README.md - extract the "
             "AppImage in simulator/ and link it onto PATH as 'lpub3d'.")
     if not os.environ.get("DISPLAY") and not os.environ.get("WAYLAND_DISPLAY"):
         raise NotAvailable(
@@ -304,7 +304,7 @@ def _even(parts, step_size):
 def add_steps(text, step_size=STEP_SIZE):
     """Split a model into build steps of at most ``step_size`` parts.
 
-    Every ``0 STEP`` the author wrote is kept — none is ever removed, so their
+    Every ``0 STEP`` the author wrote is kept - none is ever removed, so their
     build order survives exactly. What is added is markers *inside* the steps
     that are too long, and markers throughout a model that has none at all.
 
@@ -314,7 +314,7 @@ def add_steps(text, step_size=STEP_SIZE):
     conclusion was still wrong: the agent writes a marker every ten or twenty
     parts, which is a fine outline of a build and a terrible page of an
     instruction booklet. Splitting inside a step the author already closed
-    cannot reorder anything — it only says where to stop and look.
+    cannot reorder anything - it only says where to stop and look.
     """
     lines = text.splitlines()
     step_size = max(1, int(step_size or STEP_SIZE))
@@ -345,7 +345,7 @@ def _drop_empty_steps(lines):
     """Join up, minus any step marker with no parts in front of it.
 
     An empty step is a page with nothing added on it, and LPub3D agrees: it
-    renders no page at all for one. That silence is the problem — it makes the
+    renders no page at all for one. That silence is the problem - it makes the
     document one page shorter than its step count, and the whole of the
     parallel render below is built on knowing how many pages there are before
     anything is rendered. Two of three sample models had one.
@@ -372,8 +372,8 @@ def _drop_empty_steps(lines):
 def page_count(text):
     """How many pages LPub3D will make of a prepared model.
 
-    One per step, which holds exactly because ``prepare`` leaves no empty ones
-    — see ``_drop_empty_steps``. Checked against the renderer in
+    One per step, which holds exactly because ``prepare`` leaves no empty ones -
+    see ``_drop_empty_steps``. Checked against the renderer in
     ``tools/check_instructions.py``; if it ever drifts, the parallel render
     below notices (it counts what came back) and the pages are still right.
     """
@@ -384,7 +384,7 @@ _PLACEMENT = re.compile(r"^\s*1\s+\S+\s+(-?[\d.eE+]+)\s+(-?[\d.eE+]+)\s+(-?[\d.e
 
 # What one part adds to the spread between two placements: a placement is an
 # origin, and the plastic reaches out around it. Two studs is the ordinary
-# brick and it does not have to be exact — this decides a scale, not a fit.
+# brick and it does not have to be exact - this decides a scale, not a fit.
 _PART_ALLOWANCE = 40.0
 
 
@@ -433,7 +433,7 @@ def _highlight_metas():
 
     `SETUP` must come before `ENABLED` and both must be GLOBAL in the header of
     the top model, or LPub3D discards the pair with "FADE_STEPS SETUP must
-    precede FADE_STEPS ENABLED" — which is why each setting is written before
+    precede FADE_STEPS ENABLED" - which is why each setting is written before
     the ENABLED that closes its group. See HIGHLIGHT_STEPS for why this is off.
     """
     if not HIGHLIGHT_STEPS:
@@ -471,7 +471,7 @@ def prepare(text, step_size=STEP_SIZE, scale=None):
     """A model ready for LPub3D: page metas at the top, steps throughout.
 
     ``scale`` overrides the assembly magnification; None sizes it to the model
-    so a big one is drawn from further back — see ``assembly_scale``.
+    so a big one is drawn from further back - see ``assembly_scale``.
     """
     body = add_steps(text, step_size).splitlines()
     if not body:
@@ -490,7 +490,7 @@ def _truetype(filename):
     """One of the app's webfonts as TrueType bytes, or None.
 
     The app ships woff2, which FreeType cannot open, so the face is converted
-    in memory — once per face, since fitting a title to the page asks for a
+    in memory - once per face, since fitting a title to the page asks for a
     dozen sizes of it.
     """
     source = FONTS_DIR / filename
@@ -535,7 +535,7 @@ def logo_image(path, height=132):
     """Draw the Maister Builder mark and wordmark to a PNG.
 
     A 2x2 brick seen from above in the four System colours, studs and all,
-    with the wordmark beside it — the same mark the app wears, redrawn at
+    with the wordmark beside it - the same mark the app wears, redrawn at
     print size rather than scaled up from a favicon.
     """
     from PIL import Image, ImageDraw
@@ -641,7 +641,7 @@ def cover_page(title, model_text, target, work_dir):
     """The front page: the finished model, its name, and whose workbench it is.
 
     Composed here rather than by LPub3D, whose INSERT COVER_PAGE meta quietly
-    exports nothing at all in console mode — it wants the GUI. Drawing it is
+    exports nothing at all in console mode - it wants the GUI. Drawing it is
     also the only way to put things exactly where they belong: the name at the
     top, the model filling the middle, the mark in the bottom-left corner.
     """
@@ -755,7 +755,7 @@ def _render_range(binary, source, target, pages=None, timeout=TIMEOUT):
             env={**os.environ, "LPUB3D_DISABLE_UPDATE_CHECK": "1"})
     except subprocess.TimeoutExpired:
         raise NotAvailable(
-            f"LPub3D did not finish within {timeout}s — the model may be too "
+            f"LPub3D did not finish within {timeout}s - the model may be too "
             f"large to page.") from None
     if not Path(target).is_file():
         where = f" (pages {pages[0]}-{pages[1]})" if pages else ""
@@ -764,7 +764,7 @@ def _render_range(binary, source, target, pages=None, timeout=TIMEOUT):
 
 
 def _booklet(binary, source, target, pages, timeout=TIMEOUT, workers=None):
-    """The stepped pages, rendered — in several processes where that is faster.
+    """The stepped pages, rendered - in several processes where that is faster.
 
     Falls back to one process for anything that goes wrong with the split. A
     booklet rendered slowly is the outcome this had before; a booklet with
@@ -880,7 +880,7 @@ def _safe_stem(name):
 
 
 # LPub3D prefixes each log line with its level, and one INFO line lists every
-# level there is — so the level has to be matched where it sits, not anywhere.
+# level there is - so the level has to be matched where it sits, not anywhere.
 _TROUBLE = re.compile(r"^\s*(ERROR|FATAL)\b|process failed|Cannot open device",
                       re.IGNORECASE)
 

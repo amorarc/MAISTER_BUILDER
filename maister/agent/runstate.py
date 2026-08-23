@@ -5,7 +5,7 @@ it. That is not a decision, it is a coincidence: it ends a run that wrote
 nothing exactly as readily as one that finished, and it gave the user no way to
 tell the two apart.
 
-So ending is a tool now — ``finish`` — and this is the ledger it is checked
+So ending is a tool now - ``finish`` - and this is the ledger it is checked
 against. Every write, validation and render is recorded here as it happens, and
 ``gate`` reads the ledger back to answer one question: has this run done the
 work, or is it just tired?
@@ -35,15 +35,15 @@ MAX_ASKS = 10
 # model on it would fail real sets. `objects_in_pieces` was the fault worth
 # having instead, because it unions the stud graph with *contact*.
 #
-# What that leaves open is the case this cap is for. Contact is generous — a part
-# merely resting against the build counts as joined — so a model can be a loose
+# What that leaves open is the case this cap is for. Contact is generous - a part
+# merely resting against the build counts as joined - so a model can be a loose
 # heap held together by nothing but proximity and still pass every check on the
 # page. The stud graph is the one that says what real bricks actually clutch.
 #
 # So: a ceiling rather than a fault, low, and applied at the gate rather than in
 # the checker. Measured over the 28 subbuilds this project has on disk, of the 18
 # that pass validation 17 already sit at three or fewer. The one that does not is
-# a minifigure whose accessories are held by grips no stud checker can see — the
+# a minifigure whose accessories are held by grips no stud checker can see - the
 # case `validate` excuses everywhere else, and the price of this being a count
 # rather than a judgement.
 #
@@ -63,7 +63,7 @@ def too_many_pieces(report, objects="whole"):
     to forget.
 
     Answers False for anything but a single object, and for a report with no
-    count in it — an unvalidated model is refused by the gate for being
+    count in it - an unvalidated model is refused by the gate for being
     unvalidated, which is the more useful thing to say about it.
     """
     if objects != "whole":
@@ -100,7 +100,7 @@ class RunState:
         # "whole" for a builder: it was given one object and one file, so every
         # part in it belongs to that object and has to be joined to the rest.
         # "blocks" for the assembly pass, where one block is one object and the
-        # objects are *meant* not to touch — a tree beside a car is a scene, and
+        # objects are *meant* not to touch - a tree beside a car is a scene, and
         # joining them would be the fault. None asks nothing.
         #
         # Declared here rather than worked out from the file because no reading
@@ -108,28 +108,28 @@ class RunState:
         # that means "what you add at this step". See validation._disconnected.
         self.objects = objects
 
-        # The design brief for this build — what it should look like, settled
+        # The design brief for this build - what it should look like, settled
         # before the run started. See brief.py. It rides on the ledger so that
         # `plan_construction` is written against it without the builder having
         # to remember to pass it in.
         self.brief = None
 
         # The acceptance criteria this build is judged against, written before
-        # it started and stored on disk — see requirements.py. The builder does
+        # it started and stored on disk - see requirements.py. The builder does
         # not decide it has finished any more; this list does, and it is put to
         # the model at the end of every iteration.
         self.requirements = None
-        # path -> {"seq": n, "result": {...}} — the last answer to that list.
+        # path -> {"seq": n, "result": {...}} - the last answer to that list.
         self.requirement_checks = {}
 
         # The real sets found for this object before the build started, opened
-        # up — see refsets.py. Here for the same reason the brief is: the plan
+        # up - see refsets.py. Here for the same reason the brief is: the plan
         # has to be written against the sets the builder is holding, not
         # against a second search that may return different ones.
         self.reference_sets = None
 
         # This agent's own earlier work on this subject, found and opened
-        # before the build started — see recall.py. Same reasoning as the line
+        # before the build started - see recall.py. Same reasoning as the line
         # above it, applied to the two stores that were only ever pulled: the
         # creations library and the notes were reachable and were not reached,
         # so the harness reaches instead and puts what it found on the ledger,
@@ -137,7 +137,7 @@ class RunState:
         self.recalled = None
 
         # What was already on the workbench when this run began, read and
-        # looked at before anything was split or planned — see survey.py. Here
+        # looked at before anything was split or planned - see survey.py. Here
         # for the third time for the same reason as the two above: a plan for a
         # change to an existing model was being written from the raw LDraw
         # source and nothing else, so it knew the file had 200 type-1 lines in
@@ -152,7 +152,7 @@ class RunState:
         self.validations = {}   # path -> {"seq": n, "report": {...}}
         self.renders = {}       # path -> {"seq": n, "images": [...], ...}
         self.critiques = {}     # path -> {"seq": n, "critique": {...}}
-        # path -> {"seq": n, "check": {...}} — the renders judged against the
+        # path -> {"seq": n, "check": {...}} - the renders judged against the
         # reference picture the user attached, when there is one.
         self.reference_checks = {}
         # Set once describe_image has run, so the description travels with the
@@ -164,9 +164,9 @@ class RunState:
         # Whether that picture shows what *this* run has to produce. False for
         # one object of a scene: the picture has the whole scene in it, so a
         # builder given the tree can never make its renders match a photograph
-        # of a lumberjack beside a tree. It still gets the description — the
+        # of a lumberjack beside a tree. It still gets the description - the
         # colours and proportions in it are the specification for its object
-        # too — but it is not held to a comparison it has no way to pass.
+        # too - but it is not held to a comparison it has no way to pass.
         self.reference_is_this_build = True
 
         # `ask_vision_model`: how many times this run may put questions to the
@@ -181,7 +181,7 @@ class RunState:
         # nothing when the questions are real.
         #
         # So it is a flat allowance for the whole run instead. The cap is still
-        # there, because the failure it was built against is real — a builder
+        # there, because the failure it was built against is real - a builder
         # allowed to ask without limit asks one question at a time, waits, asks
         # the next, and spends the run interviewing a photograph instead of
         # placing bricks, at one vision call each. Ten is far more than a build
@@ -194,7 +194,7 @@ class RunState:
         #
         # None is a builder: it owns the file it is writing and may rewrite it
         # as often as it likes. "assembly" is the pass that composes finished
-        # objects into a scene — it may reach into the file for the small
+        # objects into a scene - it may reach into the file for the small
         # joining work that moving whole objects cannot do, and it may not use
         # that to redesign a component. See `_assembly_guard` in tools.py,
         # which is where the difference is actually decided.
@@ -300,7 +300,7 @@ class RunState:
         """Parts off the stud grid in the latest validation of ``path``.
 
         Kept apart from the other faults because it is the one no run may end
-        holding. A missing part can genuinely defeat a build — the element does
+        holding. A missing part can genuinely defeat a build - the element does
         not exist and no coordinate saves it. A part off the grid is never that:
         it is a number that wants rounding to the lattice, the report says which
         line and by how much, and a model carrying one cannot be built out of
@@ -333,7 +333,7 @@ class RunState:
             "validated": self._fresh(self.validations, path) if path else False,
             "passed": self.passed(path) if path else False,
             # Said here as well as in the report, because this is the line the
-            # builder reads before it decides to call `finish` — and finding out
+            # builder reads before it decides to call `finish` - and finding out
             # about the ceiling from a rejection costs a step that this saves.
             "subassemblies": self.subassemblies(path) if path else None,
             "may_end_with": (MAX_SUBASSEMBLIES
@@ -362,13 +362,13 @@ class RunState:
 
         ``problems`` is what is missing, in the order it should be dealt with,
         and ``next_step`` is the single tool call that would clear the first of
-        them — a rejection that does not say what to do next is how a model
+        them - a rejection that does not say what to do next is how a model
         gets stuck calling ``finish`` over and over.
         """
         path = path or self.current()
 
         if path is None:
-            return False, ["nothing has been written yet — this run has "
+            return False, ["nothing has been written yet - this run has "
                            "produced no model at all"], \
                    ("edit_model with the model you have, even if it is rough: "
                     "insert it at line 1")
@@ -377,7 +377,7 @@ class RunState:
 
         if not self._fresh(self.validations, path):
             problems.append(
-                f"`{path}` has been written but not validated since — you do "
+                f"`{path}` has been written but not validated since - you do "
                 f"not know whether it is buildable")
             next_step = next_step or f"validate_model on `{path}`"
         elif not self.passed(path):
@@ -403,7 +403,7 @@ class RunState:
                 f"most {MAX_SUBASSEMBLIES}: past that it is not a model, it is "
                 f"a handful of clumps standing near each other, and picking it "
                 f"up in real bricks would leave {pieces - 1} of them behind. "
-                f"Note that this is stricter than the faults above — parts "
+                f"Note that this is stricter than the faults above - parts "
                 f"merely touching count as joined there, and only studs count "
                 f"here.")
             loose = self.loose_pieces(path)
@@ -416,30 +416,30 @@ class RunState:
                         for row in loose[:6]))
             next_step = next_step or (
                 "seat those clumps on the build. For each one, move it until "
-                "its parts sit on real studs of the main body — x and z on "
+                "its parts sit on real studs of the main body - x and z on "
                 "multiples of 20 LDU, y on the level the part beneath puts it "
-                "at — or bridge the gap with a plate long enough to reach "
+                "at - or bridge the gap with a plate long enough to reach "
                 "both. Then validate_model and finish again.")
 
         if self.require_render and not self._fresh(self.renders, path):
             problems.append(
-                f"`{path}` has not been rendered since it was last written — "
+                f"`{path}` has not been rendered since it was last written - "
                 f"nobody has seen what it looks like")
             next_step = next_step or (
-                f"validate_model on `{path}` — it renders and looks at the "
+                f"validate_model on `{path}` - it renders and looks at the "
                 f"model as well as checking the grid")
         elif (self.require_render and self.require_vision
                 and not self._fresh(self.critiques, path)):
             problems.append(
-                f"`{path}` has been rendered but not looked at — a model can "
+                f"`{path}` has been rendered but not looked at - a model can "
                 f"pass every check and still not look like what was asked for")
             next_step = next_step or (
-                f"validate_model on `{path}` — it always renders and looks, so "
+                f"validate_model on `{path}` - it always renders and looks, so "
                 f"one call is all this needs")
 
         # The checklist, which is what actually ends a run now. It is checked
         # by the harness at the end of each iteration rather than by anything
-        # the builder calls — this clause only catches a `finish` arriving
+        # the builder calls - this clause only catches a `finish` arriving
         # before the check has been put, or while it is still failing. See
         # requirements.py and LDrawAgent._requirements_gate.
         wanted = requirements_module.items(self.requirements)
@@ -450,7 +450,7 @@ class RunState:
                     f"the {len(wanted)} requirement(s) this build is judged "
                     f"against have not been checked against the model yet")
                 next_step = next_step or (
-                    f"validate_model on `{path}` — the requirements are put to "
+                    f"validate_model on `{path}` - the requirements are put to "
                     f"the model every time an iteration ends, and that is what "
                     f"finishes the run")
             elif not result.get("passed"):
@@ -461,10 +461,10 @@ class RunState:
                     + (f", +{len(unmet) - 4} more" if len(unmet) > 4 else ""))
                 next_step = next_step or (
                     "build what those requirements ask for, then "
-                    "validate_model — the list is checked again each time")
+                    "validate_model - the list is checked again each time")
 
         # The picture the user attached is the specification, so a model that
-        # does not read as it is not finished — however cleanly it validates.
+        # does not read as it is not finished - however cleanly it validates.
         # Only a checked-and-failed comparison blocks: a reference that could
         # not be compared at all (no vision model, no renderer) must not strand
         # the run in a check it has no way to pass.
@@ -474,7 +474,7 @@ class RunState:
             if check is None and self.require_vision:
                 problems.append(
                     "this build has a reference picture and has not been "
-                    "compared against it — you do not know whether you built "
+                    "compared against it - you do not know whether you built "
                     "the right thing")
                 next_step = next_step or f"validate_model on `{path}`"
             elif check is not None and check["check"].get("matches") is False:
@@ -483,8 +483,8 @@ class RunState:
                     f"the model does not look like the reference picture: "
                     f"{verdict}")
                 next_step = next_step or (
-                    "fix the differences marked fatal and major — composition "
-                    "and colour first — then write the model and "
+                    "fix the differences marked fatal and major - composition "
+                    "and colour first - then write the model and "
                     "validate_model it again")
 
         if problems:
@@ -497,7 +497,7 @@ class RunState:
         Giving up is a good answer to a build that cannot be made. It is not an
         answer to arithmetic. Every part named here is off the stud grid by a
         stated number of LDU, on a stated line, and moving it onto the lattice
-        is the whole of the fix — so a run that stops here has not hit a wall,
+        is the whole of the fix - so a run that stops here has not hit a wall,
         it has stopped short of the last edit.
         """
         rows = self.misaligned()
@@ -514,16 +514,16 @@ class RunState:
             "finished": False,
             "why": (f"{len(rows)} part(s) are off the stud grid, and a model "
                     f"that is off the grid cannot be built out of real bricks. "
-                    f"This is not something to give up on — every one of them "
+                    f"This is not something to give up on - every one of them "
                     f"is a coordinate that needs rounding onto the lattice."),
             "misaligned_parts": rows[:8],
             "problems": [f"{listed}{more}"],
             "do_next": ("`edit_model`, replacing each of those lines with the "
-                        "same part at the nearest grid position — x and z on "
+                        "same part at the nearest grid position - x and z on "
                         "multiples of 20 (10 for a jumper's half stud), y on "
                         "the level the part below it puts it at. Then "
                         "`validate_model` and `finish` again."),
-            "note": ("give_up is for a build that genuinely cannot be made — a "
+            "note": ("give_up is for a build that genuinely cannot be made - a "
                      "part that does not exist, geometry that will not resolve. "
                      "It does not cover parts that are merely in the wrong "
                      "place."),
@@ -538,7 +538,7 @@ class RunState:
             "problems": problems,
             "do_next": next_step,
             "note": ("Fix these and call finish again. If you genuinely cannot "
-                     "— a part does not exist, the geometry will not resolve — "
+                     "- a part does not exist, the geometry will not resolve - "
                      "call finish with give_up=true and blocked_by set to what "
                      "stopped you. That is an honest answer and it is accepted; "
                      "claiming success is not."),

@@ -44,8 +44,8 @@ expressed in the submodel's own coordinates. When you place a submodel at
 `(0, −6, 20)`, a part inside it at `(0, −32, 0)` ends up at `(0, −38, 20)` in the
 finished model.
 
-Build each submodel **around its own origin** — typically with its bottom face at
-y = 0 — then position it once in the parent. Do not scatter a submodel's parts
+Build each submodel **around its own origin** - typically with its bottom face at
+y = 0 - then position it once in the parent. Do not scatter a submodel's parts
 around arbitrary coordinates and try to compensate in the parent transform.
 
 Two submodels that must connect to each other have to line up on the stud grid
@@ -55,7 +55,7 @@ of 8 in y.
 
 ## Steps
 
-`0 STEP` ends a building step. Emit one after each meaningful group of parts —
+`0 STEP` ends a building step. Emit one after each meaningful group of parts -
 roughly what a real instruction booklet would show on one page. Steps carry no
 geometry meaning, so they can never break a model, but they make it reviewable.
 

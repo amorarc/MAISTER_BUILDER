@@ -4,7 +4,7 @@ Copyright (c) 2026 the Maister Builder authors
 Licensed under the PolyForm Noncommercial License 1.0.0 (below).
 
 In short: you may use, copy, modify and share this software freely for any
-NONCOMMERCIAL purpose — personal projects, research, teaching, charities and
+NONCOMMERCIAL purpose - personal projects, research, teaching, charities and
 non-profits. You may NOT use it for commercial purposes without a separate
 licence from the copyright holder.
 
@@ -13,7 +13,7 @@ noncommercial restriction is a field-of-use limit, which the Open Source
 Definition does not allow. GitHub will show this repository as having a
 non-standard licence. That is expected and correct.
 
-Third-party material is NOT covered by this licence — see the "Licence and
+Third-party material is NOT covered by this licence - see the "Licence and
 attribution" section of README.md. In particular the LDraw parts library and
 the OMR model corpus are downloaded at setup time under their own terms and
 are not redistributed here.

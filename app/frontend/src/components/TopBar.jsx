@@ -46,8 +46,8 @@ function DocName({ project, onRename }) {
  * row, because a row of seven buttons is read left to right every time you
  * want one of them. Three groups, each divided from the next:
  *
- *   FILE     what this project is — start one, bring one in, take one away
- *   LIBRARY  the shelves either side of it — what it built, what it builds from
+ *   FILE     what this project is - start one, bring one in, take one away
+ *   LIBRARY  the shelves either side of it - what it built, what it builds from
  *   MODEL    what to do with the thing on the baseplate right now
  *
  * and the cog on its own at the end, since settings belong to the app rather
@@ -128,12 +128,12 @@ export default function TopBar({
       )}
 
       {/* The grid verdict used to sit here too. It is already in three other
-          places — the rail foot breaks it down, the editor foot counts the
+          places - the rail foot breaks it down, the editor foot counts the
           problems, and anything that needs a fix is named along the bottom
-          edge — so up here it was the same sentence for the fourth time. */}
+          edge - so up here it was the same sentence for the fourth time. */}
 
       <div className="topbar-actions">
-        {/* FILE — where a project comes from */}
+        {/* FILE - where a project comes from */}
         <div className="topbar-group" role="group" aria-label="File">
           <button
             className={`btn ${open || gallery || parts ? "" : "btn--primary"}`}
@@ -146,7 +146,7 @@ export default function TopBar({
           </button>
         </div>
 
-        {/* LIBRARY — the two shelves. Each button goes both directions: onto
+        {/* LIBRARY - the two shelves. Each button goes both directions: onto
             its shelf and back off it. */}
         <div className="topbar-group" role="group" aria-label="Library">
           <button className="btn" aria-pressed={gallery} onClick={onGallery}>
@@ -162,7 +162,7 @@ export default function TopBar({
           </button>
         </div>
 
-        {/* MODEL — what to do with what is on the baseplate */}
+        {/* MODEL - what to do with what is on the baseplate */}
         {open && (
           <div className="topbar-group" role="group" aria-label="This model">
             {source ? (
@@ -176,7 +176,7 @@ export default function TopBar({
                 <button className="btn" onClick={onSaveToGallery} disabled={saving}>
                   {saving ? "Saving…" : "Save to gallery"}
                 </button>
-                {/* the model as a booklet — only meaningful next to the model
+                {/* the model as a booklet - only meaningful next to the model
                     itself */}
                 <button className="btn" onClick={onInstructions} disabled={building}>
                   {building ? "Building…" : "Instructions"}
@@ -195,7 +195,7 @@ export default function TopBar({
         <button
           className="btn btn--icon topbar-cog"
           onClick={onSettings}
-          title="Settings — model, provider, all projects"
+          title="Settings - model, provider, all projects"
           aria-label="Settings"
         >
           ⚙

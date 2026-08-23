@@ -17,13 +17,13 @@ it validated. They get separate tools so the agent cannot blur the two.
 
 The static indexes are built from CSV catalogues. The appendable ones are
 written a row at a time as the agent works, and are fully derived from
-`data/agent_creations/metadata.json` and `data/agent_knowledge/notes.json` —
+`data/agent_creations/metadata.json` and `data/agent_knowledge/notes.json` -
 rebuilding them repairs a lost index without losing anything recorded.
 
 Models, both run locally on the GPU:
 
-- **[Qwen/Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B)** — 1024-dim embeddings
-- **[Qwen/Qwen3-Reranker-0.6B](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B)** — cross-encoder reranking of the shortlist
+- **[Qwen/Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B)** - 1024-dim embeddings
+- **[Qwen/Qwen3-Reranker-0.6B](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B)** - cross-encoder reranking of the shortlist
 
 ## Build
 
@@ -33,7 +33,7 @@ python -m maister.retrieval.build_indexes --only sets
 ```
 
 Rebuild after editing `documents.py` or re-downloading a catalogue. The float
-matrix is never written to disk — quantization happens before saving.
+matrix is never written to disk - quantization happens before saving.
 
 ## Appendable stores
 
@@ -41,7 +41,7 @@ An index the agent writes into has no corpus when its first row arrives, which
 is a problem: per-dimension calibration fit over two rows is meaningless.
 `AppendableStore` handles it in two phases.
 
-**Borrowed.** Below 64 rows it uses the parts index's calibration — same
+**Borrowed.** Below 64 rows it uses the parts index's calibration - same
 embedding model, so the per-dimension statistics transfer. Measured on set
 vectors, borrowing costs 0.0015 of cosine fidelity (0.99846 against 0.99993 for
 own-corpus calibration), far below what changes a ranking. Small stores also
@@ -49,7 +49,7 @@ skip the binary coarse filter entirely, so the weaker transfer of bit thresholds
 never comes into play.
 
 **Own.** Past 64 rows, and again on every doubling, the store recalibrates on
-its own vectors. That needs the original floats, which are not stored — so the
+its own vectors. That needs the original floats, which are not stored - so the
 payload always keeps the `document` text and the store re-embeds itself. 80
 incremental adds take ~1.2 s including the recalibration pass.
 
@@ -66,7 +66,7 @@ three creations matches *everything*, and `"spaceship"` returning the pine tree
 invites the agent to build from an unrelated reference.
 
 The reranker cannot supply this gate. It orders results correctly but its scores
-are not comparable across queries — a correct hit measured 0.0055 on one query
+are not comparable across queries - a correct hit measured 0.0055 on one query
 and a wrong hit 0.0054 on another. Cosine is calibrated; measured over good and
 bad query/answer pairs:
 
@@ -128,7 +128,7 @@ Latency, steady state (models warm):
 |---|---|---|
 | `search_parts` | 280 ms | 87 ms |
 | `search_sets` | 352 ms | 22 ms |
-| `find_similar_sets` | — | 2.4 ms |
+| `find_similar_sets` | - | 2.4 ms |
 
 Reranking is on by default: it is small against LLM latency and it is what
 separates "Slope Brick Curved 2 x 2" from the twelve patterned variants that
@@ -139,28 +139,28 @@ embed almost identically. Set `LDRAW_RERANK=0` to disable it globally, or pass
 
 `search_parts` fuses two rankings with reciprocal-rank fusion (k=60):
 
-- the **lexical** scorer in `maister/agent/catalog.py` — requires every query term
+- the **lexical** scorer in `maister/agent/catalog.py` - requires every query term
   to appear verbatim, so it is precise for `"brick 2 x 4"` and returns nothing
   for `"something curved for a car roof"`
-- **semantic** vector search — the opposite failure mode
+- **semantic** vector search - the opposite failure mode
 
 Two corrections sit on top of the fused ranking, because pure similarity gets
-both cases wrong in the same direction — it prefers the elaborate variant over
+both cases wrong in the same direction - it prefers the elaborate variant over
 the plain mould:
 
 - **Exact hits are pinned**, bypassing fusion and the reranker: a query token
   matching a `part_id`, or a query equal to a part's normalized description.
   Without the pin, `"brick 2 x 4"` returns *Brick 2 x 4 with Train Wheels* above
   plain `3001`.
-- **Decorated parts sink below plain ones** — anything whose description mentions
+- **Decorated parts sink below plain ones** - anything whose description mentions
   a pattern, sticker, print or logo. These are the same shape as the mould they
   decorate, so they embed almost identically, and `"something curved for a car
   roof"` used to return *Slope Brick Curved 2 x 2 with Black "targa" Pattern*
   ahead of plain `15068`. A printed part is specific to the one set it shipped
   in. The demotion is skipped when the query itself asks for a pattern or logo.
 
-Set search is purely semantic — there is no useful keyword match against a set
-name — filtered by theme, year and piece count.
+Set search is purely semantic - there is no useful keyword match against a set
+name - filtered by theme, year and piece count.
 
 Both degrade to keyword-only if the databases have not been built, so the agent
 keeps working before the first build.
@@ -184,7 +184,7 @@ maister/agent/creations.py   the agent's model library
 maister/agent/notes.py       the agent's notes, with subject validation
 ```
 
-Notes are validated against a real subject on write — a note filed against a
+Notes are validated against a real subject on write - a note filed against a
 part number that does not exist is worse than no note, because it is a
 confident-looking record of something hallucinated that will be retrieved and
 believed later. Notes on a part are folded into `get_part_details`
@@ -197,7 +197,7 @@ through `search_reference(kind="notes", subject_id=...)`, since
 Embedding quality is decided in `documents.py`, not in the model. The templates
 expand what the CSV encodes tersely (`"Brick  2 x  4"` becomes a sentence naming
 its footprint, height and whether anything can attach on top) and add the
-vocabulary a *user* would reach for. Changing a template means rebuilding —
+vocabulary a *user* would reach for. Changing a template means rebuilding -
 `TEMPLATE_VERSION` and the model name are recorded in each `manifest.json`.
 
 Environment variables: `LDRAW_EMBED_MODEL`, `LDRAW_RERANK_MODEL`,

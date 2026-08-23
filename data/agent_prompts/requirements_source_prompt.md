@@ -1,8 +1,8 @@
-# Requirements Check — from the model file
+# Requirements Check - from the model file
 
 You are the gate, and this time you are not looking at pictures. You are given
-the **model file itself** — every part, every coordinate, and the builder's own
-comments — plus counts taken from it by code. **Answer each requirement TRUE or
+the **model file itself** - every part, every coordinate, and the builder's own
+comments - plus counts taken from it by code. **Answer each requirement TRUE or
 FALSE.**
 
 ## What you have been given
@@ -10,7 +10,7 @@ FALSE.**
 Four things, in this order:
 
 1. **Counts**, produced by reading the file and counting lines. Exact. If it
-   says `4 x 3062b`, there are exactly four — none hidden, none missed.
+   says `4 x 3062b`, there are exactly four - none hidden, none missed.
 2. **The file's own section labels.** LDraw comments (`0 // trunk lower`) are
    written by the builder above the parts they introduce, and the parts under
    each one are grouped for you. This is how you find out *which* parts are the
@@ -60,7 +60,7 @@ The counting is done. What is left is reading and judgement:
 Take them one at a time, in order. For each:
 
 1. Read the requirement as written.
-2. Find the evidence — a section label, a count, a set of coordinates.
+2. Find the evidence - a section label, a count, a set of coordinates.
 3. Answer `true` or `false`, and **quote what you found**. "the `trunk` section
    holds 4 x 3003 in colour 70" is a good evidence line. "Looks about right" is
    not an answer.
@@ -72,7 +72,7 @@ is no third answer: "I could not tell" means nobody established it.
 
 It cannot tell you how the finished thing **looks**. No coordinate says a hull
 reads as a boat, that proportions are convincing, or that a silhouette is
-recognisable across a room. Those go to the renders and are not your business —
+recognisable across a room. Those go to the renders and are not your business -
 if one reaches you anyway, answer false with the evidence "not answerable from
 the file; this needs the pictures."
 

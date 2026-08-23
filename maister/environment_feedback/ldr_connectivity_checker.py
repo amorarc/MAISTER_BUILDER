@@ -11,7 +11,7 @@ A collision check (see ldr_collision_checker.py) cannot tell a correct build
 from a broken one. Two bricks that are properly connected overlap by ~4 LDU
 (the stud sits inside the anti-stud), and a bracket's bounding box legitimately
 encloses space another brick occupies. Meanwhile a plate resting *between*
-studs — physically impossible — also overlaps by ~4 LDU. The signals are
+studs - physically impossible - also overlaps by ~4 LDU. The signals are
 identical.
 
 What separates them is the stud grid: a System part attaches only where a stud
@@ -29,7 +29,7 @@ tells male from female without name-matching guesswork.
 Anti-studs (female) are NOT read from the tube geometry: a 2x2 brick has one
 central tube at (0,0) that grips four studs at (+-10,+-10), so tube position is
 not receiving position. Instead the receiving grid is the part's own stud grid
-projected onto its bottom face — a 2x2 brick has studs at (+-10,+-10) and
+projected onto its bottom face - a 2x2 brick has studs at (+-10,+-10) and
 receives at (+-10,+-10), which holds for bricks, plates and their relatives.
 Parts with no studs at all (tiles, slopes, cheese wedges) fall back to a 20 LDU
 lattice inferred from their footprint.
@@ -46,7 +46,7 @@ same element attaches the other way up, its own stud entering the tube at the
 centre of the four receiving positions above it.
 
 Both leave the part exactly half a stud off the grid in x and z, which is the
-signature of a broken build everywhere else — a flat 14.14 LDU (10 * sqrt 2)
+signature of a broken build everywhere else - a flat 14.14 LDU (10 * sqrt 2)
 from four points at once. It is checked separately, after the stud grid has
 had its say, and only for parts whose wall really is round at stud radius;
 a 2x2 round brick offset the same way grips nothing and still fails.
@@ -82,7 +82,7 @@ import sys
 
 # Imported two ways, and both have to work: as a package member
 # (`maister.environment_feedback.ldr_connectivity_checker`), and as a top-level
-# module — which is the path every build actually takes, because
+# module - which is the path every build actually takes, because
 # maister/agent/validation.py puts this directory on sys.path and imports the
 # checkers bare.
 try:
@@ -108,7 +108,7 @@ CRADLE_OFFSET = STUD_PITCH / 2.0
 def _is_stud_primitive(name):
     """
     True for a leaf stud primitive. "stug*" files are stud *groups* (e.g.
-    stug-2x2.dat holds four stud.dat references) — those must be recursed
+    stug-2x2.dat holds four stud.dat references) - those must be recursed
     into, not treated as a single stud.
     """
     base = norm_name(name).split("/")[-1]
@@ -125,7 +125,7 @@ def _normalize(v):
 # --------------------------------------------------------------------------
 # Round elements
 #
-# A 1x1 round brick or plate is 20 LDU across — a whole stud — and its wall is
+# A 1x1 round brick or plate is 20 LDU across - a whole stud - and its wall is
 # a cylinder rather than a box. That is what lets it clutch at the centre of a
 # 2x2 cell of studs: the four stud walls grip the barrel. The same element
 # seats under a plate the other way up, its stud entering the tube at the
@@ -221,8 +221,8 @@ _round_body_cache = {}
 # rims as explicit triangles rather than as a cylinder primitive, so there is
 # no radius to measure and they come back square. They are still round plates.
 #
-# Rather than loosen the geometry — which is what keeps a 2x2 *square* plate
-# out, and that exclusion is load-bearing — the caller may name them. The
+# Rather than loosen the geometry - which is what keeps a 2x2 *square* plate
+# out, and that exclusion is load-bearing - the caller may name them. The
 # checker stays a piece of geometry that knows nothing about the catalogue;
 # whoever has a catalogue fills this in. See maister/agent/validation.py.
 CENTRAL_TUBE_PARTS = set()
@@ -232,13 +232,13 @@ def part_has_central_tube(part_name, library_root, model, bbox_cache):
     """True for a part whose *outer wall* is a cylinder, wider than one stud.
 
     Such a part seats on a single stud at its own centre, so that centre is a
-    receiving position — see part_connection_points.
+    receiving position - see part_connection_points.
 
     The radius has to match the part's own half-width, and that is the whole
     of the test's precision. Every 2x2 plate and brick in the catalogue has a
     circular anti-stud tube inside it, so "contains a cylinder centred on the
     axis" is true of practically everything square and would hand a centre
-    seat to parts that have no business with one — which would then accept a
+    seat to parts that have no business with one - which would then accept a
     half-stud diagonal offset on any 2x2, and that offset is a real fault.
     A cylinder as wide as the part *is* the part: that is a round brick.
     """
@@ -356,12 +356,12 @@ def footprint_lattice(bbox):
     20 x 34, so rounding gave it a 1 x 2 footprint and put two receiving
     positions 10 LDU either side of the one place it can actually be seated.
     Every part carrying a clip, a bar, a tap spout, a hinge stick or a bracket
-    upstand was being told it was half a stud off the grid — in models that
+    upstand was being told it was half a stud off the grid - in models that
     came in a box.
 
     So a box that is not a whole number of studs across is not measured. The
     part's own studs still describe where it seats (see part_connection_points),
-    and where it has none it goes unverified — which is the honest answer for a
+    and where it has none it goes unverified - which is the honest answer for a
     shape this cannot read, and far better than a confident wrong one.
     """
     (minx, _, minz), (maxx, _, maxz) = bbox
@@ -382,11 +382,11 @@ def footprint_lattice(bbox):
 
 
 def tube_lattice(bbox):
-    """Where a part's underside grips a *single* stud — the jumper positions.
+    """Where a part's underside grips a *single* stud - the jumper positions.
 
     A part does not only seat on the grid of studs its own footprint covers. It
     also grips one stud held between them: that is what the tubes and ribs
-    under a plate are, and it is exactly what a jumper plate exists to offer —
+    under a plate are, and it is exactly what a jumper plate exists to offer -
     one stud at the centre of a 1x2, which a 1x2 tile then sits on.
 
     Tiles were the largest group of complaints left on the sound test, and a
@@ -396,7 +396,7 @@ def tube_lattice(bbox):
     The positions are the midpoints between adjacent cells: for a 1xN the N-1
     points along the row, for a WxD the (W-1)x(D-1) interior vertices where a
     2x2's single tube sits. **A 1x1 has no adjacent cells and so gets nothing**,
-    which is what keeps "a 1x1 plate standing between four studs" a fault — it
+    which is what keeps "a 1x1 plate standing between four studs" a fault - it
     has no tube to grip one with.
 
     This is safe in a way it first looks like it should not be. A seat only
@@ -423,7 +423,7 @@ def tube_lattice(bbox):
 
 def is_axis_aligned(m, eps=1e-6):
     """
-    True if the 3x3 is a signed permutation matrix — the part is placed at a
+    True if the 3x3 is a signed permutation matrix - the part is placed at a
     multiple of 90 degrees. A part rotated to an arbitrary angle was placed
     off-grid deliberately (hinge, clip, decorative tilt), so a near-miss to the
     stud grid says nothing about it.
@@ -469,8 +469,8 @@ def part_connection_points(part_name, library_root, stud_cache, bbox_cache, mode
     # For a plain brick or plate the two agree and nothing changes; for a
     # jumper (15573: one stud at the centre but seats on the two normal 1x2
     # positions) the lattice supplies the receiving points the stud grid alone
-    # would miss. For a part whose box is bigger than its footprint — a clip, a
-    # bracket upstand, a tap spout — `footprint_lattice` now declines to guess
+    # would miss. For a part whose box is bigger than its footprint - a clip, a
+    # bracket upstand, a tap spout - `footprint_lattice` now declines to guess
     # and answers with nothing, leaving the part's own studs to say where it
     # seats. See its docstring.
     grid |= set(footprint_lattice(bbox))
@@ -480,7 +480,7 @@ def part_connection_points(part_name, library_root, stud_cache, bbox_cache, mode
     grid |= set(tube_lattice(bbox))
 
     # A round body wider than one stud has a single central tube, and that tube
-    # goes over one stud as readily as over four — a 2x2 round brick on a
+    # goes over one stud as readily as over four - a 2x2 round brick on a
     # lamppost, a dish capping a 1x1. Its centre is therefore a real receiving
     # position and is not among the footprint cells, which sit at +-10 around
     # it. See part_has_central_tube.
@@ -535,8 +535,8 @@ def point_key(p):
 def _cradle_partners(point, candidates, self_index, tolerance):
     """The parts whose points surround `point` at (+-10, +-10) on one plane.
 
-    Returns ``(instances, cell)`` — the parts involved and the four surrounding
-    points themselves — or empty unless all four quadrants are occupied: a round
+    Returns ``(instances, cell)`` - the parts involved and the four surrounding
+    points themselves - or empty unless all four quadrants are occupied: a round
     element resting against one or two studs is held by nothing, and only the
     full 2x2 cell grips it. The four points come back because whether the cell
     is already spoken for is the next question asked about it.
@@ -566,7 +566,7 @@ def build_graph(flat, library_root, model, tolerance):
     for i, inst in enumerate(flat):
         m, f = part_connection_points(inst.src.part_name, library_root,
                                       stud_cache, bbox_cache, model)
-        # "Unresolved" means the part's geometry could not be read — a file
+        # "Unresolved" means the part's geometry could not be read - a file
         # missing from the library, a name that resolves to nothing. It does
         # NOT mean the part has no stud connections: a bracket, a curved slope
         # and a tile with a clip on it are all perfectly readable and none of
@@ -600,7 +600,7 @@ def build_graph(flat, library_root, model, tolerance):
     near_miss = {}   # instance index -> smallest non-mating gap seen
     # Connection is not the same question as support, and conflating them hid
     # a whole class of fault. A part counts as CONNECTED the moment anything
-    # mates with it — including the part standing *on* it — so a roof whose
+    # mates with it - including the part standing *on* it - so a roof whose
     # every slope sat half a stud off the plate below read as fully connected,
     # because the slopes mated with each other. These two answer the other
     # question: did this part's own underside find studs to sit on, and if it
@@ -642,9 +642,9 @@ def build_graph(flat, library_root, model, tolerance):
                             # at the depth this part's underside would take it
                             # at, and in the wrong place across. Measured along
                             # the stud's own axis rather than in plain
-                            # distance, because a stud 20 LDU below — one
+                            # distance, because a stud 20 LDU below - one
                             # belonging to a part this one merely stands
-                            # beside — is not a seating this part missed, and
+                            # beside - is not a seating this part missed, and
                             # counting it flagged a third of every official
                             # set.
                             delta = (pf[0] - pm[0], pf[1] - pm[1], pf[2] - pm[2])
@@ -669,14 +669,14 @@ def build_graph(flat, library_root, model, tolerance):
     # Every round element is examined, not just the ones that came out
     # unconnected: a brick in the middle of a column mates with its own
     # neighbours perfectly well, and it is the *plate* it is cradled by that
-    # ends up with nothing — which is precisely the part that used to be
+    # ends up with nothing - which is precisely the part that used to be
     # reported for a misalignment it had no part in.
     # A 2x2 cell of studs holds one thing. It can carry a part seated on all
     # four of them, or a round element standing in the gap between them, and
     # never both: the round element fills the very space the part above would
     # come down into. Five studs' worth of plastic on four studs is a model
     # that comes apart in your hands, and neither the grid check nor the
-    # collision check sees it — the round element mates legitimately, and its
+    # collision check sees it - the round element mates legitimately, and its
     # box is round rather than solid, so both pass it. Hence this pass.
     crowded = []
 
@@ -712,7 +712,7 @@ def build_graph(flat, library_root, model, tolerance):
             connected.add(i)
             connected.add(j)
             # A cradle is a real seating, and it is the one that is legal
-            # *because* it is half a stud off — so both ends count as seated
+            # *because* it is half a stud off - so both ends count as seated
             # or the check below would report exactly what this pass exists
             # to excuse.
             seated.add(i)
@@ -725,12 +725,12 @@ def build_graph(flat, library_root, model, tolerance):
     #
     # A stud goes into one anti-stud. If two different parts both seated on the
     # same stud they are in the same place, and no amount of shape modelling is
-    # needed to know it — this is a counting argument, not a volume test.
+    # needed to know it - this is a counting argument, not a volume test.
     #
     # That is worth having because the volume test cannot be trusted here. A
     # bounding box is a bad model of a slope, a wedge, an arch or a bracket, so
     # `collisions._NOT_A_BOX` exempts those families from overlap checking
-    # altogether — and the exemption is a blind spot. Two 2x2 slopes placed one
+    # altogether - and the exemption is a blind spot. Two 2x2 slopes placed one
     # stud apart share a full stud of plastic and were reported as a clean
     # model, because "slope" is on that list.
     #
@@ -795,7 +795,7 @@ def classify(flat, connected, near_miss, seated=None, seat_miss=None):
     """Per-part status: CONNECTED, MISALIGNED or UNVERIFIED.
 
     A part is MISALIGNED when its own seating came within a stud pitch of a
-    stud and missed — whether or not something else has since been stacked on
+    stud and missed - whether or not something else has since been stacked on
     top of it. That last clause is the point: a part holding another part up
     while resting on nothing is the fault this check exists to find, and
     treating "something mates with me" as proof of placement lets every one of
@@ -809,7 +809,7 @@ def classify(flat, connected, near_miss, seated=None, seat_miss=None):
     The argument for it was that the fault survives anyway: a misplaced part
     breaks the seating of whatever it failed to sit on, so the model still
     fails and only the reported line changes. Two worked examples agreed. Both
-    were passing for the wrong reason — `near_miss` records against *both*
+    were passing for the wrong reason - `near_miss` records against *both*
     halves of a near pair, so what was actually being failed was the innocent
     brick underneath. The moment `near_miss` stopped failing models (below,
     which is where it belongs) the load-bearing case stopped being caught at
@@ -820,9 +820,9 @@ def classify(flat, connected, near_miss, seated=None, seat_miss=None):
     What separates the two tests that were both landing here is the thing that
     was missing all along:
 
-    * **seat_miss** — the part's own underside lined up in depth with a stud
+    * **seat_miss** - the part's own underside lined up in depth with a stud
       and missed sideways. A placement question, and it fails a model.
-    * **near_miss** — any opposed stud within a stud pitch, in any direction.
+    * **near_miss** - any opposed stud within a stud pitch, in any direction.
       Proximity, not placement. UNVERIFIED.
     """
     seated = seated or set()
@@ -837,8 +837,8 @@ def classify(flat, connected, near_miss, seated=None, seat_miss=None):
         elif i in connected:
             status, gap = "CONNECTED", None
         else:
-            # `near_miss` — any opposed stud within a stud pitch, in any
-            # direction — used to land here as MISALIGNED, and it is not sound
+            # `near_miss` - any opposed stud within a stud pitch, in any
+            # direction - used to land here as MISALIGNED, and it is not sound
             # enough to fail a model on.
             #
             # It asks nothing about placement. It does not require the stud to
@@ -848,7 +848,7 @@ def classify(flat, connected, near_miss, seated=None, seat_miss=None):
             # stud-disconnected. Whether a model failed therefore came down to
             # how crowded the neighbourhood was. Measured over the reference
             # corpus it was 72% of every remaining complaint, and the parts it
-            # named were things like a 1x1 round plate and a tile — sitting in
+            # named were things like a 1x1 round plate and a tile - sitting in
             # sets that were designed, moulded and sold.
             #
             # UNVERIFIED is what this always meant: no stud connection could be
@@ -880,7 +880,7 @@ def print_report(path, rows, comps, unresolved, library_root, tolerance, show_al
     con = [r for r in rows if r[0] == "CONNECTED"]
 
     print(f"LDraw stud-connectivity report for: {path}")
-    print(f"  library: {library_root or '(none — results will be meaningless)'}")
+    print(f"  library: {library_root or '(none - results will be meaningless)'}")
     print(f"  tolerance: {tolerance} LDU")
     print(f"  parts: {len(rows)}")
     print("-" * 70)
@@ -896,19 +896,19 @@ def print_report(path, rows, comps, unresolved, library_root, tolerance, show_al
         print("-" * 70)
 
     if mis:
-        print(f"MISALIGNED — off the stud grid by a non-grid amount ({len(mis)}):")
+        print(f"MISALIGNED - off the stud grid by a non-grid amount ({len(mis)}):")
         for _, inst, gap in sorted(mis, key=lambda r: r[2]):
             print(f"  * {fmt(inst)}")
             print(f"    nearest mating point is {gap:.2f} LDU away "
                   f"(needs <= {tolerance})")
         print("-" * 70)
     else:
-        print("MISALIGNED: none — every part is either on the grid or held by a "
+        print("MISALIGNED: none - every part is either on the grid or held by a "
               "joint this tool does not model.")
         print("-" * 70)
 
     if show_all and unv:
-        print(f"UNVERIFIED — no stud connection found ({len(unv)}):")
+        print(f"UNVERIFIED - no stud connection found ({len(unv)}):")
         for _, inst, _ in unv:
             print(f"  * {fmt(inst)}")
         print("-" * 70)
@@ -919,14 +919,14 @@ def print_report(path, rows, comps, unresolved, library_root, tolerance, show_al
 
     frag = [r for r in fragmentation(rows_flat, comps) if r[1] > 1]
     if frag:
-        print("FRAGMENTED SUBMODELS — parts split across disconnected pieces:")
+        print("FRAGMENTED SUBMODELS - parts split across disconnected pieces:")
         for name, npieces, nparts in frag:
             mark = "  <== BROKEN" if npieces >= 3 else ""
             print(f"  {npieces:3d} pieces / {nparts:3d} parts   {name}{mark}")
         print("-" * 70)
     print("Only stud/anti-stud System connections are modelled. Clips, bars, "
           "Technic pins, hinges and bracket fittings all read as UNVERIFIED "
-          "even when correct — judge that count against a known-good model. "
+          "even when correct - judge that count against a known-good model. "
           "MISALIGNED is the actionable signal.")
 
 
@@ -1000,7 +1000,7 @@ def main():
         sys.exit(2)
 
     if not model.instances:
-        print("No part instances found — nothing to check.")
+        print("No part instances found - nothing to check.")
         sys.exit(0)
 
     flat, _ = unflattened(model) if args.per_block else flatten_model(model)
@@ -1016,7 +1016,7 @@ def main():
     if crowded:
         print(f"\nOVERCROWDED STUDS ({len(crowded)}):")
         print("  A 2x2 cell of studs carries either a part seated on it or a "
-              "round element between the studs — never both.")
+              "round element between the studs - never both.")
         for i, others in crowded:
             lines = ", ".join(str(flat[j].src.line_no) for j in others[:4])
             print(f"  line {flat[i].src.line_no:>5}  {flat[i].src.part_name:<16} "

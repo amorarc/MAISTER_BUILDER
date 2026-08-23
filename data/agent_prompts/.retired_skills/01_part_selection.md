@@ -3,7 +3,7 @@
 ## Never invent a part number
 
 Every `.dat` you reference must have come back from `search_parts` or
-`get_part_details`. Part numbers are LEGO Design IDs — they are not guessable, and
+`get_part_details`. Part numbers are LEGO Design IDs - they are not guessable, and
 a wrong one either fails to resolve or silently pulls in a completely different
 element. If you are unsure a part exists, look it up.
 
@@ -21,7 +21,7 @@ search_parts(query="plate round", category="Plate")
 search_parts(query="slope", width_studs=2, depth_studs=1)
 ```
 
-Plain description, when you know the *shape or job* but not the name — this is
+Plain description, when you know the *shape or job* but not the name - this is
 the case where the old keyword-only search returned nothing and you had to
 guess:
 
@@ -38,11 +38,11 @@ An exact part number or an exact catalogue description always wins: `"3001"`
 returns part 3001 first, and `"brick 2 x 4"` returns the plain brick rather than
 a patterned variant that happens to embed nearby.
 
-Prefer parts with a high `total_uses` — those are common, well-modelled elements
+Prefer parts with a high `total_uses` - those are common, well-modelled elements
 that appear in many real sets. A part used in 3 sets is likely an obscure variant.
 
 If you cannot find a part after two differently-worded searches, look at how a
-real set solved the same problem (see the reference-sets skill) — the parts a
+real set solved the same problem (see the reference-sets skill) - the parts a
 set actually used are a better starting point than a third guess at wording.
 
 ## Reading `get_part_details`
@@ -72,7 +72,7 @@ B.z = A.z + sz
 
 ## The core System vocabulary
 
-These cover most builds. Confirm each with a tool call before use — descriptions
+These cover most builds. Confirm each with a tool call before use - descriptions
 here are for orientation, not for copying blindly.
 
 | Part | What it is | Footprint |
@@ -99,7 +99,7 @@ nothing can attach above it. If you need to build upward, do not put a tile ther
 
 A jumper (`15573`) is the exception that lets you offset by half a stud: it seats
 on two normal positions but presents one stud at the centre, shifting everything
-above it by 10 LDU. Use it deliberately when you need half-stud offsets — do not
+above it by 10 LDU. Use it deliberately when you need half-stud offsets - do not
 fake them by placing parts at non-grid coordinates.
 
 ## Colours

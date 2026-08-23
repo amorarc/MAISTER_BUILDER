@@ -84,8 +84,8 @@ def _ungoverned(flat):
 
     A Technic pin in its hole, an axle through a beam, a pane of glass dropped
     into a window frame, a bar in a clip, a traction band on a wheel: none of
-    these ever seats on a stud, so the connectivity checker's near-miss test —
-    "your underside came within a stud pitch of a stud and missed" — is asking
+    these ever seats on a stud, so the connectivity checker's near-miss test -
+    "your underside came within a stud pitch of a stud and missed" - is asking
     a question they cannot answer. It measures them against a lattice they were
     never on and reports the distance as a fault.
 
@@ -95,7 +95,7 @@ def _ungoverned(flat):
     Deciding it here rather than in the checker is deliberate, and it is the
     arrangement `minifig.py` already uses: the checker stays a generic piece of
     geometry that knows about studs and nothing else, and what a *part* is
-    comes from the catalogue, in this layer. See catalog.seats_on_studs — a
+    comes from the catalogue, in this layer. See catalog.seats_on_studs - a
     part the catalogue does not have comes back None and is judged as before.
     """
     out = set()
@@ -106,8 +106,8 @@ def _ungoverned(flat):
 
 
 # Two parts are touching when their boxes meet in all three axes, give or take
-# this. Parts that are joined normally *overlap* — a stud is 4 LDU tall and
-# sits inside the part above it — so this only has to cover the ones that just
+# this. Parts that are joined normally *overlap* - a stud is 4 LDU tall and
+# sits inside the part above it - so this only has to cover the ones that just
 # meet, plus the rounding in a tyre or a rim.
 CONTACT_GAP = 1.0
 # How deep the ground is: a part counts as standing on it when its underside is
@@ -119,7 +119,7 @@ CONTACT_GAP = 1.0
 #     72 LDU   4/150 sets    54
 #     96 LDU   3/150 sets    53
 #
-# It has to be wide because a *scene* has no single ground — 6346 Shuttle
+# It has to be wide because a *scene* has no single ground - 6346 Shuttle
 # Launching Crew stands its cars, its trailer and its shuttle on ground planes
 # 60 LDU apart, and a narrow band called 305 of its 456 parts flying. Past 48
 # there is almost nothing left to buy, and every LDU of it is sensitivity given
@@ -141,14 +141,14 @@ def _contact_graph(boxes):
 
     **Contact, not the stud graph**, and that choice is measured rather than
     aesthetic. Running reachability over the connectivity graph reported a
-    floating part in 94.7% of real sets — a third of every part in them. That
+    floating part in 94.7% of real sets - a third of every part in them. That
     graph holds only the matings the stud checker can find, and a great many
     real joins leave no edge in it: a clip, a pin, a bracket, a hinge, a stud on
     the side of a brick. Whole assemblies of a real set are then their own
     island. Parts that are joined *touch*, whatever holds them, and touching is
     measurable.
 
-    Built once per validation and used twice — by ``_floating``, which spreads
+    Built once per validation and used twice - by ``_floating``, which spreads
     support up from the ground along it, and by ``_disconnected``, which asks
     whether each object is one piece. Both questions are reachability over this
     same relation, and building it twice was the only thing keeping them apart.
@@ -175,7 +175,7 @@ def _contact_graph(boxes):
 
 
 def _floating(flat, boxes, joined, excused):
-    """Parts held up by nothing — the model, minus everything the ground holds.
+    """Parts held up by nothing - the model, minus everything the ground holds.
 
     The rule is the one asked for: what the ground holds up holds up whatever
     is joined to it, outwards until it stops, and anything the spread never
@@ -183,7 +183,7 @@ def _floating(flat, boxes, joined, excused):
     the 1,819 real sets in the corpus, because both plausible readings of it
     fail badly and neither failure is visible on a small model.
 
-    **What the support spreads along is contact, not the stud graph** — see
+    **What the support spreads along is contact, not the stud graph** - see
     ``_contact_graph``, which is where that measurement is recorded and where
     ``joined`` comes from.
 
@@ -192,7 +192,7 @@ def _floating(flat, boxes, joined, excused):
     tyre: the baseplate is then a plate above the ground, nothing is on the
     ground, and the whole set comes back flying by 8 LDU.
 
-    ``excused`` are parts the stud grid has no jurisdiction over — a
+    ``excused`` are parts the stud grid has no jurisdiction over - a
     minifigure's arm, a bar in a clip. They are not reported, but they still
     carry support to whatever touches them.
     """
@@ -229,8 +229,8 @@ def _pieces(members, joined, edges):
     Over two relations at once: contact, which is what actually holds a build
     together (see ``_contact_graph``), and the stud graph, which is narrower but
     catches the few joins contact cannot see. A round brick's box is shrunk to
-    its inscribed cylinder before anything is measured — that is what stops it
-    colliding with its neighbours' corners — and the same shrink can open a
+    its inscribed cylinder before anything is measured - that is what stops it
+    colliding with its neighbours' corners - and the same shrink can open a
     hair's gap between it and a part it is genuinely seated on. The stud edge
     is still there, so the union has it either way.
     """
@@ -272,12 +272,12 @@ def _disconnected(flat, boxes, joined, edges, excused, scope, max_listed=10):
     One subconstruction is one object, and an object is one thing: every part of
     the tree is joined to the rest of the tree. What is emphatically *not*
     required is that the tree be joined to the car. They are different objects,
-    and a scene with the two of them standing a stud apart is exactly right —
+    and a scene with the two of them standing a stud apart is exactly right -
     joining them would be the fault.
 
     **The model is split into pieces once, globally, and each object is then
-    asked which pieces its parts landed in.** Doing it the other way round —
-    grouping first and connecting within the group — cuts every join that runs
+    asked which pieces its parts landed in.** Doing it the other way round -
+    grouping first and connecting within the group - cuts every join that runs
     through a part belonging to some other group, and a set's top-level loose
     parts are exactly that: the connective tissue that ties its submodels
     together. Measured on 250 corpus sets, that mistake alone accounted for 26
@@ -286,21 +286,21 @@ def _disconnected(flat, boxes, joined, edges, excused, scope, max_listed=10):
     ``scope`` says what an object *is*, and it is declared by the caller rather
     than inferred, because it cannot be read off the file:
 
-    * ``"whole"`` — the file is one object, all of it. This is a subbuild: the
+    * ``"whole"`` - the file is one object, all of it. This is a subbuild: the
       harness gave this agent one object and one file to put it in.
-    * ``"blocks"`` — one object per top-level block, which is what an assembled
+    * ``"blocks"`` - one object per top-level block, which is what an assembled
       scene is. Parts loose in the main model are not an object of their own;
       they are connective tissue and take part only by joining what they touch.
 
     Nothing can infer that from the file, and the corpus is the proof. The OMR
-    sets use submodels to mean *instruction step* — ``step226.ldr``, ``Steps 91
-    to 94.ldr`` — and the parts added at one step are routinely nowhere near
+    sets use submodels to mean *instruction step* - ``step226.ldr``, ``Steps 91
+    to 94.ldr`` - and the parts added at one step are routinely nowhere near
     each other. Twenty of those 70 false alarms were that, and no reading of the
     geometry distinguishes a block that means "an object" from a block that
     means "what you add next". The harness that wrote the file knows; the file
     does not say.
 
-    ``excused`` parts — a minifigure's arm, a bar in a clip — are not *reported*
+    ``excused`` parts - a minifigure's arm, a bar in a clip - are not *reported*
     as the stray, for the same reason they are excused everywhere else: the
     thing that holds them is not a stud and this checker cannot see it. They
     still carry connection to whatever touches them, so an accessory bridging
@@ -337,7 +337,7 @@ def _disconnected(flat, boxes, joined, edges, excused, scope, max_listed=10):
                          if i not in excused),
                         key=lambda i: flat[i].src.line_no)
         # Everything outside the largest clump is made of parts the stud grid
-        # does not govern — an accessory, a pin, a pane of glass. It is adrift,
+        # does not govern - an accessory, a pin, a pane of glass. It is adrift,
         # but nothing here can say by how much or what it should attach to, and
         # a fault nobody can act on is worse than none.
         if not strays:
@@ -363,13 +363,13 @@ def _loose_pieces(flat, boxes, comps, excused, max_listed=10):
     ``subassemblies`` has always been a bare count, which is fine while nothing
     is held to it and useless the moment something is: a builder told its model
     is in nine pieces has nowhere to start looking. Each entry here names one
-    clump — how big it is, a part and line inside it, and how far it sits from
-    the main body — so the count becomes a list of moves.
+    clump - how big it is, a part and line inside it, and how far it sits from
+    the main body - so the count becomes a list of moves.
 
     ``held_by_other_means`` marks a clump made entirely of parts the stud grid
     has no jurisdiction over: a Technic pin, a pane of glass, a minifigure's
     accessory. It is still counted, because the count is over studs and these
-    genuinely have none — but a builder reading the list has to be able to tell
+    genuinely have none - but a builder reading the list has to be able to tell
     "this is adrift" from "this is held by something you cannot see", which are
     the same row otherwise.
     """
@@ -423,9 +423,9 @@ def _lattice_split(model, max_listed=10):
         "move_these": stray[:max_listed],
         "note": ("This is the cause of the `misaligned_parts` above, and it is "
                  "one mistake rather than one per part. A part's studs sit at a "
-                 "fixed offset from its origin that depends on the part — a 6x6 "
+                 "fixed offset from its origin that depends on the part - a 6x6 "
                  "plate's studs are at ±10, ±30, ±50 from its centre, a 1x1's "
-                 "stud is at 0 — so two parts can both sit on multiples of 20 "
+                 "stud is at 0 - so two parts can both sit on multiples of 20 "
                  "and still be half a stud apart, unable to connect. Apply the "
                  "`move` against each line listed and the whole group joins the "
                  "rest of the model; the moves are the same for most of them, "
@@ -441,7 +441,7 @@ def _part_index(flat, rows, comps, assembled, excused):
     learns nothing the count did not already say, and pays for the tokens.
 
     The viewer has the opposite problem. It puts the verdict back onto the
-    model — the parts a check counted light up where they actually are — and a
+    model - the parts a check counted light up where they actually are - and a
     sample there does not read as a sample. It lights a tenth of what is wrong
     and quietly says the rest is fine, which is worse than showing nothing.
 
@@ -450,8 +450,8 @@ def _part_index(flat, rows, comps, assembled, excused):
     ``state`` mirrors the counting rules above exactly rather than the checker's
     own verdict, or the four stats and the four sets of lit parts would disagree
     with each other on screen. A part of an assembled minifigure counts as
-    connected however its studs read; a part nothing on the stud grid governs —
-    a Technic pin, a pane of glass — is ``held`` and counts under none of the
+    connected however its studs read; a part nothing on the stud grid governs -
+    a Technic pin, a pane of glass - is ``held`` and counts under none of the
     three, which is why the three do not add up to ``parts``.
     """
     clump_of = {}
@@ -472,7 +472,7 @@ def _part_index(flat, rows, comps, assembled, excused):
         out.append({
             "line": inst.src.line_no,
             "part": inst.src.part_name,
-            # World space, after submodel expansion — the frame the viewer can
+            # World space, after submodel expansion - the frame the viewer can
             # measure its own loaded parts in, so the two can be matched up
             # without either side counting lines.
             "at": [round(v, 3) for v in inst.pos],
@@ -490,11 +490,11 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     part of one object is joined to the rest of it" can be checked. ``"whole"``
     is one object and fails the model when it comes apart; ``"blocks"`` is one
     object per top-level block and only reports. None, the default, does not
-    ask at all — which is right for a file nobody has told us the shape of.
+    ask at all - which is right for a file nobody has told us the shape of.
     See _disconnected for why this is declared rather than inferred.
 
     ``index`` adds ``connectivity.part_index``: one row per part rather than
-    the capped samples. See _part_index — it is for the viewer, not the agent.
+    the capped samples. See _part_index - it is for the viewer, not the agent.
     """
     library_root = ensure_library_root()
     library = str(library_root) if library_root else None
@@ -502,7 +502,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     # The checker measures a round body off the part's own wall, which works
     # for most of them and not for the few that draw their rim as triangles.
     # The catalogue knows those by name, so it tells it. Idempotent, and the
-    # set is built once — see catalog.round_bodied_parts.
+    # set is built once - see catalog.round_bodied_parts.
     if not conn.CENTRAL_TUBE_PARTS:
         conn.CENTRAL_TUBE_PARTS.update(catalog.round_bodied_parts())
 
@@ -536,7 +536,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     comps = conn.components(len(flat), edges)
 
     # A part verified as belonging to a figure is out of the stud checker's
-    # jurisdiction entirely — in both directions.
+    # jurisdiction entirely - in both directions.
     #
     # It is not UNVERIFIED: it was checked, against the figure rather than
     # against a stud, and leaving it here reports a correct minifigure as nine
@@ -544,14 +544,14 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     #
     # And it is not MISALIGNED either, which is the one that actually failed
     # models. A helmet carries something the checker reads as a stud, so a
-    # helmet sitting correctly on a head comes back "off the stud grid" — it
+    # helmet sitting correctly on a head comes back "off the stud grid" - it
     # is, and it is meant to be, because it is held by the head's neck pin.
     # Judging a clip against a lattice it was never on is a false alarm, and
     # this is where it gets dropped.
     # ...and the same again for every other part held by something the stud
     # checker cannot see. See _ungoverned: a Technic pin, an axle, a pane of
     # glass. Excused from both verdicts for the same reason a minifigure's arm
-    # is — they were checked against the thing that actually holds them, which
+    # is - they were checked against the thing that actually holds them, which
     # is not a stud.
     ungoverned = _ungoverned(flat)
     excused = figures["assembled"] | ungoverned
@@ -610,7 +610,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
                     "over STUD connections alone, and these are the ones that "
                     "are not the main body. It is a stricter question than "
                     "`objects_in_pieces` above, which also counts parts that "
-                    "merely touch — so a build can be clean there and still be "
+                    "merely touch - so a build can be clean there and still be "
                     "listed here. Each entry gives a part and line inside the "
                     "clump and how far it sits from the main body: move it onto "
                     "real studs of the build, or bridge the gap with a plate "
@@ -629,19 +629,19 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
             "objects_in_pieces": apart,
             # Which question was asked, so that an empty list above can be told
             # apart from the question never having been put. They are the same
-            # value and opposite facts — "measured, and it is one piece" is
+            # value and opposite facts - "measured, and it is one piece" is
             # something the visual critic can be held to, and "nobody asked" is
             # not.
             "objects_checked": objects,
             **({"objects_in_pieces_note": (
                 "Each of these is ONE object that came out as several separate "
-                "clumps with nothing joining them — in real bricks it is not one "
+                "clumps with nothing joining them - in real bricks it is not one "
                 "model, it is a handful of loose pieces that fall apart when you "
                 "pick it up. `largest_piece` is the part count of the main clump; "
                 "`detached_parts` are the ones adrift from it, each with the "
                 "`gap_ldu` between it and that clump. Move each one onto the "
-                "build until it touches — a brick is 24 LDU tall, a plate 8, a "
-                "stud 20 across — or bridge the gap with a part that reaches "
+                "build until it touches - a brick is 24 LDU tall, a plate 8, a "
+                "stud 20 across - or bridge the gap with a part that reaches "
                 "both. Do NOT join separate objects to each other: a scene is "
                 "meant to have a tree and a car standing apart, and only the "
                 "insides of each one have to hold together.")}
@@ -656,8 +656,8 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
                 "there is nothing holding them up and they fall. "
                 "`height_ldu` is how far above the model's lowest surface each "
                 "one is. Bring each one down onto the build until its "
-                "underside meets what should carry it — a brick is 24 LDU "
-                "tall, a plate 8 — or build up to it. Moving it sideways does "
+                "underside meets what should carry it - a brick is 24 LDU "
+                "tall, a plate 8 - or build up to it. Moving it sideways does "
                 "not help: the fault is the air underneath.")}
                if floating else {}),
             # Said out loud, because it is the half of this check that passes.
@@ -673,8 +673,8 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
             **{k: overlaps[k] for k in
                ("unchecked_deep_overlaps", "unchecked_overlap_parts",
                 "unchecked_note") if k in overlaps},
-            "note": ("`contacts` are parts touching as they should — a stud "
-                     "inside the part above it — and need no action. "
+            "note": ("`contacts` are parts touching as they should - a stud "
+                     "inside the part above it - and need no action. "
                      "`overlapping_parts` are parts sharing solid plastic, "
                      "measured off the parts' real shapes and given in cubic "
                      "LDU as `shared_ldu3`: each carries the move that "
@@ -690,12 +690,12 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
             "LDraw library and not a part_id in the catalogue - they do not "
             "exist. Search for the part you meant with search_parts and use "
             "the part_id it returns, or define the submodel in the file.")
-    # `shared_studs` — two parts seated on one stud — is deliberately NOT
+    # `shared_studs` - two parts seated on one stud - is deliberately NOT
     # reported, and the reason is worth keeping.
     #
     # As a rule it is exact: a stud goes into one anti-stud, so two parts on
     # one stud are in the same place, and unlike the collision check it needs
-    # no opinion about a part's shape. It catches what that check cannot —
+    # no opinion about a part's shape. It catches what that check cannot -
     # slopes, wedges and brackets are exempt from collision because a bounding
     # box is too poor a likeness of them, and two 2x2 slopes placed one stud
     # apart share a full stud of plastic and validate clean.
@@ -703,8 +703,8 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     # What makes it unusable is the input, not the rule. A part's seats are
     # only partly real: where the part has no studs of its own they are
     # fabricated from its bounding box, and for anything that is not a full
-    # rectangle underneath — a corner plate with three studs in four cells, an
-    # L-shaped bracket spanning both arms, a train base full of holes — the
+    # rectangle underneath - a corner plate with three studs in four cells, an
+    # L-shaped bracket spanning both arms, a train base full of holes - the
     # fabricated cells land on studs that genuinely belong to a neighbour.
     # Turned on, it failed 808 further models of the reference corpus, taking
     # it from 81.8% to 37.4%, and the pairs it named were a corner plate beside
@@ -724,7 +724,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
         result["overcrowded_studs_note"] = (
             "A 2x2 cell of studs carries one thing. Either a part sits on all "
             "four studs, or a round 1x1 element stands in the gap between them "
-            "— never both, because the round element fills the space the part "
+            "- never both, because the round element fills the space the part "
             "above comes down into. Five studs' worth of plastic will not go on "
             "four studs. Move the round element to a cell nothing covers, or "
             "drop the part that covers this one.")
@@ -741,7 +741,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
             # Said out loud because it is the half of this check that passes.
             # A tool in a hand is attached by a grip the stud checker cannot
             # see, so without this line the only evidence it was recognised is
-            # the absence of a complaint — and the builder cannot tell that
+            # the absence of a complaint - and the builder cannot tell that
             # apart from the check not having run.
             result["minifigures"]["held_accessories"] = \
                 figures["holding"][:max_listed]
@@ -750,8 +750,8 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     #
     # Reported as a cause, next to the misaligned parts that are its symptom.
     # A model split across two lattices produces one "off the grid" row per
-    # part on the losing side — twenty-two of them, in the build this was
-    # written for — and a builder reading twenty-two rows makes twenty-two
+    # part on the losing side - twenty-two of them, in the build this was
+    # written for - and a builder reading twenty-two rows makes twenty-two
     # edits. It is one decision, and it takes one correction applied to a
     # group. See lattice.py.
     split = _lattice_split(model)
@@ -762,7 +762,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     #
     # Read off the source lines rather than the flattened build, and with
     # submodel references dropped, because the question is what this file's
-    # author wrote — see style.py. It cannot fail a model and is left out
+    # author wrote - see style.py. It cannot fail a model and is left out
     # entirely when there is nothing worth remarking on.
     styled = style.report(
         [inst for inst in model.instances
@@ -782,7 +782,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     # failed nothing. The reason it could not fail anything is worth keeping,
     # because it is *still true of the thing it measured*: it counted pieces
     # over the stud graph, and a build legitimately comes apart into several
-    # sub-assemblies there — a minifig beside a vehicle, a lid that lifts off,
+    # sub-assemblies there - a minifig beside a vehicle, a lid that lifts off,
     # anything held by a clip, a pin or a hinge. Over that graph "more than one
     # piece" rejects models that are perfectly buildable, so it was reported and
     # ignored, which is the same as not checking.
@@ -821,7 +821,7 @@ def validate(path, tolerance=2.0, max_listed=25, objects=None, index=False):
     # enforced, and the asymmetry is deliberate: "this file is one object" is a
     # fact the harness knows about a file it created, while "each block is an
     # object" is an inference about authoring convention that is wrong for every
-    # OMR set — see _disconnected. The assembly pass is also the weaker place to
+    # OMR set - see _disconnected. The assembly pass is also the weaker place to
     # enforce it, since each component was already gated as "whole" when it was
     # built, and `_assembly_guard` is what stops the pass taking one apart.
     if apart and objects == "whole":

@@ -4,18 +4,18 @@ Distilled from the official LDraw.org documentation set (https://www.ldraw.org/d
 and cross-checked against real files in `data/lego_pieces/` and `data/ldraw_omr_sets/`.
 
 Sources:
-- File Format 1.0.2 — https://www.ldraw.org/article/218.html
-- BFC extension — https://www.ldraw.org/article/415.html
-- !COLOUR extension — https://www.ldraw.org/article/299.html
-- !TEXMAP extension — https://www.ldraw.org/texmap-spec.html
-- !CATEGORY / !KEYWORDS — https://www.ldraw.org/article/340.html
-- MPD / !DATA — https://www.ldraw.org/article/47.html
-- Parts Library Specification — https://www.ldraw.org/article/512.html
-- Header Specification — https://www.ldraw.org/article/398.html
-- Part Number Specification — https://www.ldraw.org/part-number-spec.html
-- OMR Specification — https://www.ldraw.org/article/593.html
-- Primitives Reference — https://wiki.ldraw.org/wiki/Primitives_Reference
-- Common Error Check Messages — https://www.ldraw.org/docs-main/ldraw-org-quick-reference-guides/common-error-check-messages.html
+- File Format 1.0.2 - https://www.ldraw.org/article/218.html
+- BFC extension - https://www.ldraw.org/article/415.html
+- !COLOUR extension - https://www.ldraw.org/article/299.html
+- !TEXMAP extension - https://www.ldraw.org/texmap-spec.html
+- !CATEGORY / !KEYWORDS - https://www.ldraw.org/article/340.html
+- MPD / !DATA - https://www.ldraw.org/article/47.html
+- Parts Library Specification - https://www.ldraw.org/article/512.html
+- Header Specification - https://www.ldraw.org/article/398.html
+- Part Number Specification - https://www.ldraw.org/part-number-spec.html
+- OMR Specification - https://www.ldraw.org/article/593.html
+- Primitives Reference - https://wiki.ldraw.org/wiki/Primitives_Reference
+- Common Error Check Messages - https://www.ldraw.org/docs-main/ldraw-org-quick-reference-guides/common-error-check-messages.html
 
 ---
 
@@ -29,7 +29,7 @@ Sources:
 - Blank / whitespace-only lines are legal and have no effect. No line-length limit (but keep `!KEYWORDS`/`!HELP` lines ≤ 80 / ~50 chars).
 - **Exception to tokenization:** in a type-1 line the filename field consumes the rest of the line (spaces allowed inside filenames); only leading/trailing whitespace is stripped.
 
-### 1.2 Coordinate system — the single most important fact
+### 1.2 Coordinate system - the single most important fact
 - **Right-handed, with −Y pointing UP.** Y increases *downward*. Getting this wrong flips every model.
 - +X is right, +Z is toward the viewer/front (right-handed with −Y up).
 
@@ -48,16 +48,16 @@ Derived: 1 stud = 20 LDU = 8 mm. A 2×4 brick spans x ∈ [−40, 40], z ∈ [�
 
 ---
 
-## 2. Line types — exact grammar
+## 2. Line types - exact grammar
 
-### Type 0 — comment / meta
+### Type 0 - comment / meta
 ```
 0 // <comment>            <- preferred comment form
 0 <comment>               <- legacy; first type-0 line of a file is its TITLE
 0 !<METACOMMAND> <args>   <- the '!' positively identifies a registered meta command
 ```
 
-### Type 1 — sub-file reference
+### Type 1 - sub-file reference
 ```
 1 <colour> x y z a b c d e f g h i <file>
 ```
@@ -74,24 +74,24 @@ Identity, unrotated placement at the origin is:
 
 Reference resolution order: `LDRAW/PARTS`, `LDRAW/P`, `LDRAW/MODELS`, current directory, relative path, absolute path. Sub-parts are referenced as `s\name.dat`, hi-res primitives as `48\name.dat`, low-res as `8\name.dat` (backslash is the canonical separator in the library).
 
-### Type 2 — line (edge)
+### Type 2 - line (edge)
 ```
 2 <colour> x1 y1 z1 x2 y2 z2
 ```
 Must use colour **24** in library parts.
 
-### Type 3 — triangle
+### Type 3 - triangle
 ```
 3 <colour> x1 y1 z1 x2 y2 z2 x3 y3 z3
 ```
 
-### Type 4 — quadrilateral
+### Type 4 - quadrilateral
 ```
 4 <colour> x1 y1 z1 x2 y2 z2 x3 y3 z3 x4 y4 z4
 ```
-The four points **must be coplanar and the quad must be convex** — vertices in order around the perimeter. Non-convex ⇒ split into triangles.
+The four points **must be coplanar and the quad must be convex** - vertices in order around the perimeter. Non-convex ⇒ split into triangles.
 
-### Type 5 — optional (conditional) line
+### Type 5 - optional (conditional) line
 ```
 5 <colour> x1 y1 z1 x2 y2 z2 x3 y3 z3 x4 y4 z4
 ```
@@ -102,12 +102,12 @@ Segment 1→2 is drawn only when control points 3 and 4 project to the same side
 ## 3. Colours
 
 ### 3.1 The two magic codes
-- **16 — main colour.** Geometry drawn in 16 inherits the colour of the type-1 line that referenced the file. Surfaces inside parts are almost always 16.
-- **24 — complement/edge colour.** Inherits the *contrasting edge* colour of the referencing line. Reserved for line types 2 and 5.
+- **16 - main colour.** Geometry drawn in 16 inherits the colour of the type-1 line that referenced the file. Surfaces inside parts are almost always 16.
+- **24 - complement/edge colour.** Inherits the *contrasting edge* colour of the referencing line. Reserved for line types 2 and 5.
 - **Hard rule:** polygons (3/4) must **never** use 24; lines (2/5) must **always** use 24 in library parts (error checks #14, #67).
 
 ### 3.2 Direct colours
-`0x2RRGGBB` — e.g. `0x2008000` = RGB(0,128,0). Hex letters **uppercase**. Allowed in patterns/stickers only; everywhere else use a code defined in `LDConfig.ldr`.
+`0x2RRGGBB` - e.g. `0x2008000` = RGB(0,128,0). Hex letters **uppercase**. Allowed in patterns/stickers only; everywhere else use a code defined in `LDConfig.ldr`.
 
 ### 3.3 Common codes
 | Code | Name | RGB | Edge |
@@ -149,7 +149,7 @@ Standard transparency is `ALPHA 128`.
 
 ---
 
-## 4. BFC — Back Face Culling
+## 4. BFC - Back Face Culling
 
 ### 4.1 Statements
 ```
@@ -164,7 +164,7 @@ All keywords are **case-sensitive uppercase**.
 ### 4.2 Rules
 - `CERTIFY`/`NOCERTIFY` must appear **before any type 1–5 line**, and only once per file. Absent ⇒ file is treated as NOCERTIFY and culling is disabled for it.
 - Default winding is **CCW**; default cull state is **CLIP**.
-- Winding is judged **viewing the polygon from its front face**, and applies only to the current file — it is not inherited by subfiles.
+- Winding is judged **viewing the polygon from its front face**, and applies only to the current file - it is not inherited by subfiles.
 - `INVERTNEXT` inverts exactly the next type-1 reference; it must be immediately followed by a type-1 line (error check #51). It is a boolean that accumulates down the reference tree (double inversion cancels).
 - **A negative determinant of the accumulated matrix flips the effective winding.** Mirroring a subfile with e.g. `-1 0 0 0 1 0 0 0 1` inverts it; combining that with `INVERTNEXT` cancels back to normal.
 - Culling actually happens only when the current file *and* every ancestor in the reference branch are certified and none disabled clipping.
@@ -205,9 +205,9 @@ Real example (`data/lego_pieces/3001.dat`):
 Optional qualifiers: `Alias`, `Flexible_Section`, `Physical_Colour` (deprecated).
 
 ### 5.2 !LICENSE values
-- `Licensed under CC BY 4.0 : see CAreadme.txt` — current standard.
-- `Licensed under CC BY 2.0 and CC BY 4.0 : see CAreadme.txt` — legacy dual.
-- `Redistributable under CCAL version 2.0 : see CAreadme.txt` — legacy.
+- `Licensed under CC BY 4.0 : see CAreadme.txt` - current standard.
+- `Licensed under CC BY 2.0 and CC BY 4.0 : see CAreadme.txt` - legacy dual.
+- `Redistributable under CCAL version 2.0 : see CAreadme.txt` - legacy.
 - `Not redistributable : see NonCAreadme.txt`.
 
 ### 5.3 !HISTORY
@@ -242,7 +242,7 @@ Square brackets for LDraw.org usernames, braces for non-registered real names. O
 - **Angles:** every interior angle of a triangle or quad between **0.025° and 179.9°** (no degenerate slivers, no collinear vertices).
 - **Coplanarity:** a quad's two triangles must have normals within **3°**; **< 1° is required** unless justified.
 - **No duplicates / overlaps:** no identical lines, no duplicate vertices in one polygon, no overlapping coplanar surfaces, no overlapping conditional lines (except complementary curved-primitive edges).
-- **T-junctions** are flagged as warnings — abutting polygons should share vertices exactly, otherwise cracks appear when rendered.
+- **T-junctions** are flagged as warnings - abutting polygons should share vertices exactly, otherwise cracks appear when rendered.
 - **Orientation:** studs point up (i.e. toward **−Y**). Origin is centred on the topmost stud group with **stud bases at y = 0** (so studs occupy y ∈ [−4, 0] and the brick body y ∈ [0, 24]). Hinged parts put the origin at the rotation point.
 - Prefer existing **primitives** over hand-built geometry; prefer **subparts** (`s\…`) for repeated internal structures.
 - Body of a part may contain only: comments, BFC statements, `!TEXMAP` directives, and geometry.
@@ -305,7 +305,7 @@ Naming pattern `n-f<primitive>[r]` where `n/f` is the fraction of a full circle 
 - Any content before the first `0 FILE` / `0 !DATA` is discarded, and non-comment LDraw code there is an error.
 - Blocks reference each other by the exact name given in `0 FILE`.
 - `0 !:` base64 lines should all be the same length and a multiple of 4 characters, except the last.
-- The spec explicitly notes there are **no formal scoping/namespace or case-sensitivity rules** for internal names — so use globally unique, prefixed names.
+- The spec explicitly notes there are **no formal scoping/namespace or case-sensitivity rules** for internal names - so use globally unique, prefixed names.
 
 ---
 
@@ -322,9 +322,9 @@ Naming pattern `n-f<primitive>[r]` where `n/f` is the fraction of a full circle 
 - `0 !:` prefixes geometry that non-TEXMAP-aware readers must skip; it cannot nest.
 - Textures stack; `END` pops. A texture also ends at end-of-file or at a `STEP`.
 - Methods:
-  - `PLANAR x1 y1 z1 x2 y2 z2 x3 y3 z3` — P1→P2 gives U, P1→P3 gives V.
-  - `CYLINDRICAL x1 y1 z1 x2 y2 z2 x3 y3 z3 a` — bottom centre, top centre, edge point, sweep angle a.
-  - `SPHERICAL x1 y1 z1 x2 y2 z2 x3 y3 z3 a b` — centre, surface point, orientation point, two angles.
+  - `PLANAR x1 y1 z1 x2 y2 z2 x3 y3 z3` - P1→P2 gives U, P1→P3 gives V.
+  - `CYLINDRICAL x1 y1 z1 x2 y2 z2 x3 y3 z3 a` - bottom centre, top centre, edge point, sweep angle a.
+  - `SPHERICAL x1 y1 z1 x2 y2 z2 x3 y3 z3 a b` - centre, surface point, orientation point, two angles.
 - PNG lookup tries `textures/<name>` first, then the bare name. Quote filenames containing spaces.
 
 ---
@@ -345,14 +345,14 @@ Naming pattern `n-f<primitive>[r]` where `n/f` is the fraction of a full circle 
 ```
 - MPD filename: `<Set Number>[-<Qualifier>] - <Set Name>[ - <Sub Model Name>].mpd`.
 - Internal files: `<Set Number>[-<Qualifier>] - <individual name>.ldr`.
-- One file per logical component (vehicle, minifig, building) — see `data/ldraw_omr_sets/10036-1_Pizza-To-Go.mpd` for a canonical example.
-- **Mirrored geometry (negative-determinant matrices) is strongly discouraged in models** — it corrupts parts lists and rendering. Use a real rotation instead.
+- One file per logical component (vehicle, minifig, building) - see `data/ldraw_omr_sets/10036-1_Pizza-To-Go.mpd` for a canonical example.
+- **Mirrored geometry (negative-determinant matrices) is strongly discouraged in models** - it corrupts parts lists and rendering. Use a real rotation instead.
 - Only replicas of actual LEGO sets are accepted in the OMR; MOCs are not.
 - Unofficial parts may be embedded as MPD subfiles named by part number. Substituting an unpatterned part for an unavailable patterned one is allowed; note it in a comment.
 
 ### 10.2 Model meta commands
-- `0 STEP` — end of a building step. `0 CLEAR`, `0 PAUSE`, `0 SAVE`, `0 WRITE`/`0 PRINT` are legacy ldraw.exe commands, valid in models but **banned in parts**.
-- `0 ROTSTEP <x> <y> <z> [ABS|REL|ADD|END]` and `0 !LPUB …` are LPub3D/MLCad extensions, not part of the core spec — common in OMR files but ignore them when authoring library parts.
+- `0 STEP` - end of a building step. `0 CLEAR`, `0 PAUSE`, `0 SAVE`, `0 WRITE`/`0 PRINT` are legacy ldraw.exe commands, valid in models but **banned in parts**.
+- `0 ROTSTEP <x> <y> <z> [ABS|REL|ADD|END]` and `0 !LPUB …` are LPub3D/MLCad extensions, not part of the core spec - common in OMR files but ignore them when authoring library parts.
 
 ---
 
@@ -372,7 +372,7 @@ Rotation about **Y** (the vertical axis) by θ, with −Y up:
 | 45° | `0.7071 0 0.7071 0 1 0 -0.7071 0 0.7071` |
 
 Upside-down (rotate 180° about Z, e.g. an inverted brick):
-`-1 0 0 0 -1 0 0 0 1` — determinant +1, no BFC inversion needed.
+`-1 0 0 0 -1 0 0 0 1` - determinant +1, no BFC inversion needed.
 
 Mirror across X (`-1 0 0 0 1 0 0 0 1`) has determinant −1: it flips winding and duplicates a part that may not exist as a real mould. Avoid in models.
 
@@ -400,7 +400,7 @@ Colour
 Geometry
 9. All quads planar (<1° normal deviation) and convex.
 10. No duplicate lines, duplicate vertices, collinear vertices, or overlapping coplanar faces.
-11. No T-junctions — abutting faces share exact vertices.
+11. No T-junctions - abutting faces share exact vertices.
 12. Consistent CCW winding when viewed from outside; `BFC INVERTNEXT` before every mirrored/inverted subfile, and immediately followed by the type-1 line.
 13. Coordinates ≤5 decimals (3 typical); no all-zero or singular matrices.
 14. Reuse primitives and subparts instead of raw polygons; respect each primitive's scaling restrictions.

@@ -21,14 +21,14 @@ export function relativeTime(iso) {
  *
  * A subconstruction takes minutes, and "335.6 s" is a number you have to do
  * arithmetic on before it means anything. Past a minute it is minutes, and
- * past an hour it is hours — the seconds are still there, just not leading.
+ * past an hour it is hours - the seconds are still there, just not leading.
  */
 export function formatMs(ms) {
   if (ms == null) return null;
   if (ms < 1000) return `${Math.round(ms)} ms`;
 
   const secs = ms / 1000;
-  // Rounded before the comparison, or 59.99 s prints as "60.0 s" — a minute
+  // Rounded before the comparison, or 59.99 s prints as "60.0 s" - a minute
   // written as seconds, which is the thing this exists to stop.
   const whole = Math.round(secs);
   if (whole < 60) return `${secs.toFixed(1)} s`;

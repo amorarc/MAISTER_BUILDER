@@ -90,7 +90,7 @@ def needs_plan(message):
     Verb-driven, and deliberately still so: this decides whether to spend the
     optional planner pre-pass and whether a run is worth naming, and for both
     of those a false negative costs nothing much. It is **not** what decides
-    whether a request reaches the build harness — see ``wants_model``, which
+    whether a request reaches the build harness - see ``wants_model``, which
     had to stop asking this question the moment it turned out that most people
     do not use a verb at all.
     """
@@ -126,13 +126,13 @@ def wants_model(message):
     """True when this turn should go through the build harness.
 
     **A verb is not required, and requiring one was a bug.** This used to be
-    ``needs_plan``, which looks for "build", "make", "add" and their kin — so
+    ``needs_plan``, which looks for "build", "make", "add" and their kin - so
     `add a chimney` reached the harness and `a house` did not. A bare noun
     phrase is the most natural way there is to ask for a model, and every one
     of them went down the conversational path instead: no workbench survey, no
     decomposition, one agent left to infer from the file what it was looking
     at. `a tree and a car` was built as a single muddled object for the same
-    reason — nothing ever split it, because nothing had decided it was a build.
+    reason - nothing ever split it, because nothing had decided it was a build.
 
     So the default is inverted. Everything is a modelling request unless it is
     plainly not one, and there are only two of those: a question about the

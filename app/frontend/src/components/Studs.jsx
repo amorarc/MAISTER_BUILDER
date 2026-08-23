@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 /**
  * A stud every this many pixels of brick. A real brick is 20 LDU between studs
  * on a face 24 LDU tall, so the pitch is a little under the height of one
- * course — this is that ratio at the size a tool-call brick is drawn.
+ * course - this is that ratio at the size a tool-call brick is drawn.
  */
 export const STUD_PITCH = 34;
 
@@ -34,7 +34,7 @@ function watch(node, measure) {
 /**
  * The studs along the top of a brick, counted from how wide the brick actually
  * is: a wide brick carries a row of them, a narrow one carries a single stud,
- * and it is recounted as the brick resizes — drag the chat panel narrower and
+ * and it is recounted as the brick resizes - drag the chat panel narrower and
  * the bricks lose studs the way shorter bricks have fewer.
  *
  * The element measures itself rather than its parent: it is stretched between

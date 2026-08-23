@@ -2,7 +2,7 @@
 
 Mined from the 1,819 official models in the reference corpus. Every
 part here is real, is in the catalogue, and is used by enough different sets to
-count as common vocabulary — so you can place any of them **without a lookup**,
+count as common vocabulary - so you can place any of them **without a lookup**,
 exactly like the table in *The pieces*.
 
 That table is the thirty parts you need constantly. These are the 71 after
@@ -13,7 +13,7 @@ repeating a brick, the part is probably on this page.
 ## Rotation is normal
 
 **76% of all part placements in real sets carry a rotation.** Not a
-special case, not an advanced technique — it is what most parts do. A build
+special case, not an advanced technique - it is what most parts do. A build
 where everything faces the same way is the unusual one, and it reads as a stack
 of boxes because that is what it is.
 
@@ -22,24 +22,24 @@ that go in a type-1 line:
 
 | matrix | what it does | share of all placements |
 |---|---|---|
-| `1 0 0 0 1 0 0 0 1` | no rotation — the part as the catalogue draws it | 23.6% |
-| `0 0 1 0 1 0 -1 0 0` | 90° about Y — turned a quarter turn clockwise seen from above | 12.7% |
-| `0 0 -1 0 1 0 1 0 0` | −90° about Y — a quarter turn the other way | 11.4% |
-| `-1 0 0 0 1 0 0 0 -1` | 180° about Y — facing backwards | 9.9% |
-| `1 0 0 0 0 -1 0 1 0` | 90° about X — laid on its back, studs facing you | 1.3% |
-| `0 -1 0 1 0 0 0 0 1` | 90° about Z — on its side, studs facing left | 1.1% |
-| `1 0 0 0 0 1 0 -1 0` | −90° about X — laid forward, studs facing away | 1.1% |
-| `-1 0 0 0 -1 0 0 0 1` | 180° about Z — upside down | 1.0% |
-| `0 1 0 -1 0 0 0 0 1` | −90° about Z — on its side, studs facing right | 1.0% |
+| `1 0 0 0 1 0 0 0 1` | no rotation - the part as the catalogue draws it | 23.6% |
+| `0 0 1 0 1 0 -1 0 0` | 90° about Y - turned a quarter turn clockwise seen from above | 12.7% |
+| `0 0 -1 0 1 0 1 0 0` | −90° about Y - a quarter turn the other way | 11.4% |
+| `-1 0 0 0 1 0 0 0 -1` | 180° about Y - facing backwards | 9.9% |
+| `1 0 0 0 0 -1 0 1 0` | 90° about X - laid on its back, studs facing you | 1.3% |
+| `0 -1 0 1 0 0 0 0 1` | 90° about Z - on its side, studs facing left | 1.1% |
+| `1 0 0 0 0 1 0 -1 0` | −90° about X - laid forward, studs facing away | 1.1% |
+| `-1 0 0 0 -1 0 0 0 1` | 180° about Z - upside down | 1.0% |
+| `0 1 0 -1 0 0 0 0 1` | −90° about Z - on its side, studs facing right | 1.0% |
 
 The `rotated` column in every table below is how often that specific part is
-placed with a rotation. A part at 90% is a part that is nearly always turned —
+placed with a rotation. A part at 90% is a part that is nearly always turned -
 that is what it is *for*, and placing it unrotated is usually a mistake.
 
 ## Decoration faces a direction
 
 A slope is not a shape, it is a **direction**. So is a curved slope, a wedge, a
-bracket, a windscreen, a plant, a tile with a print on it — everything that is
+bracket, a windscreen, a plant, a tile with a print on it - everything that is
 on a model to be looked at rather than to hold something up.
 
 Placed square, four slopes around a roof all slope the same way and the roof
@@ -48,7 +48,7 @@ roof. Nothing else changed: the parts, the colours and the coordinates are
 identical, and only the nine numbers in the middle of the line are different.
 
 **Every decoration piece you place, decide which way it faces.** These are the
-only four rotations you need for it — all about Y, the vertical axis, so the
+only four rotations you need for it - all about Y, the vertical axis, so the
 part stays flat on the studs and the seats underneath it are unchanged:
 
 | facing | matrix | `build_ops` |
@@ -69,15 +69,15 @@ rather than four in x. `build_ops` works the spacing out from that when you
 pass `rotate`; writing the matrix by hand, you swap it yourself.
 
 **Turning can move a part half a stud.** Most slopes have their origin on their
-back stud row rather than in the middle of their footprint — `3039` runs from
-z −30 to z +10, not −20 to +20 — so a quarter turn moves where its studs fall.
+back stud row rather than in the middle of their footprint - `3039` runs from
+z −30 to z +10, not −20 to +20 - so a quarter turn moves where its studs fall.
 The same 2x2 slope that needed z+10 unturned needs x+10 at 90°. `build_ops`
 puts it back on the lattice and tells you the offset it used, which is the
 reason to turn parts through it rather than by writing the nine numbers.
 
 Turning does not need a lookup or a validation pass to justify it. If you
 cannot say which way a decoration piece faces, that is the thing to decide
-before you place it — not after `validate_model` has told you it is on the
+before you place it - not after `validate_model` has told you it is on the
 grid, because it will be on the grid either way.
 
 ## The vocabulary

@@ -1,4 +1,4 @@
-# Maister Builder — Python dependencies
+# Maister Builder - Python dependencies
 # Tested on Python 3.13. Install with:  pip install -r requirements.txt
 #
 # Lower bounds are the versions this was developed and tested against; they are
@@ -16,7 +16,7 @@ python-fcl>=0.7.0          # swept-volume collision, ldr_collision_checker.py
 Pillow>=12.1.0             # render contact sheets
 
 # --- Retrieval: local embedding + reranking over the parts/sets corpora ---
-# torch is the large one. A CPU-only build is fine and much smaller — see the
+# torch is the large one. A CPU-only build is fine and much smaller - see the
 # README; the GPU only makes index building and search faster, not possible.
 torch>=2.9.0
 transformers>=4.57.0

@@ -1,10 +1,10 @@
 """Every state a run passed through, written down so it can be read afterwards.
 
-A run reports itself as it goes — a step began, a tool was called, a subbuild
-ended — and the web UI polls those events to animate the chat panel. But they
+A run reports itself as it goes - a step began, a tool was called, a subbuild
+ended - and the web UI polls those events to animate the chat panel. But they
 live in a dict in the server's memory, they are stripped down to one line each
 on the way out, and they are gone the moment the process restarts. So the one
-question worth asking about a build afterwards — *why did it do that* — has
+question worth asking about a build afterwards - *why did it do that* - has
 never been answerable. The arguments a tool was called with and the answer it
 gave back, the prompt the builder was working from, which turn decided what:
 all of it was thrown away as soon as it had been summarised.
@@ -12,16 +12,16 @@ all of it was thrown away as soon as it had been summarised.
 This keeps it. Every event of every run is appended to a file under the
 project, whole, with the arguments and results still attached, and
 ``graph()`` reads one back as a node-and-edge structure: the run at the root,
-the phases under it, a node per *iteration* — every turn of the loop up to the
-point the model was checked — a node per tool call, each one carrying what went
+the phases under it, a node per *iteration* - every turn of the loop up to the
+point the model was checked - a node per tool call, each one carrying what went
 in and what came out, pictures included.
 
 Three files and a folder per run, all under ``out/projects/<project>/traces/``:
 
-* ``<run>.jsonl``        — the events, one JSON object per line, append-only
-* ``<run>.meta.json``    — what the run was and how it ended
-* ``<run>.prompts.json`` — system prompts, by hash
-* ``images/``            — every picture the run rendered or was shown, shared
+* ``<run>.jsonl``        - the events, one JSON object per line, append-only
+* ``<run>.meta.json``    - what the run was and how it ended
+* ``<run>.prompts.json`` - system prompts, by hash
+* ``images/``            - every picture the run rendered or was shown, shared
   by all of a project's runs and named by content hash
 
 The prompts are kept apart and deduplicated because every sub-agent in a build
@@ -62,19 +62,19 @@ SKIP = {"delta", "tool_stream"}
 
 # How long a run may go without recording anything before a reader stops
 # believing it is still running. A run is only ever settled by the thread that
-# owns it, so one killed with the server — a restart, a crash, a reload during
-# a build — leaves a trace that claims to be in progress for ever, and anything
+# owns it, so one killed with the server - a restart, a crash, a reload during
+# a build - leaves a trace that claims to be in progress for ever, and anything
 # watching it waits for ever too.
 #
 # Half an hour, which is far longer than it sounds like it needs to be. This
 # was five minutes, on the reasoning that "a single slow turn of the loop can
-# be a minute of silence on its own" — and that was simply wrong. A builder
+# be a minute of silence on its own" - and that was simply wrong. A builder
 # writing a whole subconstruction does it in ONE turn, and it emits nothing
 # between asking the model and getting the file back: a scene of two objects
 # measured 352 seconds of silence in that turn, comfortably past the old
 # threshold. What the reader did with that was worse than waiting would have
 # been, because a run reported abandoned has every node still in flight marked
-# "cut off" — so a build that was merely thinking hard showed up as a build
+# "cut off" - so a build that was merely thinking hard showed up as a build
 # that had died.
 #
 # The asymmetry is the whole argument. Waiting too long costs a stale trace
@@ -173,7 +173,7 @@ class Recorder:
         return sha
 
     def event(self, event):
-        """Append one event, whole — arguments, results and all."""
+        """Append one event, whole - arguments, results and all."""
         if not self.ok or not isinstance(event, dict):
             return
         if event.get("type") in SKIP:
@@ -197,7 +197,7 @@ class Recorder:
 
     # Keys the recorder owns and a settling run must not overwrite. The server
     # keeps its clocks as ISO strings; these are epoch seconds, and `runs()`
-    # sorts on them — one string in there and the sort raises.
+    # sorts on them - one string in there and the sort raises.
     OWNED = {"started", "finished", "events", "run_id", "project", "partial"}
 
     def close(self, **fields):
@@ -244,7 +244,7 @@ def forget(project):
 # A run's pictures, kept with the run that took them.
 #
 # Renders are written to stable filenames under out/renders so the app can
-# point an <img> at a URL that does not change — which means the next write
+# point an <img> at a URL that does not change - which means the next write
 # overwrites them. That is right for the viewer and wrong for a trace: reading
 # a build back tomorrow would show today's model beside yesterday's decision,
 # and the one question the trace exists to answer is what the agent was
@@ -259,7 +259,7 @@ THUMB_MAX = 480
 THUMB_QUALITY = 80
 
 # How many pictures a project's trace archive keeps. Past this the oldest go,
-# the same way whole runs do — and for the same reason.
+# the same way whole runs do - and for the same reason.
 MAX_IMAGES = 600
 
 
@@ -271,7 +271,7 @@ def _thumbnail(raw, target):
     """Write ``raw`` image bytes out small, flattened onto white.
 
     Flattened because a render may carry an alpha channel, and JPEG has no
-    room for one — left to itself the transparent background comes out black,
+    room for one - left to itself the transparent background comes out black,
     which reads as a model photographed in a cave.
     """
     from PIL import Image
@@ -299,7 +299,7 @@ def _prune_images(directory, keep=MAX_IMAGES):
 def keep_image(project, source, kind="render", view=None, label=None):
     """Archive one picture beside this project's traces.
 
-    Returns the record to put in the event — ``{"src": <filename>, ...}`` —
+    Returns the record to put in the event - ``{"src": <filename>, ...}`` -
     or None if the picture could not be read or written. Never raises: a build
     must not fail because a thumbnail did.
     """
@@ -342,7 +342,7 @@ def _status_of(meta, directory, run_id):
     """A run's status, with one it never got to disown corrected.
 
     The recorder writes ``running`` up front and only the run's own thread ever
-    replaces it. If that thread went down with the process, nothing ever will —
+    replaces it. If that thread went down with the process, nothing ever will -
     so a run that claims to be running and has not written a line in five
     minutes is reported as what it is: abandoned, not in progress.
     """
@@ -428,7 +428,7 @@ def _parse(value):
 # A turn of the loop is not a unit of work anybody wants to click on: the model
 # reads the catalogue in one, writes the file in the next, and reads the result
 # in a third, and none of the three is an attempt at anything. An *iteration*
-# is — everything from the first turn up to the moment the build is checked or
+# is - everything from the first turn up to the moment the build is checked or
 # the run is ended. Those two calls are the only places the agent says "that
 # attempt is over", so they are the only places a new node begins.
 ITERATION_ENDS = {"validate_model", "finish"}
@@ -437,7 +437,7 @@ ITERATION_ENDS = {"validate_model", "finish"}
 class _Builder:
     """Turns a run's event stream back into the shape the run actually had.
 
-    The events are flat and interleaved — a scene builds eight subconstructions
+    The events are flat and interleaved - a scene builds eight subconstructions
     and every one of them emits `step` and `tool_start` under its own name. The
     lane is what puts them back where they belong: each event carries the
     subconstruction or phase it came from, and each lane keeps its own current
@@ -501,7 +501,7 @@ class _Builder:
         Everything is timed, not just tool calls: the question a trace is read
         with is usually "what took so long", and until now the only thing that
         could answer it was the one node kind that happened to carry a
-        stopwatch. A turn, a subconstruction, the assembly, the whole run —
+        stopwatch. A turn, a subconstruction, the assembly, the whole run -
         each knows when it started, so each can say how long it lasted.
         """
         if node is None or node.get("ended") is not None:
@@ -509,7 +509,7 @@ class _Builder:
         when = when if when is not None else self.clock
         node["ended"] = when
         if ms is not None:
-            # Measured inside the agent, around the call itself — tighter than
+            # Measured inside the agent, around the call itself - tighter than
             # the difference between two timestamps written either side of it.
             node["ms"] = ms
         elif node.get("at"):
@@ -537,7 +537,7 @@ class _Builder:
 
         if kind == "context":
             # The standing prompt and the task, emitted by an agent as it
-            # starts. It belongs to whatever is holding that agent — the
+            # starts. It belongs to whatever is holding that agent - the
             # subbuild node, or the run itself for a plain chat turn.
             holder = self._holder(event)
             holder["context"] = {
@@ -613,7 +613,7 @@ class _Builder:
 
         elif kind == "design_brief":
             # It belongs to the object it was written for, not to the run. The
-            # brief is decided inside a subbuild — after that lane has opened —
+            # brief is decided inside a subbuild - after that lane has opened -
             # so hanging it off the root left it floating beside the object it
             # describes, with nothing connecting the two. Under the subbuild it
             # is the first thing in that lane, which is also the order it
@@ -664,7 +664,7 @@ class _Builder:
 
         elif kind == "requirements_checked":
             # One of these ends every iteration, so it hangs off the iteration
-            # it judged rather than off the object — the question it answers is
+            # it judged rather than off the object - the question it answers is
             # "was *that* attempt enough", and shown as a sibling of the object
             # it would read as a verdict on the whole build.
             met = event.get("met") or []
@@ -706,7 +706,7 @@ class _Builder:
         elif kind == "subbuild_start":
             # Hung off this object's design brief when it has one, so the trace
             # reads brief -> build in the order the run actually went. With no
-            # brief — an edit to an existing model — it hangs off the root as
+            # brief - an edit to an existing model - it hangs off the root as
             # it always did.
             name = event.get("name")
             holder = self.briefs.get(name) or self.root
@@ -761,7 +761,7 @@ class _Builder:
             holder = self._holder(event)
             previous = self.step.get(lane)
 
-            # The loop came round again inside the same attempt — nothing has
+            # The loop came round again inside the same attempt - nothing has
             # been checked since the last node was opened, so this turn belongs
             # to it rather than starting one of its own.
             if previous is not None and not previous.get("_sealed"):
@@ -780,7 +780,7 @@ class _Builder:
                               lane=lane, at=at, status="running",
                               step=event.get("step"), iteration=index, turns=1,
                               last_step=event.get("step"),
-                              title=f"Iteration {index} in {lane} — every turn "
+                              title=f"Iteration {index} in {lane} - every turn "
                                     f"up to the next validate_model or finish")
             if previous is None:
                 context = (holder.get("context") or {})
@@ -801,7 +801,7 @@ class _Builder:
             if node is not None:
                 # An iteration is several turns, and each of them may think out
                 # loud. Kept as a list so the later ones do not erase the
-                # earlier ones — reading them in order is reading the attempt.
+                # earlier ones - reading them in order is reading the attempt.
                 said = list((node.get("output") or {}).get("text") or [])
                 said.append(event.get("text"))
                 node["output"] = {**(node.get("output") or {}), "text": said}
@@ -863,8 +863,8 @@ class _Builder:
     def _settle_step(self, lane, when=None):
         """The iteration running in this lane got to the end of itself.
 
-        An iteration that called a tool never emits `answer` — the loop just
-        comes round again — so nothing else marks it finished, and it would be
+        An iteration that called a tool never emits `answer` - the loop just
+        comes round again - so nothing else marks it finished, and it would be
         reported as abandoned by a run that in fact completed it.
         """
         node = self.step.get(lane)
@@ -873,7 +873,7 @@ class _Builder:
         self._close(node, when)
 
     def _find(self, kind):
-        """The most recent node of a kind — for the events that come in pairs."""
+        """The most recent node of a kind - for the events that come in pairs."""
         for node in reversed(self.nodes):
             if node["kind"] == kind:
                 return node
@@ -898,7 +898,7 @@ class _Builder:
         self.root["status"] = _status(self.meta.get("status"))
 
         # The run's own span, and then everything still open. A node with no
-        # ending is one the run never got back to — it is closed at the last
+        # ending is one the run never got back to - it is closed at the last
         # thing that happened, which is the truthful answer to "how long was it
         # going for" even though it never finished.
         # The later of the two clocks: a run is not over before the last thing
@@ -914,7 +914,7 @@ class _Builder:
 
         # Wall clock against the work inside it. Subconstructions are built in
         # parallel, so the second number is the larger one whenever that
-        # actually happened — and their ratio is what the parallelism bought.
+        # actually happened - and their ratio is what the parallelism bought.
         subbuilds = [n for n in self.nodes if n["kind"] == "subbuild"]
         work = sum(n.get("ms") or 0 for n in subbuilds)
         wall = self.root.get("ms") or 0

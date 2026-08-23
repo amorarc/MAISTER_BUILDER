@@ -25,7 +25,7 @@ REPLAYABLE = frozenset((
 
 # `read_model` is deliberately not in that set, though reading a set twice
 # would be safe to replay. It also reads the model being built, and that changes
-# under it — a replayed answer there would hand back the model as it was two
+# under it - a replayed answer there would hand back the model as it was two
 # writes ago, which is worse than the call it saves.
 
 # The answer given for a tool call that was never made, so that a stopped turn
@@ -49,15 +49,15 @@ MAX_NUDGES = 3
 #     0 improved      3 came back with the same issues      1 got worse
 #
 # The same complaint, repeated. That is the shape of a critique the builder
-# cannot act on — "the hull is a rectangular box, not a boat" is a true remark
+# cannot act on - "the hull is a rectangular box, not a boat" is a true remark
 # about the design and not a fault with a fix, so the extra round re-renders,
 # re-reads and re-reports it. Two of the seven ended unbuildable, and in one the
 # model degraded under the extra rounds: a tree whose trunk was "a solid block"
 # in round one was "a flat, wide base plate" by round two.
 #
 # So the critique stops being a veto and goes back to being what it is: a remark
-# on a finished model. It still reaches the user — `_from_state` puts it in the
-# run's result either way — and it still reaches the builder on every earlier
+# on a finished model. It still reaches the user - `_from_state` puts it in the
+# run's result either way - and it still reaches the builder on every earlier
 # iteration, which is where it can actually be acted on. What it no longer does
 # is reopen a build the checklist has passed.
 #
@@ -70,11 +70,11 @@ def _issue_text(issue):
     if isinstance(issue, dict):
         said = issue.get("issue") or issue.get("problem") or issue.get("what")
         fix = issue.get("fix") or issue.get("change")
-        return " — ".join(str(p) for p in (said, fix) if p) or str(issue)
+        return " - ".join(str(p) for p in (said, fix) if p) or str(issue)
     return str(issue)
 
 _NUDGE = (
-    "That turn called no tool, which does not end the run — and neither does "
+    "That turn called no tool, which does not end the run - and neither does "
     "saying you are done. The run ends by itself when your requirements are "
     "all met, and they are checked every time you call `validate_model`. So "
     "if you believe the model is finished, call `validate_model` and let the "
@@ -94,7 +94,7 @@ class LDrawAgent:
         self.max_steps = max_steps
         self.verbose = verbose
         self.on_event = on_event
-        # What this agent is building, where the caller said — it decides which
+        # What this agent is building, where the caller said - it decides which
         # standing context blocks are worth carrying. See prompts._droppable.
         self.system_prompt = build_system_prompt(
             include_knowledge,
@@ -104,7 +104,7 @@ class LDrawAgent:
         self._last_tools = []
         # The run's ledger: what has been written, validated and looked at.
         # Handed to the tools that record into it, and read by `finish` to
-        # decide whether this run is allowed to end. None means no gate — a
+        # decide whether this run is allowed to end. None means no gate - a
         # bare chat turn ends the run as it always did.
         self.state = state
         # (tool, arguments) -> the result it produced, for REPLAYABLE tools
@@ -160,7 +160,7 @@ class LDrawAgent:
     def _requirements_gate(self, step):
         """Put the acceptance criteria to what was just built. Every iteration.
 
-        Runs at the end of an iteration — which is where `validate_model` was
+        Runs at the end of an iteration - which is where `validate_model` was
         called, since that is what an iteration *is* (see trace.ITERATION_ENDS).
         Returns a finished result when the build is done, and None to carry on,
         having told the builder what is still outstanding.
@@ -170,14 +170,14 @@ class LDrawAgent:
         recent runs on disk that came to 38% of iterations ending with nobody
         having asked whether the model was finished. The worst of the three was
         the grid check failing, because `validate_model` then skipped the
-        render and there was no contact sheet to judge — so precisely the
+        render and there was no contact sheet to judge - so precisely the
         iterations that needed the checklist most were the ones that never met
         it. Every remaining reason to skip is now announced, to the log and to
         the trace, so "it did not run" can never again look like "it ran and
         was happy".
 
         Failing the grid no longer skips the check either. It cannot *end* a
-        run — that is enforced below, where the accepting happens — but the
+        run - that is enforced below, where the accepting happens - but the
         builder is still told which requirements its half-repaired model does
         and does not meet, which is the information that stops it repairing
         geometry it is about to throw away.
@@ -203,7 +203,7 @@ class LDrawAgent:
         if not acceptance.items(record):
             # No checklist was ever written for this object, so there is
             # nothing to hold it to and the run will end on the generic gate
-            # instead — which is the weak one this whole pass exists to
+            # instead - which is the weak one this whole pass exists to
             # replace. Worth a line every iteration: it is the difference
             # between a judged build and an unjudged one.
             return skipped("no acceptance criteria were written for this build")
@@ -244,9 +244,9 @@ class LDrawAgent:
         # than the builder's.
 
         # A model that does not sit on the stud grid cannot end a run, however
-        # well it photographs. This used to be enforced by accident — the
+        # well it photographs. This used to be enforced by accident - the
         # render was skipped while the grid was failing, so there was never a
-        # sheet to judge — and now that the check runs anyway it has to be said.
+        # sheet to judge - and now that the check runs anyway it has to be said.
         if isinstance(report, dict) and not report.get("passed"):
             self._log(f"[{step}] requirements all met, but the grid check has not passed")
             self.messages.append({
@@ -255,12 +255,12 @@ class LDrawAgent:
                     "Every requirement is met, and this build still cannot "
                     "end: the model does not pass the stud-grid check. "
                     f"`{report.get('verdict')}` Fix the faults `validate_model` "
-                    "listed — they are the only thing left — and validate "
+                    "listed - they are the only thing left - and validate "
                     "again. A model that cannot be built out of real bricks is "
                     "not finished whatever the checklist says.")})
             return None
 
-        # And the eyes — which no longer hold the build. The checklist is a
+        # And the eyes - which no longer hold the build. The checklist is a
         # list of things that must be true and not a list of everything that
         # could be wrong, so a critic looking at a passing model often still
         # has something to say. It used to buy another round. Measured over
@@ -274,7 +274,7 @@ class LDrawAgent:
         if issues and self._critique_rounds < CRITIQUE_ROUNDS:
             self._critique_rounds += 1
             self._log(f"[{step}] requirements all met, but the critic still "
-                      f"lists {len(issues)} issue(s) — round "
+                      f"lists {len(issues)} issue(s) - round "
                       f"{self._critique_rounds}/{CRITIQUE_ROUNDS}")
             self._emit("critique_holds", step=step, issues=issues,
                        round=self._critique_rounds, of=CRITIQUE_ROUNDS)
@@ -282,7 +282,7 @@ class LDrawAgent:
                 "role": "user",
                 "content": (
                     "Every requirement is met, so the checklist is done with "
-                    "you — but the last render was looked at and these are "
+                    "you - but the last render was looked at and these are "
                     "still wrong:\n\n"
                     + "\n".join(f"- {_issue_text(i)}" for i in issues[:8])
                     + "\n\nThe checklist is a floor, not a ceiling: it says "
@@ -376,7 +376,7 @@ class LDrawAgent:
         A tool that fails on a bad path or an argument it does not take is a
         typo, not a decision, and handing that back to the builder costs it a
         whole reasoning turn to work out what the error already said. So the
-        call is repaired here and retried — see retry.py, which is also where
+        call is repaired here and retried - see retry.py, which is also where
         the tools that must *never* be retried are listed and why.
         """
         result = call_tool(name, arguments, should_stop=should_stop,
@@ -429,7 +429,7 @@ class LDrawAgent:
 
         Two turns in a build decide geometry: the one after ``plan_construction``
         returns, which writes the file, and the one after a ``validate_model``
-        that found faults, which repairs it. Those get "build" — thinking mode,
+        that found faults, which repairs it. Those get "build" - thinking mode,
         low effort.
 
         Everything else runs as "chat". Catalogue lookups, re-validation of a
@@ -456,7 +456,7 @@ class LDrawAgent:
 
         # Everything this agent is working from, once, before it starts. The
         # standing prompt does not change during a run and the task is the
-        # other half of it, so the two together are the whole of the input —
+        # other half of it, so the two together are the whole of the input -
         # which is what makes the outputs below readable afterwards.
         self._emit("context", task=task, system=self.system_prompt,
                    max_steps=self.max_steps,
@@ -472,7 +472,7 @@ class LDrawAgent:
             return bool(self.should_stop and self.should_stop())
 
         # Unbounded unless somebody asked for a bound. `max_steps` of 0 (the
-        # default) is a loop that ends when the run does — see
+        # default) is a loop that ends when the run does - see
         # DEFAULT_MAX_STEPS. The stop button is checked at the top of every
         # turn and inside the model call, so "no limit" never means "cannot be
         # interrupted".
@@ -530,7 +530,7 @@ class LDrawAgent:
             if not tool_calls:
                 # With a gate in place, a turn of prose is not an ending. Push
                 # it back and let the model either finish properly or carry on
-                # — but only so many times, since a model that will not call a
+                # - but only so many times, since a model that will not call a
                 # tool will not start because it was asked a fourth time.
                 if self.state is not None and nudges < MAX_NUDGES:
                     nudges += 1
@@ -650,19 +650,19 @@ class LDrawAgent:
 # A run has no step limit (see DEFAULT_MAX_STEPS) and nothing ever left the
 # conversation, so the context grew without a ceiling: measured on a 27-step
 # build of a *tiny house*, tool output alone came to 30,110 tokens and the last
-# turn cost about 64,000 — 30,412 of standing prompt, 3,795 of task, and the
+# turn cost about 64,000 - 30,412 of standing prompt, 3,795 of task, and the
 # rest the run talking to itself. Fifteen `build_ops` results accounted for
 # 11,960 of it, each one largely the model's own placements read back to it.
 #
 # Six is chosen to cover a repair round: a validate, the edit that answers it,
 # and the validate after that, with room to spare. What is dropped is dropped
-# because the *file on disk* is the state of the build — a stale search result
+# because the *file on disk* is the state of the build - a stale search result
 # or a superseded write is a description of a model that no longer exists, and
 # `read_model` re-reads the real one for nothing.
 KEEP_TOOL_RESULTS = 6
 
 # The plan is not a stale result. It is what the build is following, it is
-# referred to at every step, and it is one call however long the run — so it is
+# referred to at every step, and it is one call however long the run - so it is
 # kept in full wherever it falls.
 NEVER_PRUNED = frozenset(("plan_construction",))
 
@@ -674,7 +674,7 @@ _PRUNE_OVER = 160
 def _condense(name, content):
     """An old tool result reduced to what is still worth carrying, or None.
 
-    None means leave it alone — it is already small, or it is not JSON, and
+    None means leave it alone - it is already small, or it is not JSON, and
     rewriting it would cost more than it saves.
     """
     try:
@@ -704,7 +704,7 @@ def _condense(name, content):
 
     kept["pruned"] = (
         f"This is an older `{name}` result, shortened to keep the conversation "
-        f"readable — {', '.join(dropped)} were dropped. The model file on disk "
+        f"readable - {', '.join(dropped)} were dropped. The model file on disk "
         f"is the state of the build; read_model gives you any of it again.")
     return json.dumps(kept, ensure_ascii=False, default=str)
 
@@ -713,7 +713,7 @@ def _take_images(result):
     """Split a tool result into what the model reads and what the trace shows.
 
     A tool that rendered the model, or was shown the reference picture, puts
-    what it saw under ``_images`` — filenames in the run's own trace archive.
+    what it saw under ``_images`` - filenames in the run's own trace archive.
     The builder is text-only and cannot open any of them, so the key never
     reaches the conversation: it comes out here, goes to the trace, and the
     model is handed the result without it.
@@ -734,7 +734,7 @@ def _finished(step_tools):
     """The payload of an accepted ``finish`` in this step, or None.
 
     A refused finish comes back ``{"finished": false, ...}``, which is not an
-    ending — it is the gate telling the model what is still missing.
+    ending - it is the gate telling the model what is still missing.
     """
     for name, result in step_tools:
         if name != "finish":
@@ -798,8 +798,8 @@ def _critique_found_issues(result):
     """True when the looking half of validate_model found visual faults.
 
     A build that came out in loose pieces counts even when the issues list is
-    empty: it is the fault validation cannot see — two correct models standing
-    a few studs apart pass every geometric check there is — so it has to be the
+    empty: it is the fault validation cannot see - two correct models standing
+    a few studs apart pass every geometric check there is - so it has to be the
     thing that buys the repair turn.
     """
     try:

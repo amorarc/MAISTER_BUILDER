@@ -5,7 +5,7 @@
 #   ./scripts/fetch_data.sh --force    # redo everything
 #
 # What this repo DOES carry (already in data/):
-#   agent_prompts/    the system prompt — the part that is actually the design
+#   agent_prompts/    the system prompt - the part that is actually the design
 #   parts/            the measured part catalogue, as CSV (~7 MB)
 #   agent_creations/  models the agent built and saved
 #   agent_knowledge/  notes it wrote while building
@@ -14,7 +14,7 @@
 #   1. data/lego_pieces/       ~570 MB  the LDraw parts library (needed to
 #                                       render, measure and validate anything)
 #   2. data/ldraw_omr_sets/    ~363 MB  1,800 official sets as LDraw source
-#                                       (optional — only for reference/grafting)
+#                                       (optional - only for reference/grafting)
 #   3. data/vector_db/          ~12 MB  the search indexes, built locally
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -31,7 +31,7 @@ have() { [ -d "$1" ] && [ -n "$(ls -A "$1" 2>/dev/null)" ]; }
 # out of this. Nothing works without it.
 step "1/3  LDraw parts library -> data/lego_pieces/"
 if have data/lego_pieces && [ $FORCE -eq 0 ]; then
-    echo "    already present ($(ls data/lego_pieces | wc -l) files) — skipping"
+    echo "    already present ($(ls data/lego_pieces | wc -l) files) - skipping"
 else
     # Delegated to the project's own seeder rather than reimplemented here: it
     # knows the archive layout, writes the flat cache layout the rest of the
@@ -54,9 +54,9 @@ fi
 # sets solved a shape, and copy_from_set has nothing to copy from.
 step "2/3  OMR set corpus -> data/ldraw_omr_sets/  (optional, ~363 MB)"
 if have data/ldraw_omr_sets && [ $FORCE -eq 0 ]; then
-    echo "    already present ($(ls data/ldraw_omr_sets | wc -l) files) — skipping"
+    echo "    already present ($(ls data/ldraw_omr_sets | wc -l) files) - skipping"
 elif [ "${SKIP_OMR:-0}" = "1" ]; then
-    echo "    SKIP_OMR=1 — skipping"
+    echo "    SKIP_OMR=1 - skipping"
 else
     echo "    scraping library.ldraw.org/omr (this takes a while) ..."
     "$PYTHON" -m maister.database_creation.download_ldraw_omr
@@ -67,7 +67,7 @@ fi
 # and reranker models on first run (~1.2 GB, cached by HuggingFace).
 step "3/3  search indexes -> data/vector_db/"
 if have data/vector_db && [ $FORCE -eq 0 ]; then
-    echo "    already present — skipping"
+    echo "    already present - skipping"
 else
     "$PYTHON" -m maister.retrieval.build_indexes
 fi

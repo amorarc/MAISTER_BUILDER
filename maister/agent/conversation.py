@@ -6,7 +6,7 @@ arrangement always breaks. Two windows each read that blob once at startup and
 each wrote the whole of it back, so whichever typed second erased what the
 other had said. And the blob carried the tool-call rows for every message, so a
 few real builds took it past the storage quota, at which point the write failed
-silently and nothing was kept at all — close the tab, come back, and the
+silently and nothing was kept at all - close the tab, come back, and the
 conversation was gone.
 
 Meanwhile the backend kept its *own* record of the same conversation in a dict,
@@ -23,7 +23,7 @@ reads. Two windows showing one project therefore show the same conversation,
 and so does a window opened tomorrow.
 
 What is stored per assistant turn is the text, the run it came from, and the
-handful of events the transcript actually draws — the step markers, the tool
+handful of events the transcript actually draws - the step markers, the tool
 calls and their one-line summaries. Not the whole event stream: that is what
 the trace is for, and the run id here is the way back to it.
 """
@@ -46,8 +46,8 @@ MAX_MESSAGES = 240
 # .ldr file has said something worth keeping, but not worth keeping whole.
 MAX_TEXT = 20_000
 
-# Events the transcript draws. Everything else a run emits — the token deltas,
-# the sub-build bookkeeping — is either already folded into these or belongs
+# Events the transcript draws. Everything else a run emits - the token deltas,
+# the sub-build bookkeeping - is either already folded into these or belongs
 # only to the trace.
 DISPLAY_EVENTS = frozenset((
     "step", "planning", "plan", "text", "tool_start", "tool_end",
@@ -87,7 +87,7 @@ def _read(project):
 
 
 def _write(project, messages):
-    """Replace the file, atomically — a torn chat.json loses the lot."""
+    """Replace the file, atomically - a torn chat.json loses the lot."""
     path = _path(project)
     body = json.dumps({"messages": messages}, ensure_ascii=False, indent=1,
                       default=str)
@@ -182,7 +182,7 @@ def as_messages(project, limit=None):
     """The conversation in the shape an LLM takes, for reseeding an agent.
 
     A restarted server builds a fresh agent with an empty head. Without this it
-    would answer "make it taller" having no idea what *it* is — the transcript
+    would answer "make it taller" having no idea what *it* is - the transcript
     on screen would show a conversation the model was not part of.
     """
     return [{"role": "user" if role == "user" else "assistant", "content": text}

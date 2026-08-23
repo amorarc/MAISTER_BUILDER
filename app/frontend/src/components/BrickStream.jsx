@@ -6,7 +6,7 @@ import { BRICK_CYCLE, brickVars } from "../brick";
 /**
  * The reply arrives in one piece; this snaps it into place word by word as
  * coloured tiles. Once the last word lands the bricks come away and the text
- * renders as itself — the model writes markdown, so it is formatted as markdown.
+ * renders as itself - the model writes markdown, so it is formatted as markdown.
  * Line structure is preserved during the reveal so lists still read as lists.
  */
 
@@ -48,7 +48,7 @@ function useReveal(total, animate, onAdvance) {
 
 /**
  * `live` is for text still arriving from the model: every word that has landed
- * is already a brick, there is no reveal timer to run, and it never settles —
+ * is already a brick, there is no reveal timer to run, and it never settles -
  * the stream itself provides the pacing.
  */
 export default function BrickStream({ text, animate = false, live = false, onAdvance }) {
@@ -74,7 +74,7 @@ export default function BrickStream({ text, animate = false, live = false, onAdv
   return (
     <div className="stream">
       {lines.map((tokens, li) => {
-        // nothing revealed on this line yet — don't reserve space for it
+        // nothing revealed on this line yet - don't reserve space for it
         if (ends[li] - tokens.length >= shown && li !== slotLine) return null;
         if (tokens.length === 0) return <div key={li} className="stream-gap" />;
 

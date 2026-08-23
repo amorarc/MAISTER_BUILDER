@@ -21,7 +21,7 @@ SET_DETAIL_LINES = 120
 # most are a hinge; the point of the index is the assemblies worth reading.
 MAX_SUBMODELS = 40
 # Questions per ask_vision_model call. The tool is allowed once between writes,
-# so this is the whole budget — generous enough that nothing worth asking has
+# so this is the whole budget - generous enough that nothing worth asking has
 # to be left out, small enough that it stays a prepared list rather than a
 # fishing trip.
 MAX_QUESTIONS = 6
@@ -37,8 +37,8 @@ TOOL_SCHEMAS = [
             "name": "plan_construction",
             "description": (
                 "Draw up the construction plan for a build. Call this FIRST "
-                "whenever you are about to create a model — a building, a "
-                "vehicle, any new model — and before any substantial change to "
+                "whenever you are about to create a model - a building, a "
+                "vehicle, any new model - and before any substantial change to "
                 "an existing one. It researches real LEGO sets for the subject, "
                 "then returns the footprint, every Y level in LDU with the "
                 "arithmetic that produced it, a bill of materials whose part "
@@ -46,7 +46,7 @@ TOOL_SCHEMAS = [
                 "footprints and place_height_ldu), and the assembly steps in "
                 "order. Build the steps it gives you rather than replanning: "
                 "one call replaces a dozen part searches. Skip it only for "
-                "trivial edits — a colour change, moving or deleting one part."
+                "trivial edits - a colour change, moving or deleting one part."
             ),
             "parameters": {
                 "type": "object",
@@ -62,7 +62,7 @@ TOOL_SCHEMAS = [
                     "requirements": {
                         "type": "string",
                         "description": (
-                            "Anything the user asked for specifically — colours, "
+                            "Anything the user asked for specifically - colours, "
                             "features, style, a part they named."
                         ),
                     },
@@ -108,7 +108,7 @@ TOOL_SCHEMAS = [
                 "use when stacking. Always use this instead of guessing a part "
                 "number. It answers with three more things: `companion_parts`, "
                 "the parts real sets put beside the results (a rim's tyre, a "
-                "turntable's other half) — place those too or the assembly is "
+                "turntable's other half) - place those too or the assembly is "
                 "unfinished; `other_shape_families`, the families the search "
                 "reached but had no room to show, to search again with "
                 "category= rather than settle for a plain brick; and "
@@ -146,15 +146,15 @@ TOOL_SCHEMAS = [
             "description": (
                 "Exact geometry for one part: bounding box in LDU, footprint in "
                 "studs, the stud grid (offsets from the part's origin where other "
-                "parts attach), and place_height_ldu — subtract this from the y of "
+                "parts attach), and place_height_ldu - subtract this from the y of "
                 "the part below to stack this part on top of it.\n\n"
                 "`studs` is the part measured rather than estimated: every stud "
                 "on it, at its offset from the part's own origin. `on_top` are "
-                "the ones you can build on — a 2x2 slope has two, where its "
+                "the ones you can build on - a 2x2 slope has two, where its "
                 "bounding box implies four. `underside` are the tubes it comes "
                 "down over, which are what must land on the studs below. And "
                 "`on_the_sides` are studs facing sideways, each with the "
-                "rotation matrix that turns a part to go onto it — a headlight "
+                "rotation matrix that turns a part to go onto it - a headlight "
                 "brick, a bracket, a plate with studs on its side. That matrix "
                 "is the whole of how a model gets a face with no studs showing, "
                 "and it is not derivable from anything else here.\n\n"
@@ -165,7 +165,7 @@ TOOL_SCHEMAS = [
                 "SNOT, tyre) and which half of each it offers; `attachment` and "
                 "`studs_required` say what has to already be there for it to go "
                 "on. Two parts with no family in common cannot be joined, "
-                "whatever their coordinates — and validation will not catch it, "
+                "whatever their coordinates - and validation will not catch it, "
                 "so read this before placing a part you have not used before. "
                 "`used_with` lists the parts real sets put beside this one and "
                 "how often: a wheel rim's tyre at 66%, a turntable's other half "
@@ -191,7 +191,7 @@ TOOL_SCHEMAS = [
             "description": (
                 "Search everything that is not a part: 1,800 real LEGO models "
                 "and the models you have built and saved. Search `sets` BEFORE "
-                "building anything non-trivial — a real set that already solved "
+                "building anything non-trivial - a real set that already solved "
                 "a similar shape is the best reference you can get, and what "
                 "comes back can be read with read_model('set:...')."
             ),
@@ -209,7 +209,7 @@ TOOL_SCHEMAS = [
                     "query": {
                         "type": "string",
                         "description": (
-                            "What you are after, in plain words — 'a small "
+                            "What you are after, in plain words - 'a small "
                             "medieval house with a sloped roof'."
                         ),
                     },
@@ -232,7 +232,7 @@ TOOL_SCHEMAS = [
                     "max_pieces": {
                         "type": "integer",
                         "description": (
-                            "sets/creations. Worth setting — a 3,000-piece "
+                            "sets/creations. Worth setting - a 3,000-piece "
                             "model is a poor reference for a 40-piece build."
                         ),
                     },
@@ -275,7 +275,7 @@ TOOL_SCHEMAS = [
                         "type": "string",
                         "description": (
                             "One named block of an MPD instead of a line range "
-                            "— 'wing.ldr', or any part of that name. This is "
+                            "- 'wing.ldr', or any part of that name. This is "
                             "how to read one assembly of a real set: sets are "
                             "built out of submodels, and the one you want is a "
                             "few dozen lines somewhere inside a few thousand. "
@@ -297,7 +297,7 @@ TOOL_SCHEMAS = [
         "function": {
             "name": "get_set_details",
             "description": (
-                "Open an official set and read its LDraw source — the real "
+                "Open an official set and read its LDraw source - the real "
                 "coordinates LEGO's own designers used. Comes back with the "
                 "start of the file and an index of its submodels, so you can "
                 "go straight to the assembly you need with "
@@ -320,10 +320,10 @@ TOOL_SCHEMAS = [
         "function": {
             "name": "edit_model",
             "description": (
-                "Put lines into a model file — the one tool that writes. An "
+                "Put lines into a model file - the one tool that writes. An "
                 "LDraw file IS a program: one part per line, in order, and "
                 "every fault you are told about comes with the line it is on. "
-                "So work on it line by line — replace the line with the wrong "
+                "So work on it line by line - replace the line with the wrong "
                 "coordinate, delete the duplicate part, insert the course of "
                 "bricks that is missing.\n\n"
                 "A file that does not exist yet is an empty file: to START a "
@@ -371,7 +371,7 @@ TOOL_SCHEMAS = [
                                     "description": (
                                         "First line this edit acts on, counting "
                                         "from 1. For insert it is the line the "
-                                        "new text goes BEFORE — use "
+                                        "new text goes BEFORE - use "
                                         "total_lines + 1 to add at the end."
                                     ),
                                 },
@@ -420,49 +420,49 @@ TOOL_SCHEMAS = [
                 "Build by describing the arrangement instead of typing "
                 "coordinates. **You give the position of the FIRST part only; "
                 "the rest are worked out from the part's real size.**\n\n"
-                "  row   — n in a line:   {\"op\":\"row\",\"part\":\"3941\","
+                "  row   - n in a line:   {\"op\":\"row\",\"part\":\"3941\","
                 "\"colour\":2,\"at\":[0,-216,0],\"count\":5}\n"
-                "  grid  — n by m:        {\"op\":\"grid\",\"part\":\"3024\","
+                "  grid  - n by m:        {\"op\":\"grid\",\"part\":\"3024\","
                 "\"colour\":71,\"at\":[0,0,0],\"counts\":[6,8]}\n"
-                "  stack — n upward:      {\"op\":\"stack\",\"part\":\"3062b\","
+                "  stack - n upward:      {\"op\":\"stack\",\"part\":\"3062b\","
                 "\"colour\":70,\"at\":[0,-24,0],\"count\":6}\n"
-                "  ring  — 4 round a centre, each turned to face out: "
+                "  ring  - 4 round a centre, each turned to face out: "
                 "{\"op\":\"ring\",\"part\":\"4286\",\"colour\":70,"
                 "\"at\":[0,-240,0],\"count\":4,\"radius_ldu\":20}\n"
-                "  mirror— a symmetric pair: {\"op\":\"mirror\",\"part\":"
+                "  mirror- a symmetric pair: {\"op\":\"mirror\",\"part\":"
                 "\"3039\",\"colour\":4,\"at\":[60,-24,0],\"about\":\"x\"}\n"
-                "  wall  — bonded course-work, bricks chosen for you: "
+                "  wall  - bonded course-work, bricks chosen for you: "
                 "{\"op\":\"wall\",\"colour\":4,\"at\":[0,0,0],"
                 "\"axis\":\"x\",\"length_studs\":12,\"courses\":3}\n"
-                "  box   — four bonded walls round a rectangle: "
+                "  box   - four bonded walls round a rectangle: "
                 "{\"op\":\"box\",\"colour\":4,\"at\":[0,0,0],"
                 "\"size_studs\":[10,8],\"courses\":4}\n"
-                "  fill  — a region tiled with the parts YOU name, bonded: "
+                "  fill  - a region tiled with the parts YOU name, bonded: "
                 "{\"op\":\"fill\",\"colour\":4,\"at\":[0,0,0],"
                 "\"size_studs\":[10,8],\"courses\":3,"
                 "\"parts\":[\"3008\",\"3009\",\"3004\"]}\n"
-                "  place — a single part: {\"op\":\"place\",\"part\":\"3001\","
+                "  place - a single part: {\"op\":\"place\",\"part\":\"3001\","
                 "\"colour\":4,\"at\":[40,-8,0]}\n\n"
-                "And four that place nothing themselves — they say what "
+                "And four that place nothing themselves - they say what "
                 "happens to the ops **inside** them, which is how you say "
                 "'and again', 'and the same on the other side', and 'that "
                 "thing, six times':\n\n"
-                "  repeat  — the ops inside, n times, each moved on from the "
+                "  repeat  - the ops inside, n times, each moved on from the "
                 "last: {\"op\":\"repeat\",\"times\":4,\"step\":[0,-24,0],"
                 "\"ops\":[ ... ]}\n"
-                "  reflect — the ops inside, and their mirror image: "
+                "  reflect - the ops inside, and their mirror image: "
                 "{\"op\":\"reflect\",\"about\":\"x\",\"plane\":0,"
                 "\"ops\":[ ... ]}\n"
-                "  define  — name an assembly, build it nowhere: "
+                "  define  - name an assembly, build it nowhere: "
                 "{\"op\":\"define\",\"name\":\"window\",\"ops\":[ ... ]}\n"
-                "  call    — put a defined assembly somewhere: "
+                "  call    - put a defined assembly somewhere: "
                 "{\"op\":\"call\",\"name\":\"window\",\"at\":[-60,-48,50],"
                 "\"rotate\":90}\n\n"
                 "**Reach for the repeating ops first; `place` last.** If you "
                 "are about to write two `place` ops for the same part in a "
                 "line, that is a `row` with `count: 2`, and it is shorter and "
                 "cannot be mis-spaced. `place` is for the odd part that "
-                "belongs nowhere in a pattern — a door, a chimney, one tile. A "
+                "belongs nowhere in a pattern - a door, a chimney, one tile. A "
                 "call that is twenty `place` ops is this tool being used as a "
                 "typewriter.\n\n"
                 "**Four identical courses is a `repeat`, not four lists of "
@@ -472,7 +472,7 @@ TOOL_SCHEMAS = [
                 "{\"op\":\"repeat\",\"times\":4,\"step\":[0,-24,0],\"ops\":["
                 "{\"op\":\"row\",\"part\":\"3010\",\"colour\":4,"
                 "\"at\":[0,0,0],\"count\":3}]}\n"
-                "`step` is how far each copy moves from the one before it — "
+                "`step` is how far each copy moves from the one before it - "
                 "[0,-24,0] is one brick course up, [80,0,0] is one 2x4 along. "
                 "The copies cannot drift, because there is only one position "
                 "written down.\n\n"
@@ -480,13 +480,13 @@ TOOL_SCHEMAS = [
                 "inside it AND their mirror image on the far side of the "
                 "plane, each part turned so the pair reads as a mirror rather "
                 "than two copies facing the same way. A wing, an arm, a wheel "
-                "arch, a whole side of a building — a detail that lands a stud "
+                "arch, a whole side of a building - a detail that lands a stud "
                 "off on one side only is the commonest reason a build reads as "
                 "unfinished, and by hand that is exactly what happens. "
                 "`mirror` does this for ONE part; `reflect` does it for "
                 "everything inside it, which is what symmetry usually means.\n\n"
                 "**`define` and `call` are for a shape you build more than "
-                "once** — a window, a wheel, a battlement, a leg. Define it "
+                "once** - a window, a wheel, a battlement, a leg. Define it "
                 "once at [0,0,0], then `call` it wherever it goes. `call` "
                 "takes `at`, and optionally `rotate` (turns the whole assembly "
                 "about Y) and `mirror` (\"x\" or \"z\", for the handed copy). "
@@ -494,44 +494,44 @@ TOOL_SCHEMAS = [
                 "**`ring` is for anything that goes round something**: the "
                 "slopes finishing a tower roof, four walls about a courtyard. "
                 "It turns each part as well as placing it, so they all face "
-                "outward — writing that by hand is how four slopes end up a "
+                "outward - writing that by hand is how four slopes end up a "
                 "full stud inside each other. `count` is 2 or 4 (a right "
                 "angle); `radius_ldu` defaults to the part's own depth, which "
                 "puts four of them edge to edge.\n\n"
                 "**`wall`, `box` and `fill` are for anything made of "
-                "courses** — a wall, a cube, a room, a tower, a chimney, a "
+                "courses** - a wall, a cube, a room, a tower, a chimney, a "
                 "floor, a solid mass, a raised bed. They lay a ladder of "
                 "bricks chosen to *bond*: longest that fits, seams broken "
                 "course to course and row to row, so no vertical joint runs "
                 "through. Never lay a wall as rows of 2x4s. That is the single "
-                "most common thing this builder does and it is wrong twice — "
+                "most common thing this builder does and it is wrong twice - "
                 "every course has a straight vertical joint running through "
                 "it, which is where a real wall comes apart, and the whole "
                 "thing is one shape repeated, which is what makes a model read "
                 "as assembled rather than designed. A bonded 12x4 wall is 10 "
                 "parts and 3 shapes; the same wall in 2x4s is 12 parts and 1. "
                 "`box` alternates which pair of walls runs through, course by "
-                "course, so the corners interlock — and it refuses a "
+                "course, so the corners interlock - and it refuses a "
                 "single-course box, which is four walls that touch and are "
                 "joined nowhere.\n\n"
                 "**`fill` is those two with the bricks left to you.** `wall` "
                 "and `box` pick their own, which is why they are worth "
-                "reaching for when you do not care; `fill` takes `parts` — the "
-                "list to tile the region with — so the palette and the shapes "
+                "reaching for when you do not care; `fill` takes `parts` - the "
+                "list to tile the region with - so the palette and the shapes "
                 "stay yours while the bonding stays automatic. It also does "
                 "the one thing neither of the others does: a **solid** "
                 "region. A floor, a slab, a plinth, a mass. "
                 "`size_studs` is the region, `courses` how many high, "
                 "`hollow: true` makes it a shell instead. Every part in "
-                "`parts` must be the same width and the same height — a course "
-                "is one course — and each a different length, since that is "
+                "`parts` must be the same width and the same height - a course "
+                "is one course - and each a different length, since that is "
                 "what there is to choose between.\n\n"
                 "**`mirror` is for anything symmetric**: a pair of wings, two "
                 "arms of a chair, headlights. It places the part at `at` and "
                 "again on the far side of the `about` plane (\"x\" or \"z\", "
                 "through `plane`, default 0), turned so the pair reads as a "
                 "mirror image rather than two copies facing the same way. Use "
-                "it wherever the model has an axis — a detail that lands a "
+                "it wherever the model has an axis - a detail that lands a "
                 "stud off on one side only is the commonest reason a build "
                 "reads as unfinished, and by hand that is exactly what "
                 "happens.\n\n"
@@ -540,18 +540,18 @@ TOOL_SCHEMAS = [
                 "slip is the commonest way a model becomes unbuildable, and "
                 "here it cannot be written down. Rotating a part turns its "
                 "footprint too, so the spacing follows by itself.\n\n"
-                "Rules: `colour` is required on every op (an LDraw code — 16 "
+                "Rules: `colour` is required on every op (an LDraw code - 16 "
                 "means 'inherit' and makes parts look uncoloured). `at` is "
                 "[x, y, z] in LDU with x and z on multiples of 10, and −Y is "
                 "up, so a stack goes to smaller y and this does that "
-                "subtraction. `rotate` is degrees about Y — 0, 90, 180 or 270 "
-                "— and for anything with a direction to it (a slope, a wedge, "
+                "subtraction. `rotate` is degrees about Y - 0, 90, 180 or 270 "
+                "- and for anything with a direction to it (a slope, a wedge, "
                 "a bracket, a printed tile) which way it faces is part of "
                 "placing it, not a refinement afterwards. "
                 "`gap_studs` opens a deliberate gap. `note` writes a comment "
                 "above the parts.\n\n"
-                "If the parts it would place would share solid plastic — with "
-                "each other or with the model — **nothing is written at all** "
+                "If the parts it would place would share solid plastic - with "
+                "each other or with the model - **nothing is written at all** "
                 "and it names the clash. That is not a failure to work around: "
                 "move the `at` that is wrong and call again. The file on disk "
                 "is untouched, so there is nothing to undo.\n\n"
@@ -634,7 +634,7 @@ TOOL_SCHEMAS = [
                                     "type": "boolean",
                                     "description": (
                                         "reflect: build the near side too. "
-                                        "Default true — a reflect is normally "
+                                        "Default true - a reflect is normally "
                                         "'and the same on the other side'."),
                                 },
                                 "hollow": {
@@ -706,7 +706,7 @@ TOOL_SCHEMAS = [
                                         "Degrees about Y: 0, 90, 180 or 270. "
                                         "Which way a slope, a wedge, a bracket "
                                         "or a printed tile faces is a decision "
-                                        "— three placements in four in real "
+                                        "- three placements in four in real "
                                         "sets are turned, and a model where "
                                         "every part faces the same way reads "
                                         "as a stack of boxes. The footprint "
@@ -732,7 +732,7 @@ TOOL_SCHEMAS = [
                                     "description": (
                                         "wall, box and fill: how many courses "
                                         "high. A box or a hollow fill needs at "
-                                        "least 2 — one course is four walls "
+                                        "least 2 - one course is four walls "
                                         "with no stud between them."),
                                 },
                                 "thickness_studs": {
@@ -767,7 +767,7 @@ TOOL_SCHEMAS = [
                             },
                             # `op` only. `colour` and `at` are required of
                             # every op that places something and the compiler
-                            # says so by name when one is missing — but a
+                            # says so by name when one is missing - but a
                             # `repeat` has neither, and a schema that demanded
                             # them would make the group ops unwritable.
                             "required": ["op"],
@@ -810,7 +810,7 @@ TOOL_SCHEMAS = [
             "name": "copy_from_set",
             "description": (
                 "Take an assembly out of a real released set and put it in the "
-                "model you are building — as real part lines, at your "
+                "model you are building - as real part lines, at your "
                 "coordinates, which you then own and can change.\n\n"
                 "This is what the reference sets are *for*. Reading a wing's "
                 "thirty lines of coordinates and typing them out again shifted "
@@ -829,7 +829,7 @@ TOOL_SCHEMAS = [
                 "you do not want with `edit_model`, build onto it with "
                 "`build_ops`. Grafting a torso and redressing it is the "
                 "intended use; grafting a whole set and calling it a build is "
-                "not — take assemblies, not models.\n\n"
+                "not - take assemblies, not models.\n\n"
                 "It refuses and writes nothing if the assembly would overlap "
                 "what is already there or land on a different stud lattice, "
                 "and it never modifies the set."
@@ -858,7 +858,7 @@ TOOL_SCHEMAS = [
                         "description": (
                             "[x, y, z] in LDU where the assembly goes. By "
                             "default that is the middle of its footprint and "
-                            "its underside — the point you would set it down "
+                            "its underside - the point you would set it down "
                             "on."),
                     },
                     "rotate": {
@@ -897,7 +897,7 @@ TOOL_SCHEMAS = [
                         "items": {"type": "string"},
                         "description": (
                             "Take only these part numbers out of the assembly "
-                            "— the four wheels of a racer without its "
+                            "- the four wheels of a racer without its "
                             "chassis."),
                     },
                     "exclude_parts": {
@@ -909,7 +909,7 @@ TOOL_SCHEMAS = [
                         "type": "string",
                         "description": (
                             "Take only the parts whose catalogue description "
-                            "contains this word — 'wheel', 'windscreen', "
+                            "contains this word - 'wheel', 'windscreen', "
                             "'slope'. Combines with the two above."),
                     },
                     "allow_half_offset": {
@@ -928,15 +928,15 @@ TOOL_SCHEMAS = [
         "function": {
             "name": "validate_model",
             "description": (
-                "Check the model AND look at it — the two questions that "
+                "Check the model AND look at it - the two questions that "
                 "decide whether a build is finished, in one call. First the "
                 "grid: every part on the stud grid, nothing sharing solid "
                 "plastic, every part number real; overlaps that are pure "
                 "arithmetic are slid back into place for you, and the model's "
                 "size comes back under `size`. Then the eyes: it is rendered "
-                "from six viewpoints — four corners a quarter turn apart, "
-                "plus front and top — and a vision model describes what is "
-                "actually there — whether it reads as the thing you were "
+                "from six viewpoints - four corners a quarter turn apart, "
+                "plus front and top - and a vision model describes what is "
+                "actually there - whether it reads as the thing you were "
                 "asked for, what is floating, what is out of proportion. When "
                 "the user attached a reference picture the renders are "
                 "compared against it too, difference by difference. A model "
@@ -945,14 +945,14 @@ TOOL_SCHEMAS = [
                 "every change.\n\n"
                 "**Both halves run every time, and neither can be turned "
                 "off.** The model is rendered and looked at even while the "
-                "grid check is failing — a build with an overlap in it is "
+                "grid check is failing - a build with an overlap in it is "
                 "still a build whose shape is worth knowing about, and the "
                 "two faults are almost always repaired in the same edit.\n\n"
                 "It may also return `style`: your model's part variety, "
                 "colours and use of rotation measured against the 1,800 real "
                 "sets in the reference corpus, but only when the build is a "
                 "long way outside what sets its size look like. That is not a "
-                "fault and never fails the model — it is the one signal that "
+                "fault and never fails the model - it is the one signal that "
                 "tells you a build is correct and still dull."
             ),
             "parameters": {
@@ -984,7 +984,7 @@ TOOL_SCHEMAS = [
         "function": {
             "name": "ask_about_image",
             "description": (
-                "Look at the reference picture the user attached — you cannot "
+                "Look at the reference picture the user attached - you cannot "
                 "see it, and this is the only way to know what is in it. "
                 "Called with no questions it describes the picture: do that "
                 "FIRST, before planning anything. Called with questions it "
@@ -1030,8 +1030,8 @@ TOOL_SCHEMAS = [
         "function": {
             "name": "move_submodel",
             "description": (
-                "Shift one whole subconstruction inside an assembled scene — "
-                "the tree, the house, the car — by a distance in LDU. This is "
+                "Shift one whole subconstruction inside an assembled scene - "
+                "the tree, the house, the car - by a distance in LDU. This is "
                 "how a scene is arranged: the objects are finished and "
                 "correct, and what is wrong is where they are standing "
                 "relative to each other. Move on the stud grid: multiples of "
@@ -1044,7 +1044,7 @@ TOOL_SCHEMAS = [
                     "submodel": {
                         "type": "string",
                         "description": (
-                            "Which object to move, by name — 'tree', "
+                            "Which object to move, by name - 'tree', "
                             "'tree.ldr'. The scene lists what it holds."
                         ),
                     },
@@ -1064,7 +1064,7 @@ TOOL_SCHEMAS = [
         "function": {
             "name": "rotate_submodel",
             "description": (
-                "Turn one whole subconstruction where it stands — to face it "
+                "Turn one whole subconstruction where it stands - to face it "
                 "a different way, or to lay it on its side. It turns about "
                 "the object's own centre, so it stays where it is instead of "
                 "swinging across the scene. Quarter turns only: any other "
@@ -1102,7 +1102,7 @@ TOOL_SCHEMAS = [
                 "component becomes a submodel of the result, placed so that "
                 "none of them overlap: laid in a row, dropped onto the ground "
                 "plane, snapped to the stud grid. Give x/y/z on a component "
-                "only when you want it somewhere specific — the computed "
+                "only when you want it somewhere specific - the computed "
                 "layout is measured from real bounding boxes and is usually "
                 "right. Do not write the combining MPD by hand; this exists so "
                 "that arithmetic is not yours to get wrong."
@@ -1147,7 +1147,7 @@ TOOL_SCHEMAS = [
             "name": "finish",
             "description": (
                 "Report that you cannot go on. **You do not use this to "
-                "finish** — whether the build is done is not yours to decide "
+                "finish** - whether the build is done is not yours to decide "
                 "and not yours to announce. Your requirements are checked "
                 "against the model every time you call validate_model, and the "
                 "run ends by itself the moment they are all met. Keep "
@@ -1179,7 +1179,7 @@ TOOL_SCHEMAS = [
                         "description": (
                             "Required with give_up: what stopped you, "
                             "specifically. 'The 4x4 slope I need is not in the "
-                            "catalogue' — not 'it did not work'."
+                            "catalogue' - not 'it did not work'."
                         ),
                     },
                 },
@@ -1193,7 +1193,7 @@ TOOL_SCHEMAS = [
 # --------------------------------------------------------------------------
 # Grafting, on or off
 #
-# `copy_from_set` can be withdrawn for a run — see COPY_FROM_SET_ENABLED in
+# `copy_from_set` can be withdrawn for a run - see COPY_FROM_SET_ENABLED in
 # config.py for why anyone would want that. Withdrawn means *withdrawn*, not
 # discouraged: the schema is never shown, so there is no tool for the model to
 # decide to call, which is the only form of "off" that a prompt cannot argue
@@ -1220,7 +1220,7 @@ def agent_tools():
     """The schemas an agent may be shown, as things stand.
 
     Everything that builds a tool list starts here rather than from
-    ``TOOL_SCHEMAS`` — the orchestrator's per-phase narrowing, the app's chat
+    ``TOOL_SCHEMAS`` - the orchestrator's per-phase narrowing, the app's chat
     turn, the bare agent. TOOL_SCHEMAS remains the full catalogue of what
     exists, which is what the retry repairer and the trace need.
     """
@@ -1286,8 +1286,8 @@ def _inherent_faults(lines):
     make the whole reference corpus unusable for the one thing it is for.
 
     So the assembly is validated on its own first, and whatever it is already
-    guilty of is not counted against it again. Anything the graft *introduces*
-    — a collision with what it is joining — still blocks.
+    guilty of is not counted against it again. Anything the graft *introduces* -
+    a collision with what it is joining - still blocks.
     """
     import tempfile
 
@@ -1323,7 +1323,7 @@ def _new_line_faults(text, first_new, last_new, inherent=(), ignore=()):
     """What is wrong with the parts this call is adding. ``{}`` when nothing is.
 
     Run over the whole candidate model, because a new brick collides with an
-    old one rather than with itself — but only faults involving a line this
+    old one rather than with itself - but only faults involving a line this
     call is responsible for may block it. A model that already had faults is
     not a reason to refuse to add a chimney to it, and refusing would leave the
     builder unable to write anything until it had repaired work it may not have
@@ -1390,7 +1390,7 @@ def _phase_conflict(text, first_new, last_new):
 
     The failure this exists for looks like nothing at all in the source. A 6x6
     plate at x = -180 and a 1x1 plate at x = 140 are both on multiples of 20 and
-    both perfectly reasonable — and their studs are half a stud apart, so they
+    both perfectly reasonable - and their studs are half a stud apart, so they
     can never connect. One build spent fifteen calls laying two such lattices
     over each other and only found out when it validated at the end, by which
     time thirty-six parts were on the wrong one.
@@ -1433,7 +1433,7 @@ def _phase_conflict(text, first_new, last_new):
     # One correction for all of them is a phase slip, not a design mistake:
     # the whole call is half a stud out of step with the model and the fix is
     # to shift it back. Refusing that costs the builder a step to be told a
-    # number this already knows — and the last time it happened three times in
+    # number this already knows - and the last time it happened three times in
     # one run, the builder gave up on the tool and hand-wrote the parts through
     # `edit_model`, which checks nothing. So it is applied rather than
     # reported, and the reply says what moved.
@@ -1452,8 +1452,8 @@ def _phase_conflict(text, first_new, last_new):
                 "±30, ±50 from its centre, a 1x1 plate's stud is at 0. So two "
                 "parts can both sit on multiples of 20 and still be half a "
                 "stud apart. That is what has happened here."),
-        "hint": ("Apply the move listed against each part — ±10 on one axis or "
-                 "both — and call build_ops again. Usually it is the same move "
+        "hint": ("Apply the move listed against each part - ±10 on one axis or "
+                 "both - and call build_ops again. Usually it is the same move "
                  "for all of them, so it is one correction to the `at` of each "
                  "op rather than a redesign. If the offset is deliberate "
                  "because these parts sit on jumper plates, pass "
@@ -1489,7 +1489,7 @@ def _write_parts(path, lines, mode="append", submodel=None, title=None,
         headers = [(i, ln.strip()[7:].strip()) for i, ln in enumerate(existing_lines)
                    if ln.strip().lower().startswith("0 file ")]
         # A block whose name ends in .dat is a *part definition*, not a
-        # submodel — a printed tile a graft brought with it. It is not
+        # submodel - a printed tile a graft brought with it. It is not
         # somewhere parts can be added, and it must not be counted when
         # deciding whether the file is ambiguous: after one graft a plain model
         # can easily hold six of them, and counting those refused every
@@ -1520,7 +1520,7 @@ def _write_parts(path, lines, mode="append", submodel=None, title=None,
             combined = body + "\n" + "\n".join(lines) + "\n"
             first_new = len(body.splitlines()) + 1
         else:
-            # The end of *this block*, which is where the next header begins —
+            # The end of *this block*, which is where the next header begins -
             # not the end of the file. Appending past a part definition would
             # put the model's bricks inside the definition of a printed tile.
             end = next((i for i in range(start + 1, len(existing_lines))
@@ -1537,7 +1537,7 @@ def _write_parts(path, lines, mode="append", submodel=None, title=None,
     last_new = first_new + len(lines) - 1
 
     # Part definitions the placements need, as their own blocks at the end of
-    # the document — which is where an MPD keeps them. They carry no
+    # the document - which is where an MPD keeps them. They carry no
     # coordinates in the model's space, so they sit outside the checked range.
     if definitions:
         already = {ln.strip().lower() for ln in combined.splitlines()
@@ -1580,7 +1580,7 @@ def _write_parts(path, lines, mode="append", submodel=None, title=None,
             **faults,
             "hint": (f"Each fault names the line it is on; the lines from "
                      f"{first_new} onward are the ones {source} would have "
-                     f"added. Move what is wrong and call {tool} again — the "
+                     f"added. Move what is wrong and call {tool} again - the "
                      f"model on disk is untouched, so nothing needs undoing."),
         }
         fix = _proposed_fix(combined, first_new, last_new, faults,
@@ -1589,7 +1589,7 @@ def _write_parts(path, lines, mode="append", submodel=None, title=None,
             out["try_this"] = fix
             out["hint"] = (
                 f"`try_this` is a correction that was applied to a copy and "
-                f"re-checked, and it came back clean — it is not a guess. "
+                f"re-checked, and it came back clean - it is not a guess. "
                 f"Apply those moves to the ops that placed the lines named and "
                 f"call {tool} again. The model on disk is untouched.")
         return out
@@ -1616,14 +1616,14 @@ def _proposed_fix(combined, first_new, last_new, faults, inherent, ignore_faults
 
     A rejection used to hand back a fault list and leave the builder to derive
     the correction itself. Measured across the recorded runs that cost 129
-    extra rounds — 42% of every successful write was preceded by at least one
-    rejection — and the geometry needed to answer it was already computed:
+    extra rounds - 42% of every successful write was preceded by at least one
+    rejection - and the geometry needed to answer it was already computed:
     `collisions._describe` works out the shortest legal move that separates an
     overlapping pair and puts it in `suggested_move`.
 
     So the moves are collected, applied to a copy, and the copy is re-checked.
     Only a correction that actually comes back clean is offered, because a
-    suggestion that does not work is worse than none — it costs the round it
+    suggestion that does not work is worse than none - it costs the round it
     was meant to save and it teaches the builder to stop reading the field.
     """
     moves = {}
@@ -1709,7 +1709,7 @@ def _model_phase(target, submodel=None):
     """The stud lattice a model already stands on, as ``(phase_x, phase_z)``.
 
     None for a file that does not exist yet or holds nothing the stud grid
-    governs — in which case the ops about to be written set the lattice
+    governs - in which case the ops about to be written set the lattice
     themselves and only have to agree with each other.
     """
     from . import lattice
@@ -1730,7 +1730,7 @@ def _build_ops(path, ops, mode="append", submodel=None, title=None,
 
     # The lattice the destination already stands on, so the ops are laid down
     # in its phase rather than discovering the clash after they are compiled.
-    # Skipped when the caller says the offset is deliberate — that is what a
+    # Skipped when the caller says the offset is deliberate - that is what a
     # jumper plate is for. See buildir._snap_to_phase.
     phase = None
     if not allow_half_offset and mode != "replace":
@@ -1768,7 +1768,7 @@ def _build_ops(path, ops, mode="append", submodel=None, title=None,
             f"copying; do not write those copies out by hand to check them.")
     _record_ops(_resolve(path), result.get("mode"), submodel,
                 {"ops": ops if isinstance(ops, list) else [ops]})
-    result["next"] = ("Now validate_model on this path — it checks the grid and "
+    result["next"] = ("Now validate_model on this path - it checks the grid and "
                       "renders the model. build_ops only checked the parts it "
                       "placed itself.")
     return result
@@ -1788,7 +1788,7 @@ def _copy_from_set(path, set_number, submodel=None, at=None, rotate=0,
     # setting whose enforcement lives only in the schema is a setting that is
     # off until something goes wrong.
     if not _COPY_FROM_SET:
-        return {"error": "copy_from_set is switched off for this run — this "
+        return {"error": "copy_from_set is switched off for this run - this "
                          "model is to be designed rather than assembled out "
                          "of released sets. Read the sets if they help "
                          "(`read_model(\"set:<n>\")`), then build it with "
@@ -1836,10 +1836,10 @@ def _copy_from_set(path, set_number, submodel=None, at=None, rotate=0,
     # a *body*, and inside a real set there are genuine half-stud offsets built
     # on jumper plates. Judging those part by part would refuse every assembly
     # LEGO ever designed. The grid check below still runs, and it asks the
-    # question that actually matters — is each part seated on something.
+    # question that actually matters - is each part seated on something.
     # A *filtered* graft is a handful of parts lifted out of an assembly, so
     # whatever used to hold them up was left behind on purpose. They arrive
-    # unsupported and the builder attaches them next — which is not a fault in
+    # unsupported and the builder attaches them next - which is not a fault in
     # the graft, it is the middle of the job. Overlaps still block, because two
     # parts in one space is never the middle of anything.
     partial = bool(only_parts or exclude_parts or matching)
@@ -1858,8 +1858,8 @@ def _copy_from_set(path, set_number, submodel=None, at=None, rotate=0,
         result["attach_these"] = (
             "These parts were taken out of an assembly without whatever was "
             "holding them, so they are sitting where you put them rather than "
-            "on anything. Attach them — move them onto real studs with "
-            "edit_model, or build up to them with build_ops — before you "
+            "on anything. Attach them - move them onto real studs with "
+            "edit_model, or build up to them with build_ops - before you "
             "finish: validate_model will report them as off the grid until you "
             "do, and no run may end holding one.")
     _record_ops(_resolve(path), result.get("mode"), into_submodel,
@@ -1868,7 +1868,7 @@ def _copy_from_set(path, set_number, submodel=None, at=None, rotate=0,
                            "rotate": rotate, "recolour": recolour,
                            "anchor": anchor}})
     result["next"] = (
-        "It is in your model now, as ordinary part lines you own — change them "
+        "It is in your model now, as ordinary part lines you own - change them "
         "with edit_model, recolour them, take pieces out, build onto them. Then "
         "validate_model.")
     return result
@@ -1895,7 +1895,7 @@ def _plan_construction(subject, requirements=None, model_path=None,
             use_references=use_references is not False,
             should_stop=should_stop,
             # The look was settled before this run started. The builder does
-            # not carry it into the call — it is on the ledger, so a plan is
+            # not carry it into the call - it is on the ledger, so a plan is
             # written against the brief whether or not the builder thought to
             # mention it.
             design_brief=getattr(state, "brief", None),
@@ -1905,7 +1905,7 @@ def _plan_construction(subject, requirements=None, model_path=None,
             # builder was never handed and cannot graft.
             reference_sets=getattr(state, "reference_sets", None),
             # And what this builder already worked out on a subject like this.
-            # On the ledger for the same reason again — see recall.py.
+            # On the ledger for the same reason again - see recall.py.
             recalled=getattr(state, "recalled", None),
             # What the harness read off the workbench before the run started.
             # The raw source below says what lines are in the file; this says
@@ -1942,7 +1942,7 @@ def _search_parts(query="", category=None, width_studs=None, depth_studs=None,
     if not results:
         # "No match" and "the search broke" are the same empty list and must
         # never read the same way. Told the first when the second is true, the
-        # agent concludes the part does not exist — and the next thing it does
+        # agent concludes the part does not exist - and the next thing it does
         # is invent a part number for it.
         if failure:
             return {"results": [], "error": f"the part search failed: {failure}",
@@ -1957,7 +1957,7 @@ def _search_parts(query="", category=None, width_studs=None, depth_studs=None,
     info = _retrieval().status().get("parts") or {}
     if not info.get("available"):
         return {"results": results,
-                "note": "keyword search only — the parts vector database is not "
+                "note": "keyword search only - the parts vector database is not "
                         "built, so describing a shape in plain words will not work. "
                         "Build it with: python -m maister.retrieval.build_indexes"}
     return {"results": results,
@@ -1973,7 +1973,7 @@ COMPANIONS_RETURNED = 5
 
 
 def _companions_for(results):
-    """The parts that go with what was found — deduplicated, best first.
+    """The parts that go with what was found - deduplicated, best first.
 
     Half the catalogue is half of something. A search for a wheel rim answers
     with rims, and every one of them is a hubcap until its tyre goes on; the
@@ -2009,7 +2009,7 @@ def _companions_for(results):
         "companion_parts_note": (
             "Parts that real sets put alongside the results above, with how "
             "often. A high percentage means the result is half of an assembly "
-            "— place the companion too, or the assembly is unfinished."),
+            "- place the companion too, or the assembly is unfinished."),
     }
 
 
@@ -2043,7 +2043,7 @@ def _shape_map(category, shown, rest):
     """The shape families this query also reached but did not show.
 
     A search answers with twelve parts. What it never showed was the shape of
-    the space they came out of — that the same words also reached cylinders,
+    the space they came out of - that the same words also reached cylinders,
     cones and dishes, any of which might be the better answer. Without that,
     one search returns one idea, and a model told to search sparingly builds
     the whole thing out of the first idea.
@@ -2115,15 +2115,15 @@ def _sets_unavailable_hint():
 def _get_set_details(set_number):
     """Open a real set: its LDraw source, and the way into the rest of it.
 
-    This used to lead with metadata — theme, year, piece counts, the twenty
-    parts the set used most — and put the source underneath. That is backwards.
+    This used to lead with metadata - theme, year, piece counts, the twenty
+    parts the set used most - and put the source underneath. That is backwards.
     None of it is how the set was *built*: a year and a piece count cannot be
     copied onto a stud grid, and a list of the parts used most is a shopping
     list for a model whose geometry the agent still has not seen. The source is
     the only part of a set that answers "how did they do it", so the source is
     what comes back.
 
-    With it, the index of submodels — because that is what a real set is. A
+    With it, the index of submodels - because that is what a real set is. A
     2,000-line MPD is thirty named assemblies, and "the one that makes the
     wing" is a thing you can ask for by name and cannot find by guessing line
     numbers.
@@ -2154,7 +2154,7 @@ def _get_set_details(set_number):
         if len(blocks) > MAX_SUBMODELS:
             # A 4,700-line set is 136 blocks, most of them a hinge or a pair of
             # tiles. Listing all of them buries the assemblies worth reading in
-            # the ones that are not, so the biggest survive — then put back in
+            # the ones that are not, so the biggest survive - then put back in
             # build order, because that order is itself information.
             shown = sorted(sorted(blocks, key=lambda b: -b["parts"])[:MAX_SUBMODELS],
                            key=lambda b: b["starts_at"])
@@ -2164,11 +2164,11 @@ def _get_set_details(set_number):
         biggest = max(shown, key=lambda b: b["parts"])
         details["next"] = (
             f"{len(blocks)} submodels. Read the one that makes the part you "
-            f"are stuck on — the largest is "
+            f"are stuck on - the largest is "
             f"read_model('set:{number}', submodel='{biggest['name']}')")
     elif source.get("more"):
         details["next"] = (
-            f"{source['more'].split(';')[0]} — "
+            f"{source['more'].split(';')[0]} - "
             f"read_model('set:{number}', "
             f"start_line={source['shown_lines'][1] + 1}) for the rest")
 
@@ -2181,7 +2181,7 @@ def _set_submodels(row):
     """The named blocks of a set's MPD: what it is assembled out of.
 
     Each with the line it starts on and how many parts are in it, so the agent
-    can pick by size as well as by name — the twelve-part block is a detail,
+    can pick by size as well as by name - the twelve-part block is a detail,
     the hundred-part block is the body.
     """
     path = sets.model_path(row)
@@ -2250,7 +2250,7 @@ def _get_part_details(part_id, state=None):
         info["studs"] = studs
     # For a part that has a direction, the turns handed over ready to use. The
     # search row says it faces a way; this is where the numbers come from, so
-    # deciding to turn it costs nothing further. Y only — a Y turn keeps the
+    # deciding to turn it costs nothing further. Y only - a Y turn keeps the
     # part flat on the studs and its footprint on the lattice, so it needs no
     # re-checking of anything underneath it.
     if catalog.faces_a_direction(info):
@@ -2262,7 +2262,7 @@ def _get_part_details(part_id, state=None):
             "matrix_for": {"0 (as drawn)": "1 0 0 0 1 0 0 0 1",
                            **{f"{d}°": m for d, m in catalog.Y_TURNS.items()}},
             "with_build_ops": 'pass "rotate": 90, 180 or 270 and the footprint '
-                              'turns with the part — a turned 1x4 takes four '
+                              'turns with the part - a turned 1x4 takes four '
                               'studs in z rather than four in x, and the '
                               'spacing is worked out for you.',
             # Measured, not asserted: an LDraw slope's origin sits on its back
@@ -2271,7 +2271,7 @@ def _get_part_details(part_id, state=None):
             # unturned it needed z+10. This is the thing that goes wrong when a
             # rotation is written by hand.
             "watch_the_half_stud":
-                "many parts with a direction — most slopes among them — have "
+                "many parts with a direction - most slopes among them - have "
                 "their origin on an edge rather than at their centre, so "
                 "turning one moves its footprint half a stud and it no longer "
                 "lands on the same studs. build_ops corrects that for you and "
@@ -2296,7 +2296,7 @@ def _save_creation(path, name, description, tags=None, require_valid=False):
     """Put a model in the user's gallery.
 
     Not a tool any more: the gallery is the user's shelf, and deciding what
-    goes on it was never something to ask a language model to judge — it was
+    goes on it was never something to ask a language model to judge - it was
     withheld unless the turn's wording looked like a request, which is a
     guess about intent standing in for a button. There is a button now, and
     this is what it calls.
@@ -2394,17 +2394,17 @@ def _notes_on(subject_type, subject_id):
 
 
 def _write_file(path, content, state=None):
-    """Write a whole model file. Internal — the agent has no tool for this.
+    """Write a whole model file. Internal - the agent has no tool for this.
 
     There used to be a `write_model` tool alongside `edit_model`, and the two
     were one job wearing two names: both put LDraw text on disk, both went
     through `_persist`, both rendered. Two tools for one job is a decision the
-    model has to make on every write, and the wrong branch of it is expensive —
+    model has to make on every write, and the wrong branch of it is expensive -
     retyping ninety-seven lines to change three is how the ninety-seven get
     lost. `edit_model` now treats a missing file as an empty one, which is the
     whole of what the other tool was for.
 
-    What is left is this: the harness composing a file it generated itself —
+    What is left is this: the harness composing a file it generated itself -
     an arrangement, an assembled scene. That is not the model deciding to
     rewrite anything, so it does not need a tool.
     """
@@ -2414,7 +2414,7 @@ def _write_file(path, content, state=None):
     result = _persist(target, path, content, state=state)
     result["next"] = ("Now call validate_model on this path. It checks the "
                       "grid and renders the model so you can see what you "
-                      "actually built — both in the one call.")
+                      "actually built - both in the one call.")
     return result
 
 
@@ -2438,7 +2438,7 @@ def _persist(target, path, content, state=None, action="written"):
         state.record_write(path, lines=len(lines), parts=n_refs)
 
     # A picture, every time, wrong models included. It costs a third of a
-    # second and it is what the user is actually waiting for — they would
+    # second and it is what the user is actually waiting for - they would
     # rather see a broken build than read that one exists. The critique is not
     # taken here: that is an API call, and it belongs where the agent asked for
     # it rather than after every write.
@@ -2449,7 +2449,7 @@ def _persist(target, path, content, state=None, action="written"):
 def _edit_model(path, edits, state=None):
     """Put lines into a model file. All the edits, or none of them.
 
-    Line numbers are the file's own, as it stands before this call — the
+    Line numbers are the file's own, as it stands before this call - the
     numbering the model was just shown by read_model or by a validation report.
     Asking it to predict how its own earlier edits shift the later ones is
     asking it to do bookkeeping instead of building, and it gets it wrong; the
@@ -2459,7 +2459,7 @@ def _edit_model(path, edits, state=None):
     this be the only writing tool: starting a model is inserting every line of
     it before line 1 of nothing, which `_plan_edits` already allows and already
     bounds-checks. `replace` and `delete` against a file with no lines in it
-    fail the same way they fail past the end of a real one, which is right —
+    fail the same way they fail past the end of a real one, which is right -
     there is nothing there to have expectations about.
     """
     target = _resolve(path)
@@ -2497,7 +2497,7 @@ def _edit_model(path, edits, state=None):
     result["was_lines"] = len(original)
     result["changed_regions"] = _regions(planned, lines)
 
-    # Spend the assembly budget, and say what is left of it — a limit nobody is
+    # Spend the assembly budget, and say what is left of it - a limit nobody is
     # told the balance of is a limit they only find out about by hitting it.
     if state is not None and getattr(state, "edit_scope", None) == "assembly":
         changed = sum(
@@ -2510,8 +2510,8 @@ def _edit_model(path, edits, state=None):
             "parts_changed_so_far": state.parts_edited,
             "parts_left": max(0, ASSEMBLY_EDIT_BUDGET - state.parts_edited),
             "note": "This pass composes finished objects. The budget is for "
-                    "joining them — clashing parts, a plate that ties two "
-                    "together — not for rebuilding one.",
+                    "joining them - clashing parts, a plate that ties two "
+                    "together - not for rebuilding one.",
         }
     # What this edit did to the model, checked now rather than whenever the
     # builder next validates.
@@ -2522,7 +2522,7 @@ def _edit_model(path, edits, state=None):
     # would block the work only this tool can do. But leaving it silent turned
     # out worse. In one run `build_ops` refused three times, the builder
     # switched to `edit_model`, wrote the same parts off the grid unchecked,
-    # and found out at the step limit — the checked tool taught it to use the
+    # and found out at the step limit - the checked tool taught it to use the
     # unchecked one. So this reports, immediately and by line.
     introduced = _edited_line_faults(target, planned, lines)
     if introduced:
@@ -2532,15 +2532,15 @@ def _edit_model(path, edits, state=None):
             + ", ".join(f"{len(rows)} {name.replace('_', ' ')}"
                         for name, rows in introduced.items())
             + ". Each one names its line and what to do. Fix them in your next "
-              "edit_model call rather than building on top of them — a model "
+              "edit_model call rather than building on top of them - a model "
               "carrying either cannot be built out of real bricks, and no run "
               "is allowed to end holding a part off the grid.")
 
     result["next"] = ("Now call validate_model on this path. It checks the "
                       "grid and renders the model so you can see what the "
-                      "change actually did — both in the one call.")
+                      "change actually did - both in the one call.")
     if not [ln for ln in lines if ln.strip()]:
-        result["warning"] = ("that emptied the file — there is no model left "
+        result["warning"] = ("that emptied the file - there is no model left "
                              "in it")
     return result
 
@@ -2637,7 +2637,7 @@ def _plan_edits(original, edits):
 
         # The guard. A line number the model worked out from an older view of
         # the file is the failure this tool is most exposed to, and without a
-        # check it fails silently — the wrong brick is deleted and everything
+        # check it fails silently - the wrong brick is deleted and everything
         # downstream reports on a model nobody meant to build.
         if op in ("replace", "delete"):
             expect = edit.get("expect")
@@ -2667,7 +2667,7 @@ def _plan_edits(original, edits):
                                    "removed": end - start + 1,
                                    "added": len(new)}})
 
-    # Two edits over the same line have no defined result — whichever ran last
+    # Two edits over the same line have no defined result - whichever ran last
     # would win, and which that is depends on an ordering the caller did not
     # choose.
     for a, b in _pairs(planned):
@@ -2710,8 +2710,8 @@ ASSEMBLY_EDIT_PARTS = 8
 ASSEMBLY_EDIT_BUDGET = 20
 # …of any one component, at most this share of the parts in it.
 ASSEMBLY_EDIT_SHARE = 0.25
-# Below this many parts a share is meaningless — a two-brick component would
-# be down to half a brick — so small components get a flat allowance instead.
+# Below this many parts a share is meaningless - a two-brick component would
+# be down to half a brick - so small components get a flat allowance instead.
 ASSEMBLY_EDIT_FLOOR = 2
 
 _FILE_LINE = re.compile(r"^\s*0\s+FILE\s+(.+?)\s*$", re.IGNORECASE)
@@ -2725,7 +2725,7 @@ def _mpd_blocks(lines):
     """``[(name, first_line, last_line)]`` for one file, 1-indexed.
 
     An assembled scene is an MPD: the scene itself, then one block per
-    subconstruction. A plain .ldr with no ``0 FILE`` in it is a single block —
+    subconstruction. A plain .ldr with no ``0 FILE`` in it is a single block -
     which is what the guard sees if it is ever pointed at a component directly.
     """
     marks = [(i + 1, found.group(1).strip())
@@ -2799,7 +2799,7 @@ def _assembly_guard(original, planned, state):
                    "finished objects, it is building a new one.",
             "hint": "Place what you have with `move_submodel` and "
                     "`rotate_submodel`, validate, and finish. If a component "
-                    "is genuinely wrong, say so in your summary — that is a "
+                    "is genuinely wrong, say so in your summary - that is a "
                     "report the user can act on, and rebuilding it here is not.",
         }
 
@@ -2814,7 +2814,7 @@ def _assembly_guard(original, planned, state):
                 "why": f"`{name}` is a finished subconstruction. Removing that "
                        f"much of it is dismantling it, which is not what this "
                        f"pass is for.",
-                "hint": "Move it instead — `move_submodel` shifts the whole "
+                "hint": "Move it instead - `move_submodel` shifts the whole "
                         "object and never breaks it. Take out only the parts "
                         "that are physically in the way of another object.",
             }
@@ -2892,8 +2892,8 @@ def _keep_images(path, images=(), sheet=None, reference_image=None):
 
     Renders live at stable filenames and are overwritten by the next write, so
     a trace read afterwards would show the latest model beside every decision
-    that was ever made. Copies land beside the trace instead, under ``_images``
-    — a key the agent loop strips out before the result reaches the model,
+    that was ever made. Copies land beside the trace instead, under ``_images`` -
+    a key the agent loop strips out before the result reaches the model,
     because the builder is text-only and a list of filenames it cannot open is
     tokens spent on nothing. The picture is for the person reading the run.
     """
@@ -2908,7 +2908,7 @@ def _keep_images(path, images=(), sheet=None, reference_image=None):
                                   label="contact sheet")
         if record:
             kept.append(record)
-    # One reference picture or four — see reference.py. All of them are kept:
+    # One reference picture or four - see reference.py. All of them are kept:
     # a comparison made against four and shown beside one is a trace of
     # something that did not happen.
     for picture in ([reference_image]
@@ -2935,7 +2935,7 @@ def _describe_image(request=None, image_id=None, state=None):
     """Describe the reference picture, or pictures, attached to this project.
 
     All of them, in one call, unless one is named. A project may hold up to
-    four and every one of them is the specification — see reference.py.
+    four and every one of them is the specification - see reference.py.
     """
     if state is None or not state.project:
         return {"error": "there is no project to look for a reference image in"}
@@ -2974,12 +2974,12 @@ def _describe_image(request=None, image_id=None, state=None):
                                       request=request or state.requirements)
     except render.NotAvailable as exc:
         return {"error": str(exc), "_images": shown,
-                "hint": "Build from the written request instead — do not guess "
+                "hint": "Build from the written request instead - do not guess "
                         "at what the picture shows."}
 
     # A reply that did not come back in the shape asked for was almost always
-    # cut off part-way. It is worth handing over — half a description beats
-    # none — but it must NOT be stored: the stored one is never asked for
+    # cut off part-way. It is worth handing over - half a description beats
+    # none - but it must NOT be stored: the stored one is never asked for
     # again, so caching a truncated answer means the project is stuck with it
     # for good.
     if description.get("unstructured"):
@@ -2987,7 +2987,7 @@ def _describe_image(request=None, image_id=None, state=None):
                 "partial": True, "_images": shown,
                 "note": "This description was cut short, so it is incomplete "
                         "and has NOT been kept. Build from what is here, and "
-                        "call describe_image again for the rest — it will ask "
+                        "call describe_image again for the rest - it will ask "
                         "afresh rather than repeating this."}
 
     reference.set_description(state.project, ids, description)
@@ -3016,7 +3016,7 @@ def _ask_vision_model(questions=None, purpose=None, image_id=None, state=None):
     The budget lives on the run's ledger rather than here (see
     ``RunState.MAX_ASKS``): ten sets of questions for the whole run, spent as
     the build needs them. Two things are checked before one is spent, because
-    both would spend it on nothing — that the picture has been described
+    both would spend it on nothing - that the picture has been described
     already, and that these questions have not been answered before.
     """
     if state is None or not state.project:
@@ -3032,7 +3032,7 @@ def _ask_vision_model(questions=None, purpose=None, image_id=None, state=None):
         return {"error": f"{len(questions)} questions, and you may ask "
                          f"{MAX_QUESTIONS} at a time",
                 "hint": "Keep the ones whose answers change what you build; "
-                        "drop the rest. Nothing is spent — ask again with the "
+                        "drop the rest. Nothing is spent - ask again with the "
                         "shorter list."}
 
     if image_id:
@@ -3054,7 +3054,7 @@ def _ask_vision_model(questions=None, purpose=None, image_id=None, state=None):
 
     # The description is free and covers most of what gets asked. Spending the
     # one set of questions on things it would have answered is the failure
-    # this refusal exists to prevent — and it costs a step to clear, not a
+    # this refusal exists to prevent - and it costs a step to clear, not a
     # credit.
     if not record.get("description"):
         return {"error": "this picture has not been described yet",
@@ -3089,7 +3089,7 @@ def _ask_vision_model(questions=None, purpose=None, image_id=None, state=None):
     except render.NotAvailable as exc:
         # Nothing was spent: a question that could not be put was not asked.
         return {"error": str(exc),
-                "hint": "Build from the description you already have — do not "
+                "hint": "Build from the description you already have - do not "
                         "guess at what the picture shows."}
 
     entries = _qa_entries(fresh, answer)
@@ -3134,14 +3134,14 @@ _ASK_NOTE = (
     "Build with these answers now: treat them as the specification alongside "
     "the description, and where an answer says something was not visible, "
     "that is yours to decide. Ask again whenever the picture is what you are "
-    "actually missing — you have questions left — but a question you could "
+    "actually missing - you have questions left - but a question you could "
     "answer by looking at your own render is a question worth not spending."
 )
 
 
 _REFERENCE_NOTE = (
-    "This is the specification. Build what it describes — the composition, the "
-    "colours and the proportions especially — rather than what you would have "
+    "This is the specification. Build what it describes - the composition, the "
+    "colours and the proportions especially - rather than what you would have "
     "designed from the text alone. validate_model will compare what you build "
     "against this picture and tell you where they differ."
 )
@@ -3151,8 +3151,8 @@ def _measured_facts(report):
     """What the geometry checker established, phrased for the vision model.
 
     The critic is about to be asked what is wrong with a picture. Three of the
-    things it will reach for — is this connected, is anything floating, how big
-    is it — have already been computed exactly from the coordinates, and they
+    things it will reach for - is this connected, is anything floating, how big
+    is it - have already been computed exactly from the coordinates, and they
     are the three a vision model is least able to judge from a downscaled tile.
     Handing them over is what stops the critique inventing them.
 
@@ -3179,15 +3179,15 @@ def _measured_facts(report):
     elif parts:
         facts.append(f"it has {parts} parts")
 
-    # Only when the question was actually put — see validation, where an empty
+    # Only when the question was actually put - see validation, where an empty
     # list means "clean" or "never asked" depending on this.
     scope = connectivity.get("objects_checked")
     if scope == "whole" and not connectivity.get("objects_in_pieces"):
-        facts.append("EVERY PART IS JOINED TO THE REST OF THE MODEL — this is "
+        facts.append("EVERY PART IS JOINED TO THE REST OF THE MODEL - this is "
                      "one connected build, measured, not estimated")
     elif scope == "blocks" and not connectivity.get("objects_in_pieces"):
         facts.append("each separate object in this scene is internally "
-                     "connected — measured, not estimated")
+                     "connected - measured, not estimated")
 
     if not connectivity.get("floating"):
         facts.append("nothing is floating: every part has a path of support "
@@ -3207,13 +3207,13 @@ def _reconcile(verdict, report):
     """Set the critique against the measurements, and mark what cannot both hold.
 
     The critic runs only on a model that already passed the grid check, so by
-    the time it speaks, connectivity is not an open question — it is a fact on
+    the time it speaks, connectivity is not an open question - it is a fact on
     file. When the two disagree about it, one of them is wrong in a way we can
     name, and saying nothing means the builder acts on whichever it read last.
 
     Only connectivity is arbitrated, and only in the direction the evidence
-    supports. Everything else the critic reports — proportion, character, a
-    missing wheel, a figure with no arm — is exactly what it is for, and no
+    supports. Everything else the critic reports - proportion, character, a
+    missing wheel, a figure with no arm - is exactly what it is for, and no
     measurement here has an opinion about any of it.
     """
     if not isinstance(verdict, dict) or not isinstance(report, dict):
@@ -3230,12 +3230,12 @@ def _reconcile(verdict, report):
         # read as two, which is a real fault about spacing and a different one
         # from the fault the critic named.
         verdict["one_build_note"] = (
-            "The geometry checker measured this model as one connected build — "
+            "The geometry checker measured this model as one connected build - "
             "every part is joined to the rest. So this is NOT a disconnection, "
             "and nothing needs reattaching. What the critic saw is real but is "
             "a different fault: the model *reads* as separate lumps. Close the "
-            "gap visually — bring the masses together, or bridge them with "
-            "something that spans the join — and do not go looking for parts "
+            "gap visually - bring the masses together, or bridge them with "
+            "something that spans the join - and do not go looking for parts "
             "that have come adrift, because there are none.")
         verdict["one_build_measured"] = True
         verdict["separate_pieces_note"] = (
@@ -3305,14 +3305,14 @@ def _render_model(path, subject=None, question=None, critique=True, state=None):
     if verdict:
         result["seen"] = verdict
         note = ("This is what the model actually looks like. Each issue comes "
-                "with the change that resolves it — apply them all in one "
+                "with the change that resolves it - apply them all in one "
                 "rewrite, keeping everything listed under `good` as it is, "
                 "then validate_model once more. Treat them as real: you cannot "
                 "see the model and this is the only report you get. If the "
                 "issues list is empty and the verdict says it is finished, "
                 "stop changing it.")
         # The one fault worth saying twice, because it used to be the one the
-        # builder could not detect any other way. It is measured now — so this
+        # builder could not detect any other way. It is measured now - so this
         # shouts only where the measurement agrees, and defers to `_reconcile`
         # where it does not. Shouting over a measurement is how a builder gets
         # sent to reattach parts that were never loose.
@@ -3320,8 +3320,8 @@ def _render_model(path, subject=None, question=None, critique=True, state=None):
             stray = ", ".join(verdict.get("separate_pieces") or []) or "part of it"
             note = (f"THIS IS NOT ONE BUILD. {stray} is standing apart from the "
                     f"main model instead of being attached to it. Unless that "
-                    f"piece is genuinely a separate object — a car beside a "
-                    f"house, a minifigure — this is wrong and must be fixed "
+                    f"piece is genuinely a separate object - a car beside a "
+                    f"house, a minifigure - this is wrong and must be fixed "
                     f"before anything else: move it onto the build so it seats "
                     f"on real studs, then validate_model again. " + note)
         elif verdict.get("one_build_note"):
@@ -3383,7 +3383,7 @@ def _compare_reference(sheet, path, subject, state):
         worth_it = [c for c in changes
                     if str(c.get("severity", "")).lower() in ("fatal", "major")]
         out["reference_note"] = (
-            "Not there yet — the run cannot finish until it reads as the "
+            "Not there yet - the run cannot finish until it reads as the "
             "picture, and `changes_to_make` is how to get there. Work down it "
             "in order: it is sorted by how much each change buys, and "
             "composition and colour move the needle further than detail."
@@ -3392,7 +3392,7 @@ def _compare_reference(sheet, path, subject, state):
             + " Keep everything listed under `keep` exactly as it is, apply the "
               "changes in one rewrite, then validate_model again. You cannot see "
               "the picture and this can, so take its word for what is "
-              "different — but the how is yours: build it with the parts you "
+              "different - but the how is yours: build it with the parts you "
               "think fit.")
         if verdict.get("closeness"):
             out["reference_note"] = (f"{verdict['closeness'].strip().rstrip('.')}. "
@@ -3400,7 +3400,7 @@ def _compare_reference(sheet, path, subject, state):
     elif matched is True:
         out["reference_note"] = (
             "It reads as the reference. Minor differences are what LEGO does to "
-            "a photograph and are not worth another round — stop here unless "
+            "a photograph and are not worth another round - stop here unless "
             "something else is wrong.")
     return out
 
@@ -3487,7 +3487,7 @@ def _assemble_model(path, components, title=None, state=None):
 
 
 def _finish(summary, give_up=False, blocked_by=None, state=None):
-    """End the run — if the run has actually done the work.
+    """End the run - if the run has actually done the work.
 
     Without a state to check against there is nothing to enforce, so the call
     is simply accepted: a harness that did not set up a gate did not ask for
@@ -3496,7 +3496,7 @@ def _finish(summary, give_up=False, blocked_by=None, state=None):
     summary = (summary or "").strip()
     if not summary:
         return {"finished": False,
-                "why": "finish needs a summary — say what you built and what "
+                "why": "finish needs a summary - say what you built and what "
                        "the checks reported"}
 
     if state is None:
@@ -3518,7 +3518,7 @@ def _finish(summary, give_up=False, blocked_by=None, state=None):
 
     # A build with a checklist does not end by being declared finished. Refused
     # here rather than only in the gate, so the answer names the actual rule
-    # instead of listing whichever requirement happens to be outstanding — the
+    # instead of listing whichever requirement happens to be outstanding - the
     # builder has to stop trying to end the run and go back to building.
     # See requirements.py and LDrawAgent._requirements_gate.
     if runstate.requirements_module.items(getattr(state, "requirements", None)):
@@ -3529,7 +3529,7 @@ def _finish(summary, give_up=False, blocked_by=None, state=None):
             "finished": False,
             "why": ("finish does not end this run. Your requirements do, and "
                     "they are checked for you every time you call "
-                    "validate_model — the run stops by itself when all of them "
+                    "validate_model - the run stops by itself when all of them "
                     "are met."),
             "requirements_met": f"{met} of {total}",
             "do_next": ("carry on building what the outstanding requirements "
@@ -3547,7 +3547,7 @@ def _submodel_range(lines, wanted):
     """The line range of one named block of an MPD, or an error naming them all.
 
     Matched on any part of the name, case-insensitively, because the names in
-    a real set are filenames — "40440 - Puppy.ldr" — and asking for "puppy" is
+    a real set are filenames - "40440 - Puppy.ldr" - and asking for "puppy" is
     what a reader would do. An unambiguous prefix is enough; when several match
     the shortest wins, which is the plain block rather than a variant of it.
     """
@@ -3557,7 +3557,7 @@ def _submodel_range(lines, wanted):
         if match:
             blocks.append((match.group(1), number))
     if not blocks:
-        return None, {"error": "this file has no submodels — it is a single "
+        return None, {"error": "this file has no submodels - it is a single "
                                "model, so read it by line number instead"}
 
     needle = str(wanted).strip().lower()
@@ -3569,7 +3569,7 @@ def _submodel_range(lines, wanted):
     after = [s for _, s in blocks if s > start]
     end = (min(after) - 1) if after else len(lines)
     # "wing" against `left wing.ldr` and `right wing.ldr` picks one of them,
-    # and the agent has to be told which — a block quietly chosen out of three
+    # and the agent has to be told which - a block quietly chosen out of three
     # is read as *the* answer, and the geometry in it belongs to a part of the
     # set nobody asked about.
     others = [n for n, _ in hits if n != name]
@@ -3592,7 +3592,7 @@ def _read_lines(lines, start_line, end_line, submodel=None, cap=None):
         # `last` is what "there is more" is measured against: the end of the
         # submodel when one was named, the end of the file otherwise. Without
         # this a submodel longer than the cap came back truncated and looking
-        # complete, which is the worst way to be wrong about a reference — the
+        # complete, which is the worst way to be wrong about a reference - the
         # agent reads two thirds of a wing and builds it as if that were all.
         last = end
         # A start_line inside the block pages through it, so a long submodel is
@@ -3642,8 +3642,8 @@ def _read_project_file(path, start_line=1, end_line=None, submodel=None):
 def _read_source(source, start_line=1, end_line=None, submodel=None):
     """Read LDraw source, wherever it lives.
 
-    Three tools used to do this — one for the model being built, one for an
-    official set, one for a saved creation — with identical parameters and
+    Three tools used to do this - one for the model being built, one for an
+    official set, one for a saved creation - with identical parameters and
     identical output, differing only in how the thing was named. So the name is
     the argument now, and there is one tool.
     """
@@ -3661,7 +3661,7 @@ def _read_source(source, start_line=1, end_line=None, submodel=None):
 
 
 # What each corpus takes, so a filter meant for one is not silently handed to
-# another — asking for `theme` among your own notes is a mistake worth naming.
+# another - asking for `theme` among your own notes is a mistake worth naming.
 _REFERENCE_FILTERS = {
     "sets": ("theme", "year_min", "year_max", "min_pieces", "max_pieces"),
     "creations": ("tag", "validated_only", "min_pieces", "max_pieces"),
@@ -3674,8 +3674,8 @@ def _search_reference(kind=None, query=None, like=None, max_results=8,
                       validated_only=None):
     """Search the corpora that are not the parts catalogue.
 
-    Sets and saved creations were separate tools doing one thing — a semantic
-    search with a few filters — and between them they accounted for a twentieth
+    Sets and saved creations were separate tools doing one thing - a semantic
+    search with a few filters - and between them they accounted for a twentieth
     of the calls a run makes. One tool, one `kind`.
 
     Notes used to be a third kind here. Nothing writes them any more (there is
@@ -3724,7 +3724,7 @@ def _ask_about_image(questions=None, request=None, purpose=None,
     """Look at the reference picture: describe it, or answer questions about it.
 
     One call either way. They were two tools because they are two prompts, but
-    to a builder they are one question — *what is in the picture* — and which
+    to a builder they are one question - *what is in the picture* - and which
     of the two it wants is exactly whether it has questions yet.
     """
     asked = [q for q in (questions or []) if str(q).strip()]
@@ -3763,19 +3763,19 @@ def _autofix_note(report):
     listed = max(0, left - missed)
 
     if not moved and not left:
-        return "nothing was inside anything else — there was nothing to fix"
+        return "nothing was inside anything else - there was nothing to fix"
 
     parts = []
     if moved:
         parts.append(
             f"{moved} part{'' if moved == 1 else 's'} slid back onto the grid "
             f"for you. Those lines still have the numbers they had, but new "
-            f"coordinates — read_model before you edit them")
+            f"coordinates - read_model before you edit them")
     if listed:
         parts.append(
             f"{listed} overlap{'' if listed == 1 else 's'} could not be fixed "
             f"by moving anything: see unfixed_parts, each with the reason. "
-            f"These are yours to fix, and each needs a real decision — a "
+            f"These are yours to fix, and each needs a real decision - a "
             f"different part, a different place in the build, a whole "
             f"sub-assembly moved, or one of the two lines deleted")
     if missed:
@@ -3783,7 +3783,7 @@ def _autofix_note(report):
         # clear" and "I stopped looking", and only one of those is true here.
         parts.append(
             f"{missed} more {'was' if missed == 1 else 'were'} never looked "
-            f"at — one pass repairs a limited number, so call fix_collision "
+            f"at - one pass repairs a limited number, so call fix_collision "
             f"again once you have dealt with what is listed")
     if not left:
         parts.append("nothing is inside anything else any more")
@@ -3795,7 +3795,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
     """Check the model on the grid, and look at it. Always both.
 
     These were two tools, and they were two tools that always had to be called
-    together — the grid says whether a build is legal and says nothing at all
+    together - the grid says whether a build is legal and says nothing at all
     about whether a car looks like a car, so a run that skipped the second was
     a run that finished a model nobody had seen. `finish` refused both ways,
     which is the shape of a thing that was one step all along.
@@ -3805,7 +3805,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
 
     * **``look=false``**, offered for the middle of a repair round. What it
       actually bought was a builder that could decide it did not want to be
-      seen, on the turn where being seen mattered most — and every skipped
+      seen, on the turn where being seen mattered most - and every skipped
       render is a render the *user* did not get either, since the pictures in
       the trace and on the workbench are the same pictures.
     * **The grid check failing**, on the reasoning that a model with parts
@@ -3815,7 +3815,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
       overlap is there, and withholding it meant the builder repaired the
       arithmetic blind and only found out on the *next* iteration that the
       thing it had spent the repair on did not read as a car. The two faults
-      are almost always fixed in one edit — when the builder is told about
+      are almost always fixed in one edit - when the builder is told about
       both.
 
     ``look`` is still accepted so that a call written against the old schema
@@ -3827,7 +3827,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
     target = _resolve(path)
     if not target.is_file():
         return {"error": f"no such file: {path}"}
-    # What this run was told it is building — one object, or a scene of them.
+    # What this run was told it is building - one object, or a scene of them.
     # It rides on the ledger rather than being a parameter of the tool: whether
     # this file is one object is the harness's knowledge, not a judgement the
     # builder should be able to talk itself out of. See RunState.objects.
@@ -3837,7 +3837,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
 
     # The lattice first, because it is upstream of everything else. A model
     # built across two grids half a stud apart reports one misalignment per
-    # part on the losing side — dozens of them — and every one is the same
+    # part on the losing side - dozens of them - and every one is the same
     # ±10 LDU correction. Repairing that here turns a report the builder would
     # have spent its whole remaining budget on into a note saying it was done.
     # Held in a local rather than written straight onto the report: the overlap
@@ -3857,7 +3857,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
     # The overlaps that are pure arithmetic get repaired here rather than
     # reported: a brick one stud too far east is not something worth spending a
     # turn of the model's attention on, and the fix is unambiguous. Only what
-    # survives that is put in front of it — which is the set of overlaps that
+    # survives that is put in front of it - which is the set of overlaps that
     # genuinely need a decision. Nothing is written unless something moved, and
     # nothing that moves changes a line number, so a plan made against this
     # file's numbering still holds.
@@ -3865,7 +3865,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
         # One pass repairs a limited number of overlaps, so it is run until it
         # stops making progress rather than once. It used to stop after one and
         # tell the model to call `fix_collision` itself for the rest, which put
-        # a whole tool in the schema to do what a while loop does — and cost a
+        # a whole tool in the schema to do what a while loop does - and cost a
         # turn of the model's attention on arithmetic it was never needed for.
         moved, fixed = 0, {}
         for _ in range(AUTOFIX_PASSES):
@@ -3902,7 +3902,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
                           ("size_ldu", "size_studs", "min", "max",
                            "ground_y", "top_y") if k in size}
 
-    # The ceiling on how many pieces a build may end in — said here, where
+    # The ceiling on how many pieces a build may end in - said here, where
     # there is still time to do something about it, rather than only by the
     # finish gate. A model can pass every fault check on the page and still be
     # refused for this, so a builder that only met it at `finish` would meet it
@@ -3915,7 +3915,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
             "note": (f"This is ONE object and the studs read it as {pieces} "
                      f"separate pieces. A build may finish with at most "
                      f"{runstate.MAX_SUBASSEMBLIES}, so `finish` will be "
-                     f"refused until this comes down — whatever the verdict "
+                     f"refused until this comes down - whatever the verdict "
                      f"above says. `loose_pieces` names the clumps that are "
                      f"not the main body; seat each one on real studs of the "
                      f"build, or bridge it with a plate that reaches both."),
@@ -3936,7 +3936,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
         return report
 
     # A renderer that is missing must cost the run its eyes, not its
-    # validation — the grid check above is true either way.
+    # validation - the grid check above is true either way.
     try:
         seen = _render_model(path, question=question, state=state)
     except Exception as exc:
@@ -3964,7 +3964,7 @@ def _validate_model(path, tolerance=2.0, question=None, state=None,
 # for the agent loop's next check would leave Stop looking broken.
 STOPPABLE = frozenset(("plan_construction",))
 
-# Tools that read or write the run's ledger — what has been built, checked and
+# Tools that read or write the run's ledger - what has been built, checked and
 # looked at. Everything else is a lookup and has no business knowing.
 STATEFUL = frozenset((
     "edit_model", "build_ops", "copy_from_set", "validate_model",
@@ -4005,7 +4005,7 @@ DISPATCH = {
 def call_tool(name, arguments, should_stop=None, state=None):
     """Run a tool by name. Returns a JSON string for the model.
 
-    ``should_stop`` is handed only to the tools that can act on it — the ones
+    ``should_stop`` is handed only to the tools that can act on it - the ones
     that spend real time inside a single call. Everywhere else a stop is
     caught by the agent loop between calls, which is soon enough.
 

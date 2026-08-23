@@ -14,7 +14,7 @@ export const BRICK = {
 /** The rotation used whenever a sequence of things needs to look like bricks. */
 export const BRICK_CYCLE = [BRICK.red, BRICK.blue, BRICK.yellow, BRICK.green];
 
-/** Multiply a hex colour by `f` — under 1 darkens (bevel), over 1 lightens. */
+/** Multiply a hex colour by `f` - under 1 darkens (bevel), over 1 lightens. */
 export function shade(hex, f) {
   const n = parseInt(hex.slice(1), 16);
   const ch = (shift) => Math.min(255, Math.round(((n >> shift) & 255) * f));
@@ -27,7 +27,7 @@ export function shade(hex, f) {
  *
  * A subconstruction's name rides on a brick standing on the tool call it
  * belongs to, and that call is already red, green, yellow or blue for its
- * status — so naming objects out of the same four would put a green brick on a
+ * status - so naming objects out of the same four would put a green brick on a
  * green brick often enough to matter. These are real LDraw System colours from
  * outside that set: still unmistakably LEGO, never the colour underneath.
  */

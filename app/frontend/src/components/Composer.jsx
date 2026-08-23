@@ -6,13 +6,13 @@ import { api } from "../api";
  * The one box you talk to the agent through: `[+] [what to build] [Send]`.
  *
  * It floats over the workbench rather than sitting in a panel down the side,
- * and it shows none of the agent's working-out. That is deliberate — the trace
+ * and it shows none of the agent's working-out. That is deliberate - the trace
  * is a better account of a run than a scrolling list of tool calls ever was,
  * and two views of the same thing means reading neither. What is left here is
  * the parts of a conversation that are not narration: what you asked for, the
  * pictures you attached, whether it is still going, and the reply.
  *
- * It stays mounted while the run polls even when it is not on screen — a build
+ * It stays mounted while the run polls even when it is not on screen - a build
  * started here and then watched from the Model view must not stop being
  * watched because the box that started it was hidden.
  */
@@ -21,11 +21,11 @@ import { api } from "../api";
 const POLL_MS = 400;
 
 // No step budget. A run ends when the agent finishes, gives up, or you stop
-// it — see DEFAULT_MAX_STEPS in config.py. 0 is what says "no limit".
+// it - see DEFAULT_MAX_STEPS in config.py. 0 is what says "no limit".
 const MAX_STEPS = 0;
 
-// How many reference pictures a project takes. The backend enforces it —
-// reference.MAX_IMAGES, which is where the reasoning lives — and this is here
+// How many reference pictures a project takes. The backend enforces it -
+// reference.MAX_IMAGES, which is where the reasoning lives - and this is here
 // so the box can say so before the upload rather than after it.
 const MAX_REFERENCES = 4;
 
@@ -34,7 +34,7 @@ const MAX_REFERENCES = 4;
 // Every tool the agent can be given has a line here, and that is a rule rather
 // than a list that grew: a tool with no label showed the raw function name at
 // best and nothing at worst, and the one it happened to be missing was
-// `build_ops` — the most-called tool there is. Half the run reported itself as
+// `build_ops` - the most-called tool there is. Half the run reported itself as
 // silence because of one absent key. If a tool is added to tools.py it gets a
 // line here in the same commit.
 const TOOL_LABELS = {
@@ -61,14 +61,14 @@ const TOOL_LABELS = {
  * A run is not a flat sequence of tool calls. Before the first brick it splits
  * the request into objects, decides what each should look like and writes the
  * acceptance checklist; after the last one it composes the scene and looks at
- * it. The backend announces every one of those — see `_emit` in
- * orchestrator.py — and until now this box read four event types out of about
+ * it. The backend announces every one of those - see `_emit` in
+ * orchestrator.py - and until now this box read four event types out of about
  * twenty-five and showed nothing for the rest. That is the silence: not the
  * agent going quiet, but a status line that was not listening.
  *
  * Returns the line to show, or null for an event that says nothing new. The
  * phase persists until something replaces it, because a phase is a state the
- * run is in rather than an instant — between two tool calls of a subbuild the
+ * run is in rather than an instant - between two tool calls of a subbuild the
  * honest answer is still "building the tree".
  */
 function phaseOf(e) {
@@ -99,8 +99,8 @@ function phaseOf(e) {
     // again from that. Said plainly, because a build restarting with no
     // explanation reads as the run having gone wrong.
     case "replanning":
-      return e.reads_as ? `It came out looking like ${e.reads_as} — trying a different design`
-                        : "It came out as the wrong thing — trying a different design";
+      return e.reads_as ? `It came out looking like ${e.reads_as} - trying a different design`
+                        : "It came out as the wrong thing - trying a different design";
     case "replan_discarded":
       return "Keeping the earlier version";
     case "requirements":
@@ -153,11 +153,11 @@ function blank() {
 /**
  * Apply the events a poll just returned.
  *
- * Incremental, because ``/api/runs/{id}?since=`` hands back only what is new —
+ * Incremental, because ``/api/runs/{id}?since=`` hands back only what is new -
  * and because the only question asked of the stream is "what is in flight",
  * which does not need the events kept. Which step it is on is not one of them:
  * there is no budget to count against, and it was never the thing anyone
- * wanted to know. Nor is what the build is borrowing from — the run's workings
+ * wanted to know. Nor is what the build is borrowing from - the run's workings
  * belong in the trace, not over the model.
  */
 function advance(state, events) {
@@ -170,8 +170,8 @@ function advance(state, events) {
     if (e.type === "tool_start") next.running.set(e.call_id ?? e.i, e.tool);
     else if (e.type === "tool_end") next.running.delete(e.call_id ?? e.i);
     else if (e.type === "subbuild_start") {
-      // Several of these run at once — a scene of five objects is five
-      // conversations in parallel — so they are counted rather than replaced.
+      // Several of these run at once - a scene of five objects is five
+      // conversations in parallel - so they are counted rather than replaced.
       next.builds.set(e.name, e.subject || e.name);
     } else if (e.type === "subbuild_end" || e.type === "subbuild_interrupted") {
       next.builds.delete(e.name);
@@ -225,7 +225,7 @@ export default function Composer({
   };
 
   // Switching project parks whatever was going on rather than carrying it over
-  // — and then asks whether the project being switched *to* has a build of its
+  // - and then asks whether the project being switched *to* has a build of its
   // own still going, because it very well might. A run belongs to the backend,
   // not to this component: it survives a reload, a project switch and a second
   // tab, and until this asked, all three left a build running with the Stop
@@ -249,7 +249,7 @@ export default function Composer({
         watch(run_id);
       })
       .catch(() => {
-        /* nothing in flight, or the backend is down — the composer is idle,
+        /* nothing in flight, or the backend is down - the composer is idle,
            which is what it already shows */
       });
     return () => {
@@ -277,7 +277,7 @@ export default function Composer({
   }, [refreshReferences]);
 
   /**
-   * Attach pictures — one, or everything that was picked or pasted at once.
+   * Attach pictures - one, or everything that was picked or pasted at once.
    *
    * Several are allowed because several is often what the reference actually
    * is: the front of the thing and the side of it say between them what one
@@ -302,7 +302,7 @@ export default function Composer({
       // as a sentence about the limit rather than as a failed upload.
       const room = MAX_REFERENCES - references.length;
       if (room <= 0) {
-        setAttachError(`${MAX_REFERENCES} reference pictures is the limit — `
+        setAttachError(`${MAX_REFERENCES} reference pictures is the limit - `
                        + "remove one to attach another");
         return;
       }
@@ -310,7 +310,7 @@ export default function Composer({
       const taking = images.slice(0, room);
       setAttaching(taking.length);
       setAttachError(taking.length < images.length
-        ? `only ${taking.length} of those fit — a project takes `
+        ? `only ${taking.length} of those fit - a project takes `
           + `${MAX_REFERENCES} reference pictures`
         : null);
       try {
@@ -380,7 +380,7 @@ export default function Composer({
    * Separate from `send` because a run is not only ever watched by the page
    * that started it. A reload, a switch to another project and back, or a
    * second tab all leave a build running on the backend with nothing watching
-   * it — and, worse, with no Stop button, because Stop needs the run id and
+   * it - and, worse, with no Stop button, because Stop needs the run id and
    * that lived in this component's state. Re-attaching is the same loop, from
    * `since = 0`, so the events already recorded replay into the read-out and
    * the page catches up rather than starting blank.
@@ -430,7 +430,7 @@ export default function Composer({
 
   const finish = (run) => {
     setLive(blank());
-    // Whatever the run did to itself, the file on disk is what it is — show it.
+    // Whatever the run did to itself, the file on disk is what it is - show it.
     if (run.validation) onValidation?.(run.validation);
     if (run.model_changed) onModelChanged?.();
     // Asked again at the end, so a run that started with none and attached one
@@ -473,7 +473,7 @@ export default function Composer({
   // What the agent is doing, most specific first: the tool actually in flight,
   // then which object is being built, then whatever phase the run last
   // announced. Only the last of those is ever a guess about the present, and
-  // it is a phase the backend really did report rather than filler — the rule
+  // it is a phase the backend really did report rather than filler - the rule
   // this box was written with still holds. It says nothing about *thinking*,
   // because "thinking it through" stands where a real answer goes. It now says
   // plenty about doing, because the run was always saying it and this was not
@@ -501,7 +501,7 @@ export default function Composer({
 
   return (
     <div className="composer-float" onPaste={onPaste}>
-      {/* What the build is borrowing from used to be announced here — "building
+      {/* What the build is borrowing from used to be announced here - "building
           tree out of 561412-1 Christmas Tree…". It is in the trace, where a
           run's workings belong; over the model it was a set number and a
           filename in the way of the thing being built. */}
@@ -523,8 +523,8 @@ export default function Composer({
       )}
 
       {/* Its own box, above the one you type in. The pictures belong to the
-          project rather than to the message — they outlive whatever is being
-          typed — and a composer that grows a row taller the moment one is
+          project rather than to the message - they outlive whatever is being
+          typed - and a composer that grows a row taller the moment one is
           attached moves the thing you were aiming at. */}
       {(references.length > 0 || attaching > 0 || attachError) && (
         <div className="composer-attached">
@@ -575,8 +575,8 @@ export default function Composer({
             disabled={busy || attaching > 0 || references.length >= MAX_REFERENCES}
             title={
               references.length >= MAX_REFERENCES
-                ? `${MAX_REFERENCES} reference pictures is the limit — remove one to attach another`
-                : `Attach reference pictures — up to ${MAX_REFERENCES}, or just paste them with ⌘/Ctrl+V`
+                ? `${MAX_REFERENCES} reference pictures is the limit - remove one to attach another`
+                : `Attach reference pictures - up to ${MAX_REFERENCES}, or just paste them with ⌘/Ctrl+V`
             }
             aria-label="Attach reference pictures"
           >
@@ -623,7 +623,7 @@ export default function Composer({
             className="btn btn--quiet composer-reset"
             onClick={newConversation}
             disabled={busy}
-            title="Start a new conversation — the agent forgets what was said"
+            title="Start a new conversation - the agent forgets what was said"
           >
             New chat
           </button>

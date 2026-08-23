@@ -1,13 +1,13 @@
 # People are minifigures
 
 **Any person in a model is a minifigure.** Not bricks arranged into a person
-shape — the actual figure, out of the actual parts. This is not a stylistic
+shape - the actual figure, out of the actual parts. This is not a stylistic
 choice, it is what LEGO is: there is no set in the 1,800-model reference
 library where a human being is built any other way.
 
 So this applies to a driver, a rider, a pedestrian, a knight, an astronaut, a
 firefighter, a shopkeeper, a child, a crowd, "a man walking his dog", "someone
-sitting on the bench" — anything with a person in it. If the request names a
+sitting on the bench" - anything with a person in it. If the request names a
 person, or plainly implies one, you build a minifigure.
 
 It does **not** apply to a statue, a scarecrow, a snowman, a giant, a robot, or
@@ -16,7 +16,7 @@ an animal. Those are built out of bricks like anything else.
 ## Do not design one. Copy this.
 
 A minifigure has exactly one correct arrangement and it is not derivable from
-the stud grid — the head hangs on a neck pin, the arms clip into shoulder
+the stud grid - the head hangs on a neck pin, the arms clip into shoulder
 sockets, the legs snap onto the hip block. Working it out from first principles
 is wasted effort and it will be wrong. **Copy the block below and change the
 colours.**
@@ -44,13 +44,13 @@ feet stand on a surface whose top is y = 0.
 **To use it:** paste those ten lines, change the colour numbers, and add the
 same `(dx, dy, dz)` to every one of the ten to put the figure where it goes. To
 turn a figure to face another way, give all ten lines the same rotation matrix.
-Move it as a unit, always — a minifigure is one object.
+Move it as a unit, always - a minifigure is one object.
 
 ## The parts, and what the sets actually use
 
 | Role | Part | Usual colours |
 |---|---|---|
-| head | `3626bp01` (standard grin) — or `3626b` plain | `14` yellow |
+| head | `3626bp01` (standard grin) - or `3626b` plain | `14` yellow |
 | headgear | `3901` hair · `3624` police hat · `3833` helmet · `4530` long hair | `0`, `4`, `6` |
 | torso | `973` | `15` white, `0` black, `1` blue, `4` red |
 | arm right / left | `3818` / `3819` | same colour as the torso |
@@ -63,7 +63,7 @@ Move it as a unit, always — a minifigure is one object.
 superseded part. The numbers above are the ones 1,800 real sets use; take them
 from this table.
 
-Headgear is optional but almost always worth it — a bare head reads as unfinished.
+Headgear is optional but almost always worth it - a bare head reads as unfinished.
 Pick the one that says who the figure is: a police hat for a police officer, a
 construction helmet for a builder, hair for everyone else.
 
@@ -76,19 +76,19 @@ negative offset is *above* the torso):
 |---|---|
 | head, headgear | **−24** |
 | arms | **+9**, and ±15.6 sideways |
-| hands | on the ends of the arms — posed, not fixed |
+| hands | on the ends of the arms - posed, not fixed |
 | hips | **+32** |
 | legs | **+44** |
 
 `validate_model` checks these. A figure whose head is not on its neck fails
 exactly as a brick off the grid does, and the report names the part and the
 coordinate that fixes it. It also checks, when it looks at the renders, that
-every figure is **complete** — two legs, a torso, two arms with a hand on each,
+every figure is **complete** - two legs, a torso, two arms with a hand on each,
 a head. A minifigure missing an arm is a fault, not a simplification.
 
 ## Giving it something to hold
 
-A sword, a spanner, a camera, a mug, a fishing rod — a minifigure's hand is a
+A sword, a spanner, a camera, a mug, a fishing rod - a minifigure's hand is a
 **C-shaped clip** and every one of these is a bar pushed through it. So a tool
 is not placed *near* the hand, and it does not sit on a stud: it goes on the
 hand's **grip axis**.
@@ -102,12 +102,12 @@ tool rotation = R · grip_matrix
 ```
 
 `grip_y` is how far along the bar the fist closes, and it is the one number
-that changes between tools — a sword is gripped at the hilt, a torch halfway
+that changes between tools - a sword is gripped at the hilt, a torch halfway
 down its shaft. **You do not have to work it out.** `search_parts` marks every
 part a minifigure holds, and `get_part_details` gives you that part's own
 `grip_y` and `grip_matrix`, both measured from the sets that hold it.
 
-Worked example — the figure above, holding a shortsword (`3847`) in its right
+Worked example - the figure above, holding a shortsword (`3847`) in its right
 hand. Add this eleventh line to the ten:
 
 ```
@@ -116,7 +116,7 @@ hand. Add this eleventh line to the ten:
 
 `validate_model` recognises a tool on a grip axis as held, and reports it under
 `held_accessories` with the hand that holds it. A tool that is *not* on one is
-not an error — a sword lying on a table is a perfectly good model — but it will
+not an error - a sword lying on a table is a perfectly good model - but it will
 show as a separate loose piece, which is the tell that a figure you meant to arm
 is standing next to its sword rather than holding it.
 
@@ -127,7 +127,7 @@ comes out as a sword pointing into the figure's own leg.
 ## Posing it: turning a head, bending a leg, raising an arm
 
 A minifigure has four joints and each one turns about **one axis only**. Posing
-is changing a part's **rotation matrix and nothing else** — every part stays at
+is changing a part's **rotation matrix and nothing else** - every part stays at
 the position the table above gives it. A figure that "sits" by having its legs
 moved down is a figure that has come apart.
 
@@ -137,7 +137,7 @@ moved down is a figure that has come apart.
 | legs | **x** | 0° standing, **−90° sitting** | strides, sits |
 | arms | **x** (on top of their ±10° about z) | −15° to −60° | raises forward |
 
-Three quarters of all figures in the reference sets are left straight — a
+Three quarters of all figures in the reference sets are left straight - a
 neutral figure is the normal one. Pose when the model says to: someone sitting
 in a car, waving, holding something up.
 
@@ -148,7 +148,7 @@ in a car, waving, holding something up.
 1  0 0 -96 0  0.866 0 0.5 0 1 0 -0.5 0 0.866  3901.dat
 ```
 
-The headgear takes **the same matrix as the head** — a hat that stays facing
+The headgear takes **the same matrix as the head** - a hat that stays facing
 front while the face turns is the commonest posing mistake there is.
 
 **Sitting.** Both legs keep their position and take a −90° rotation about x.
@@ -159,7 +159,7 @@ Nothing else about the figure changes:
 1 1 0 -28 0  1 0 0 0 0 1 0 -1 0  3817.dat
 ```
 
-A seated figure's feet come forward, so its hips still sit at torso +32 — put
+A seated figure's feet come forward, so its hips still sit at torso +32 - put
 the figure on the seat by placing the *whole* figure, not by dropping its legs.
 
 **Raising an arm.** This is the one that is not just a matrix: the hand is on
@@ -173,7 +173,7 @@ detached fist floating by its hip. Taken from a set, the right arm raised:
 ```
 
 If that figure is holding something, recompute the tool from the hand's new
-position and rotation with the grip formula above — the tool follows the hand,
+position and rotation with the grip formula above - the tool follows the hand,
 always.
 
 **Rotating the whole figure** is the other thing entirely: to turn a figure to
@@ -189,8 +189,8 @@ Two more categories, and the catalogue tells them apart for you:
 | Category | Where it goes |
 |---|---|
 | `Minifig Accessory` | held in a hand, on the grip axis above |
-| `Minifig Headwear` | worn on the head — **the head's own coordinates** |
-| `Minifig Neckwear` | airtanks, a backpack — **the torso's own coordinates** |
+| `Minifig Headwear` | worn on the head - **the head's own coordinates** |
+| `Minifig Neckwear` | airtanks, a backpack - **the torso's own coordinates** |
 
 So a helmet goes at exactly the position the head is at, and a backpack at
 exactly the position the torso is at. No offset, no arithmetic.

@@ -1,6 +1,6 @@
 """How a part attaches to other parts, and what it needs in order to.
 
-The catalogue says what a piece *is* — "Technic Pin with Friction and Slots",
+The catalogue says what a piece *is* - "Technic Pin with Friction and Slots",
 40 x 20 x 20 LDU. It says nothing about the only question that decides whether
 two pieces can go together: what kind of connection each of them offers. A stud
 does not go into a pin hole, a bar does not go into a cross hole, and a tyre
@@ -11,7 +11,7 @@ can never actually join.
 So each part is read for its connections. Two sources, and they are not equally
 good, which is why every finding says which one it came from:
 
-* **Geometry** — the part's own file, recursed. LDraw builds parts out of named
+* **Geometry** - the part's own file, recursed. LDraw builds parts out of named
   primitives, and several connections have a primitive that means exactly one
   thing: `confric*` is a Technic friction pin, `peghole`/`npeghol*` is the hole
   one goes into, `tooth*` is a gear tooth, `clip*` is a clip. Studs are better
@@ -19,7 +19,7 @@ good, which is why every finding says which one it came from:
   one pointing down is the tube underneath, and one pointing sideways is SNOT.
   Where a primitive is decisive this is the answer, and it is not a guess.
 
-* **The name** — where geometry is not decisive. The axle family is the reason:
+* **The name** - where geometry is not decisive. The axle family is the reason:
   `axlehol8` is "Technic Axle Perimeter", the shaft, while `axlehole` is the
   hole, so the prefix cannot tell a cross-hole from the axle that goes in it.
   LDraw part names are rigorously standardised, so "Technic Axle  4" and "with
@@ -43,13 +43,13 @@ from .config import CHECKER_DIR
 # parts are in the same system is the first thing that has to be true.
 #
 # **What the joint does**, because that is the question a build actually starts
-# from — "I need this to turn", "I need this to hold an angle", "I need to
+# from - "I need this to turn", "I need this to hold an angle", "I need to
 # drive that wheel". Two connections in different systems can do the same job,
 # and two in the same system can behave completely differently: a friction pin
 # and a smooth pin are the same shape and one holds while the other spins.
 #
 # Sorting only by system would put "anything that is not a stud" in one bucket,
-# which is not a category — it is the absence of one.
+# which is not a category - it is the absence of one.
 GROUPS = [
     ("system", "The stud grid",
      "The System connection every brick has, and the parts that turn it "
@@ -57,7 +57,7 @@ GROUPS = [
     ("articulated", "Joints that move",
      "Everything meant to turn, fold, swivel or swing after it is built."),
     ("technic", "Technic mechanism",
-     "Pins, axles and gears — the connections that carry motion and torque "
+     "Pins, axles and gears - the connections that carry motion and torque "
      "from one part of a model to another."),
     ("standalone", "Its own system",
      "Connections that answer to nothing else in the model: track that clicks "
@@ -76,7 +76,7 @@ MOTIONS = [
     ("swivels", "Swivels any direction", "A cone of movement, not a single "
      "axis."),
     ("pivots", "Pivots or holds", "Free-turning with a smooth pin, fixed with "
-     "a friction one — the same hole either way."),
+     "a friction one - the same hole either way."),
     ("drives", "Carries torque", "Rotation transmitted rather than allowed: "
      "what actually turns a wheel."),
 ]
@@ -86,7 +86,7 @@ FAMILIES = [
     ("stud_tube", "Stud and tube", "system", "rigid",
      "The baseline system: studs press into the tubes underneath the part "
      "above. Around three quarters of every connection in a real set."),
-    ("snot", "SNOT — studs not on top", "system", "rigid",
+    ("snot", "SNOT - studs not on top", "system", "rigid",
      "Studs facing sideways or down, so a part can be built on at right angles "
      "to the grid. Brackets, headlight bricks, and jumper plates that offset "
      "by half a stud."),
@@ -107,10 +107,10 @@ FAMILIES = [
      "smooth pins turn freely as pivots."),
     ("axle", "Axle and cross-hole", "technic", "drives",
      "A cross-section axle in a matching cross-hole. Rotationally locked, so "
-     "this is what transmits torque — unlike a round pin hole, which lets its "
+     "this is what transmits torque - unlike a round pin hole, which lets its "
      "pin spin."),
     ("gear", "Gear", "technic", "drives",
-     "Teeth meshing to transfer rotation — spur, bevel, worm, or a rack that "
+     "Teeth meshing to transfer rotation - spur, bevel, worm, or a rack that "
      "turns rotation into a straight line."),
     ("track", "Rail and track", "standalone", "rigid",
      "Train and monorail track, which clicks end to end on its own "
@@ -121,7 +121,7 @@ FAMILIES = [
 ]
 
 # The families whose count means something: a stud primitive is one stud, so
-# these can be counted. Nothing else can — see `analyse`.
+# these can be counted. Nothing else can - see `analyse`.
 _COUNTABLE = ("stud_tube", "snot")
 
 LABELS = {fid: name for fid, name, _g, _m, _b in FAMILIES}
@@ -141,7 +141,7 @@ MOTION_LABELS = {mid: name for mid, name, _b in MOTIONS}
 _PIN_SHAFT = ("confric",)
 _PIN_HOLE = ("peghole", "npeghol", "connhole", "beamhol")
 
-# Anything in the axle family. Which end of it — shaft or cross-hole — the
+# Anything in the axle family. Which end of it - shaft or cross-hole - the
 # names do not say (see the module docstring), so that comes from the part name.
 _AXLE = ("axle",)
 
@@ -177,13 +177,13 @@ _BY_NAME = (
 
 # Whether a part seats on studs, in three tests, decisive first.
 #
-# Tubes underneath settle it outright — that is the anti-stud itself, and only
+# Tubes underneath settle it outright - that is the anti-stud itself, and only
 # a part meant to go onto studs has one. Studs on top settle it only together
 # with a body that is a whole number of plates: a Technic brick has both and
 # does seat, where a Technic pin connector has studs on nothing and a body 12
 # LDU tall, and a rule that looked at height alone would have it sitting on
-# studs it cannot reach. What is left is the parts with neither — a tile, a
-# slope, a hinge base — and those are read from their category, which in LDraw
+# studs it cannot reach. What is left is the parts with neither - a tile, a
+# slope, a hinge base - and those are read from their category, which in LDraw
 # is a fixed vocabulary and says plainly what family a part belongs to.
 PLATE_LDU = 8.0
 _HEIGHT_TOLERANCE = 1.0
@@ -210,8 +210,8 @@ _scan_cache = {}
 def scan(part_name, library_root=None):
     """Every stud and every primitive in a part, found once and remembered.
 
-    One walk answers both questions asked of a part — which studs it has and
-    which primitives it is made of — because the walk is the expensive half and
+    One walk answers both questions asked of a part - which studs it has and
+    which primitives it is made of - because the walk is the expensive half and
     doing it twice for the same file is the only way this gets slow.
     """
     key = (part_name or "").strip().lower()
@@ -242,8 +242,8 @@ def scan(part_name, library_root=None):
                     result["tubes"] += 1
                 else:
                     result["side_studs"] += 1
-            # Where they are, not only how many. The walk already knows — it
-            # has the point and the direction of every one — and counting them
+            # Where they are, not only how many. The walk already knows - it
+            # has the point and the direction of every one - and counting them
             # and throwing the coordinates away left the builder to work out
             # for itself where a part's studs sit, which is the one thing about
             # a part that cannot be guessed from its name.
@@ -378,7 +378,7 @@ def analyse(part_name, description="", category="", keywords="",
             # primitive is one stud. A pin's shaft may be drawn from three
             # `confric` segments and a clip from one primitive or four, so the
             # number of references says how the part was modelled and nothing
-            # about how many things can be plugged into it — and a number that
+            # about how many things can be plugged into it - and a number that
             # looks like an answer and is not is worse than no number.
             "count": entry["count"] if fid in _COUNTABLE else None,
             "evidence": "geometry" if "geometry" in entry["evidence"] else "name",
@@ -405,7 +405,7 @@ def _attachment(scanned, found, category, width_studs, depth_studs,
                 body_height=None):
     """What has to be there for this part to go on: the other half of a fit.
 
-    Dimensions say how much room a part takes. This says what it lands on —
+    Dimensions say how much room a part takes. This says what it lands on -
     the number of studs it covers and must have under it, or the connectors it
     plugs into when it is not a studded part at all. A part whose attachment is
     unknown says so rather than claiming zero.
@@ -442,7 +442,7 @@ def _attachment(scanned, found, category, width_studs, depth_studs,
     elif seats:
         summary = "seats on studs, but not on a plain rectangle of them"
     else:
-        summary = "does not attach by studs — see its connection types"
+        summary = "does not attach by studs - see its connection types"
 
     return {"studs_required": studs, "connectors_required": needs,
             "seats_on_studs": seats, "summary": summary}

@@ -5,7 +5,7 @@ with its own idea of where the origin is. Assembling them is three problems:
 
 * **Inlining.** An MPD holds every block it needs. A subbuild that is itself an
   MPD brings its own blocks along, and two subbuilds that both call a block
-  ``base.ldr`` would otherwise silently share one — so every block is renamed
+  ``base.ldr`` would otherwise silently share one - so every block is renamed
   into its subbuild's namespace and every reference to it rewritten.
 * **Placement.** Where each one goes. Computed from real bounding boxes rather
   than guessed: they are laid in a row, each dropped onto the ground plane and
@@ -43,7 +43,7 @@ def read_blocks(text, fallback_name):
     """``text`` split into ``[(block_name, [lines])]``, main block first.
 
     A plain .ldr with no ``0 FILE`` at all is one block under
-    ``fallback_name`` — which is what most subbuilds are.
+    ``fallback_name`` - which is what most subbuilds are.
     """
     blocks, current, lines = [], None, []
 
@@ -71,8 +71,8 @@ def read_blocks(text, fallback_name):
 def namespace(text, prefix, fallback_name):
     """Rename every block in ``text`` into ``prefix``'s namespace.
 
-    The first block becomes ``<prefix>.ldr`` — that is the name the scene will
-    reference — and the rest become ``<prefix>-<their name>``. References
+    The first block becomes ``<prefix>.ldr`` - that is the name the scene will
+    reference - and the rest become ``<prefix>-<their name>``. References
     between them are rewritten to match; references to anything else (a real
     LDraw part) are left exactly as they are.
 
@@ -101,7 +101,7 @@ def namespace(text, prefix, fallback_name):
     return out
 
 
-# No \b after "Name:" — a word boundary needs a word character on one side, and
+# No \b after "Name:" - a word boundary needs a word character on one side, and
 # between the colon and the space that follows it there is none, so the line
 # would never match and every block would carry two Name: headers.
 _META = re.compile(r"^\s*0\s+(Name:|Author:|!LDRAW_ORG\b|!LICENSE\b|!LPUB\b)",
@@ -118,7 +118,7 @@ def _description(lines, default):
     """Split a block into its description line and the rest.
 
     LDraw puts the description first, above ``0 Name:``. A block that already
-    carries one keeps it — lifted to where it belongs rather than left below
+    carries one keeps it - lifted to where it belongs rather than left below
     the header and duplicated by one made from the component's name.
     """
     for index, line in enumerate(lines):
@@ -219,6 +219,6 @@ def compose(components, title="Scene", main_name="main.ldr", spacing=None):
 
 
 def _n(value):
-    """A coordinate, integral where it can be — LDraw is read by people too."""
+    """A coordinate, integral where it can be - LDraw is read by people too."""
     value = float(value)
     return int(value) if value == int(value) else round(value, 3)

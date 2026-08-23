@@ -11,11 +11,11 @@ them.
 So this is the pass that writes the acceptance criteria, and the node that
 checks them:
 
-* ``compose`` — once per object, before the first brick. A list of statements
+* ``compose`` - once per object, before the first brick. A list of statements
   that are true or false of the finished model and nothing in between. Stored on
   disk, so a resumed run is held to the same list it started with and a reader
   can see afterwards what the build was actually judged on.
-* ``check`` — at the end of every iteration. Each requirement answered
+* ``check`` - at the end of every iteration. Each requirement answered
   ``true``/``false`` against the renders and the measurements, one at a time.
   All true ends the run; anything false is handed back as the work remaining.
 
@@ -23,7 +23,7 @@ checks them:
 
 An acceptance test that can be argued with is not a test. "Well proportioned"
 lets a model through on the checker's mood, and worse, lets it *fail* on the
-same — a builder cannot act on "not quite right", so a soft criterion produces
+same - a builder cannot act on "not quite right", so a soft criterion produces
 either a rubber stamp or an endless loop. The prompt in
 ``requirements_prompt.md`` is mostly one long argument for countability, because
 that is the property the whole design rests on.
@@ -32,12 +32,12 @@ that is the property the whole design rests on.
 
 It used to decide for itself that it was done, against a gate that could only
 check generic properties. Deciding you have finished is the one judgement a
-builder is worst placed to make — it is the same model that has just spent
+builder is worst placed to make - it is the same model that has just spent
 twenty steps convincing itself the thing it built is the thing it was asked for.
 
 So the decision moved out. The builder builds and validates; the harness runs
 this check when an iteration ends, and *the harness* ends the run. There is
-still a way to stop honestly — see ``give_up`` in tools.py — because a build
+still a way to stop honestly - see ``give_up`` in tools.py - because a build
 that genuinely cannot satisfy a requirement must not spin forever.
 """
 
@@ -54,7 +54,7 @@ from .config import (OUT_DIR, REQUIREMENTS_CHECK_PROMPT_FILE,
 STORE_NAME = "requirements.json"
 
 # A build with more than this many acceptance criteria is not being checked, it
-# is being buried — and every one of them costs the checker attention it needs
+# is being buried - and every one of them costs the checker attention it needs
 # for the ones that matter. The user asked for as many as the model thinks the
 # build needs, and this is only the ceiling on "thinks".
 MAX_REQUIREMENTS = 40
@@ -81,8 +81,8 @@ _VAGUE = re.compile(r"\b(" + "|".join(re.escape(w) for w in VAGUE) + r")\b",
 # A prompt is advice and this failed in practice: a run was blocked for
 # twenty-seven minutes on "the sofa is white" against a request that said
 # `build a sofa`, because the design brief had chosen white and this pass read
-# a brief as a specification. The brief is no longer given to it — see
-# ``compose`` — and this is the belt to that pair of braces.
+# a brief as a specification. The brief is no longer given to it - see
+# ``compose`` - and this is the belt to that pair of braces.
 _COLOURS = (
     "white", "black", "grey", "gray", "red", "blue", "green", "yellow",
     "orange", "purple", "violet", "pink", "brown", "tan", "beige", "cream",
@@ -103,7 +103,7 @@ def mentions_colour(text):
 #
 # The prompt asks for a symmetry requirement only where the subject has an
 # axis, and for silence everywhere else. Asked for silence about a rock, the
-# model writes "the rock is not symmetric about any plane" instead — checkable,
+# model writes "the rock is not symmetric about any plane" instead - checkable,
 # confidently wrong, and it refuses a rock that happened to come out tidy.
 # Telling it not to in the prompt did not stop it: measured over the subjects
 # in run_agent's checks, the negation came back for a rock and for a ruined
@@ -114,7 +114,7 @@ def mentions_colour(text):
 # demanding irregularity is one no build can argue its way out of.
 #
 # Matched as a negation standing before a symmetry word, so the positive form
-# that names its own exceptions — "symmetric apart from the door" — is left
+# that names its own exceptions - "symmetric apart from the door" - is left
 # alone.
 _NO_SYMMETRY = re.compile(
     r"\basymmetr\w*"
@@ -132,8 +132,8 @@ def forbids_symmetry(text):
 # Language that genuinely needs eyes, and it is a much shorter list than it
 # first looks.
 #
-# The first version of this demoted anything naming a feature — wall, roof,
-# trunk, leg — on the reasoning that a bill of materials knows what a model is
+# The first version of this demoted anything naming a feature - wall, roof,
+# trunk, leg - on the reasoning that a bill of materials knows what a model is
 # made of and nothing about where any of it went. That reasoning was right
 # about a bill of materials and wrong about the file, and the difference is
 # the thing the builder writes on its way past:
@@ -177,7 +177,7 @@ def is_objective(text):
     """Whether a requirement can be answered without an opinion.
 
     A blunt instrument on purpose. It cannot tell a checkable statement from an
-    unfalsifiable one in general — that is what the prompt is for — but it
+    unfalsifiable one in general - that is what the prompt is for - but it
     catches the specific way this fails in practice, which is a criterion
     carrying one of a small set of words that mean "to a standard nobody has
     stated".
@@ -256,7 +256,7 @@ def _normalise(document, colour_asked=True):
     ``colour_asked`` is False when nothing in the request mentioned a colour and
     no reference picture was attached. Every colour requirement is then thrown
     out, because there is nowhere it could have come from except this pass
-    deciding one — and a colour nobody asked for is a build refused for being
+    deciding one - and a colour nobody asked for is a build refused for being
     the wrong shade of a thing that was never specified.
     """
     raw = document.get("requirements") if isinstance(document, dict) else document
@@ -316,7 +316,7 @@ def compose(subject, requirements=None, reference=None,
     if should_stop and should_stop():
         return None
 
-    # Did anyone actually ask for a colour? A picture counts — the user chose to
+    # Did anyone actually ask for a colour? A picture counts - the user chose to
     # attach it, so what it shows is specified. Nothing else does.
     colour_asked = bool(reference) or mentions_colour(f"{subject} {requirements or ''}")
 
@@ -324,28 +324,28 @@ def compose(subject, requirements=None, reference=None,
     if not colour_asked:
         blocks.append(
             "**No colour was asked for.** Do not write a single requirement "
-            "that mentions a colour or a palette — any colour is a correct "
+            "that mentions a colour or a palette - any colour is a correct "
             "answer here, and one that names a colour would refuse a finished "
             "model for being the wrong shade of something nobody specified.")
     # A size the user asked for is a requirement. A size this project chose
     # because the user said nothing is a starting point, and a gate that
-    # refuses a model for missing it is a gate refusing its own invention —
+    # refuses a model for missing it is a gate refusing its own invention -
     # which is the fault the colour rule above already names. scale.py sets
     # `size_from` to "default" in exactly that case.
     if not size_hint or size_from == "default":
         blocks.append(
             "**No size was asked for.** Do not write a requirement bounding "
             "the size in studs; whatever size it comes out is right. A size "
-            "may be mentioned below as the size it is being built at — that is "
+            "may be mentioned below as the size it is being built at - that is "
             "direction for the builder, not something to hold it to.")
     if requirements:
         blocks.append(
-            f"What the user asked for, in their own words — every one of these "
+            f"What the user asked for, in their own words - every one of these "
             f"becomes a requirement:\n{requirements}")
     if size_hint:
         blocks.append(
             f"The size it is being built at: {size_hint}"
-            + ("" if size_from == "default" else " — this one was asked for."))
+            + ("" if size_from == "default" else " - this one was asked for."))
     # The design brief is deliberately NOT passed. It is direction for the
     # builder, not a contract with the user: it picks a palette and a signature
     # detail so the model is not a grey box, and the builder is free to go
@@ -401,7 +401,7 @@ def compose(subject, requirements=None, reference=None,
 # renders, hand it the geometry as a paragraph of text, and let it say
 # true/false for all of them. For "the roof slopes" that is the only method
 # there is. For "the model is one connected object" it is indefensible, and it
-# failed exactly as you would expect — a build came back with the one-piece
+# failed exactly as you would expect - a build came back with the one-piece
 # requirement answered YES while the checker had counted more than one
 # sub-assembly, because the number was context for a language model rather than
 # the answer itself.
@@ -438,7 +438,7 @@ def _one_piece(report):
         named = ", ".join(
             f"{row.get('parts')} part(s) at line {row.get('line')}"
             for row in loose[:3])
-        detail += f" — the ones adrift from the main body are {named}"
+        detail += f" - the ones adrift from the main body are {named}"
     if apart:
         detail += (f"; {len(apart)} object(s) came apart into pieces with "
                    f"nothing joining them")
@@ -451,7 +451,7 @@ def _nothing_floating(report):
     if floating is None:
         return None
     return (floating == 0,
-            f"{floating} part(s) are held up by nothing — no path of "
+            f"{floating} part(s) are held up by nothing - no path of "
             f"connections down to the ground" if floating else
             "every part has support down to the ground")
 
@@ -477,7 +477,7 @@ def _on_the_grid(report):
 
 
 # Order matters: the first pattern that matches settles the requirement. The
-# patterns are deliberately narrow — a requirement this cannot recognise is
+# patterns are deliberately narrow - a requirement this cannot recognise is
 # answered the old way, which is the safe direction to be wrong in. "The tree
 # has one trunk" must not read as a connectivity criterion.
 _SETTLERS = (
@@ -513,8 +513,8 @@ def settle(text, report):
 def ensure_connected(record):
     """Guarantee the one-piece requirement is on the list, machine-checked.
 
-    Appended rather than hoped for. The composer is asked for it — item 7 of
-    the prompt — and a language model asked for eight things reliably writes
+    Appended rather than hoped for. The composer is asked for it - item 7 of
+    the prompt - and a language model asked for eight things reliably writes
     seven, so the one criterion that no picture can answer is the one most
     worth not leaving to chance. An existing requirement that already says it
     is re-tagged instead, so the list never carries the same demand twice.
@@ -536,7 +536,7 @@ def ensure_connected(record):
         "text": CONNECTED_TEXT,
         "check": "measured",
         "settled_by": "geometry",
-        "why": "a model in several pieces is not one model — always checked",
+        "why": "a model in several pieces is not one model - always checked",
         "auto": True,
     })
     return record
@@ -577,7 +577,7 @@ def _facts(report):
 # Two things could settle a criterion before this: the geometry checker, which
 # knows whether the model is one piece and on the grid, and a vision model
 # looking at a contact sheet. Between them they leave a whole class of
-# requirement unanswerable, and it is the most *countable* class there is —
+# requirement unanswerable, and it is the most *countable* class there is -
 # "four red 1x1 round plates", "no more than two colours", "a 2x4 brick at the
 # base".
 #
@@ -596,8 +596,8 @@ def _facts(report):
 # the model the counts and it does the second job well; ask it for the first
 # and it will guess.
 #
-# Where a requirement is countable *unambiguously* — an explicit number and a
-# part id — `settle_source` answers it with no model at all. See `_COUNTABLE`.
+# Where a requirement is countable *unambiguously* - an explicit number and a
+# part id - `settle_source` answers it with no model at all. See `_COUNTABLE`.
 
 # How many rows of each breakdown reach the checker. A bill of materials is
 # long and the tail of it is never what a criterion turns on.
@@ -608,7 +608,7 @@ def inventory(path):
     """What is actually in the .ldr file: parts, colours, counts.
 
     Read off the source rather than the flattened build, and off type-1 lines
-    that name a real catalogue part — the same rule ``style.measure`` uses, and
+    that name a real catalogue part - the same rule ``style.measure`` uses, and
     for the same reason: LDraw primitives are the internals of a part
     definition and are nothing anybody chose to put in the model.
 
@@ -682,7 +682,7 @@ def sections(path):
     """The model's own account of itself: what each `0 //` comment covers.
 
     LDraw files carry comments, and this project's builder writes them on every
-    op — ``build_ops`` turns a step's ``note`` into ``0 // front wall`` above
+    op - ``build_ops`` turns a step's ``note`` into ``0 // front wall`` above
     the parts it places. Across the 133 models on disk, 116 carry them: 1,004
     lines saying *trunk lower*, *canopy level 1 mound*, *root flare*, *thick
     trunk - four 2x2 bricks*.
@@ -762,7 +762,7 @@ def sections_text(rows):
             name = (f" ({part['colour_name']})" if part.get("colour_name")
                     else "")
             out.append(f"    {part['count']} x {part['part_id']} in colour "
-                       f"{part['colour']}{name} — {part['description']}")
+                       f"{part['colour']}{name} - {part['description']}")
     return "\n".join(out)
 
 
@@ -770,8 +770,8 @@ def source_text(path, limit=SOURCE_LINE_LIMIT):
     """The model file itself, numbered, for the checker to read directly.
 
     The digests above are convenient and they are also lossy: they drop every
-    coordinate. A requirement about where something sits — a tile on each
-    corner, the roof above the walls, one section centred on another — is
+    coordinate. A requirement about where something sits - a tile on each
+    corner, the roof above the walls, one section centred on another - is
     answerable from the file and from nothing else, and only if the file is
     actually shown.
     """
@@ -812,7 +812,7 @@ def inventory_text(stock, limit=INVENTORY_LIMIT):
     out.append("")
     out.append("Every part in the model, counted exactly:")
     for row in stock["by_part"][:limit]:
-        out.append(f"  - {row['count']} x {row['part_id']} — {row['description']}")
+        out.append(f"  - {row['count']} x {row['part_id']} - {row['description']}")
     if len(stock["by_part"]) > limit:
         out.append(f"  - ... and {len(stock['by_part']) - limit} more shapes")
     return "\n".join(out)
@@ -824,8 +824,8 @@ def inventory_text(stock, limit=INVENTORY_LIMIT):
 # has one trunk" contains a number and a noun and means nothing countable.
 #
 # So a pattern only fires where the requirement names something the file can be
-# asked about *exactly* — a catalogue part id, the total part count, the number
-# of colours — together with an explicit comparison. Everything vaguer is
+# asked about *exactly* - a catalogue part id, the total part count, the number
+# of colours - together with an explicit comparison. Everything vaguer is
 # interpretation, and interpretation is the model's half of the job.
 _AT_LEAST = r"(?:at\s+least|no\s+fewer\s+than|minimum\s+of|\d+\s*\+|or\s+more)"
 _AT_MOST = r"(?:at\s+most|no\s+more\s+than|fewer\s+than|under|maximum\s+of|or\s+fewer)"
@@ -973,21 +973,21 @@ def check(record, sheet, report=None, subject=None, model=None, client=None,
     ``render.NotAvailable`` when there is no vision model to ask, which the
     caller has to treat as "not established" rather than as a pass.
 
-    The three routes, in the order they are tried — cheapest and most certain
+    The three routes, in the order they are tried - cheapest and most certain
     first, because every requirement one of them settles is a requirement the
     next one does not have to guess at:
 
-    1. **the geometry checker** — connectivity, the stud grid, overlaps.
+    1. **the geometry checker** - connectivity, the stud grid, overlaps.
        Free and exact. See ``settle``.
-    2. **the parts list** — counts of parts and colours read straight out of
+    2. **the parts list** - counts of parts and colours read straight out of
        the ``.ldr``. Free and exact where the requirement names a part id or a
        total; see ``settle_source``. Where it names a *colour word* or a family
        of shapes, the counting is still exact but deciding what the words cover
-       is not, so it goes to a text model with the counts in front of it —
+       is not, so it goes to a text model with the counts in front of it -
        ``_check_source``. That is the "code counts, model judges" split, and it
        is the whole reason this route exists: a vision model asked how many 1x1
        plates are on a roof estimates, and cannot see the ones underneath.
-    3. **the pictures** — everything about shape, position and proportion,
+    3. **the pictures** - everything about shape, position and proportion,
        which is what a render is actually evidence of.
 
     ``path`` is the ``.ldr`` to read the parts list from; it falls back to the
@@ -1121,7 +1121,7 @@ def as_text(record):
     if not wanted:
         return ""
     lines = ["These are the requirements this build is judged against. The run "
-             "does not end until every one of them is true — you do not decide "
+             "does not end until every one of them is true - you do not decide "
              "that it is finished, they do.\n"]
     for requirement in wanted:
         lines.append(f"- **{requirement['id']}** [{requirement['check']}] "
@@ -1135,7 +1135,7 @@ def outstanding(result, limit=12):
     if not unmet:
         return ""
     lines = [f"{len(unmet)} requirement(s) are still not met. This is what the "
-             f"run is waiting on — fix these and nothing else:\n"]
+             f"run is waiting on - fix these and nothing else:\n"]
     for row in unmet[:limit]:
         lines.append(f"- **{row['id']}** {row['text']}")
         if row.get("evidence"):

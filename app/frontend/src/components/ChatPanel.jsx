@@ -8,21 +8,21 @@ import { inkOn, objectColourFor, shade } from "../brick";
 import { formatMs, plural } from "../format";
 
 // The model streams, so this is the refresh rate of the reply appearing on
-// screen, not just a status check — it wants to be quick.
+// screen, not just a status check - it wants to be quick.
 const POLL_MS = 280;
 // Most tools return in tens of milliseconds, so start and end land in the same
 // poll. Keep a row visibly "running" this long so the call is perceptible; the
 // duration reported on the row is still the real one.
 const HOLD_MS = 550;
 
-// No step budget. A run goes until it is finished or until you stop it — see
+// No step budget. A run goes until it is finished or until you stop it - see
 // DEFAULT_MAX_STEPS in config.py, and the stop button, which is now the only
 // thing that ends a run early.
 const MAX_STEPS = 0;
 
 // What the agent is doing while a tool call is in flight.
 // STALE, and this file is not mounted by anything (see app/README.md).
-// The live status labels are in Composer.jsx — that map covers every
+// The live status labels are in Composer.jsx - that map covers every
 // tool and every run phase, and this one does not. Do not copy from it.
 const TOOL_LABELS = {
   plan_construction: "Drawing up the construction plan",
@@ -134,7 +134,7 @@ function foldEvents(events, seen) {
 // a status told only in colour is a status some people cannot read.
 //
 // Which object the call belongs to rides on a smaller brick stacked on top of
-// that one — objects are built at the same time now, so the rows of three
+// that one - objects are built at the same time now, so the rows of three
 // builders arrive shuffled together and each needs to say whose it is.
 const STATUS = {
   running: { mark: "▸", label: "running" },
@@ -233,7 +233,7 @@ function Trace({ items, animate, onAdvance }) {
 
 /**
  * The agent's working-out, kept with the reply it produced: what it reasoned
- * between calls and every tool it ran. Open by default — this is the part that
+ * between calls and every tool it ran. Open by default - this is the part that
  * explains why the model came out the way it did.
  */
 function TraceBox({ trace }) {
@@ -254,7 +254,7 @@ function TraceBox({ trace }) {
 /**
  * A call the model is still writing. It cannot run until the arguments are
  * complete, so this is the only window in which it would otherwise be
- * invisible — the JSON appears character by character as it is generated.
+ * invisible - the JSON appears character by character as it is generated.
  */
 function ComposingRow({ call }) {
   return (
@@ -295,11 +295,11 @@ function Dots() {
 // thing back, so the second to type erased what the first had said; and the
 // blob carried a tool row per event, so a few real builds took it past the
 // storage quota, after which the write failed silently and nothing survived a
-// reload at all. The server keeps the conversation now — this key is read once
+// reload at all. The server keeps the conversation now - this key is read once
 // more, to carry anything still in it across, and then dropped.
 const STORE_KEY = "maister.threads.v1";
 
-// Shared so an empty conversation keeps a stable identity between renders —
+// Shared so an empty conversation keeps a stable identity between renders -
 // `|| []` would mint a new array each time and retrigger every effect.
 const NO_MESSAGES = [];
 
@@ -328,7 +328,7 @@ function dropStrandedThread(projectId) {
 
 /**
  * A stored message as the log renders it. The tool rows are folded from the
- * events the server kept, which is the same fold a live run goes through — so
+ * events the server kept, which is the same fold a live run goes through - so
  * a reply read back tomorrow looks like the one that arrived today.
  */
 function restore(message) {
@@ -388,7 +388,7 @@ export default function ChatPanel({
   /**
    * Read the transcript back from the server.
    *
-   * `force` replaces whatever is on screen — that is opening a project. Without
+   * `force` replaces whatever is on screen - that is opening a project. Without
    * it the server list is only adopted when it is at least as complete as the
    * one already shown, because a reply is written a moment after the run is
    * marked finished, and a poll that lands in that gap would otherwise wipe the
@@ -548,7 +548,7 @@ export default function ChatPanel({
     setPartial("");
     setPending([]);
     try {
-      // Clears the record on disk as well as the agent's memory of it — the
+      // Clears the record on disk as well as the agent's memory of it - the
       // two are the same conversation, so they end together.
       await api.resetChat(projectId);
     } catch {
@@ -580,12 +580,12 @@ export default function ChatPanel({
     const { items } = foldEvents(eventsRef.current);
     setLiveEvents([]);
 
-    // Whatever the run did to itself, the file on disk is what it is — show it.
+    // Whatever the run did to itself, the file on disk is what it is - show it.
     if (run.validation) onValidation?.(run.validation);
     if (run.model_changed) onModelChanged?.();
 
     // Shown straight away from what this window watched happen, then reconciled
-    // below against what the server wrote — which is what every other window,
+    // below against what the server wrote - which is what every other window,
     // and this one tomorrow, will read.
     if (run.status === "error") {
       setMessages((m) => [...m, { role: "error", text: run.error, trace: items }]);
@@ -806,7 +806,7 @@ export default function ChatPanel({
             ))}
             {attaching && <ReferenceChip size="sm" pending />}
             <p className="composer-refs-note">
-              Attached to this project — the agent builds to match it, and it
+              Attached to this project - the agent builds to match it, and it
               stays in force for later changes.
             </p>
           </div>
@@ -850,7 +850,7 @@ export default function ChatPanel({
             className="btn btn--attach"
             onClick={() => fileRef.current?.click()}
             disabled={busy || !projectId || attaching}
-            title="Attach a reference image — or just paste one with ⌘/Ctrl+V"
+            title="Attach a reference image - or just paste one with ⌘/Ctrl+V"
             aria-label="Attach a reference image"
           >
             +

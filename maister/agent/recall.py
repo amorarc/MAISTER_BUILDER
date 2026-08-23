@@ -10,15 +10,15 @@ That reasoning was never about sets. It is about *anything the builder has to
 decide to ask for*, and the two stores it applies to next are the ones this
 project keeps of its own work:
 
-* **creations** — models it built before and saved, with the LDraw of the ones
+* **creations** - models it built before and saved, with the LDraw of the ones
   that validated cleanly. A tree it already got right is the best possible
   answer to "build a tree", and it is sitting on disk being not looked at.
-* **notes** — what it worked out while building and wrote down. That `3062b`
+* **notes** - what it worked out while building and wrote down. That `3062b`
   stacks into a good trunk four to six tall; that a set is a clean reference
   for a small house. Facts discovered at cost, retrievable only by asking.
 
 Neither has ever been pushed. Both are pulled, through `search_reference` and
-through the notes folded into `get_part_details` — which is to say, both are
+through the notes folded into `get_part_details` - which is to say, both are
 reached only by a builder that thought to reach, and the measured behaviour is
 that it does not.
 
@@ -36,7 +36,7 @@ out right. So:
 * **Only creations that validated.** An unvalidated one is a draft, and handing
   a draft over as a worked example teaches the mistake in it.
 * **Only ones that are actually about the subject.** The relevance floor is the
-  retrieval layer's own — a semantic search always answers, and the least-bad
+  retrieval layer's own - a semantic search always answers, and the least-bad
   row is worse than nothing here for exactly the reason it is worse than
   nothing in ``refsets``: the builder has been told to start from what it is
   given.
@@ -52,8 +52,8 @@ from . import creations, notes
 # subject looks like, and more source than that is more than anyone reads
 # before starting.
 MAX_CREATIONS = 2
-# Lines of a creation's own LDraw shown. Its models are small — the library's
-# median is under 40 parts — so this holds most of them whole.
+# Lines of a creation's own LDraw shown. Its models are small - the library's
+# median is under 40 parts - so this holds most of them whole.
 SOURCE_LINES = 50
 # Notes are one sentence each, so more of them fit than of anything else here.
 MAX_NOTES = 6
@@ -160,15 +160,15 @@ def _monotonous(text):
     real sets its size have 23**, and 83 of 93 are past the corpus's 90th
     percentile for one shape doing all the work. The library is therefore full
     of models that validate perfectly and are a single part repeated sixty
-    times — and handing one of those back as a worked example does not merely
+    times - and handing one of those back as a worked example does not merely
     fail to help, it teaches the fault. The bonsai in the library is 62 round
     plates out of 76.
 
     So the same yardstick `style.py` already holds a *new* build to is applied
     to an old one before it is offered as precedent: past the corpus 90th
     percentile for its size, it is not prior art, it is a mistake that was
-    saved. Everything else — every model inside what real sets of its size look
-    like — comes through untouched.
+    saved. Everything else - every model inside what real sets of its size look
+    like - comes through untouched.
 
     Deliberately the one axis and not all four. Colour count and rotation share
     are properties a subject can honestly have (a grey wall is grey), whereas
@@ -228,7 +228,7 @@ def remembered(subject, requirements=None, parts=(), limit=MAX_NOTES):
 
     Two sources, in order. The notes filed against the **parts this build is
     going to use** are the ones that cannot be found any other way at the
-    moment they matter — `get_part_details` surfaces them, but only for a part
+    moment they matter - `get_part_details` surfaces them, but only for a part
     the builder already decided to look up, which is after the decision they
     would have informed. Then whatever the index thinks is relevant to the
     subject.
@@ -281,7 +281,7 @@ def as_text(found=None, remembered_notes=None, subject=None):
         return None
 
     parts = [
-        "This is **your own** earlier work — models you built and saved, and "
+        "This is **your own** earlier work - models you built and saved, and "
         "things you worked out and wrote down. It is not an official set and "
         "carries none of a set's authority: a set is evidence of how LEGO "
         "solves a problem, and this is evidence of how *you* solved one. Only "
@@ -290,7 +290,7 @@ def as_text(found=None, remembered_notes=None, subject=None):
         "Use it the way you would use a set you had just read: take the "
         "technique, not the file. Reproducing one of these line for line is "
         "not building anything, and a model you already have is not an answer "
-        "to a request for a new one — but the trunk you got right last time is "
+        "to a request for a new one - but the trunk you got right last time is "
         "a trunk you do not have to work out again.",
     ]
 
@@ -302,7 +302,7 @@ def as_text(found=None, remembered_notes=None, subject=None):
                   if digest.get("distinct_shapes") else None),
                  ", ".join(digest.get("tags") or []) or None]
         facts = [f for f in facts if f]
-        parts.append(f"{head} — {' · '.join(facts)}" if facts else head)
+        parts.append(f"{head} - {' · '.join(facts)}" if facts else head)
         if digest.get("description"):
             parts.append("")
             parts.append(digest["description"])
@@ -332,7 +332,7 @@ def as_text(found=None, remembered_notes=None, subject=None):
                      "you lean on it.")
         parts.append("")
         for entry in remembered_notes:
-            parts.append(f"- **{entry['about']}** — {entry['note']}")
+            parts.append(f"- **{entry['about']}** - {entry['note']}")
 
     return "\n".join(parts)
 

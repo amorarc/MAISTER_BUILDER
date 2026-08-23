@@ -1,7 +1,7 @@
 """The construction planner behind the ``plan_construction`` tool.
 
 The builder plans best when it plans once, in writing, before the first part is
-placed — footprint, levels, bill of materials, order of assembly. This draws
+placed - footprint, levels, bill of materials, order of assembly. This draws
 that plan up in a call of its own: it gathers evidence (official sets that
 solved something similar, the model being extended), asks a model with no tools
 for a plan in a fixed JSON shape, and then resolves every shape it named against
@@ -9,7 +9,7 @@ the real parts catalogue.
 
 The resolution step is the point. A plan is only worth following if the parts in
 it exist, so the planner names shapes ("brick 2 x 4") and this module turns them
-into part numbers with real footprints and stacking heights — or says plainly
+into part numbers with real footprints and stacking heights - or says plainly
 that a shape had no match, which is a thing the builder needs to know before it
 starts writing coordinates.
 """
@@ -61,8 +61,8 @@ def set_model(model):
     """Point the planner at another model.
 
     Dropped rather than retargeted, so the next call rebuilds it: the cached
-    instance carries flags negotiated against the old model — whether it would
-    take tools, whether it would stream — and those say nothing about the new
+    instance carries flags negotiated against the old model - whether it would
+    take tools, whether it would stream - and those say nothing about the new
     one. Pass None to go back to ``BLUEPRINT_MODEL``.
     """
     global _model, _llm_instance
@@ -82,7 +82,7 @@ def references(subject, max_pieces=None, limit=MAX_REFERENCE_SETS):
     """Official models that solved something like this, opened up.
 
     The **geometry**, not a shopping list. This used to return each set's
-    most-used parts — "a car: 4 tyres, 4 wheel rims, 2 grille tiles" — and that
+    most-used parts - "a car: 4 tyres, 4 wheel rims, 2 grille tiles" - and that
     is a parts bin, not a construction. It says nothing about the thing the
     planner cannot work out for itself and the corpus already knows: that a car
     starts on a `2441` car base with the wheels in its recesses, that the
@@ -92,7 +92,7 @@ def references(subject, max_pieces=None, limit=MAX_REFERENCE_SETS):
 
     So this hands over what `refsets` hands the builder: the assemblies each set
     comes apart into, and the real LDraw of the one worth copying. Same
-    function, same digests — see refsets.py.
+    function, same digests - see refsets.py.
 
     Best effort: an unbuilt vector index or a retrieval failure means the plan
     is written from the subject alone, which is worse but still a plan.
@@ -121,7 +121,7 @@ def _request_text(subject, requirements, current_model, max_pieces,
         blocks.append(f"Requirements: {requirements}")
 
     # The look was settled before this call, at a temperature this one does not
-    # run at — see brief.py. It arrives as part of the request rather than as
+    # run at - see brief.py. It arrives as part of the request rather than as
     # evidence because that is what it is: the plan has to deliver it.
     if design_brief:
         from . import brief as brief_module
@@ -129,7 +129,7 @@ def _request_text(subject, requirements, current_model, max_pieces,
         rendered = brief_module.as_text(design_brief)
         if rendered:
             blocks.append(
-                "Design brief — what this model has to look like. The "
+                "Design brief - what this model has to look like. The "
                 "silhouette, the palette and the signature detail are "
                 "requirements, not suggestions: put the colours in the bill of "
                 "materials, and give the signature detail and the technique "
@@ -156,7 +156,7 @@ def _request_text(subject, requirements, current_model, max_pieces,
             "```\n" + "\n".join(lines) + "\n```"
             # Said rather than done quietly. A plan written from the first 400
             # lines of a 900-line model, believing it had seen all of it, will
-            # put a step where a wall already is — and nothing downstream can
+            # put a step where a wall already is - and nothing downstream can
             # tell that the planner was working from half a model.
             + (f"\n\n**Only the first {MAX_MODEL_LINES} of this model's "
                f"{len(every)} lines are shown.** There is more of it than you "
@@ -169,7 +169,7 @@ def _request_text(subject, requirements, current_model, max_pieces,
 
     if reference_rows:
         blocks.append(
-            "Real LEGO sets that already built this, opened up — how they are "
+            "Real LEGO sets that already built this, opened up - how they are "
             "actually put together, in their own LDraw. Plan from these: say "
             "in `graft` which assembly the build starts from, and spend the "
             "steps on what makes this model different from it.\n\n"
@@ -183,7 +183,7 @@ def _request_text(subject, requirements, current_model, max_pieces,
     # that came out right last time plans another trunk from nothing.
     if recalled:
         blocks.append(
-            "This builder's own earlier work on something like this — models "
+            "This builder's own earlier work on something like this - models "
             "it built and saved, and notes it wrote. Weaker evidence than the "
             "sets above and it never overrules them; use it for what it "
             "already got right, and plan past what it did not.\n\n"
@@ -201,7 +201,7 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
          recalled=None):
     """A construction plan for ``subject``, with its parts resolved.
 
-    ``reference_sets`` are digests the caller has already found — the harness
+    ``reference_sets`` are digests the caller has already found - the harness
     opens them before the build starts, and passing them in rather than looking
     again does two things. It saves the second search, and it means the plan is
     written against **the same sets the builder will be holding**: a plan that
@@ -261,7 +261,7 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
         result["plan_text"] = text
         result["note"] = ("the planner did not return JSON, so the plan is "
                           "unstructured and its parts were not resolved "
-                          "against the catalogue — check every part number "
+                          "against the catalogue - check every part number "
                           "yourself with search_parts")
         return result
 
@@ -277,14 +277,14 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
         result["geometry_problems"] = off_grid
         result["geometry_note"] = (
             f"{len(off_grid)} coordinate(s) in this plan are not on the stud "
-            f"grid. Each one comes with `nearest_legal` — use that value "
+            f"grid. Each one comes with `nearest_legal` - use that value "
             f"instead of the one written in the step. Do not build the plan as "
             f"it stands: an off-grid placement fails validation, and it fails "
             f"it after the whole model has been written and rendered.")
     if needs_check:
         result["parts_to_confirm"] = needs_check
         result["note"] = (f"{needs_check} entr(y/ies) in the bill of materials "
-                          f"are marked with a hint — resolve those with "
+                          f"are marked with a hint - resolve those with "
                           f"search_parts before placing them. The rest are "
                           f"catalogue-confirmed; do not search for them again.")
     warnings = []
@@ -304,7 +304,7 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
     if runnable:
         result["ops_note"] = (
             f"{runnable} of the steps came back as `ops` with real part "
-            f"numbers in them. Pass them to `build_ops` as they are — the "
+            f"numbers in them. Pass them to `build_ops` as they are - the "
             f"spacing is worked out from each part, so they are shorter to run "
             f"than to retype and cannot be mis-spaced."
             # A group is one op and many parts, so the count above understates
@@ -313,7 +313,7 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
             # decides that cannot be the whole build writes the copies out by
             # hand, which is the arithmetic these exist to remove.
             + (f" {grouped} of them are `repeat`/`reflect`/`call` groups, which "
-               f"each lay many parts — run them as they are rather than writing "
+               f"each lay many parts - run them as they are rather than writing "
                f"their copies out." if grouped else "")
             + (f" {unresolved_ops} op(s) had no catalogue match and were left "
                f"with the shape they named; resolve those with search_parts "
@@ -322,7 +322,7 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
     # A graft named in the plan is turned into the call that performs it. The
     # plan is read once, at the point where the builder is deciding what to do
     # first, and "the plan says to start from set 1477-1" is a fact it has to
-    # act on — whereas the call, written out, is the action itself.
+    # act on - whereas the call, written out, is the action itself.
     #
     # Unless grafting is off, in which case the planner has proposed a step
     # that cannot be taken. The set it found is still the right set, so it is
@@ -343,8 +343,8 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
                    "the shape, then place your own parts.",
         }
         result["next"] = (
-            "Read the set in `study_first` before you start — it is how this "
-            "is really built — then build the steps in order (`build_ops` for "
+            "Read the set in `study_first` before you start - it is how this "
+            "is really built - then build the steps in order (`build_ops` for "
             "the ops above, `edit_model` for anything irregular) in your own "
             "coordinates, and validate_model.")
     elif isinstance(graft, dict) and graft.get("set_number"):
@@ -361,13 +361,13 @@ def plan(subject, requirements=None, current_model=None, max_pieces=None,
                    "build on what makes this model different from that set.",
         }
         result["next"] = (
-            "Start with the `copy_from_set` in `start_with` — that is step 1 "
+            "Start with the `copy_from_set` in `start_with` - that is step 1 "
             "and everything else is measured from what it puts down. Then "
             "build the remaining steps in order (`build_ops` for the ops "
             "above, `edit_model` for anything irregular) and validate_model.")
     else:
-        result["next"] = ("Build the steps in order — `build_ops` for the ops "
-                          "above, `edit_model` for anything irregular — then "
+        result["next"] = ("Build the steps in order - `build_ops` for the ops "
+                          "above, `edit_model` for anything irregular - then "
                           "validate_model.")
     return result
 
@@ -404,7 +404,7 @@ def resolve_parts(specs):
 
         if found is None:
             entry["part_id"] = None
-            entry["hint"] = ("no catalogue match for this shape — search_parts "
+            entry["hint"] = ("no catalogue match for this shape - search_parts "
                              "for it before placing it")
             needs_check += 1
         else:
@@ -423,10 +423,10 @@ def resolve_parts(specs):
                 entry["hint"] = (
                     f"the nearest the catalogue came is "
                     f"{found.get('description')!r}, which is not the size this "
-                    f"asked for — confirm with search_parts before placing it"
+                    f"asked for - confirm with search_parts before placing it"
                     if wrong_size else
                     "this is the closest the catalogue came to the shape, and "
-                    "it may be wrong — confirm with search_parts before "
+                    "it may be wrong - confirm with search_parts before "
                     "placing it")
                 others = [c for c in candidates[1:] if c.get("part_id")]
                 if others:
@@ -444,7 +444,7 @@ def resolve_parts(specs):
 
 # A plan where one shape is more than this is a plan to approximate something.
 # The blueprint prompt asks for the same figure; this is the half that notices
-# when the plan came back anyway, which is most of the time — a rule in a prompt
+# when the plan came back anyway, which is most of the time - a rule in a prompt
 # is a preference, and a number checked after the fact is a fact.
 MAX_SHAPE_SHARE = 1.0 / 3.0
 # Below this there is nothing to be varied about and nothing to say.
@@ -480,7 +480,7 @@ def vocabulary_warning(bill, total):
 
     return (f"`{shape}` is {round(100 * quantity / total)}% of this plan "
             f"({quantity} of {total} parts){comparison}. That is the shape of a "
-            f"build that approximates something — a curve stepped out of "
+            f"build that approximates something - a curve stepped out of "
             f"plates, foliage made of one round brick, a slope built as a "
             f"staircase. Before you place it that many times, search_parts for "
             f"the shape you are approximating; it almost certainly exists, and "
@@ -501,7 +501,7 @@ def _snap(number, step):
     """``number`` to the nearest multiple of ``step``, ties away from zero.
 
     Not ``round``: Python rounds halves to even, so a rotation of 45 degrees
-    snapped to right angles came back as 0 — which is not the nearest legal
+    snapped to right angles came back as 0 - which is not the nearest legal
     turn, it is *no turn*, and following it drops the intent the plan was
     expressing. Half a step is genuinely ambiguous; resolving it away from zero
     at least keeps the movement the plan asked for.
@@ -530,7 +530,7 @@ def check_geometry(document):
     This is the half of the plan nothing was checking. ``resolve_parts`` makes
     sure the parts *exist*; until this existed nothing made sure the positions
     were **buildable**, even though the prompt asks for exactly that in so many
-    words — "every position is a real number", "everything sits on the stud
+    words - "every position is a real number", "everything sits on the stud
     grid". A rule in a prompt is a preference; the same rule measured after the
     fact is a fact, which is the argument `vocabulary_warning` already makes
     one section up.
@@ -541,7 +541,7 @@ def check_geometry(document):
     a single brick is placed.
 
     Returns a list of problems, each naming the step, the value and the nearest
-    legal one — so the builder corrects rather than re-plans.
+    legal one - so the builder corrects rather than re-plans.
     """
     problems = []
     for step in (document or {}).get("steps") or []:
@@ -571,7 +571,7 @@ def check_geometry(document):
                         problems.append({
                             "where": spot, "field": f"at[{name}]", "value": value,
                             "problem": (
-                                f"off the stud grid by {abs(drift)} LDU — x and "
+                                f"off the stud grid by {abs(drift)} LDU - x and "
                                 f"z land on multiples of {STUD_LDU}, or "
                                 f"{HALF_STUD_LDU} for a half stud a jumper "
                                 f"plate provides"
@@ -593,7 +593,7 @@ def resolve_ops(steps, bill):
     """Turn each step's ``part_shape`` into a real ``part`` id, in place.
 
     The planner names shapes, because a part number it invents is worse than
-    none — but an op is only worth having if it can be *run*, and `build_ops`
+    none - but an op is only worth having if it can be *run*, and `build_ops`
     takes part numbers. So the shapes are resolved here, against the bill of
     materials this plan already resolved wherever possible: the same shape
     should not become two different parts depending on which field it was
@@ -647,7 +647,7 @@ def resolve_ops(steps, bill):
                     else:
                         op["part_shapes"] = shapes
                         op["hint"] = ("some of these shapes had no catalogue "
-                                      "match — search_parts for them and put "
+                                      "match - search_parts for them and put "
                                       "their part_ids in `parts`, or drop "
                                       "`parts` to use the standard ladder")
                         missed += 1
@@ -669,7 +669,7 @@ def resolve_ops(steps, bill):
                 op["part"] = part_id
             else:
                 op["part_shape"] = shape
-                op["hint"] = ("no catalogue match — search_parts for this "
+                op["hint"] = ("no catalogue match - search_parts for this "
                               "shape and put its part_id in `part`")
                 missed += 1
         return missed
@@ -686,7 +686,7 @@ def lookup(query, category=None, limit=3):
     """Catalogue matches for a shape described in words, best first.
 
     Hybrid search when the vector index is there, keyword search when it is
-    not — the same fallback the search_parts tool makes, so a plan resolves
+    not - the same fallback the search_parts tool makes, so a plan resolves
     even on a checkout where the indexes were never built.
     """
     try:
@@ -717,8 +717,8 @@ def _plausible(shape, description):
     """Whether a match shares any real word with the shape that was asked for.
 
     Deliberately weak: it is there to catch a wheel returned for a chimney, not
-    to judge which slope is the better slope. It says nothing about *size* —
-    ``_words`` keeps letters only — which is what ``_footprint_ok`` is for.
+    to judge which slope is the better slope. It says nothing about *size* -
+    ``_words`` keeps letters only - which is what ``_footprint_ok`` is for.
     """
     wanted = _words(shape)
     if not wanted:
@@ -726,7 +726,7 @@ def _plausible(shape, description):
     return bool(wanted & _words(description))
 
 
-# "2 x 4", "2x4", "2 × 4" — the size in a shape or in a catalogue description.
+# "2 x 4", "2x4", "2 × 4" - the size in a shape or in a catalogue description.
 _DIMENSIONS = re.compile(r"(\d+)\s*[x×]\s*(\d+)")
 
 
@@ -747,14 +747,14 @@ def _footprint_ok(shape, row):
 
     ``_plausible`` cannot answer this and never could: it compares words, and a
     size is digits. So `plate 20 x 20` resolved to *Plate 2 x 2 Round with 1
-    Centre Stud* and came back with no warning on it at all — the word "plate"
+    Centre Stud* and came back with no warning on it at all - the word "plate"
     was shared, and that was the whole test. Measured over the plans on disk,
     10% of every entry that named a size resolved to a part of a different one,
     every one of them silently.
 
     Two ways to be right, because neither alone is enough. The **description**
     naming the same pair is the stronger signal and catches the parts whose
-    footprint is not their name — *Slope Brick 45 1 x 2 Double / Inverted*
+    footprint is not their name - *Slope Brick 45 1 x 2 Double / Inverted*
     measures 2 x 2 and is exactly what "slope 45 1 x 2" meant. The
     **catalogue footprint** catches the rest.
 
@@ -776,7 +776,7 @@ def _best_match(shape, candidates):
     """The first candidate that is the right thing *and* the right size.
 
     Search returns its nearest neighbour by similarity, and similarity does not
-    read numbers — so the best match for `brick 2 x 16` can be `Brick 1 x 16`
+    read numbers - so the best match for `brick 2 x 16` can be `Brick 1 x 16`
     while the right part sits second in the same list. Preferring a candidate
     that agrees on the footprint costs nothing: they were all fetched already.
     """
@@ -795,9 +795,9 @@ _FENCE = re.compile(r"```(?:json)?\s*(.+?)```", re.S)
 def extract_json(text):
     """Public name for ``_extract_json``, for the other planning passes.
 
-    The brief has exactly the same problem this module already solved — a model
+    The brief has exactly the same problem this module already solved - a model
     asked for one JSON object and nothing else answers with a sentence, a fence
-    and then the object — and solving it twice is how the two come to disagree.
+    and then the object - and solving it twice is how the two come to disagree.
     """
     return _extract_json(text)
 

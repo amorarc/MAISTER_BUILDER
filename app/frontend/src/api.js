@@ -32,7 +32,7 @@ export const api = {
     return fetch(`${API}/api/projects/upload`, { method: "POST", body: form }).then(json);
   },
 
-  // rename, or recolour the brick beside it — pass colour: "" to go back to the
+  // rename, or recolour the brick beside it - pass colour: "" to go back to the
   // colour derived from the project id
   updateProject: (id, patch) =>
     fetch(`${API}/api/projects/${id}`, {
@@ -69,7 +69,7 @@ export const api = {
   deleteProject: (id) =>
     fetch(`${API}/api/projects/${id}`, { method: "DELETE" }).then(json),
 
-  // every project at once — there is no undo, so only Settings offers it
+  // every project at once - there is no undo, so only Settings offers it
   deleteAllProjects: () =>
     fetch(`${API}/api/projects`, { method: "DELETE" }).then(json),
 
@@ -100,8 +100,8 @@ export const api = {
     return { blob: await res.blob(), filename };
   },
 
-  // A scene is built as several files — model.ldr plus one per
-  // subconstruction under parts/ — and during a build the components are where
+  // A scene is built as several files - model.ldr plus one per
+  // subconstruction under parts/ - and during a build the components are where
   // all the work is. The Source view lists them with this.
   projectFiles: (id) => fetch(`${API}/api/projects/${id}/files`).then(json),
 
@@ -137,7 +137,7 @@ export const api = {
       body: JSON.stringify(patch),
     }).then(json),
 
-  // the agent's own library — models it built and chose to keep
+  // the agent's own library - models it built and chose to keep
   listCreations: () => fetch(`${API}/api/creations`).then(json),
 
   openCreation: (creationId) =>
@@ -148,7 +148,7 @@ export const api = {
   deleteCreation: (creationId) =>
     fetch(`${API}/api/creations/${creationId}`, { method: "DELETE" }).then(json),
 
-  // the parts bin — the catalogue the agent builds out of, as opposed to the
+  // the parts bin - the catalogue the agent builds out of, as opposed to the
   // gallery of things it has built
   browseParts: (params = {}) => {
     const query = new URLSearchParams();
@@ -160,7 +160,7 @@ export const api = {
 
   partCategories: () => fetch(`${API}/api/parts/categories`).then(json),
 
-  // the ways a part can join to another part — stud and tube, clip and bar,
+  // the ways a part can join to another part - stud and tube, clip and bar,
   // Technic pin, and the rest
   partConnections: () => fetch(`${API}/api/parts/connections`).then(json),
 
@@ -170,7 +170,7 @@ export const api = {
   partModelUrl: (partId, colour = 4) =>
     `${API}/api/parts/${partId}/model.ldr?colour=${colour}`,
 
-  // the shelf of official sets — 1,800 real models, which is what the builder
+  // the shelf of official sets - 1,800 real models, which is what the builder
   // learns from and what a person can start a project out of
   browseSets: (params = {}) => {
     const query = new URLSearchParams();
@@ -211,8 +211,8 @@ export const api = {
   // `since` is the event index already seen, so a poll only returns what is new
   run: (runId, since = 0) => fetch(`${API}/api/runs/${runId}?since=${since}`).then(json),
 
-  // The run still in flight for a project, so a page that has forgotten one —
-  // after a reload, a project switch, or in a second tab — can pick it back up.
+  // The run still in flight for a project, so a page that has forgotten one -
+  // after a reload, a project switch, or in a second tab - can pick it back up.
   activeRun: (id) => fetch(`${API}/api/projects/${id}/run`).then(json),
 
   stopRun: (runId) => fetch(`${API}/api/runs/${runId}/stop`, { method: "POST" }).then(json),
@@ -230,13 +230,13 @@ export const api = {
     }).then(json),
 
   // What the agent actually did, kept after the run that did it. `traceGraph`
-  // is readable while a run is still going — it grows as the events land.
+  // is readable while a run is still going - it grows as the events land.
   traces: (id) => fetch(`${API}/api/projects/${id}/traces`).then(json),
 
   traceGraph: (id, runId) =>
     fetch(`${API}/api/projects/${id}/traces/${runId}`).then(json),
 
-  // A picture as it was when the run took it. Copies, kept with the trace —
+  // A picture as it was when the run took it. Copies, kept with the trace -
   // out/renders holds only the newest build of each project.
   traceImageUrl: (id, name) => `${API}/api/projects/${id}/traces/images/${name}`,
 

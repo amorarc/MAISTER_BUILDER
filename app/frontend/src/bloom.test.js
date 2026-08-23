@@ -5,8 +5,8 @@
  *
  * No browser and no WebGL: everything in bloom.js is scene-graph arithmetic and
  * material bookkeeping, which is exactly the part that cannot be checked by
- * looking at the screen. Two versions of it shipped broken — a rim that never
- * moved, and a ghost the same colour as the plastic under it — and both looked
+ * looking at the screen. Two versions of it shipped broken - a rim that never
+ * moved, and a ghost the same colour as the plastic under it - and both looked
  * identical to "nothing happened". This is what tells the difference.
  */
 
@@ -40,7 +40,7 @@ function loadedModel(lines) {
   model.rotation.x = Math.PI; // LDraw is -Y up; three is +Y up
   modelRoot.add(model);
 
-  // One material per colour, shared — which is the whole reason the bloom
+  // One material per colour, shared - which is the whole reason the bloom
   // clones before it tints. If it did not, lighting one brick would light
   // every brick of that colour in the model.
   const shared = new Map();
@@ -159,7 +159,7 @@ console.log("\nlighting one up");
   check("both copies are off the scene",
         scene.children.includes(bloom.aura)
         || scene.children.includes(bloom.ghost), false);
-  check("the geometry survived — it belongs to the model",
+  check("the geometry survived - it belongs to the model",
         piece.children[0].geometry.attributes.position.count > 0, true);
 }
 
@@ -227,7 +227,7 @@ console.log("\nlighting a whole check up");
 
   check("a red brick in the blue group reads blue at the trough already",
         trough !== "#c91a09", true);
-  check("the pulse is light, not colour — it stays blue at the peak",
+  check("the pulse is light, not colour - it stays blue at the peak",
         peak !== "#c91a09", true);
   check("and it glows harder at the peak than the trough", high > low, true);
   check("the second group glows its own colour, not the first's",
@@ -239,7 +239,7 @@ console.log("\nlighting a whole check up");
         model.children[0].children[0].material === sharedRed
           && model.children[1].children[0].material === sharedRed
           && model.children[2].children[0].material === sharedYellow, true);
-  check("the geometry survived — it belongs to the model",
+  check("the geometry survived - it belongs to the model",
         model.children[0].children[0].geometry.attributes.position.count > 0,
         true);
 }

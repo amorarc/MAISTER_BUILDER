@@ -1,4 +1,4 @@
-# simulator/ — LDraw toolchain
+# simulator/ - LDraw toolchain
 
 Upstream AppImages for the two tools this project drives. They are kept here as
 the source of truth for *which build* we use; the running copies are extracted
@@ -32,7 +32,7 @@ directly. Both are **extracted** and launched through their `AppRun`:
 ~/.local/bin/lpub3d   -> ~/.local/opt/lpub3d/AppRun
 ```
 
-Parts libraries — nothing extra to download:
+Parts libraries - nothing extra to download:
 
 * **LeoCAD** ships a pre-indexed library at
   `~/.local/opt/leocad/usr/share/leocad/library.bin` (136 MB). Override with
@@ -71,14 +71,14 @@ have `libfuse2`.
 Full option lists: `leocad --help`, `lpub3d --help`.
 
 ```bash
-# LeoCAD — quick looks at the model
+# LeoCAD - quick looks at the model
 leocad model.mpd                                     # GUI
 leocad model.mpd --image shot.png -w 1600 -h 1200 --viewpoint home
 leocad model.mpd --image step.png -f 1 -t 3          # writes step01.png ...
 leocad model.mpd --submodel "40440 - Puppy.ldr" --image puppy.png
 leocad model.mpd -csv parts.csv
 
-# LPub3D — instruction documents (console mode = no GUI)
+# LPub3D - instruction documents (console mode = no GUI)
 lpub3d -ns -ll -pe -o pdf -of /abs/path/out.pdf  /abs/path/model.mpd
 lpub3d -ns -ll -pe -o png -od /abs/path/outdir   /abs/path/model.mpd
 lpub3d -ns -ll -pe -o png -r 1-10 -od /abs/dir   /abs/path/model.mpd
@@ -112,7 +112,7 @@ Verified against LPub3D 2.4.9-r86 on Ubuntu 24.04 with the model in
   and moving the result.
 * **`-o htmlsteps` segfaults.** Use LeoCAD's `-html` for a browsable page, or
   export PNG pages.
-* **The default page background is pink.** It is not a preference — only the
+* **The default page background is pink.** It is not a preference - only the
   meta command `0 !LPUB PAGE BACKGROUND COLOR "#FFFFFF"` in the model changes
   it. `make_instructions.sh` injects it (`BG=none` opts out).
 * **LPub3D writes beside the model file**: a `LPub3D/` render cache plus

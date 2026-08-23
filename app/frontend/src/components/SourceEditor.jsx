@@ -10,13 +10,13 @@ const HIGHLIGHT_LIMIT = 4000;
  * Which lines the last validation found fault with, and why.
  *
  * The report names lines in six different places, one per kind of wrong, and
- * nothing has ever put them together — so the editor could tell you a model
+ * nothing has ever put them together - so the editor could tell you a model
  * failed without telling you where. They fold into one map here: line number
  * to the reasons against it.
  *
  * `unresolved_parts` is the odd one out. It comes back as bare part names with
  * no line numbers at all, so those are matched against the source by name,
- * against the whole reference and against its basename — the checker and the
+ * against the whole reference and against its basename - the checker and the
  * file do not always spell a part the same way.
  */
 function faultLines(validation, lines) {
@@ -44,7 +44,7 @@ function faultLines(validation, lines) {
   }
 
   // Both ends of an overlap are wrong together, and the fix names which one to
-  // move — so it is worth reading from either line.
+  // move - so it is worth reading from either line.
   for (const c of validation.collision?.overlapping_parts || []) {
     const why = c.fix || "shares solid plastic with another part";
     add(c.a?.line, why);
@@ -52,7 +52,7 @@ function faultLines(validation, lines) {
   }
 
   for (const c of validation.circular_references || []) {
-    add(c.line, "circular reference — this file includes itself");
+    add(c.line, "circular reference - this file includes itself");
   }
 
   const unresolved = new Set(
@@ -83,7 +83,7 @@ function faultLines(validation, lines) {
  * the whole point of the distinction: these are **not faults**. No stud
  * connection could be established and nothing was near enough to call it a near
  * miss, which means either the part is genuinely adrift or it is held by a
- * joint the checker does not model — a clip, a bar, a Technic pin, a hinge, a
+ * joint the checker does not model - a clip, a bar, a Technic pin, a hinge, a
  * bracket, a minifigure's hand. All of those are correct building.
  *
  * So this runs on a model that *passed*, where `faultLines` returns nothing at
@@ -104,7 +104,7 @@ function unverifiedLines(validation, lines) {
     // A list, the same shape `faultLines` returns, so a caller can hold the
     // two side by side without knowing which it has.
     marks.set(n, [
-      `${u.part} sits on no stud the checker can find — either it is adrift, ` +
+      `${u.part} sits on no stud the checker can find - either it is adrift, ` +
         `or a clip, pin, hinge or hand is holding it`,
     ]);
   }
@@ -145,7 +145,7 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
    * Read off the textarea rather than tracked as state: the caret moves on
    * every click, every arrow key and every character typed, and a re-render
    * per keystroke to hold a number the editor itself does not draw would cost
-   * the typing. `null` for a line that places nothing — a comment, a step
+   * the typing. `null` for a line that places nothing - a comment, a step
    * marker, the blank line between two of them.
    *
    * It is NOT cleared when the box loses focus. Losing focus is what happens
@@ -178,7 +178,7 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
     });
   }, [onCursor]);
 
-  // The file on screen changed under the caret — a component opened, a build
+  // The file on screen changed under the caret - a component opened, a build
   // written. Whatever was lit up is a line of a file nobody is reading now.
   useEffect(() => {
     onCursor?.(null);
@@ -200,7 +200,7 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
   );
 
   // Red wins where a line is both. A part can be unverified *and* overlapping
-  // something, and of the two only one is worth acting on — a line painted the
+  // something, and of the two only one is worth acting on - a line painted the
   // colour of "probably fine" while it shares plastic with its neighbour is the
   // editor talking the reader out of the fault.
   const tone = (n) =>
@@ -211,7 +211,7 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
     [...(marks.get(n) || []), ...(warns.get(n) || [])].join(" · ") || undefined;
 
   // Counted off the marks rather than off two of the report's fields, which is
-  // what this used to do — a model failing only on overlaps read "parses
+  // what this used to do - a model failing only on overlaps read "parses
   // clean" here while the rest of the app said FAIL.
   const problems = marks.size;
   // The report's own total, not the length of the list it sent: it lists 25 at
@@ -229,7 +229,7 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
         {dirty && <span className="dirty-dot" title="Unsaved changes" />}
 
         {/* A scene is built as several files, and while it is being built the
-            model file is still empty — everything that is happening is in the
+            model file is still empty - everything that is happening is in the
             components. They appear here as they are written. */}
         {files.length > 1 && (
           <div className="editor-files" role="group" aria-label="File">
@@ -314,9 +314,9 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
       <div className="editor-foot">
         {/* The validation belongs to the scene file. Reporting it under a
             component would have it say "no part references found" over a
-            component full of them — it is describing the other file. */}
+            component full of them - it is describing the other file. */}
         {component ? (
-          <span>component of the scene — checked when it is assembled</span>
+          <span>component of the scene - checked when it is assembled</span>
         ) : validation?.error ? (
           <span className="bad">✕ {validation.error}</span>
         ) : validation ? (
@@ -339,7 +339,7 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
             className="warn"
             title={
               `${plural(unverified, "part")} the stud checker could not vouch ` +
-              `for — held by a clip, pin, hinge or hand, or else adrift. ` +
+              `for - held by a clip, pin, hinge or hand, or else adrift. ` +
               `Not a fault` +
               (warns.size < unverified
                 ? `. The report marks the first ${warns.size} of them`
@@ -360,7 +360,7 @@ export default function SourceEditor({ name, value, onChange, onSave, dirty,
           <span>read-only here</span>
         ) : (
           <span className={dirty ? "bad" : ""}>
-            {dirty ? "unsaved — nothing is written until you save" : "in sync with the model"}
+            {dirty ? "unsaved - nothing is written until you save" : "in sync with the model"}
           </span>
         )}
         <button

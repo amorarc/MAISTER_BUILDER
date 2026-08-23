@@ -1,7 +1,7 @@
 """Every part this project has found, kept across the whole build.
 
 A run does not search once. It searches for a wheel, builds the chassis,
-searches for a windscreen, builds the cab — and by then it has forgotten the
+searches for a windscreen, builds the cab - and by then it has forgotten the
 wheel, because each subconstruction is a fresh agent with a fresh conversation
 and the search results scrolled out of it three sub-builds ago. What comes out
 is a model whose front half uses curved slopes and whose back half approximates
@@ -30,7 +30,7 @@ from .config import DATA_DIR, OUT_DIR
 PALETTE_DIR = OUT_DIR / "palettes"
 
 # The colour scheme, filed alongside the parts under a key no part_id can
-# collide with — part numbers are alphanumeric, and this is not.
+# collide with - part numbers are alphanumeric, and this is not.
 #
 # It is here rather than in a file of its own for the reason the parts are: a
 # scene is built by several agents that cannot see each other, and a colour
@@ -42,7 +42,7 @@ SCHEME_KEY = "__scheme__"
 # Subconstructions are built at the same time now, and every one of them
 # searches for parts, so several threads reach `record` for one project at
 # once. Without this each would read the file, add its own finds to what it
-# read, and write the whole thing back — so whichever finished last would
+# read, and write the whole thing back - so whichever finished last would
 # erase every part the others had found, and a reader landing mid-write would
 # get half a JSON object and treat the palette as empty. One lock per project,
 # and the write goes through a rename, which the filesystem does in one step.
@@ -60,7 +60,7 @@ def _lock(project):
 MAX_PARTS = 120
 
 # What a palette shows a builder at once. The rest stay on file and still count
-# as "already found" — this is the reminder, not the archive.
+# as "already found" - this is the reminder, not the archive.
 SUMMARY_LIMIT = 40
 
 
@@ -126,7 +126,7 @@ def record_scheme(project, codes):
     """Set this project's colour scheme, if it does not have one yet.
 
     First writer wins, deliberately. The scheme belongs to the scene, and the
-    scene's first object is the one that establishes it — a later object
+    scene's first object is the one that establishes it - a later object
     overwriting it would leave the objects built before it painted to a scheme
     that no longer exists, which is worse than no scheme at all.
     """
@@ -169,7 +169,7 @@ def record(project, rows, query=None):
     """Add parts to this project's palette. Returns how many were new.
 
     A part already on file keeps its original entry rather than being rewritten,
-    so the query that first turned it up — usually the most descriptive one — is
+    so the query that first turned it up - usually the most descriptive one - is
     the one that stays attached to it.
     """
     rows = [r for r in (rows or []) if isinstance(r, dict) and r.get("part_id")]
@@ -209,7 +209,7 @@ def _write(project, data):
     """Replace a project's palette file. True if it landed.
 
     Written to a temporary file and renamed, which the filesystem does in one
-    step — a reader arriving mid-write gets the old palette rather than half of
+    step - a reader arriving mid-write gets the old palette rather than half of
     the new one. Callers hold the project's lock.
     """
     path = _path(project)
@@ -239,7 +239,7 @@ def scheme_summary(project):
         f"`{code}`" + (f" ({colour_name(code)})" if colour_name(code) else "")
         for code in codes)
     return (f"**This project's colours: {rendered}.** They were settled for the "
-            f"whole scene, and every object in it is painted from them — an "
+            f"whole scene, and every object in it is painted from them - an "
             f"object that picks its own colours is the one that looks like it "
             f"came from somewhere else. Use others only for what genuinely has "
             f"its own colour: foliage, skin, glass, a warning light.")
@@ -254,11 +254,11 @@ def summary(project, limit=SUMMARY_LIMIT):
     for entry in found:
         bits = [f"`{entry['part_id']}`", str(entry.get("description") or "").strip()]
         if entry.get("attaches"):
-            bits.append(f"— {entry['attaches']}")
+            bits.append(f"- {entry['attaches']}")
         lines.append("- " + " ".join(b for b in bits if b))
     total = len(_parts_only(load(project)))
     # "this project", not "this build": the file outlives a single run, which
-    # is the whole point — a follow-up turn should not start from nothing.
+    # is the whole point - a follow-up turn should not start from nothing.
     head = (f"{total} part{'' if total == 1 else 's'} "
             f"{'has' if total == 1 else 'have'} already been found "
             f"for this project")
@@ -274,7 +274,7 @@ def summary(project, limit=SUMMARY_LIMIT):
 
 
 def forget(project):
-    """Drop a project's palette — a new build starts with an empty one."""
+    """Drop a project's palette - a new build starts with an empty one."""
     try:
         _path(project).unlink(missing_ok=True)
     except OSError:

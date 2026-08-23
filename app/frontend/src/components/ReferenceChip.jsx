@@ -7,7 +7,7 @@ import Studs, { TILE_PITCH } from "./Studs";
 //
 // A stud in the frame's grey is a stud belonging to some other brick that
 // happens to be holding this picture. A stud takes the colour of the plastic
-// it is moulded out of, and the plastic here is the photograph — so each one
+// it is moulded out of, and the plastic here is the photograph - so each one
 // is painted the average of the pixels it is sitting directly above.
 //
 // Both edges are sampled, because a brick has two of them. The top band paints
@@ -20,7 +20,7 @@ import Studs, { TILE_PITCH } from "./Studs";
 // attached: `edges` arrives with the record and this file only decides what to
 // paint with it. A picture's edge colours cannot change after the file is
 // written, so re-deriving them in every browser on every page load was work
-// done again to get the same answer — and work that could fail, which is how a
+// done again to get the same answer - and work that could fail, which is how a
 // brick ended up grey after a reload. See `edge_colours` in
 // maister/agent/reference.py.
 //
@@ -58,7 +58,7 @@ function load(src) {
  * to hand its pixels back. `crossOrigin="anonymous"` is the usual answer and
  * is not a reliable one here: the visible <img> asks for the same URL without
  * it, the two requests differ only in CORS mode, and whichever lands in the
- * cache first can be served to the other — after which the read throws and
+ * cache first can be served to the other - after which the read throws and
  * every brick comes out grey. A blob is same-origin by construction, so this
  * cannot happen at all.
  */
@@ -109,7 +109,7 @@ async function readEdges(url) {
 
 function sampleEdges(url) {
   if (!sampled.has(url)) {
-    // A picture that cannot be read is not an error worth showing — the brick
+    // A picture that cannot be read is not an error worth showing - the brick
     // falls back to the frame's grey, which is what it always used to be.
     sampled.set(url, readEdges(url).catch(() => null));
   }
@@ -125,7 +125,7 @@ function asEdges(value) {
 }
 
 /**
- * The picture's edge colours — recorded if the backend measured them, read off
+ * The picture's edge colours - recorded if the backend measured them, read off
  * the picture if it did not.
  *
  * A record that carries them costs nothing at all: no request, no canvas, and
@@ -143,7 +143,7 @@ function useEdgeColours(url, record) {
     return () => {
       alive = false;
     };
-    // The colours themselves are not a dependency — only whether there are any,
+    // The colours themselves are not a dependency - only whether there are any,
     // since a record arriving is what calls off the measurement.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, Boolean(recorded)]);
@@ -159,7 +159,7 @@ function mean(columns) {
   return total.map((v) => Math.round(v / columns.length));
 }
 
-/** Multiply a sampled colour — under 1 darkens it into a bevel. */
+/** Multiply a sampled colour - under 1 darkens it into a bevel. */
 const scale = (c, f) => c.map((v) => Math.min(255, Math.round(v * f)));
 
 /**
@@ -173,7 +173,7 @@ function legible(c, floor = 150) {
   const luma = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
   if (luma >= floor) return c;
   // Brightening is a multiply, and nothing multiplies black into grey. A band
-  // that is exactly black — a letterboxed screenshot, a black bar — has no hue
+  // that is exactly black - a letterboxed screenshot, a black bar - has no hue
   // to preserve, so it goes to neutral at the floor rather than staying black.
   if (luma < 1) return [floor, floor, floor];
   return scale(c, floor / luma);
@@ -184,7 +184,7 @@ function legible(c, floor = 150) {
  *
  * Barely darkened, and floored. A real lip is the shaded underside of the
  * plastic, but the point of this one is that you can tell what colour it came
- * from — and it sits against dark chrome rather than against the picture, so a
+ * from - and it sits against dark chrome rather than against the picture, so a
  * photograph with a night sky along the bottom would otherwise paint a black
  * strip indistinguishable from no colour at all. The floor is low enough that
  * a dark picture still reads as dark; it only stops it reading as absent.
@@ -203,7 +203,7 @@ function bevelColour(columns) {
  * The colour for stud `i` of `n`, as the mean of the columns around it.
  *
  * The studs are spread across the brick's width, so stud i sits at roughly
- * `(i + 0.5) / n` of the way along — near enough, since the point is that a
+ * `(i + 0.5) / n` of the way along - near enough, since the point is that a
  * stud over the red part of a picture comes out red. Three columns rather than
  * one so a single bright pixel cannot decide it.
  */
@@ -233,7 +233,7 @@ function colourAt(columns, i, n) {
  * bare thumbnail: it is a thing the project now owns, and it should look like
  * it belongs on the workbench.
  *
- * The studs are the same ones a tool call wears — the shared `Studs`, counted
+ * The studs are the same ones a tool call wears - the shared `Studs`, counted
  * from the chip's own width, sitting proud of the top edge. Reused rather than
  * restyled so a reference reads as the same kind of object as everything else
  * on the page: the wide chip comes out a four-stud brick and the small one a
@@ -243,7 +243,7 @@ function colourAt(columns, i, n) {
  * the brick looks moulded out of the reference rather than merely holding it.
  *
  * The square is the point. A photograph is any shape at all, and letting it
- * set the size of the chip makes a column of them ragged — so the frame is
+ * set the size of the chip makes a column of them ragged - so the frame is
  * fixed and the image is covered into it, centre-cropped, never squashed.
  * `object-fit: cover` is what keeps the format: it fills the square by
  * overflowing the long edge instead of distorting the short one.

@@ -2,12 +2,12 @@
 """
 ldr_collision_checker.py
 
-A CLI tool that parses an LDraw (.ldr / .mpd) file — the format LeoCAD
-models are saved in — and reports:
+A CLI tool that parses an LDraw (.ldr / .mpd) file - the format LeoCAD
+models are saved in - and reports:
 
-  1. COLLISIONS  — pairs of parts whose bounding boxes overlap in 3D space,
+  1. COLLISIONS  - pairs of parts whose bounding boxes overlap in 3D space,
                     reported with the exact source line number of each part.
-  2. ISOLATED PARTS — parts that have no other part within a plausible
+  2. ISOLATED PARTS - parts that have no other part within a plausible
                     connection distance (a heuristic proxy for "floating /
                     disconnected from the model").
 
@@ -21,7 +21,7 @@ This means collisions BETWEEN submodels are found, and a submodel reference
 is never mistaken for a missing part.
 
 Blocks whose name ends in ".dat" are treated as *part definitions* embedded
-in the MPD (the standard way OMR models ship unofficial parts) — their
+in the MPD (the standard way OMR models ship unofficial parts) - their
 geometry is read in place instead of being expanded as a submodel.
 
 Use --per-block to get the old behaviour: each "0 FILE" block checked in
@@ -33,20 +33,20 @@ Two accuracy modes:
         Full mode. Recursively resolves each referenced part (and any
         sub-parts / primitives it references) inside the official LDraw
         parts library (the folder that contains "parts/", "p/", "models/"
-        etc. — e.g. what LDCad, LeoCAD or the LDraw.org "complete" download
+        etc. - e.g. what LDCad, LeoCAD or the LDraw.org "complete" download
         installs). Computes a REAL geometric bounding box per part by
         walking its vertex data. This gives meaningfully accurate results.
 
   (no --library given)
         Fallback mode. Every part is approximated with a generic brick-sized
-        box (20 x 24 x 20 LDU — a 1x1 brick footprint/height). This still
+        box (20 x 24 x 20 LDU - a 1x1 brick footprint/height). This still
         finds *gross* overlaps (two parts placed on the exact same spot,
         wildly wrong translations, etc.) but will under- and over-report
         compared to full mode. A warning banner is printed when this mode
         is used.
 
 IMPORTANT LIMITATION (inherent to any bounding-box approach, not just this
-script): legitimately connected pieces overlap on purpose — a stud sits
+script): legitimately connected pieces overlap on purpose - a stud sits
 inside an anti-stud tube, a plate's underside overlaps the top of the plate
 below it, clips overlap bars, a door sits inside its frame, etc. This script
 shrinks each box slightly (--shrink, default 0.80) to cut down on this noise,
@@ -348,7 +348,7 @@ def compute_part_points(part_name, library_root, cache, stack=None, model=None):
     """
     Recursively collects a part's vertices in its own LOCAL frame.
 
-    Vertices — not bounding-box corners — must be carried up the reference
+    Vertices - not bounding-box corners - must be carried up the reference
     tree. Re-bounding a child's AABB after an off-axis rotation inflates it by
     up to 41%, which is how 11477 (a curved slope whose cylinder is rotated 45
     degrees) ends up 0.49 LDU oversized in four directions and lands off the
@@ -398,7 +398,7 @@ def compute_part_points(part_name, library_root, cache, stack=None, model=None):
             # line / triangle / quad / optional-line: raw vertex coords follow
             # (skip color token at index 1).
             # A type-5 optional line has 4 points, but points 3 and 4 are
-            # control points that steer visibility — they are not geometry and
+            # control points that steer visibility - they are not geometry and
             # can sit far outside the part, so only points 1-2 count.
             coords = tokens[2:8] if t == "5" else tokens[2:]
             vals = []
@@ -470,7 +470,7 @@ def world_aabb(instance, local_points, shrink):
     """
     World-space AABB of a placed part.
 
-    The part's actual vertices are transformed and then bounded — bounding
+    The part's actual vertices are transformed and then bounded - bounding
     first and rotating the 8 corners afterwards would inflate a 45-degree
     placement by up to 41%.
     """
@@ -580,7 +580,7 @@ def find_isolated(world_boxes, threshold, same_space_only):
                             nearest = d
         if nearest is not None and nearest <= threshold:
             continue
-        # nothing close by — do an exact full scan to report the true distance
+        # nothing close by - do an exact full scan to report the true distance
         nearest = None
         for j, (inst_b, cb) in enumerate(centers):
             if j == i:
@@ -685,7 +685,7 @@ def print_report(source_path, collisions, isolated, unresolved, cycles,
 
     print("-" * 70)
     print("Note: isolation is a distance heuristic (center-to-center vs. "
-          "--isolation-threshold), not true stud/clip connectivity — a part "
+          "--isolation-threshold), not true stud/clip connectivity - a part "
           "can be close in space but not actually snapped/connected, or "
           "legitimately connected at a distance greater than the threshold "
           "for long parts (technic beams, hoses, etc.).")
@@ -778,7 +778,7 @@ def main():
         sys.exit(2)
 
     if not model.instances:
-        print("No part instances (type-1 lines) found in this file — nothing to check.")
+        print("No part instances (type-1 lines) found in this file - nothing to check.")
         sys.exit(0)
 
     collisions, isolated, unresolved, flat, cycles = check_model(

@@ -53,7 +53,7 @@ export default function Viewer3D({ projectId, version, file, busy, built,
 
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     // `replaceChildren` rather than `appendChild`: this node holds the one
-    // canvas and nothing else, so anything already in it is a leftover — a
+    // canvas and nothing else, so anything already in it is a leftover - a
     // canvas from a mount whose cleanup did not run, which in development is
     // one saved file away. A leftover on top of the live one is a frozen
     // picture of the model that ignores the mouse.
@@ -85,7 +85,7 @@ export default function Viewer3D({ projectId, version, file, busy, built,
       // Guarded, and the guard is the point: the highlight is a nicety and the
       // view is the product. Anything thrown between here and `render` below
       // stops the frame being drawn, and a viewer that has stopped drawing
-      // looks exactly like one that has frozen — you cannot even turn the
+      // looks exactly like one that has frozen - you cannot even turn the
       // model to see what went wrong. So a bloom that misbehaves is dropped
       // and the frame goes on.
       try {
@@ -120,7 +120,7 @@ export default function Viewer3D({ projectId, version, file, busy, built,
       disposeTree(modelRoot);
       disposeTree(gridHolder.current);
 
-      // The renderer is shared and deliberately NOT disposed — disposing it
+      // The renderer is shared and deliberately NOT disposed - disposing it
       // would drop the one context we reuse. Only detach its canvas.
       if (renderer.domElement.parentNode === mount) {
         mount.removeChild(renderer.domElement);
@@ -175,7 +175,7 @@ export default function Viewer3D({ projectId, version, file, busy, built,
 
       try {
         loader.load(
-          // The scene, or whichever component the Source view is showing —
+          // The scene, or whichever component the Source view is showing -
           // both panes look at the same file, so switching moves both.
           file && file !== "model.ldr"
             ? api.fileUrl(projectId, file, version)
@@ -235,7 +235,7 @@ export default function Viewer3D({ projectId, version, file, busy, built,
   // --- the piece the caret is on -------------------------------------------
   //
   // Rebuilt whenever the highlight changes and whenever the model is reloaded
-  // under it — `partCount` is what says a new one has landed, and the piece
+  // under it - `partCount` is what says a new one has landed, and the piece
   // this was pointing at belongs to the tree that has just been thrown away.
   useEffect(() => {
     const st = stateRef.current;
@@ -319,7 +319,7 @@ export default function Viewer3D({ projectId, version, file, busy, built,
       </div>
 
       {/* What the agent is doing right now is NOT reported here. It used to
-          be, in a read-out docked at the foot of the workbench — and the
+          be, in a read-out docked at the foot of the workbench - and the
           composer sitting directly under it was already saying the same
           sentence. Two copies of one line means reading neither. */}
       {children}
@@ -376,8 +376,8 @@ function gridLines(points, colour) {
  * A stud grid under a footprint, in the workbench's own greys.
  *
  * The floor follows the build rather than the origin. A model is written
- * wherever its author put it — a scene's second object can stand two hundred
- * studs off — and a fixed square centred on (0,0) left those builds hanging
+ * wherever its author put it - a scene's second object can stand two hundred
+ * studs off - and a fixed square centred on (0,0) left those builds hanging
  * over the edge of it, or clear of it altogether, which reads as floating
  * rather than as standing on anything. So the extent is taken from where the
  * parts actually are, in x and z independently: a long car gets a long floor,
@@ -409,7 +409,7 @@ function makeGrid(box) {
   const z0 = Math.floor((box.minZ - margin) / cell) * cell;
   const z1 = Math.ceil((box.maxZ + margin) / cell) * cell;
 
-  // Every fifth line darker — something to count studs against, and what the
+  // Every fifth line darker - something to count studs against, and what the
   // old grid used its two centre lines for.
   const minor = [];
   const major = [];

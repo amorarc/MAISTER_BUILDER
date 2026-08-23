@@ -17,20 +17,20 @@
 
 0 === MINIFIGURES ===
 
-0 // Minifig on front short side — red torso, black legs
+0 // Minifig on front short side - red torso, black legs
 1 16 0 32 -50 -1 0 0 0 1 0 0 0 -1 minifig1.ldr
 
-0 // Minifig on back short side — green torso, dark bluish grey legs
+0 // Minifig on back short side - green torso, dark bluish grey legs
 1 16 0 32 50 1 0 0 0 1 0 0 0 1 minifig2.ldr
 
-0 // Minifig on left long side — yellow torso, blue legs
+0 // Minifig on left long side - yellow torso, blue legs
 1 16 -90 32 0 0 0 -1 0 1 0 1 0 0 minifig3.ldr
 
-0 // Minifig on right long side — white torso, reddish brown legs
+0 // Minifig on right long side - white torso, reddish brown legs
 1 16 90 32 0 0 0 1 0 1 0 -1 0 0 minifig4.ldr
 
 0 FILE minifig1.ldr
-0 Minifigure — red torso, black legs
+0 Minifigure - red torso, black legs
 0 Name: minifig1.ldr
 0 Author: Maister Builder
 0 !LDRAW_ORG Model
@@ -53,7 +53,7 @@
 1 0 0 -28 0 1 0 0 0 1 0 0 0 1 3816.dat
 
 0 FILE minifig2.ldr
-0 Minifigure — green torso, dark bluish grey legs
+0 Minifigure - green torso, dark bluish grey legs
 0 Name: minifig2.ldr
 0 Author: Maister Builder
 0 !LDRAW_ORG Model
@@ -76,7 +76,7 @@
 1 72 0 -28 0 1 0 0 0 1 0 0 0 1 3816.dat
 
 0 FILE minifig3.ldr
-0 Minifigure — yellow torso, blue legs
+0 Minifigure - yellow torso, blue legs
 0 Name: minifig3.ldr
 0 Author: Maister Builder
 0 !LDRAW_ORG Model
@@ -99,7 +99,7 @@
 1 1 0 -28 0 1 0 0 0 1 0 0 0 1 3816.dat
 
 0 FILE minifig4.ldr
-0 Minifigure — white torso, reddish brown legs
+0 Minifigure - white torso, reddish brown legs
 0 Name: minifig4.ldr
 0 Author: Maister Builder
 0 !LDRAW_ORG Model

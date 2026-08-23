@@ -3,7 +3,7 @@ import * as THREE from "three";
 // --------------------------------------------------------------------------
 // The piece under the caret
 //
-// Reading a model file, the hard question is never what a line says — it is
+// Reading a model file, the hard question is never what a line says - it is
 // which brick it is. `1 4 0 -24 40 ... 3001.dat` is a red 2x4 somewhere in a
 // hundred of them, and the only way to find it used to be to change the line
 // and watch what moved.
@@ -15,15 +15,15 @@ import * as THREE from "three";
 //     Cloned rather than tinted in place because LDrawLoader hands the same
 //     material to every part of that colour, and lighting one red brick would
 //     otherwise light all of them.
-//   * **A rim** — the piece a hair larger, drawn inside-out, so what survives
+//   * **A rim** - the piece a hair larger, drawn inside-out, so what survives
 //     being covered by the piece is a halo around its outline.
 //   * **A ghost** drawn with the depth test off, so a brick buried in the
-//     middle of a build — exactly the one that cannot be found by looking —
+//     middle of a build - exactly the one that cannot be found by looking -
 //     shows through what is in front of it.
 //
 // It lives in its own file because it is the part of the viewer that cannot be
 // checked by looking at it: it is three matrices and a material swap, and two
-// versions of it shipped broken in ways that were invisible on screen — a rim
+// versions of it shipped broken in ways that were invisible on screen - a rim
 // that never moved because `matrixAutoUpdate = false` stops three.js copying
 // `.matrix` into `matrixWorld`, and a ghost laid over the piece in the piece's
 // own colour, which changes nothing anyone can see. Out here it is four plain
@@ -48,7 +48,7 @@ export function pieceColour(piece) {
     const material = Array.isArray(o.material) ? o.material[0] : o.material;
     if (material?.color) found = material.color;
   });
-  // Nothing to read the colour off — a part that failed to load has no mesh.
+  // Nothing to read the colour off - a part that failed to load has no mesh.
   return found ? found.clone() : new THREE.Color(0xf6c700);
 }
 
@@ -57,13 +57,13 @@ export function pieceColour(piece) {
  *
  * Matched on the part file *and* where it was put. LDrawLoader gives each
  * type-1 reference a Group of its own, names it after the file, and decomposes
- * the line's matrix into the group's position — so the numbers in the line are
+ * the line's matrix into the group's position - so the numbers in the line are
  * the numbers on the object, and neither has to be counted.
  *
  * Null when nothing matches, and null is the right answer: it means the line
  * places something this render does not contain. Lighting up a near-miss
  * instead would point at the wrong brick, which is worse than pointing at
- * none — the whole purpose of this is to answer "which one is it".
+ * none - the whole purpose of this is to answer "which one is it".
  */
 export function findPiece(root, ref) {
   const model = root?.children?.[0];
@@ -93,7 +93,7 @@ export function findPiece(root, ref) {
 /**
  * Light a piece up. Returns what `breathe` pulses and `clearBloom` takes down.
  *
- * Everything here shares the piece's geometry rather than rebuilding it —
+ * Everything here shares the piece's geometry rather than rebuilding it -
  * which is why nothing here may ever dispose a geometry.
  */
 export function makeBloom(scene, piece) {
@@ -123,7 +123,7 @@ export function makeBloom(scene, piece) {
   //    12% too big has no business moving the camera.
   //
   //    Posed by decomposing the matrix into position/rotation/scale rather
-  //    than by writing `.matrix` — three.js recomputes `matrixWorld` from the
+  //    than by writing `.matrix` - three.js recomputes `matrixWorld` from the
   //    decomposed values every frame, and from a raw `.matrix` only when it is
   //    told the matrix changed. Told nothing, it draws these at the piece's
   //    own size and position, where neither can be seen.
@@ -151,7 +151,7 @@ export function makeBloom(scene, piece) {
 
   // The rim: the piece, inside-out and larger, so what survives being covered
   // by the piece itself is a halo around its outline. Grown about its own
-  // centre — grown about its origin instead, which for LDraw sits on the top
+  // centre - grown about its origin instead, which for LDraw sits on the top
   // face, it would swell downwards and through the brick below it.
   const centre = new THREE.Box3().setFromObject(piece)
     .getCenter(new THREE.Vector3());
@@ -201,7 +201,7 @@ export function breathe(bloom, at) {
 // --------------------------------------------------------------------------
 // A whole check, lit at once
 //
-// The caret bloom above lights ONE piece and spends three objects doing it —
+// The caret bloom above lights ONE piece and spends three objects doing it -
 // the piece, a rim around it and a ghost through the model in front of it. All
 // three are worth it for one brick you are hunting for.
 //
@@ -213,7 +213,7 @@ export function breathe(bloom, at) {
 //
 // What it does buy is sharing. LDrawLoader hands ONE material to every part of
 // a given LDraw colour, so a model of four hundred red bricks is four hundred
-// meshes over a single material — and one clone per (group, source material)
+// meshes over a single material - and one clone per (group, source material)
 // paints all of them. A model that took four hundred clones now takes about
 // three, and the pulse is three colour writes a frame rather than four hundred.
 // --------------------------------------------------------------------------
@@ -228,7 +228,7 @@ export const GLOW_FLOOR = 0.72;
  * Measured against the loaded model's frame rather than read off `.position`,
  * which is local to whatever submodel the part was reached through. The
  * checker reports world space after expanding every submodel, so this is the
- * frame both sides can meet in — and it survives the model being stood on the
+ * frame both sides can meet in - and it survives the model being stood on the
  * grid by `frameObject`, since that moves the frame and not the parts in it.
  */
 export function indexPieces(root) {
@@ -336,7 +336,7 @@ export function breatheGlow(glow, at) {
   }
 }
 
-/** Take the bloom down. The geometry belongs to the model — leave it alone. */
+/** Take the bloom down. The geometry belongs to the model - leave it alone. */
 export function clearBloom(bloom) {
   if (!bloom) return;
   // The piece gets its own materials back before anything else: those are the
@@ -351,8 +351,8 @@ export function clearBloom(bloom) {
 /**
  * Take a check's glow down.
  *
- * A glow is a bloom without the two copies — the same `swapped` to put back
- * and the same `lit` to dispose — so the bloom's own teardown already does the
+ * A glow is a bloom without the two copies - the same `swapped` to put back
+ * and the same `lit` to dispose - so the bloom's own teardown already does the
  * whole job, and the pair of them can never drift apart into one leaking what
  * the other releases.
  */

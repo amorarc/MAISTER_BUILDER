@@ -101,7 +101,7 @@ export function partRef(line) {
 
 /**
  * Count the type-1 references in a model, heaviest first. Sub-model references
- * (anything not ending in `.dat`) are skipped — they are not real parts.
+ * (anything not ending in `.dat`) are skipped - they are not real parts.
  */
 export function inventory(source) {
   const counts = new Map();

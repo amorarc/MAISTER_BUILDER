@@ -1,7 +1,7 @@
 """Fixing a tool call that came back with an error, and calling it again.
 
 A tool that errors currently costs a whole step. The result goes back into the
-conversation, the builder reads it on its next turn, and — if it reads it well —
+conversation, the builder reads it on its next turn, and - if it reads it well -
 makes the call again with the argument corrected. That is one turn of the model
 plus one wasted call for a mistake that is usually a typo:
 
@@ -17,7 +17,7 @@ the builder sees one result instead of a failure and a correction.
 
 # Two ways to repair, cheapest first
 
-**Deterministic rules** handle the errors with only one sensible fix — a path
+**Deterministic rules** handle the errors with only one sensible fix - a path
 that does not exist, an argument the tool does not take. They cost nothing and
 they are exact.
 
@@ -31,13 +31,13 @@ anything is run with it.
 Not every error is a mistake in the call. Some are the tool telling the builder
 something it has to know:
 
-* ``edit_model`` — it writes. An ``expect`` that did not match means the
+* ``edit_model`` - it writes. An ``expect`` that did not match means the
   builder's line numbers are stale, and the repair for that is to read the file
   again, not to try once more with a guess. A wrong write is not recoverable
   the way a wrong lookup is.
-* ``finish`` — a refusal is the gate doing its job, and it already says what is
+* ``finish`` - a refusal is the gate doing its job, and it already says what is
   missing.
-* ``ask_about_image`` — the questions are rationed. A retry would spend the
+* ``ask_about_image`` - the questions are rationed. A retry would spend the
   allowance on the same question.
 
 Those three are the ones where a retry could do damage, spend a budget, or hide
@@ -52,7 +52,7 @@ import json
 MAX_ATTEMPTS = 3
 
 # Tools whose errors are usually a malformed call. Everything not listed here
-# is left alone — see the module docstring.
+# is left alone - see the module docstring.
 REPAIRABLE = frozenset((
     "plan_construction", "read_model", "get_part_details", "get_set_details",
     "search_parts", "search_reference", "validate_model", "add_note",
@@ -166,8 +166,8 @@ def rules(name, arguments, result, state=None, schema=None):
 
     # An argument the tool does not take.
     #
-    # Usually the builder used a near-miss name for a real parameter —
-    # `read_model(path=...)` when the parameter is `source` — so the fix is to
+    # Usually the builder used a near-miss name for a real parameter -
+    # `read_model(path=...)` when the parameter is `source` - so the fix is to
     # *rename* it, not to drop it. Dropping was the first version of this rule
     # and it turned a wrong argument name into an empty call, which fails just
     # as reliably and tells nobody why.
@@ -258,7 +258,7 @@ def _usable(fixed, arguments, schema):
     """Whether a proposed repair is worth spending a call on.
 
     A repair that drops a required argument, or empties the call altogether, is
-    not a correction — it is a different way to fail, and running it costs a
+    not a correction - it is a different way to fail, and running it costs a
     call to be told so.
     """
     if not isinstance(fixed, dict) or fixed == arguments:
@@ -315,7 +315,7 @@ def note(result, attempts, original, final):
         "attempts": attempts,
         "corrected": changed,
         "called_with": final,
-        "note": ("your first call failed and was corrected for you — make the "
+        "note": ("your first call failed and was corrected for you - make the "
                  "next one this way round"),
     }
     return json.dumps(payload, ensure_ascii=False, default=str)

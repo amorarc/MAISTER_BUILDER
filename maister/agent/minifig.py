@@ -1,7 +1,7 @@
 """Minifigures: the one assembly the stud grid cannot see.
 
 A minifigure is not built out of studs. The head hangs on a neck pin, the arms
-clip into shoulder sockets, the legs snap onto the hip block — none of it is a
+clip into shoulder sockets, the legs snap onto the hip block - none of it is a
 stud in a tube, so the connectivity checker finds no mating points on any of
 these parts and files every one of them as UNVERIFIED. The collision checker is
 no better off: the moulds interpenetrate by design, so a bounding-box test has
@@ -44,7 +44,7 @@ import re
 # Matched on the leading digits of the part number, so every printed and
 # moulded variant comes along with the plain one: 3626bp01 (a printed head) is
 # a head, 973p1d (a printed torso) is a torso. That is also why the map is
-# keyed on the stem and not the whole name — there are thousands of torso
+# keyed on the stem and not the whole name - there are thousands of torso
 # prints and one torso.
 # --------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ ROLES = {
     # Worn on the torso rather than the head, and it measures exactly there:
     # every backpack in the library sits at the torso's own origin. It was
     # listed as headgear at first and every figure carrying one was reported
-    # broken — which is what checking the catalogue description rather than
+    # broken - which is what checking the catalogue description rather than
     # guessing from the part number would have said in the first place.
     "2524": "backpack",
 }
@@ -75,7 +75,7 @@ _STEM = re.compile(r"^(\d+)")
 
 # dy from the torso, tolerance on it, and how far sideways the part may sit.
 #
-# The `dy` values are the modes — where the great majority of real parts sit,
+# The `dy` values are the modes - where the great majority of real parts sit,
 # and what the suggested fix names. The tolerances are deliberately looser than
 # the measured spread, because the two ways of being wrong here do not cost the
 # same. This check exists to catch a head forty LDU above its neck; a head
@@ -96,7 +96,7 @@ CANON = {
     "backpack": {"dy": 0.0, "dy_tol": 4.0, "lateral": 10.0},
 }
 
-# Hands are posed — the measured spread is -1.7..+28.7 in y and 24 LDU
+# Hands are posed - the measured spread is -1.7..+28.7 in y and 24 LDU
 # sideways, because an arm swings. They belong to the figure and are bonded to
 # it, but there is no offset worth holding them to.
 UNCHECKED = frozenset(("hand",))
@@ -107,7 +107,7 @@ UNCHECKED = frozenset(("hand",))
 #
 # The distinction is the difference between a fault and a fact. A torso with no
 # legs under it is broken. A helmet on a shelf near a figure is a helmet on a
-# shelf — and since headwear is matched by catalogue category, that is now
+# shelf - and since headwear is matched by catalogue category, that is now
 # hundreds of parts that could otherwise be claimed by a figure standing within
 # reach of them and reported as its head gear, 60 LDU out of place.
 OPTIONAL = frozenset(("headgear", "backpack"))
@@ -121,14 +121,14 @@ CLAIM_RADIUS = 90.0
 # What a figure is holding
 #
 # A hand is a C-shaped clip and a tool is a bar pushed through it, so there is
-# no single held position — the bar slides. A sword gripped at the hilt and a
+# no single held position - the bar slides. A sword gripped at the hilt and a
 # torch gripped halfway down its shaft sit at different points on the same
 # line. What is fixed is the line: in the hand part's own frame, the grip axis
 # runs along local y at x = 0, z = -10.5.
 #
 # Measured over every accessory placed near a hand in the reference library:
 # 91% sit within 5 LDU of that axis, and the ones that do not are skirts, hair
-# and airtanks — parts *worn* by a figure rather than held in its hand.
+# and airtanks - parts *worn* by a figure rather than held in its hand.
 #
 # This check only ever accepts. A sword lying on a table is a perfectly good
 # model, so a part that is not on a grip axis is left exactly as the stud
@@ -149,7 +149,7 @@ def role_of(part_name):
 
     The body is matched on the part number, because those six moulds are exact
     and there is no ambiguity to resolve. What a figure *wears* is matched on
-    the catalogue's own category instead — `Minifig Headwear` and `Minifig
+    the catalogue's own category instead - `Minifig Headwear` and `Minifig
     Neckwear` are already the distinction this needs, and there are hundreds of
     hats. Listing the six I happened to think of meant every other hat in the
     library was an unknown part hovering above a figure's head.
@@ -174,7 +174,7 @@ def role_of(part_name):
 def _local(matrix, delta):
     """``delta`` expressed in the frame of a part with this rotation.
 
-    The rotation is orthonormal, so its inverse is its transpose — which is
+    The rotation is orthonormal, so its inverse is its transpose - which is
     what makes a figure lying on its back or facing away measurable with the
     same numbers as one standing up facing front.
     """
@@ -253,7 +253,7 @@ def inspect(flat):
 
     * ``bonds`` are index pairs to feed the connectivity graph, so a figure
       that is correctly put together counts as one piece rather than nine.
-    * ``assembled`` are the parts that may stop being reported as UNVERIFIED —
+    * ``assembled`` are the parts that may stop being reported as UNVERIFIED -
       they have been verified, just not against a stud.
     * ``faults`` are parts that are not where the figure says they should be.
     * ``holding`` is what each figure has in its hands.
@@ -288,7 +288,7 @@ def inspect(flat):
                 placed.append(index)
                 continue
 
-            # Not where this figure wears it — so it is not this figure's, and
+            # Not where this figure wears it - so it is not this figure's, and
             # saying nothing is the correct answer.
             if role in OPTIONAL:
                 continue
@@ -306,7 +306,7 @@ def inspect(flat):
 
         # What its hands are holding. Bonded to the hand rather than to the
         # torso, which is both where it actually is and what keeps the bond
-        # honest — an accessory reaches the rest of the figure through the hand
+        # honest - an accessory reaches the rest of the figure through the hand
         # that holds it, the way it does in plastic.
         #
         # Done whether or not the figure itself is sound: a sword really is in
@@ -349,7 +349,7 @@ def _phrase(role, off_y, lateral, spec):
     if abs(off_y) > spec["dy_tol"]:
         # LDraw's +y is down, so a part with a positive error sits too low.
         way = "too low" if off_y > 0 else "too high"
-        return (f"the {role} is {abs(off_y):.1f} LDU {way} — it is not on the "
+        return (f"the {role} is {abs(off_y):.1f} LDU {way} - it is not on the "
                 f"torso")
     return (f"the {role} is {lateral:.1f} LDU off the figure's centre line, "
             f"which is further sideways than it can sit")
@@ -371,8 +371,8 @@ def _fix(role, anchor, spec):
 
 
 NOTE = (
-    "A minifigure is not built on studs — the head hangs on a neck pin, the "
-    "arms clip into the shoulders, the legs snap onto the hips — so these "
+    "A minifigure is not built on studs - the head hangs on a neck pin, the "
+    "arms clip into the shoulders, the legs snap onto the hips - so these "
     "parts are checked against the offsets every real minifigure uses instead "
     "of against the stud grid. Relative to the torso: hips +32, legs +44, "
     "arms +9, head -24, and headgear with the head (LDraw's +y is down, so a "

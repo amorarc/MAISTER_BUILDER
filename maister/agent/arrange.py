@@ -2,21 +2,21 @@
 
 An assembled scene is one MPD: a main model whose entire body is a handful of
 type-1 lines, one per subconstruction, each naming a submodel that holds the
-actual bricks. So "the tree overlaps the house" is a fault in exactly one line
-— the line that places the tree — and the repair is that line's three numbers.
+actual bricks. So "the tree overlaps the house" is a fault in exactly one line -
+the line that places the tree - and the repair is that line's three numbers.
 
 The assembly pass used to be handed `edit_model` for this, which is a tool for
 changing lines of LDraw, and it treated the scene as what it literally is: a
 file of text. That is the wrong altitude. A builder asked to separate two
 buildings would read forty lines of the tree's trunk looking for the one that
 places it, and having found it, would compute a rotation by hand as nine
-matrix entries — where what it wanted to say was "turn the tree ninety
+matrix entries - where what it wanted to say was "turn the tree ninety
 degrees".
 
 These two functions are that sentence. They take the *name* of a
 subconstruction and move or turn the whole of it, and everything below is the
 arithmetic that saves the caller from doing it: finding the placement line,
-composing rotations onto the matrix it already has, and — for a turn — putting
+composing rotations onto the matrix it already has, and - for a turn - putting
 the object back over its own centre afterwards, because rotating a placement
 about the submodel's origin swings the object across the scene, which is never
 what anybody meant.
@@ -199,7 +199,7 @@ def rotate(text, name, degrees=90, axis="y"):
     if axis not in ("x", "y", "z"):
         return None, {"error": "axis must be x, y or z"}
     if abs(float(degrees)) % QUARTER > 1e-6:
-        return None, {"error": f"turns are multiples of {QUARTER} degrees — "
+        return None, {"error": f"turns are multiples of {QUARTER} degrees - "
                                f"anything else takes the object off the grid"}
 
     found, error = _target(text, name)
@@ -232,7 +232,7 @@ def rotate(text, name, degrees=90, axis="y"):
 
 
 def summary(text):
-    """What the scene holds and where each object sits — the arranging view."""
+    """What the scene holds and where each object sits - the arranging view."""
     lines = text.splitlines()
     out = []
     for name, number in sorted(placements(text).items(), key=lambda kv: kv[1]):

@@ -2,7 +2,7 @@
 
     python -m maister.database_creation.build_technique_notes
 
-Writes ``data/agent_prompts/context/26_techniques.md`` — a context block naming
+Writes ``data/agent_prompts/context/26_techniques.md`` - a context block naming
 the shapes real sets use and the rotations they use them at.
 
 # Why this is mined rather than written
@@ -10,7 +10,7 @@ the shapes real sets use and the rotations they use them at.
 The agent's standing vocabulary is a table of about thirty part numbers in
 ``20_pieces.md``, and it is a good table: every entry checked, usable with no
 lookup, which is exactly what a builder needs for the common cases. The trouble
-is that it is also *complete* — a model built only out of what is on it comes
+is that it is also *complete* - a model built only out of what is on it comes
 out as rectangles, and measuring the results says so. Real sets of 26 to 60
 parts name 23 distinct shapes; this agent's builds of that size have named four
 to six.
@@ -22,7 +22,7 @@ that professional designers reach for most are pulled out here, once, and put
 where they cost nothing to read.
 
 The same goes for rotation. ``10_lego_cad.md`` explains rotation matrices
-correctly and then frames them defensively — never mirror, only multiples of
+correctly and then frames them defensively - never mirror, only multiples of
 90°. What it never says is that seven parts in ten in a real set carry one. The
 four matrices below are simply the ones the corpus uses, in order, with what
 each one does.
@@ -30,8 +30,8 @@ each one does.
 # The three filters that make the output usable
 
 * **Catalogue parts only.** A quarter of the corpus files embed part
-  definitions, and those are built from LDraw primitives — ``4-4cyli``,
-  ``rect3``, ``1-8edge`` — which appear as ordinary part references and are
+  definitions, and those are built from LDraw primitives - ``4-4cyli``,
+  ``rect3``, ``1-8edge`` - which appear as ordinary part references and are
   nothing a designer chose.
 * **No ``~Moved to`` or obsolete stubs.** ``20_pieces.md`` already warns that
   ``3023`` is a redirect and ``3023b`` is the plate; a mined list that
@@ -53,7 +53,7 @@ OUTPUT = CONTEXT_DIR / "26_techniques.md"
 # The same scan, kept as data as well as prose.
 #
 # The page below can only name a hundred parts, and the fact it is trying to
-# teach — that this shape is one real sets turn — is a fact about every part in
+# teach - that this shape is one real sets turn - is a fact about every part in
 # the catalogue. Written out per part, it reaches the agent at the moment it
 # matters instead: on the search result and in the details call, where the part
 # is actually being chosen. See catalog.turn_share.
@@ -77,7 +77,7 @@ ALREADY_KNOWN = {
 
 # Categories that decide what a model *looks like*. Technic and Electric are
 # left out on purpose: they are the most-used categories in the corpus by a
-# wide margin and almost none of it is shape — it is pins, axles and bushes
+# wide margin and almost none of it is shape - it is pins, axles and bushes
 # holding other things together, and a builder given that list builds a chassis
 # nobody asked for. Minifig parts have a context block of their own.
 SHAPE_CATEGORIES = (
@@ -178,16 +178,16 @@ def scan_rotations(known):
 # common; only a person can say what they mean, so these are named here and the
 # counts come from the scan.
 MATRIX_MEANING = {
-    (1, 0, 0, 0, 1, 0, 0, 0, 1): "no rotation — the part as the catalogue draws it",
-    (0, 0, 1, 0, 1, 0, -1, 0, 0): "90° about Y — turned a quarter turn clockwise seen from above",
-    (0, 0, -1, 0, 1, 0, 1, 0, 0): "−90° about Y — a quarter turn the other way",
-    (-1, 0, 0, 0, 1, 0, 0, 0, -1): "180° about Y — facing backwards",
-    (1, 0, 0, 0, 0, -1, 0, 1, 0): "90° about X — laid on its back, studs facing you",
-    (1, 0, 0, 0, 0, 1, 0, -1, 0): "−90° about X — laid forward, studs facing away",
-    (0, -1, 0, 1, 0, 0, 0, 0, 1): "90° about Z — on its side, studs facing left",
-    (0, 1, 0, -1, 0, 0, 0, 0, 1): "−90° about Z — on its side, studs facing right",
-    (-1, 0, 0, 0, -1, 0, 0, 0, 1): "180° about Z — upside down",
-    (1, 0, 0, 0, -1, 0, 0, 0, -1): "180° about X — upside down, facing backwards",
+    (1, 0, 0, 0, 1, 0, 0, 0, 1): "no rotation - the part as the catalogue draws it",
+    (0, 0, 1, 0, 1, 0, -1, 0, 0): "90° about Y - turned a quarter turn clockwise seen from above",
+    (0, 0, -1, 0, 1, 0, 1, 0, 0): "−90° about Y - a quarter turn the other way",
+    (-1, 0, 0, 0, 1, 0, 0, 0, -1): "180° about Y - facing backwards",
+    (1, 0, 0, 0, 0, -1, 0, 1, 0): "90° about X - laid on its back, studs facing you",
+    (1, 0, 0, 0, 0, 1, 0, -1, 0): "−90° about X - laid forward, studs facing away",
+    (0, -1, 0, 1, 0, 0, 0, 0, 1): "90° about Z - on its side, studs facing left",
+    (0, 1, 0, -1, 0, 0, 0, 0, 1): "−90° about Z - on its side, studs facing right",
+    (-1, 0, 0, 0, -1, 0, 0, 0, 1): "180° about Z - upside down",
+    (1, 0, 0, 0, -1, 0, 0, 0, -1): "180° about X - upside down, facing backwards",
 }
 
 
@@ -243,7 +243,7 @@ def build():
         rows = []
         for sets_using, pid, row in entries:
             uses, rotated = per_part.get(pid, (0, 0))
-            share = f"{round(100 * rotated / uses)}%" if uses else "—"
+            share = f"{round(100 * rotated / uses)}%" if uses else "-"
             description = (row.get("description") or "").strip()
             # The catalogue writes "Slope Brick 45  2 x  1" with padding.
             description = " ".join(description.split())
@@ -284,7 +284,7 @@ def build():
 
 Mined from the {corpus_size:,} official models in the reference corpus. Every
 part here is real, is in the catalogue, and is used by enough different sets to
-count as common vocabulary — so you can place any of them **without a lookup**,
+count as common vocabulary - so you can place any of them **without a lookup**,
 exactly like the table in *The pieces*.
 
 That table is the thirty parts you need constantly. These are the {named} after
@@ -295,7 +295,7 @@ repeating a brick, the part is probably on this page.
 ## Rotation is normal
 
 **{rotated_share}% of all part placements in real sets carry a rotation.** Not a
-special case, not an advanced technique — it is what most parts do. A build
+special case, not an advanced technique - it is what most parts do. A build
 where everything faces the same way is the unusual one, and it reads as a stack
 of boxes because that is what it is.
 
@@ -305,13 +305,13 @@ that go in a type-1 line:
 {_table(rotation_rows, ["matrix", "what it does", "share of all placements"])}
 
 The `rotated` column in every table below is how often that specific part is
-placed with a rotation. A part at 90% is a part that is nearly always turned —
+placed with a rotation. A part at 90% is a part that is nearly always turned -
 that is what it is *for*, and placing it unrotated is usually a mistake.
 
 ## Decoration faces a direction
 
 A slope is not a shape, it is a **direction**. So is a curved slope, a wedge, a
-bracket, a windscreen, a plant, a tile with a print on it — everything that is
+bracket, a windscreen, a plant, a tile with a print on it - everything that is
 on a model to be looked at rather than to hold something up.
 
 Placed square, four slopes around a roof all slope the same way and the roof
@@ -320,7 +320,7 @@ roof. Nothing else changed: the parts, the colours and the coordinates are
 identical, and only the nine numbers in the middle of the line are different.
 
 **Every decoration piece you place, decide which way it faces.** These are the
-only four rotations you need for it — all about Y, the vertical axis, so the
+only four rotations you need for it - all about Y, the vertical axis, so the
 part stays flat on the studs and the seats underneath it are unchanged:
 
 | facing | matrix | `build_ops` |
@@ -341,15 +341,15 @@ rather than four in x. `build_ops` works the spacing out from that when you
 pass `rotate`; writing the matrix by hand, you swap it yourself.
 
 **Turning can move a part half a stud.** Most slopes have their origin on their
-back stud row rather than in the middle of their footprint — `3039` runs from
-z −30 to z +10, not −20 to +20 — so a quarter turn moves where its studs fall.
+back stud row rather than in the middle of their footprint - `3039` runs from
+z −30 to z +10, not −20 to +20 - so a quarter turn moves where its studs fall.
 The same 2x2 slope that needed z+10 unturned needs x+10 at 90°. `build_ops`
 puts it back on the lattice and tells you the offset it used, which is the
 reason to turn parts through it rather than by writing the nine numbers.
 
 Turning does not need a lookup or a validation pass to justify it. If you
 cannot say which way a decoration piece faces, that is the thing to decide
-before you place it — not after `validate_model` has told you it is on the
+before you place it - not after `validate_model` has told you it is on the
 grid, because it will be on the grid either way.
 
 ## The vocabulary

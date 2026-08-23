@@ -9,7 +9,7 @@ import { thumbnailFor } from "../thumbnail";
  * Everything the agent built and chose to keep, each card showing an actual
  * render of the model. The renders are produced one at a time off-screen (see
  * thumbnail.js) and arrive as images, so the card falls back to the model's
- * colour fingerprint until its picture is ready — or permanently, if the model
+ * colour fingerprint until its picture is ready - or permanently, if the model
  * cannot be drawn.
  */
 /** The render if it arrives, the colour fingerprint until then. */

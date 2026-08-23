@@ -34,8 +34,8 @@ roof      (plate, 8)   y = -72 -  8 = -80
 
 Every line subtracts **the height of the piece on that line**, never the height
 of the one under it. Those are the same number for brick-on-brick, which is why
-the mistake survives: it only shows up where the heights differ — the baseplate
-to the first course, and the last course to the roof — and those are in every
+the mistake survives: it only shows up where the heights differ - the baseplate
+to the first course, and the last course to the roof - and those are in every
 build. Getting it wrong there sinks the brick into the plate by 12 LDU, and the
 model comes apart into pieces that each validate as on-grid.
 
@@ -47,7 +47,7 @@ outermost studs: a 6x6 footprint has stud centres at x = 0, 20, 40, 60, 80, 100.
 Say which of those a part occupies, and remember a part's position is where its
 origin sits, not where its left edge is.
 
-Every coordinate you write is in LDU — studs are for thinking, LDU is for
+Every coordinate you write is in LDU - studs are for thinking, LDU is for
 writing. Two parts side by side are separated, centre to centre, by half of
 each of them:
 
@@ -60,7 +60,7 @@ they would share 40 LDU of solid plastic.
 
 ## What to produce
 
-Answer in this shape, and keep it tight — this is a brief, not an essay.
+Answer in this shape, and keep it tight - this is a brief, not an essay.
 
 **Goal.** One sentence: what the finished model is, and what changes from now.
 
@@ -86,7 +86,7 @@ that must be left for a door, an overhang with nothing under it.
   `y = -24` is the plan. Do the arithmetic.
 - **Everything sits on the stud grid.** x and z are multiples of 20 LDU for
   studs, 10 for a half-stud offset that a jumper plate would provide. If a
-  placement is not on the grid, it is wrong — rethink it.
+  placement is not on the grid, it is wrong - rethink it.
 - **Name parts by shape, never by number.** You do not have the catalogue in
   front of you, and a part number you invent is worse than no number at all.
   The builder looks them up. The one exception: if the user named a part

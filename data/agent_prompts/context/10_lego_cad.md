@@ -4,7 +4,7 @@ Your output is **LDraw**, the file format the whole LEGO CAD toolchain reads.
 What you write is opened by LeoCAD (which renders your model and produces the
 pictures you are shown), by LPub3D (which turns it into a building-instruction
 booklet), and by the viewer in front of the user. All three read the same file,
-so the file has to be right — there is no separate "export" step that fixes it.
+so the file has to be right - there is no separate "export" step that fixes it.
 
 ## Everything is in LDU
 
@@ -33,7 +33,7 @@ A brick is exactly 3 plates tall (24 = 3 × 8).
 
 **Every part must sit on the stud grid.** A part connects only where its
 anti-stud meets another part's stud. Placing a brick so that it merely *touches*
-a surface — "resting on top", "tucked against the edge" — is not a connection.
+a surface - "resting on top", "tucked against the edge" - is not a connection.
 It is a build that falls apart, and it is the single most common way to get this
 wrong.
 
@@ -88,8 +88,8 @@ roof      (plate, 8)   y = -72 -  8 = -80
 
 Every line subtracts **the height of the piece on that line**, never the height
 of the one under it. Those are the same number for brick-on-brick, which is why
-the mistake survives: it only shows up where the heights differ — the baseplate
-to the first course, and the last course to the roof — and those are in every
+the mistake survives: it only shows up where the heights differ - the baseplate
+to the first course, and the last course to the roof - and those are in every
 build. Getting it wrong there sinks the brick into the plate by 12 LDU, and the
 model comes apart into pieces that each validate as on-grid.
 
@@ -103,7 +103,7 @@ centre-to-centre = 10 × (studs of A + studs of B)   along that axis
 ```
 
 A part `w` studs wide spans `20w` LDU with its origin in the middle, so each
-part contributes `10w` — its own half-width — to the gap.
+part contributes `10w` - its own half-width - to the gap.
 
 | A | B | Along | Centre-to-centre |
 |---|---|---|---|
@@ -114,7 +114,7 @@ part contributes `10w` — its own half-width — to the gap.
 | plate 6x8 | brick 1x1 | 8-stud vs 1-stud | 10 × (8+1) = **90** |
 
 This is the arithmetic a row of bricks gets wrong. Two 2x4 bricks at `x = 0` and
-`x = 40` look adjacent — the number is a round two studs — but they share 40 LDU
+`x = 40` look adjacent - the number is a round two studs - but they share 40 LDU
 of solid plastic and validation reports an overlap. **The spacing depends on
 both parts**, so recompute it for each pair rather than carrying one figure
 along a row of mixed sizes. To leave a deliberate gap of `g` studs, add `20g`.
@@ -137,7 +137,7 @@ A 2x4 brick at the origin has 8 studs at x ∈ {−30,−10,10,30}, z ∈ {−10
 
 **A part on top must have its own seat positions land on those coordinates.** A
 1x1 part (seat at offset 0) must have its centre exactly on a stud. A 2x2 part
-(seats at ±10) must have its centre on a stud *corner intersection* — offset by
+(seats at ±10) must have its centre on a stud *corner intersection* - offset by
 10 from a stud in both x and z.
 
 ### Worked check
@@ -148,11 +148,11 @@ Place a 1x2 plate (`3023b`, seats at x = ±10, z = 0) on a 2x4 brick (`3001`) at
 - Plate centre `(0, −8, 10)`: seats land at `(−10, 10)` and `(+10, 10)`. Both
   are real studs. **Correct.**
 - Plate centre `(0, −8, 0)`: seats land at `(−10, 0)` and `(+10, 0)`. There is
-  no stud at z = 0. **Misaligned** — exactly what the validator reports.
+  no stud at z = 0. **Misaligned** - exactly what the validator reports.
 
 ### One model, one lattice
 
-The rule above is local — this part on that part. There is a second rule that
+The rule above is local - this part on that part. There is a second rule that
 is about the whole model at once, and it is the one that actually ruins builds.
 
 **Every part in a model has to agree on where the grid starts.** Because the
@@ -170,10 +170,10 @@ other.
 
 This is not hypothetical. One build laid a floor of 6x6 plates on one lattice
 and then put the whole object on the other, and came back with 22 parts reported
-off the grid — one report per part, all of them the same mistake made once.
+off the grid - one report per part, all of them the same mistake made once.
 
 So: **fix the lattice with the first part you place and never leave it.** The
-check is one line of arithmetic per part — take its position, add any one of its
+check is one line of arithmetic per part - take its position, add any one of its
 stud offsets, and the answer mod 20 must be the same number for every part in
 the model. `build_ops` does this for you and refuses to place a part that would
 break it; `validate_model` reports the split under `lattice` when one exists.
@@ -220,7 +220,7 @@ joint. Arbitrary angles put the part off the grid.
 ## Building sideways (SNOT)
 
 Rotating a brick 90° about X or Z points its studs sideways, and the two grids
-only meet at specific offsets — the pitch is 20 one way and 24 the other. Unless
+only meet at specific offsets - the pitch is 20 one way and 24 the other. Unless
 you have a concrete reason, build everything stud-up. Sideways construction is
 the fastest route to an unbuildable model.
 
@@ -267,7 +267,7 @@ Rules:
 **Nested coordinates.** Everything inside a submodel is in the submodel's own
 coordinates. A submodel placed at `(0, −6, 20)` containing a part at
 `(0, −32, 0)` puts that part at `(0, −38, 20)` in the finished model. Build each
-submodel **around its own origin** — typically bottom face at y = 0 — then
+submodel **around its own origin** - typically bottom face at y = 0 - then
 position it once in the parent. Do not scatter a submodel's parts around
 arbitrary coordinates and compensate in the parent transform.
 

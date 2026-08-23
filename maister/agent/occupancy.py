@@ -5,11 +5,11 @@ whether the bounding box could be believed. Both halves of that fail on exactly
 the parts a good model is made of.
 
 A box is a poor likeness of a slope, a wedge, a bracket or a dish, so those
-were exempted — and with them went every defect between two of them. Measured
+were exempted - and with them went every defect between two of them. Measured
 over the 65 project models on disk: of 797 overlaps deeper than a legitimate
 contact, **633 were never judged at all**, 432 of them because both parts were
 exempt. Two 2x2 slopes sharing a full stud of plastic, a 2x4 brick buried
-inside a double slope, a bracket driven through a brick — `validate_model`
+inside a double slope, a bracket driven through a brick - `validate_model`
 answered "nothing overlaps" to all of them. Only 141 of the catalogue's 5,878
 parts could ever be judged.
 
@@ -21,7 +21,7 @@ already failed to be exactly one brick or one plate tall.
 
 It measures the plastic.
 
-    the triangles          already parsed, and thrown away — see `triangles`
+    the triangles          already parsed, and thrown away - see `triangles`
     -> a surface           rasterised into a grid at RESOLUTION LDU
     -> a solid             flood-fill the outside; the rest is plastic
     -> a core              erode one voxel, so touching is not sharing
@@ -32,7 +32,7 @@ code: **correctly assembled LEGO parts never share material.** A stud goes
 *into* a hollow tube; a bar goes *through* a clip; a bracket holds a plate
 *beside* its upstand; a dish *nests* in another dish. Every one of those is an
 overlap of bounding boxes and none of them is an overlap of plastic. So a
-measurement of plastic needs no exemptions at all — not for shape, not for
+measurement of plastic needs no exemptions at all - not for shape, not for
 rotation, not for the parts whose sockets swallow more than a stud.
 
 Measured on the cases that defeated the old check:
@@ -50,8 +50,8 @@ the old check could not see any of the four on the left.
 Triangle-triangle intersection is the obvious answer and it is the one the
 LDraw community tried and backed away from: the tolerance band is the whole
 problem, and rotated or round parts produce false intersections that cannot be
-tuned away without losing real ones. A voxel grid has its tolerance built in —
-it is the voxel — and the erosion step turns "these two surfaces touch", which
+tuned away without losing real ones. A voxel grid has its tolerance built in -
+it is the voxel - and the erosion step turns "these two surfaces touch", which
 is what every correct connection looks like, into a measurement of zero.
 
 It is also what the generative-LEGO literature settled on for the same reason.
@@ -74,7 +74,7 @@ import numpy as np
 # the reasoning for it sounded right: it resolves every feature a LEGO part
 # has. What it does not resolve is the *error*, and the error is what decides a
 # threshold. Two parts correctly side by side share a skin of voxels along
-# their contact face, and that skin scales with the area they touch — a big
+# their contact face, and that skin scales with the area they touch - a big
 # Technic brick against its neighbour came to 1,352 cubic LDU of pure
 # quantisation, against a mildest-real-defect of 1,888. A 1.4x band is not a
 # band, it is a coincidence.
@@ -106,7 +106,7 @@ MAX_VOXELS = 40_000_000
 # For scale, a whole 1x1 plate is 20 x 20 x 8 = 3,200 cubic LDU.
 #
 # This is the *ceiling*, not the whole rule. Being absolute, it makes the
-# check's sensitivity a function of part size — which is why a 1x1 brick buried
+# check's sensitivity a function of part size - which is why a 1x1 brick buried
 # inside a 2x2 slope (1,009 cubic LDU) went unreported for as long as this was
 # the only test. `collisions.SHARED_FRACTION` lowers it per pair, on the share
 # of the smaller part's own plastic; that is where the reasoning and the
@@ -127,7 +127,7 @@ class _Unavailable(Exception):
 def _triangles(part_name, library_root, coll, cache, stack=None, model=None):
     """Every triangle of a part, in its own local frame, recursively.
 
-    The same walk `compute_part_points` already makes — it reads these very
+    The same walk `compute_part_points` already makes - it reads these very
     lines and keeps only the corners. A vertex cloud cannot say which side of a
     surface is inside, so the connectivity between them, which the file states
     and which costs nothing to keep, is what this holds on to.
@@ -191,7 +191,7 @@ def _triangles(part_name, library_root, coll, cache, stack=None, model=None):
 
 
 def _rasterise(triangles, resolution):
-    """``(origin, shell)`` — the voxels any surface of the part passes through.
+    """``(origin, shell)`` - the voxels any surface of the part passes through.
 
     Each triangle is sampled on its own barycentric grid at half a voxel, which
     is dense enough that a surface cannot slip between two voxels. Crude beside
@@ -238,7 +238,7 @@ def _fill(shell):
 
     This is the step that makes a hollow part hollow. A brick's underside, a
     stud's tube, the arch under a mudguard and the space inside a bracket's L
-    are all open to the outside, so the fill never claims them — which is
+    are all open to the outside, so the fill never claims them - which is
     exactly why a stud sitting in a tube shares nothing with it.
     """
     from scipy import ndimage
@@ -265,7 +265,7 @@ class Solid:
     """A part's plastic, as a voxel grid in the part's own local frame.
 
     Two erosions are kept, and which one is used depends on how the pair is
-    placed relative to each other — see ``shared_volume``.
+    placed relative to each other - see ``shared_volume``.
 
     ``core`` is one voxel in from the surface. That is the right margin when
     both parts sit square to the grid, because the two grids are then parallel
@@ -273,8 +273,8 @@ class Solid:
 
     ``loose`` is two, and it exists because a rotated pair is resampled rather
     than aligned: B's voxel centres land anywhere inside A's cells, so the
-    boundary is uncertain by about a voxel diagonal — 1.7 LDU at this
-    resolution — and a large contact face turns that into a few hundred voxels
+    boundary is uncertain by about a voxel diagonal - 1.7 LDU at this
+    resolution - and a large contact face turns that into a few hundred voxels
     of shared plastic that is not there. Measured on 76161 Batwing, whose wing
     panels are pinned at 19 degrees: 2,904 cubic LDU of pure resampling error,
     reported as sixty-nine overlaps in a set that is correctly modelled.
@@ -323,7 +323,7 @@ def solid(part_name, library_root, coll, cache, model=None,
 
         core = ndimage.binary_erosion(filled, _NEIGHBOURHOOD)
         if not core.any():
-            # Everything this part has is skin — a sticker, a flag, a part one
+            # Everything this part has is skin - a sticker, a flag, a part one
             # voxel thick. There is no interior to be inside of, so it is not
             # something this check can speak about.
             raise _Unavailable("nothing but surface")
@@ -373,7 +373,7 @@ def shared_volume(inst_a, inst_b, library_root, coll, cache, model=None,
                   resolution=RESOLUTION):
     """Cubic LDU of plastic two placed parts have in common, or None.
 
-    None means at least one of them could not be measured — which is a third
+    None means at least one of them could not be measured - which is a third
     answer, distinct from nothing-shared, and the caller has to keep it that
     way.
     """
@@ -407,7 +407,7 @@ def shared_volume(inst_a, inst_b, library_root, coll, cache, model=None,
     # B-local -> world -> A-local. The inverse of a placement matrix is its
     # transpose: LDraw placements are rotations, possibly with a reflection,
     # and both are orthonormal. A part placed with a scale would break that,
-    # and there are none — a scaled brick is not a brick.
+    # and there are none - a scaled brick is not a brick.
     world = points @ matrix_b.T + position_b
     local = (world - position_a) @ matrix_a
 

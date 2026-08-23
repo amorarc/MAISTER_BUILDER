@@ -95,7 +95,7 @@ function ColourPicker({ current, resolved, onPick, onClose }) {
 }
 
 /**
- * Left rail: every project as a coloured brick, and — at the foot — how the
+ * Left rail: every project as a coloured brick, and - at the foot - how the
  * open build currently stands on the stud grid.
  */
 export default function ProjectRail({
@@ -225,7 +225,7 @@ export default function ProjectRail({
 }
 
 /**
- * How the open build stands on the stud grid — and, on hover, where.
+ * How the open build stands on the stud grid - and, on hover, where.
  *
  * Each row lights its own parts up on the model in the colour of its dot, so
  * a count is somewhere to look rather than a number to go hunting for. Only

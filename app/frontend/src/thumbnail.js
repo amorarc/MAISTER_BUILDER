@@ -8,7 +8,7 @@ import { fillMissingMaterials } from "./ldrawMaterials";
  * Off-screen renders of saved models, for the gallery.
  *
  * A card per model means a canvas per model, and a browser allows only a
- * handful of live WebGL contexts — so instead there is exactly one renderer
+ * handful of live WebGL contexts - so instead there is exactly one renderer
  * here, shared by every thumbnail and separate from the viewer's. Models are
  * drawn one at a time into it and read out as PNG data URLs, which are plain
  * images the grid can show as many of as it likes.
@@ -122,7 +122,7 @@ function drawOne(url) {
             const camera = new THREE.PerspectiveCamera(38, WIDTH / HEIGHT, 1, 100000);
             if (!frame(camera, group)) {
               disposeTree(group);
-              resolve(null); // nothing to see — an empty or unresolvable model
+              resolve(null); // nothing to see - an empty or unresolvable model
               return;
             }
 

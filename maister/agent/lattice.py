@@ -1,7 +1,7 @@
 """Which stud lattice a part is standing on.
 
 A LEGO model is built on one grid of studs 20 LDU apart. Where that grid
-*starts* is arbitrary — but every part in a model has to agree on it, and this
+*starts* is arbitrary - but every part in a model has to agree on it, and this
 is the module that says whether they do.
 
 # The rule nobody states, and everybody gets wrong
@@ -10,9 +10,9 @@ A part's studs are not at its origin. They are at a fixed offset from it, and
 the offset depends on whether the part is an even or an odd number of studs
 across:
 
-    plate 6 x 6  (3958)   studs at x = ±10, ±30, ±50    — odd multiples of 10
-    plate 1 x 4  (3710)   studs at x = ±10, ±30         — odd multiples of 10
-    plate 1 x 1  (6141)   stud  at x = 0                — a multiple of 20
+    plate 6 x 6  (3958)   studs at x = ±10, ±30, ±50    - odd multiples of 10
+    plate 1 x 4  (3710)   studs at x = ±10, ±30         - odd multiples of 10
+    plate 1 x 1  (6141)   stud  at x = 0                - a multiple of 20
 
 So a 6x6 plate placed at x = -180 puts its studs on x ≡ 10 (mod 20), and a 1x1
 plate placed at x = 140 puts its stud on x ≡ 0 (mod 20). Both placements are on
@@ -30,7 +30,7 @@ The phase of a placement on an axis is where its studs fall, modulo 20:
     phase = (position along that axis + any one of its stud offsets) mod 20
 
 Two parts can connect only if they share a phase on x and on z. A model is
-sound when every part shares one phase — and the model that prompted this
+sound when every part shares one phase - and the model that prompted this
 module had 64 parts on phase 10 and 36 on phase 0, reported as "22 parts off
 the stud grid", which is the symptom of one decision described twenty-two
 times.
@@ -77,7 +77,7 @@ def _rotate(offset, matrix):
 def phase(part_id, x, z, matrix=None):
     """``(phase_x, phase_z)`` for a placement, or None if it has no footprint.
 
-    None is the right answer for anything the stud lattice does not govern — a
+    None is the right answer for anything the stud lattice does not govern - a
     minifigure's arm, a bar in a clip, a part the catalogue has no measurements
     for. Those are held together by something other than studs and judging them
     against a grid is how a correct model gets reported as broken.
@@ -90,7 +90,7 @@ def phase(part_id, x, z, matrix=None):
     except (TypeError, ValueError):
         return None
 
-    # Every cell of one part shares a phase — the cells are 20 apart — so one
+    # Every cell of one part shares a phase - the cells are 20 apart - so one
     # of them answers for all of them.
     offset_x, offset_z = _rotate(grid[0], matrix)
     return (round((x + offset_x) % PITCH, 3),

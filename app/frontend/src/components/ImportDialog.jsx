@@ -16,7 +16,7 @@ function countParts(text) {
 
 function describe(file, text) {
   if (!ACCEPTED.test(file.name)) return { error: "not an .ldr, .mpd or .dat file" };
-  if (file.size > MAX_BYTES) return { error: `too large — ${MAX_LABEL} max` };
+  if (file.size > MAX_BYTES) return { error: `too large - ${MAX_LABEL} max` };
   const parts = countParts(text);
   if (!parts) return { error: "no part references found" };
   return { parts };

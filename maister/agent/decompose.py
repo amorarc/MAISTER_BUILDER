@@ -24,14 +24,14 @@ from .config import DECOMPOSE_PROMPT_FILE, DEFAULT_MODEL
 #
 # It was 6, and 6 is a good number for a scene: six objects, each with a brief,
 # a checklist, a build loop and six renders, is already a long run. It is a bad
-# number for the case that object *count* does not describe — a word. "MAISTER
+# number for the case that object *count* does not describe - a word. "MAISTER
 # in big letters" is seven objects and every one of them is a letter four
 # bricks wide; the seventh was folded into the sixth as "also asked for, if it
 # fits: r", and the model came back spelling MAISTE.
 #
 # So the cap is set by the longest thing anyone reasonably asks for rather than
 # by what a scene of houses costs. Twelve covers a word; a diorama of twelve
-# buildings is still refused, and it is still refused by the wrong measure —
+# buildings is still refused, and it is still refused by the wrong measure -
 # the honest bound is total work rather than object count, and this is not it.
 # Objects are built PARALLEL_SUBBUILDS at a time (see orchestrator.py), so
 # twelve letters is four waves rather than twelve.
@@ -56,7 +56,7 @@ class Subconstruction:
         self.size_hint = size_hint
         self.extends = extends
         # Which band this is being built at, and the piece budget that goes
-        # with it. See scale.py — the band is decided from the request, not
+        # with it. See scale.py - the band is decided from the request, not
         # here, because "how big" is a different question from "how many
         # objects" and this pass only answers the second.
         self.size_band = size_band
@@ -120,8 +120,8 @@ def _reference_block(description):
     """What the picture says about how many things there are, for the split.
 
     Only the part of the description that bears on splitting: what the objects
-    are, and what they are doing with each other. The rest of it — silhouettes,
-    part-by-part sizes, colours — is for the builder that gets each object, and
+    are, and what they are doing with each other. The rest of it - silhouettes,
+    part-by-part sizes, colours - is for the builder that gets each object, and
     putting it here would bury the one question this call has to answer.
 
     The two kinds are listed apart rather than tagged. `role: scenery` in the
@@ -131,7 +131,7 @@ def _reference_block(description):
 
     Scenery is named and then explicitly excluded. It used to be folded into the
     subject's requirements, and "build this chair" came back as a chair, a rug,
-    a wooden floor, a lamp and a tray — because a photograph of a chair is also
+    a wooden floor, a lamp and a tray - because a photograph of a chair is also
     a photograph of the room it is in, and every one of those was in the
     picture. Nine 6x6 plates went into the floor, and the floor was laid on a
     different stud lattice from the chair.
@@ -151,8 +151,8 @@ def _reference_block(description):
     scenery = [o for o in objects if o not in standing]
 
     # With one object standing there is nothing for it to stand *with*, and
-    # `with_others` then describes the scenery — "the chair is standing on a
-    # rug" — which is the sentence that puts a rug in the requirements.
+    # `with_others` then describes the scenery - "the chair is standing on a
+    # rug" - which is the sentence that puts a rug in the requirements.
     keys = ("what", "size", "with_others") if len(standing) > 1 else ("what", "size")
 
     def describe(entry):
@@ -189,8 +189,8 @@ def _reference_block(description):
             f"considered and left out:")
         lines += [f"- {o['name']}" for o in scenery]
     # Only when there is more than one thing to arrange. With a single subject
-    # this field is a tour of the room — "the rug is on a wooden floor, behind
-    # the chair is a lamp" — and it is the sentence that talks a split into
+    # this field is a tour of the room - "the rug is on a wooden floor, behind
+    # the chair is a lamp" - and it is the sentence that talks a split into
     # building the room.
     if len(standing) > 1 and description.get("arrangement"):
         lines.append(f"\nHow they stand together: {description['arrangement']}")
@@ -198,8 +198,8 @@ def _reference_block(description):
     if not lines:
         return None
     return ("A reference picture is attached and has been read. It is the "
-            "specification for what the objects *are* — their shape, their "
-            "colours, their proportions — and it outranks the wording of the "
+            "specification for what the objects *are* - their shape, their "
+            "colours, their proportions - and it outranks the wording of the "
             "request wherever the two describe the same thing differently.\n\n"
             "What it is not is a list of things to build. A photograph comes "
             "with a floor, a wall and whatever else was in the room, and none "
@@ -212,7 +212,7 @@ def decompose(message, current_model=None, reference=None, workbench=None,
     """Atomic subconstructions for ``message``.
 
     Returns ``(subconstructions, meta)``. ``meta`` carries the one-line summary,
-    whether this is a scene, and how the split was arrived at — an LLM call, or
+    whether this is a scene, and how the split was arrived at - an LLM call, or
     the fallback. Never raises.
     """
     system = _prompt()
@@ -227,7 +227,7 @@ def decompose(message, current_model=None, reference=None, workbench=None,
     if seen:
         blocks.append(seen)
     # What is on the workbench, as it was read at the start of the run: not the
-    # source, but what the model actually *is* — see survey.py. It comes before
+    # source, but what the model actually *is* - see survey.py. It comes before
     # the source because it is what the source means, and because the split
     # turns on it: a request to "add a helmet" against a finished figure is one
     # change to one object, and the same words against an empty file are a
@@ -276,8 +276,8 @@ def _apply_scale(out, message):
     literally would be wrong.
 
     **A scene keeps its own proportions.** The decomposer sizes the objects in
-    a scene against each other — a car beside a house is smaller than the house
-    — and that is a real decision about the scene rather than an invention
+    a scene against each other - a car beside a house is smaller than the house -
+    and that is a real decision about the scene rather than an invention
     about its size. Overwriting every hint with one default would flatten a
     street to a row of equal boxes. So for a scene the hints stay and only the
     budget is set; for a single object, which is the case the default was
@@ -296,7 +296,7 @@ def _apply_scale(out, message):
         # The budget travels with the hint and only with it. A 16 x 16 house
         # kept from the decomposer's own scene proportions, handed the small
         # band's 45-piece budget, is two instructions that contradict each
-        # other — and the builder would meet whichever it was reminded of last.
+        # other - and the builder would meet whichever it was reminded of last.
         # Where the hint is ours, the budget is too; where the hint is not, the
         # hint governs alone, as it did before any of this existed.
         sub.max_pieces = budget
@@ -371,7 +371,7 @@ def fold_attached(subs):
     """Merge every subconstruction that is detail of another into its parent.
 
     The decomposer is told that grass, stones, a chimney, a door are detail and
-    belong in the requirements of whatever they sit on — but it will sometimes
+    belong in the requirements of whatever they sit on - but it will sometimes
     list them as objects anyway, and a list is not the place to argue about it.
     Anything whose ``extends`` names a sibling is folded into that sibling here,
     so it can never become a separate file laid out a few studs away from the
@@ -412,7 +412,7 @@ def _fallback(message, reason):
     text = " ".join((message or "a model").split())
     out = [Subconstruction(name="model", subject=text[:400])]
     # The size is decided from the request, not from the split, so it survives
-    # the split failing — this path is exactly where a build with no size at
+    # the split failing - this path is exactly where a build with no size at
     # all used to start.
     band, why = _apply_scale(out, message)
     return (out,

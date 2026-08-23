@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# make_instructions.sh — generate LEGO building instructions from an LDraw
+# make_instructions.sh - generate LEGO building instructions from an LDraw
 # .mpd/.ldr model with LPub3D (console mode, no GUI interaction needed).
 #
 # Default model: the first .mpd in data/ldraw_omr_sets/, else the first
@@ -118,7 +118,7 @@ WORK="$OUT/.work"          # working copy + LPub3D render cache live here,
 # --- working copy ------------------------------------------------------------
 # LPub3D drops its render cache (LPub3D/), renderer logs and the csv/xml exports
 # next to the model file it is given, and those paths are not configurable.
-# Feeding it a copy under out/ keeps data/ pristine — and lets us set the page
+# Feeding it a copy under out/ keeps data/ pristine - and lets us set the page
 # background, which is only reachable through an LPUB meta command.
 prepare_source() {
     mkdir -p "$WORK"

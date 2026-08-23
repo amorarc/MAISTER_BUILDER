@@ -1,7 +1,7 @@
 @import "./fonts.css";
 
 /* ==========================================================================
-   Maister Builder — chunky, physical, brick-built.
+   Maister Builder - chunky, physical, brick-built.
 
    Dark chrome (topbar, rail, chat) wrapped around a light "workbench" where
    the model lives. Everything that can be pressed carries a hard bevel
@@ -125,7 +125,7 @@ body {
 }
 
 /* ==========================================================================
-   Bricks — the shared primitives
+   Bricks - the shared primitives
    ========================================================================== */
 
 /* 2×2 brick seen from above, used as the mark and as project thumbnails */
@@ -821,7 +821,7 @@ body {
 }
 
 /* A button rather than a row of text, because hovering one paints its parts
-   on the model — but it carries none of a button's chrome, so the foot of the
+   on the model - but it carries none of a button's chrome, so the foot of the
    rail still reads as a read-out. */
 .stat {
   display: flex;
@@ -875,7 +875,7 @@ body {
 }
 
 /* Sub-assemblies. Blue rather than one of the three above because the count is
-   not a verdict — a scene is meant to have a tree standing apart from a car —
+   not a verdict - a scene is meant to have a tree standing apart from a car -
    and it is the colour the main body glows when the row is hovered. */
 .stat-dot--info {
   background: var(--blue);
@@ -915,7 +915,7 @@ body {
 }
 
 /* Source and preview, half the workbench each. Reading LDraw is comparing two
-   things — a line of text and the brick it puts on the grid — and neither half
+   things - a line of text and the brick it puts on the grid - and neither half
    of that is the junior partner. */
 .stage--source .editor,
 .stage--source .viewer {
@@ -931,7 +931,7 @@ body {
 /* The render stops where the parts dock begins, rather than running underneath
    it. The mount node is watched by a ResizeObserver, so three.js re-frames the
    model into the shorter box instead of cropping it. Kept in step with
-   `.parts-card` by the same expression — see the note there. */
+   `.parts-card` by the same expression - see the note there. */
 .stage--source .viewer-canvas {
   bottom: min(148px, 40%);
 }
@@ -994,7 +994,7 @@ body {
 }
 
 /* ==========================================================================
-   Viewer loading state — four bricks clicking together
+   Viewer loading state - four bricks clicking together
    ========================================================================== */
 
 .brick-loader {
@@ -1036,8 +1036,8 @@ body {
 }
 
 /*
- * The four bricks arrive one after another — the stagger is what makes it read
- * as assembly rather than a fade-in — but they all leave together at 84%, so
+ * The four bricks arrive one after another - the stagger is what makes it read
+ * as assembly rather than a fade-in - but they all leave together at 84%, so
  * the loop ends on the complete 2×2 block coming apart. Staggering the exit as
  * well (with animation-delay) looks like a brick falling off the model.
  *
@@ -1135,7 +1135,7 @@ body {
 
 /* The live build read-out that used to be docked at the foot of the workbench
    is gone, and so is `.hud`. It sat directly above the composer, which says
-   the same sentence on its own foot line while a run is in flight — one thing
+   the same sentence on its own foot line while a run is in flight - one thing
    happening, reported twice, a few pixels apart. What is left on the model is
    the `Building…` pill up in the overlay, which says only that a run is alive.
    ---------- empty state ---------- */
@@ -1304,13 +1304,13 @@ body {
    drawn. A background and a colour change neither. */
 
 /* The band and nothing else. There was a red rule down the left edge as well,
-   and it sat right where the first character of the line is drawn — a marker
+   and it sat right where the first character of the line is drawn - a marker
    that obscured the thing it was pointing at. */
 .editor-hl .is-bad {
   background: rgba(227, 0, 11, 0.15);
 }
 
-/* the number goes red too — it is the part still visible when the line is
+/* the number goes red too - it is the part still visible when the line is
    scrolled off to the right, and it is what the report names */
 .editor-gutter .is-bad {
   color: #ff6b62;
@@ -1417,7 +1417,7 @@ body {
   flex: 1;
 }
 
-/* the only control that writes the file — kept next to the text it saves */
+/* the only control that writes the file - kept next to the text it saves */
 .editor-save {
   padding: 5px 12px;
   font-size: 11.5px;
@@ -1431,14 +1431,14 @@ body {
 /* parts inventory card, floating over the preview */
 /* The inventory is docked under the preview, not laid over it.
    It used to float at the foot of the viewer taking up to 46% of the height,
-   which put the bottom half of the model behind it — and the model is the
+   which put the bottom half of the model behind it - and the model is the
    thing the Source view is there to check the text against. So the canvas is
    inset by exactly this much (see `.stage--source .viewer-canvas`) and the
    card fills the gap: shorter, in front of nothing, and still as useful,
    because a list that scrolls does not need half the height to be read.
 
    One value drives both, so they cannot drift apart. It resolves against the
-   viewer either way — as `bottom` on the canvas, as `height` here. */
+   viewer either way - as `bottom` on the canvas, as `height` here. */
 .parts-card {
   --parts-dock: min(148px, 40%);
   position: absolute;
@@ -1725,7 +1725,7 @@ body {
   animation: tileIn 0.34s cubic-bezier(0.2, 1.5, 0.4, 1) both;
 }
 
-/* counted from the tile's width, the same way a tool brick's are — see Studs.jsx */
+/* counted from the tile's width, the same way a tool brick's are - see Studs.jsx */
 .tile-studs {
   position: absolute;
   left: var(--stud-inset, 5px);
@@ -1978,8 +1978,8 @@ body {
 /* ---------------------------------------------------------------------------
    One tool call, one brick.
 
-   The colour IS the status — yellow running, green done, red failed, blue
-   while the model is still writing the call — so a trace reads at a glance as
+   The colour IS the status - yellow running, green done, red failed, blue
+   while the model is still writing the call - so a trace reads at a glance as
    a stack of coloured parts. Each brick is moulded the way the rest of this UI
    is: studs on the top edge, a hard bevel underneath, a lit top face.
    --------------------------------------------------------------------------- */
@@ -2034,7 +2034,7 @@ body {
     inset 0 -3px 4px -3px rgba(0, 0, 0, 0.45);
 }
 
-/* the model is still writing this call — it cannot run yet */
+/* the model is still writing this call - it cannot run yet */
 .tool--composing {
   --face: var(--blue);
   --bevel: var(--blue-bevel);
@@ -2229,7 +2229,7 @@ body {
 
    The one box the agent is spoken to through, over the middle of the
    workbench rather than down one side. Nothing of the agent's working-out is
-   in it — that is the trace's job, and saying the same thing twice means
+   in it - that is the trace's job, and saying the same thing twice means
    reading neither.
    ========================================================================== */
 
@@ -2272,7 +2272,7 @@ body {
     0 3px 0 var(--ink-900);
 }
 
-/* The attached pictures have no box at all — the brick is the thing, and a
+/* The attached pictures have no box at all - the brick is the thing, and a
    panel behind it was a second frame around something already framed. It hugs
    its contents so it never claims width it is not using. */
 .composer-attached {
@@ -2401,13 +2401,13 @@ body {
 
 /* ---------- over the model ----------
    On the workbench the composer sits on top of the very thing it is there to
-   change, so while it is being ignored it goes see-through — frosted, enough
+   change, so while it is being ignored it goes see-through - frosted, enough
    to read the box against the model and the model through the box. It fills
    in the moment it is being used: `is-writing` is set while there is anything
    typed, and `:focus-within` covers the click that came before the typing.
 
    The attached pictures are deliberately not in here. They have no box to make
-   translucent, and the brick itself stays solid — a reference you cannot quite
+   translucent, and the brick itself stays solid - a reference you cannot quite
    see is not a reference. */
 
 .stage--model .composer-box,
@@ -2433,7 +2433,7 @@ body {
   color: var(--fg-4);
 }
 
-/* being used — solid again, and the bevel back under the +. Reaching for it
+/* being used - solid again, and the bevel back under the +. Reaching for it
    counts as using it, so hover fills it in as readily as focus does. */
 .stage--model .composer-box:hover,
 .stage--model .composer-box:focus-within,
@@ -2460,7 +2460,7 @@ body {
 }
 
 /* ---------- composer, docked form ----------
-   Nothing mounts this any more — the chat panel it belonged to was replaced by
+   Nothing mounts this any more - the chat panel it belonged to was replaced by
    the floating box above. Kept because ChatPanel.jsx is still on disk. */
 
 .composer {
@@ -2520,7 +2520,7 @@ body {
 }
 
 /* ==========================================================================
-   Gallery — the agent's own library
+   Gallery - the agent's own library
    ========================================================================== */
 
 .gallery {
@@ -2754,7 +2754,7 @@ body {
 }
 
 /* ==========================================================================
-   The parts bin — the catalogue, browsable
+   The parts bin - the catalogue, browsable
    ========================================================================== */
 
 .select {
@@ -3128,7 +3128,7 @@ body {
 }
 
 /* ==========================================================================
-   Dialogs — import, settings
+   Dialogs - import, settings
    ========================================================================== */
 
 .modal {
@@ -3744,7 +3744,7 @@ body {
 }
 
 /* ==========================================================================
-   Narrow windows — the chat is the first thing to give up its width
+   Narrow windows - the chat is the first thing to give up its width
    ========================================================================== */
 
 @media (max-width: 1180px) {
@@ -3796,7 +3796,7 @@ body {
   box-shadow: 0 3px 0 var(--ink-900), inset 0 0 0 1px var(--line-2);
   /* What `.tool-studs i` paints itself with. The face of this brick is a
      photograph and cannot lend its colour, so the studs take the frame's
-     instead — which is the plastic the picture is printed on. */
+     instead - which is the plastic the picture is printed on. */
   --face: var(--ink-650);
   --bevel: var(--ink-900);
 }
@@ -3892,7 +3892,7 @@ body {
 }
 
 /* The brick's bottom lip, painted with the bottom edge of the picture standing
-   on it — the mirror of the studs, which take the top. Inside the brick and
+   on it - the mirror of the studs, which take the top. Inside the brick and
    over the image, since the image is covered to inset 0 and would otherwise
    sit on top of it. */
 .refchip-lip {
@@ -3984,7 +3984,7 @@ body {
 }
 
 /* ==========================================================================
-   Trace — the run as a graph
+   Trace - the run as a graph
 
    A tooling surface, so it takes the dark chrome the source editor takes
    rather than the light workbench: what is on it is the agent's reasoning,
@@ -4082,7 +4082,7 @@ body {
 .trace-dot--error { background: var(--err-fg); }
 .trace-dot--running { background: var(--yellow); animation: trace-pulse 1.2s infinite; }
 .trace-dot--stopped { background: var(--fg-4); }
-/* a run whose server went down under it — not running, never finished */
+/* a run whose server went down under it - not running, never finished */
 .trace-dot--abandoned { background: var(--fg-6); }
 
 @keyframes trace-pulse {
@@ -4115,7 +4115,7 @@ body {
   color: var(--fg-5);
 }
 
-/* .btn--quiet is a workbench button — paper-coloured, which is a hole punched
+/* .btn--quiet is a workbench button - paper-coloured, which is a hole punched
    in the dark strip. Same shape, chrome palette. */
 .trace-runs .btn {
   --btn-bg: var(--ink-700);
@@ -4468,7 +4468,7 @@ body {
   color: var(--green-bright);
 }
 
-/* Unmet is the row that matters — it is why the run is still going — so it is
+/* Unmet is the row that matters - it is why the run is still going - so it is
    the only one that gets the colour and the weight. */
 .req--unmet > .req-mark {
   color: var(--err-fg);
@@ -4664,7 +4664,7 @@ body {
   font: 400 10.5px/1 var(--font-mono);
 }
 
-/* Which subconstruction a line of thinking belongs to — flat, because thinking
+/* Which subconstruction a line of thinking belongs to - flat, because thinking
    is not a tool call, but the same colour the object's brick carries so one
    object reads as one colour wherever it turns up. */
 .trace-lane {
@@ -4723,7 +4723,7 @@ body {
   color: var(--ok-fg);
 }
 
-/* the files a scene is made of — the assembled model, then each component */
+/* the files a scene is made of - the assembled model, then each component */
 .editor-files {
   display: flex;
   gap: 4px;

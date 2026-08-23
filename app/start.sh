@@ -29,7 +29,7 @@ cd "$ROOT"
 # the only symptom is a 404 that looks like a bug in the feature.
 #
 # The watched directories are named explicitly, and that is not tidiness. The
-# default is to watch the working directory, which here contains out/ — where
+# default is to watch the working directory, which here contains out/ - where
 # the agent writes a model file on every single write_model. Watching that
 # would restart the backend in the middle of its own builds.
 "$PYTHON" -m uvicorn app.backend.main:app --port 8000 \

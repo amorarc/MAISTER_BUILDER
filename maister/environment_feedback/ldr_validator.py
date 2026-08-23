@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ldr_validator.py — classify every part-pair relationship in an LDraw model.
+ldr_validator.py - classify every part-pair relationship in an LDraw model.
 
 WHAT MAKES THIS DIFFERENT FROM THE TWO CHECKERS BESIDE IT
 ---------------------------------------------------------
@@ -11,9 +11,9 @@ Both throw away the quantity that actually decides the question. The single
 number this module is built around is the **signed surface separation** `d`
 between two parts:
 
-    d < -EPS_OVERLAP        overlapping   — interpenetration, report it
-    -EPS_OVERLAP <= d <= +EPS_TOUCH   contact      — AMBIGUOUS
-    d > +EPS_TOUCH          separated     — feeds the connection graph
+    d < -EPS_OVERLAP        overlapping   - interpenetration, report it
+    -EPS_OVERLAP <= d <= +EPS_TOUCH   contact      - AMBIGUOUS
+    d > +EPS_TOUCH          separated     - feeds the connection graph
 
 A `collide()` that answers yes/no has already discarded the sign and the
 magnitude, which are exactly what tells the three states apart.
@@ -22,7 +22,7 @@ WHY THE CONTACT BAND IS AMBIGUOUS
 ---------------------------------
 In LDraw geometry a stud is a radius-6 cylinder and the anti-stud tube that
 receives it has inner radius 6. The surfaces are *exactly coincident*: d = 0.
-In the real part that is an interference fit — it is what clutch power is. So a
+In the real part that is an interference fit - it is what clutch power is. So a
 correct connection and an impossible placement land on the same number, and no
 tolerance separates them. Geometry alone cannot answer it; connection semantics
 must. That is stage 6.
@@ -31,8 +31,8 @@ WHY FLOATING IS NOT A PAIRWISE PROPERTY
 ---------------------------------------
 A 40-part subassembly sitting 60 LDU from the model is internally perfect and
 has zero collisions, and is still an impossible model. No pairwise test finds
-it. Only connected components over a graph of *validated connections* — not
-contacts — does. That is stage 7.
+it. Only connected components over a graph of *validated connections* - not
+contacts - does. That is stage 7.
 
 THE PIPELINE
 ------------
@@ -49,8 +49,8 @@ Each stage is cheap relative to the next, so they run in that order.
 
 EXPLICIT NON-GOAL
 -----------------
-Assembly-order feasibility. A model can pass every stage here — nothing
-overlapping, everything connected — and still be unbuildable, because parts
+Assembly-order feasibility. A model can pass every stage here - nothing
+overlapping, everything connected - and still be unbuildable, because parts
 interlock in a closed ring or one is sealed inside another. That is
 disassembly path planning and this does not attempt it. It is reported as a
 known limitation in the output rather than left implied.
@@ -71,7 +71,7 @@ both in stage 6 rather than in the geometry:
 
 * **The connection model is stud-only.** `part_connection_points` answers for
   studs and anti-studs, which is what it was written for. A clip on a bar, a
-  pin in a hole, an axle through a beam, a hinge, a ball in a socket — none of
+  pin in a hole, an axle through a beam, a hinge, a ball in a socket - none of
   them produce a connection point, so every such pair falls to TOUCHING_ONLY
   and the component count becomes roughly the part count. That is what the
   Technic column above is showing.
@@ -86,7 +86,7 @@ here. Until the snap data is parsed, this is a good tool for stud-built models
 and a noisy one for everything else.
 
 What is in service meanwhile is `maister/agent/occupancy.py`, which sidesteps
-the whole problem by measuring shared plastic *volume* against an allowance —
+the whole problem by measuring shared plastic *volume* against an allowance -
 less principled, and tolerant of designed interference in a way that a signed
 distance is not. Replacing it means beating its calibration, not just passing
 these fixtures.
@@ -182,7 +182,7 @@ def _is_connection_primitive(name):
 
 
 # --------------------------------------------------------------------------
-# Stage 0 — parse, flatten, and read real triangles
+# Stage 0 - parse, flatten, and read real triangles
 # --------------------------------------------------------------------------
 
 class Mesh:
@@ -259,8 +259,8 @@ def read_mesh(part_name, library_root, cache, model=None, stack=None):
                 tris.append(moved)
                 # Provenance is the nearest CONNECTION-primitive ancestor, not
                 # the leaf that authored the triangle. A stud is not drawn by
-                # stud.dat — it is drawn by 4-4cyli.dat and 4-4disc.dat inside
-                # it — so propagating leaf names tags a stud's triangles
+                # stud.dat - it is drawn by 4-4cyli.dat and 4-4disc.dat inside
+                # it - so propagating leaf names tags a stud's triangles
                 # "4-4cyli.dat" and stage 5 strips nothing at all. That is not
                 # a hypothetical: it left all 700 triangles of a 2x4 brick in
                 # the collision mesh and every correct stack registered as a
@@ -297,7 +297,7 @@ def read_mesh(part_name, library_root, cache, model=None, stack=None):
                 tags.append(key)
             else:
                 # Split the quad into two triangles. BFC and winding are
-                # ignored throughout — collision does not care about normals.
+                # ignored throughout - collision does not care about normals.
                 tris.append(np.array([points[[0, 1, 2]], points[[0, 2, 3]]]))
                 tags.extend([key, key])
 
@@ -355,14 +355,14 @@ def load(path, library_root=None):
 
 
 # --------------------------------------------------------------------------
-# Stage 1 — transform sanity
+# Stage 1 - transform sanity
 # --------------------------------------------------------------------------
 
 def transform_findings(parts):
     """MIRRORED and NON_RIGID, and the scale to propagate for the latter.
 
     NON_RIGID is deliberately NOT a rejection. Legacy LDraw models legitimately
-    use scaled parts — a known LDraw.org case has bricks scaled to about 23 LDU
+    use scaled parts - a known LDraw.org case has bricks scaled to about 23 LDU
     tall, and a correct checker reports zero collisions on it once the scale is
     accounted for. So it is flagged, the scale is carried into the geometry for
     the later stages, and the reader decides.
@@ -393,13 +393,13 @@ def transform_findings(parts):
 
 
 def axis_aligned(matrix, tolerance=1e-6):
-    """Whether every entry is -1, 0 or 1 — a useful secondary signal."""
+    """Whether every entry is -1, 0 or 1 - a useful secondary signal."""
     return bool(np.all(np.abs(np.abs(matrix) - np.round(np.abs(matrix))) < tolerance)
                 and np.all(np.isin(np.round(matrix, 6), (-1.0, 0.0, 1.0))))
 
 
 # --------------------------------------------------------------------------
-# Stage 2 — duplicates
+# Stage 2 - duplicates
 # --------------------------------------------------------------------------
 
 def duplicate_findings(parts, tolerance=1e-3):
@@ -420,7 +420,7 @@ def duplicate_findings(parts, tolerance=1e-3):
             findings.append({
                 "severity": "error", "code": "DUPLICATE",
                 "parts": [first.ref(), part.ref()],
-                "detail": {"why": "the same part at the same transform twice — "
+                "detail": {"why": "the same part at the same transform twice - "
                                   f"delete the one on line {part.line}"}})
             excluded.add((min(first.index, part.index),
                           max(first.index, part.index)))
@@ -430,7 +430,7 @@ def duplicate_findings(parts, tolerance=1e-3):
 
 
 # --------------------------------------------------------------------------
-# Stage 3 — lattice alignment
+# Stage 3 - lattice alignment
 # --------------------------------------------------------------------------
 
 def lattice_findings(parts):
@@ -454,27 +454,27 @@ def lattice_findings(parts):
                 "parts": [part.ref()],
                 "detail": {"off": residuals,
                            "why": "not expressible in stud, plate or jumper "
-                                  "increments — often hand-edited, but hinges "
+                                  "increments - often hand-edited, but hinges "
                                   "and Technic geometry do it legitimately"}})
     return findings
 
 
 # --------------------------------------------------------------------------
-# Stages 4 and 5 — broad phase, then signed distance
+# Stages 4 and 5 - broad phase, then signed distance
 # --------------------------------------------------------------------------
 
 class _Narrow:
     """FCL BVH models over raw triangles, and the two queries they answer.
 
     Triangle soup rather than solids, deliberately. LDraw parts are routinely
-    non-manifold — open shells, single-sided surfaces, degenerate primitives —
+    non-manifold - open shells, single-sided surfaces, degenerate primitives -
     so mesh booleans fail or return nonsense on them. A BVH does not care.
     """
 
     def __init__(self, parts, strip_connections=True):
         if fcl is None:
             raise RuntimeError(
-                "python-fcl is not installed — `pip install python-fcl`")
+                "python-fcl is not installed - `pip install python-fcl`")
         self.parts = parts
         self.objects = {}
         self.boxes = {}
@@ -502,7 +502,7 @@ class _Narrow:
     def candidates(self, dilate=EPS_TOUCH):
         """Stage 4. Pairs whose dilated world AABBs meet.
 
-        All-pairs is O(n^2) and does not scale — a community LDCad collision
+        All-pairs is O(n^2) and does not scale - a community LDCad collision
         script chokes around forty parts. This is a sweep over sorted intervals
         on the widest axis, which is enough structure to keep the pair count
         near linear on models shaped like real builds.
@@ -532,7 +532,7 @@ class _Narrow:
         `distance()` measures the gap between disjoint objects and goes to zero
         and stays there once they touch; `collide()` measures penetration depth
         and says nothing about parts that do not. So distance first, and fall
-        through to collide for anything it reports as touching — negating the
+        through to collide for anything it reports as touching - negating the
         depth, which is what makes the result signed.
         """
         first, second = self.objects.get(a), self.objects.get(b)
@@ -563,8 +563,8 @@ class _Narrow:
         the far face of one passes right through the other. Correct, and not
         the number a reader can act on.
 
-        The world AABB overlap gives the actionable one — the shallowest axis
-        is the way out — which is the same arithmetic `collisions._describe`
+        The world AABB overlap gives the actionable one - the shallowest axis
+        is the way out - which is the same arithmetic `collisions._describe`
         does. Reported alongside the signed distance rather than instead of it:
         the distance decides the band, this says how far to move.
         """
@@ -591,7 +591,7 @@ def band(distance, eps_touch=EPS_TOUCH, eps_overlap=EPS_OVERLAP):
 
 
 # --------------------------------------------------------------------------
-# Stage 6 — connection resolution
+# Stage 6 - connection resolution
 # --------------------------------------------------------------------------
 
 _MALE = {"stud", "axle", "pin", "bar", "ball"}
@@ -602,7 +602,7 @@ def _connector_kind(name):
     """``(type, gender)`` for a connection primitive."""
     stem = name.rsplit("/", 1)[-1].removesuffix(".dat").lower()
     if stem.startswith("stud"):
-        # stud2/stud3/stud4 are the open/tube forms — the receiving side.
+        # stud2/stud3/stud4 are the open/tube forms - the receiving side.
         return ("stud", "female" if stem[4:5].isdigit() and stem[4] in "234"
                 else "male")
     if stem.startswith("tube"):
@@ -629,7 +629,7 @@ def connection_points(part, library_root, caches, model=None):
     central tube at (0, 0) that grips four studs at (+-10, +-10), so reading
     the female points off the tube geometry puts them where nothing mates. Worse
     the other way: a 6x6 plate has 36 studs and 25 tubes, and the tubes are
-    authored as flipped stud primitives — count those as studs and you have 25
+    authored as flipped stud primitives - count those as studs and you have 25
     male points that can never mate with anything.
 
     `ldr_connectivity_checker.part_connection_points` already solves this: males
@@ -675,7 +675,7 @@ def connected(part_a, part_b, points_a, points_b,
 
 
 # --------------------------------------------------------------------------
-# Stage 7 — the connection graph
+# Stage 7 - the connection graph
 # --------------------------------------------------------------------------
 
 def components(count, edges):
@@ -764,7 +764,7 @@ def validate(path, library_root=None, eps_touch=EPS_TOUCH,
             # Two parts resting face to face are COPLANAR, and FCL measures the
             # in-plane overlap of two coplanar triangles as a penetration: a
             # brick sitting correctly on another but three studs along comes
-            # back "3 LDU deep" — the 3 is the sideways offset, not a depth.
+            # back "3 LDU deep" - the 3 is the sideways offset, not a depth.
             #
             # The world AABBs settle it. A box encloses its geometry, so boxes
             # that do not interpenetrate are a proof that the parts do not
@@ -802,7 +802,7 @@ def validate(path, library_root=None, eps_touch=EPS_TOUCH,
             "parts": [parts[a].ref(), parts[b].ref()],
             "detail": {"separation_ldu": round(distance, 2),
                        "why": "these two touch but no connection point of one "
-                              "mates with the other. Legal — parts may abut — "
+                              "mates with the other. Legal - parts may abut - "
                               "but a large abutting contact with nothing "
                               "holding it is a common signature of "
                               "misplacement"}})

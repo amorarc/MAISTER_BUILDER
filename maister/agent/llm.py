@@ -105,7 +105,7 @@ class LLM:
         self.client = client or make_client()
         self.model = model
         self.temperature = temperature
-        # What this client is for — "plan", "build" or "chat". It decides how
+        # What this client is for - "plan", "build" or "chat". It decides how
         # much deliberation the model is asked for; see REASONING_PROFILES.
         self.task = task
         self.reasoning = reasoning_args(model, task)
@@ -127,7 +127,7 @@ class LLM:
 
         ``on_delta(text)`` is called with each piece of content as it arrives
         and ``on_tool(index, name, arguments)`` each time a tool call grows, so
-        a caller can show the reply — and the call being composed — instead of
+        a caller can show the reply - and the call being composed - instead of
         waiting for the whole turn. The return value is the same either way: a
         message with ``.content`` and ``.tool_calls``.
 
@@ -182,13 +182,13 @@ class LLM:
         """One turn, asked again if the connection drops under it.
 
         Safe to repeat: at the moment a request dies nothing it asked for has
-        run — tool calls are executed by the caller after this returns — so a
+        run - tool calls are executed by the caller after this returns - so a
         second attempt costs tokens and nothing else. What it saves is the whole
         run, which is what a dropped stream used to cost.
 
         The retry is not for the model saying something unhelpful, and never for
         a refusal, a bad parameter or a 400: those come back the same however
-        many times they are asked. Only for transport — see ``_transient``.
+        many times they are asked. Only for transport - see ``_transient``.
         """
         delay = LLM_BACKOFF
         for attempt in range(1, LLM_RETRIES + 2):
@@ -310,8 +310,8 @@ def _reasoning_kwargs(reasoning):
     ``reasoning_effort`` and ``top_p`` are first-class request parameters, so
     they go at the top level. ``thinking_mode`` is an argument to the model's
     own prompt encoder, which OpenAI-compatible endpoints take under
-    ``chat_template_kwargs``. A stack that templates client-side — the HF
-    router does — ignores the second; sending it costs nothing and means the
+    ``chat_template_kwargs``. A stack that templates client-side - the HF
+    router does - ignores the second; sending it costs nothing and means the
     intent travels with the request to one that does not (vLLM, SGLang).
     """
     if not reasoning:
@@ -329,7 +329,7 @@ def _reasoning_kwargs(reasoning):
 # an `httpx.RemoteProtocolError` in an `APIConnectionError` sometimes and lets
 # it through raw at others, and a stream that dies mid-body surfaces as
 # `httpx.RemoteProtocolError: peer closed connection without sending complete
-# message body (incomplete chunked read)` — the one that cost a thirteen-minute
+# message body (incomplete chunked read)` - the one that cost a thirteen-minute
 # build.
 _TRANSIENT_TYPES = (
     "RemoteProtocolError", "ProtocolError", "IncompleteRead",

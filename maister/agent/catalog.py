@@ -16,7 +16,7 @@ STUD_PITCH = 20.0
 # Built by maister/database_creation/build_minifig_grips.py from the sets that
 # hold these parts. It travels with the part rather than living in a prompt,
 # because "this is a thing a minifigure holds, and here is where in the hand it
-# goes" is a property of the sword — and a builder who has just chosen a sword
+# goes" is a property of the sword - and a builder who has just chosen a sword
 # should not have to know to go and ask a second question about it.
 # --------------------------------------------------------------------------
 
@@ -32,15 +32,15 @@ def _grips():
 
 # The catalogue already draws the distinction this needs, in its categories:
 #
-#   Minifig Accessory   swords, tools, food, cameras, shields — held in a hand
-#   Minifig Headwear    hats, hair, helmets — worn on the head
-#   Minifig Neckwear    airtanks, backpacks — worn on the torso
+#   Minifig Accessory   swords, tools, food, cameras, shields - held in a hand
+#   Minifig Headwear    hats, hair, helmets - worn on the head
+#   Minifig Neckwear    airtanks, backpacks - worn on the torso
 #   Minifig             the body itself: head, torso, hips, legs, arms, hands
 #
 # Which makes the measured table evidence rather than the whole answer. 56
 # parts were *seen* held in the reference sets; 294 are accessories. A sword
 # released after the sets in the library is still a sword, so the category
-# decides whether a part is held and the table decides where — falling back to
+# decides whether a part is held and the table decides where - falling back to
 # the median grip when a part has never been measured.
 ACCESSORY_CATEGORY = "minifig accessory"
 HEADWEAR_CATEGORY = "minifig headwear"
@@ -73,7 +73,7 @@ def held_in_hand(part_id):
         if key not in _accessory_ids():
             return None
         # An accessory the reference sets never happened to hold. It is still
-        # held in a hand — that is what the category means — so it gets the
+        # held in a hand - that is what the category means - so it gets the
         # rule and the median grip, marked as the guess it is.
         return {
             "grip_y": DEFAULT_GRIP_Y,
@@ -82,7 +82,7 @@ def held_in_hand(part_id):
             "how": ("A minifigure holds this. Place it on the grip axis of the "
                     "hand: the hand's position plus the hand's rotation applied "
                     f"to (0, {DEFAULT_GRIP_Y}, -10.5). That grip is the usual "
-                    "one rather than this part's own — no set in the reference "
+                    "one rather than this part's own - no set in the reference "
                     "library holds it, so slide it along the axis until the "
                     "render looks right."),
         }
@@ -146,7 +146,7 @@ def stud_offsets(n, centre=0.0):
 
     ``centre`` is the middle of the part's own bounding box, and passing it is
     the whole point: plenty of parts are not drawn centred on their origin, and
-    a 45-degree slope is the common one — 3039 spans z from -30 to +10, so its
+    a 45-degree slope is the common one - 3039 spans z from -30 to +10, so its
     two rows of studs sit at z = -20 and 0, not at the -10 and +10 a part
     centred on nothing would have.
 
@@ -206,7 +206,7 @@ def part_geometry(row):
 # The spine that carries the model wants the longest parts that fit; the body
 # that gives it its shape wants ordinary bricks; the details that make it
 # readable want 1x1s. That is not a style preference, it is what the corpus
-# does — and the failure it names is specific and measured.
+# does - and the failure it names is specific and measured.
 #
 # Across the 1,797 OMR sets, 98.6% of models use all three of the classes
 # below. Across this agent's own 84 models, 54.8% do, and 13% are built out of
@@ -219,7 +219,7 @@ def part_geometry(row):
 #     structural  15%     medium  42%     detail  43%
 #
 # Worth reading twice, because it is the opposite of the obvious guess: real
-# sets are *detail-heavy*. The structural parts are a spine, not a bulk — about
+# sets are *detail-heavy*. The structural parts are a spine, not a bulk - about
 # one part in seven. Telling a builder "use big pieces" without that number
 # produces the 90-100% models above, which are worse than what they replaced.
 #
@@ -237,9 +237,9 @@ STRUCTURAL_AREA, STRUCTURAL_SPAN = 8.0, 6.0
 MEDIUM_AREA, MEDIUM_SPAN = 2.0, 2.0
 
 SIZE_CLASS_ROLES = {
-    STRUCTURAL: "the spine — spans, floors, the parts that carry the model",
-    MEDIUM: "the body — the walls and masses that give it its shape",
-    DETAIL: "the details — what makes it readable as the thing it is",
+    STRUCTURAL: "the spine - spans, floors, the parts that carry the model",
+    MEDIUM: "the body - the walls and masses that give it its shape",
+    DETAIL: "the details - what makes it readable as the thing it is",
 }
 
 
@@ -247,7 +247,7 @@ def size_class(row):
     """Which of the three jobs this part is sized for, or None if unmeasured.
 
     Takes a catalogue row or anything ``part_geometry`` has already been run
-    over — ``get_part`` hands back the latter, and asking for the raw min_x/
+    over - ``get_part`` hands back the latter, and asking for the raw min_x/
     max_x columns on one of those reports every part as unmeasured.
     """
     width = row.get("width_studs")
@@ -287,7 +287,7 @@ def summarize(row, with_geometry=True):
         out["held_in_hand"] = f"held in a minifigure's hand, grip_y {grip['grip_y']}"
     # And for the same reason: a search is where a part gets chosen, and for a
     # slope, a wedge or a bracket, *which way it faces* is half of choosing it.
-    # Only on the parts it is a real decision for — see facing_note.
+    # Only on the parts it is a real decision for - see facing_note.
     facing = facing_note(row)
     if facing:
         out["facing"] = facing
@@ -307,7 +307,7 @@ def summarize(row, with_geometry=True):
                 "kind": g["kind"],
                 "place_height_ldu": g["place_height_ldu"],
             })
-        # How it joins, on every row of every search — not only in the details
+        # How it joins, on every row of every search - not only in the details
         # call. A search is where a part gets chosen, and choosing one that
         # cannot attach to what it is for is the mistake this prevents; making
         # the agent fetch details for twelve candidates to find that out is how
@@ -325,7 +325,7 @@ def summarize(row, with_geometry=True):
         out["attaches"] = joins["attachment"]["summary"]
         # A band rather than the raw count: 29,903 uses means nothing on its
         # own, and ranking by it means always choosing the plainest part there
-        # is. "uncommon" is the useful signal — a real element, just a
+        # is. "uncommon" is the useful signal - a real element, just a
         # specialist one.
         from . import companions
 
@@ -342,14 +342,14 @@ def summarize(row, with_geometry=True):
 # above the top face", which is studs on a brick but is also the ramp of a
 # slope, the plume on a helmet, and the upper half of a Technic beam whose
 # origin sits at its centre. Measured against the real geometry it is wrong
-# about two parts in five — so the real geometry is what gets used.
+# about two parts in five - so the real geometry is what gets used.
 # --------------------------------------------------------------------------
 
 def top_studs(part_name):
     """How many studs a part has on its top face, or None if unreadable.
 
-    None means the library could not answer — a part not on disk, or no library
-    at all — and is not the same as zero, which is a tile.
+    None means the library could not answer - a part not on disk, or no library
+    at all - and is not the same as zero, which is a tile.
     """
     from . import connections
 
@@ -361,7 +361,7 @@ def top_studs(part_name):
 # Where a part's studs are, and how to put something on them
 #
 # The stud grid in the CSV is derived from the bounding box, which is right for
-# a rectangle and wrong for everything else — a 2x2 slope has two studs, not
+# a rectangle and wrong for everything else - a 2x2 slope has two studs, not
 # four, and a bracket's are not where its box says. The real answer is in the
 # part file, and the geometry walk in connections.scan already finds it: every
 # stud, its position in the part's own coordinates, and which way it points.
@@ -370,7 +370,7 @@ def top_studs(part_name):
 # a list of coordinates but "put a part *here*, turned like *this*".
 #
 # The turn is the half nobody can work out from a number. A part sits with its
-# underside facing +y — down, since -Y is up — and receives a stud pointing -y.
+# underside facing +y - down, since -Y is up - and receives a stud pointing -y.
 # A stud on the SIDE of a brick points sideways, so a part going onto it has to
 # be turned until its underside faces back into that stud. These are the four
 # rotations that do it, and they are why a headlight brick or a bracket is
@@ -438,7 +438,7 @@ def _side_studs(part_name):
     """This part's sideways studs, in its own frame. The shared scan.
 
     Pulled out because `stud_map` and `side_studs_placed` both need it and one
-    calling the other recursed without end — `stud_map` now reports the four
+    calling the other recursed without end - `stud_map` now reports the four
     facings, and working those out needs the studs it is in the middle of
     reporting.
     """
@@ -465,7 +465,7 @@ def side_studs_placed(part_name, matrix=None, position=(0.0, 0.0, 0.0),
     """Where a part's side studs really are once the part has been turned.
 
     This is the answer the builder needs and could not get. ``stud_map`` reports
-    a part's side studs in the part's **own** frame — a 1x1 with a stud on one
+    a part's side studs in the part's **own** frame - a 1x1 with a stud on one
     side always reports it facing `-z`, because in its own coordinates it always
     does. Turn that brick a quarter turn and the stud faces `-x` in the model
     while the catalogue still says `-z`, and the part built onto it is placed
@@ -477,24 +477,24 @@ def side_studs_placed(part_name, matrix=None, position=(0.0, 0.0, 0.0),
 
     So the placement is composed in. Returns one entry per side stud:
 
-    * ``at`` — where the stud is **in the model**, not an offset
-    * ``faces`` / ``towards`` — the direction it points in the model
-    * ``matrix`` — what to put in the type-1 line of the part going onto it,
+    * ``at`` - where the stud is **in the model**, not an offset
+    * ``faces`` / ``towards`` - the direction it points in the model
+    * ``matrix`` - what to put in the type-1 line of the part going onto it,
       which is the host's rotation applied to the facing's own matrix rather
       than either one alone
 
     ``attaching`` names the part that is going on, and it is what turns this
     from a description into a placement: ``place_at`` is then the exact origin
     for its type-1 line. The offset is the attaching part's own stacking
-    height along the facing — a plate stands 8 LDU out from the face, a brick
-    24 — which is the same rule as stacking upward, pointed sideways. Measured
+    height along the facing - a plate stands 8 LDU out from the face, a brick
+    24 - which is the same rule as stacking upward, pointed sideways. Measured
     rather than derived: see the sweep in the self-test, where the connecting
     band for a plate is centred on 8 and for a brick on 24, on every SNOT part
     tried.
 
     Without ``attaching`` there is no ``place_at``, deliberately. The stud
     position on its own is where the *plastic* is, and a part put there is
-    inside the host — which is exactly the mistake this function exists to
+    inside the host - which is exactly the mistake this function exists to
     stop, so it is not a number worth handing out unqualified.
 
     ``matrix`` may be given as the nine numbers, as a string, or left out for an
@@ -552,7 +552,7 @@ def side_studs_placed(part_name, matrix=None, position=(0.0, 0.0, 0.0),
 def _stand_off(part_name):
     """How far out from the face a part seated on a side stud sits.
 
-    Its own stacking height: 8 for a plate, 24 for a brick — the same number
+    Its own stacking height: 8 for a plate, 24 for a brick - the same number
     that decides where it goes when it is stacked upward, because it is the
     same connection turned on its side.
     """
@@ -591,7 +591,7 @@ def side_stud_facings(part_name):
 def stud_map(part_name):
     """Every stud on a part: where it is, which way it points, what goes on it.
 
-    ``None`` when the geometry could not be read — no library, or a part that
+    ``None`` when the geometry could not be read - no library, or a part that
     is not in it. Positions are in the part's own coordinates, so a part placed
     at ``(x, y, z)`` has a stud at ``(x + sx, y + sy, z + sz)``.
     """
@@ -630,7 +630,7 @@ def stud_map(part_name):
         found["underside"] = {
             "count": len(seats),
             "at": sorted(seats),
-            "how": "the tubes underneath — where this part comes down over "
+            "how": "the tubes underneath - where this part comes down over "
                    "somebody else's studs. These are what have to land on the "
                    "stud positions of the part below, and they are the reason "
                    "a part can be on a multiple of 20 and still not connect.",
@@ -640,7 +640,7 @@ def stud_map(part_name):
             "count": len(sides),
             "studs": sides,
             "how": "each of these faces sideways, so the part going onto it is "
-                   "turned until its underside faces back into the stud — that "
+                   "turned until its underside faces back into the stud - that "
                    "is what `matrix_for_the_part_on_it` is, ready to paste "
                    "into the type-1 line. This is how a wall gets a surface "
                    "with no studs on it, or a detail that faces the viewer.",
@@ -653,11 +653,11 @@ def stud_map(part_name):
                 "not: a stud facing `-z` faces `-x` after a 90° turn about Y, "
                 "`+z` after 180° and `+x` after 270°, and the matrix for the "
                 "part going onto it changes with it. `facings_when_turned` "
-                "below has all four worked out — read the one for the rotation "
+                "below has all four worked out - read the one for the rotation "
                 "you are placing this at, and never reuse the unrotated matrix "
                 "on a turned part."),
             "stand_off": (
-                "The part going on does NOT sit at the stud position — that is "
+                "The part going on does NOT sit at the stud position - that is "
                 "where the plastic is, and its origin there would put it "
                 "inside this part. It stands off along the facing by its own "
                 "stacking height: 8 LDU for a plate, 24 for a brick. Stud at "
@@ -700,7 +700,7 @@ def part_connections(row):
 # What the stud grid governs
 #
 # The connectivity checker understands one connection: a stud in an anti-stud.
-# That is most of LEGO and it is nothing like all of it — a Technic pin goes
+# That is most of LEGO and it is nothing like all of it - a Technic pin goes
 # into a pin hole, an axle threads a cross-hole, a pane of glass drops into a
 # window frame, a bar slides through a clip. None of those parts ever seats on
 # a stud, so measuring one against the stud lattice asks a question it has no
@@ -708,7 +708,7 @@ def part_connections(row):
 # judged against a grid it was never on and reported off it.
 #
 # Measured over the 1,801 official sets, that single mistake was the largest
-# source of false alarms in the whole checker — Technic and window glass alone
+# source of false alarms in the whole checker - Technic and window glass alone
 # accounted for nearly half of every "misaligned" row in models that were
 # designed, moulded and sold.
 #
@@ -721,14 +721,14 @@ def part_connections(row):
 
 # Round-bodied parts, named rather than measured.
 #
-# A part whose body is a cylinder seats on a single stud at its centre — see
+# A part whose body is a cylinder seats on a single stud at its centre - see
 # `part_has_central_tube` in the connectivity checker, which reads that off the
 # part's own wall. Most round parts say so in their geometry; a few draw their
 # rim as explicit triangles and measure as square, and 4032a and 60474 are the
 # two the reference corpus actually trips over.
 #
 # So the catalogue answers as well. This is a *relation between named parts and
-# a physical fact about them*, which is what a parts catalogue is for — and it
+# a physical fact about them*, which is what a parts catalogue is for - and it
 # is safe in a way loosening the geometric test would not be, because it turns
 # on the word "Round" rather than on a tolerance that a square 2x2 plate could
 # creep through.
@@ -769,7 +769,7 @@ def round_bodied_parts():
 def seats_on_studs(part_name):
     """Whether the stud grid governs this part at all.
 
-    True for anything that sits on studs — a brick, a plate, a tile, a slope.
+    True for anything that sits on studs - a brick, a plate, a tile, a slope.
     False for a part held by some other system entirely. **None** when the part
     is not in the catalogue, which is not the same answer: an embedded part
     definition inside an MPD is usually an ordinary printed element, and
@@ -783,7 +783,7 @@ def seats_on_studs(part_name):
         return None
     if is_primitive(row):
         # A primitive is the geometry parts are *made of*. Placed directly in a
-        # model it is a generated run — a hose path, a rubber band, a rope —
+        # model it is a generated run - a hose path, a rubber band, a rope -
         # and no part of that is seated on anything.
         return False
     try:
@@ -803,7 +803,7 @@ def seats_on_studs(part_name):
 #
 # That distinction is what this is for, and it is why it is *not* read off the
 # corpus rotation share. That share says a plain 2x4 brick is turned in 70% of
-# its placements, which is true and means nothing — a brick running along z
+# its placements, which is true and means nothing - a brick running along z
 # carries a 90° matrix, and nobody decided anything by writing it. Flagging
 # every part above some threshold would flag four parts in five, which is the
 # same as flagging none.
@@ -811,7 +811,7 @@ def seats_on_studs(part_name):
 # So the question asked here is "does turning this change what it looks like",
 # which is a fact about the shape. Category first, because the catalogue
 # already sorts most of them; then the words that make an otherwise-square part
-# directional — a stud on one side, a clip, a handle, a print.
+# directional - a stud on one side, a clip, a handle, a print.
 # --------------------------------------------------------------------------
 
 _FACING_CATEGORIES = {
@@ -856,7 +856,7 @@ def faces_a_direction(row):
 
 @lru_cache(maxsize=1)
 def _turn_shares():
-    """``{part_id: share}`` — how often real sets place each part turned."""
+    """``{part_id: share}`` - how often real sets place each part turned."""
     shares = {}
     try:
         with Path(PART_ROTATION).open(encoding="utf-8") as handle:
@@ -876,7 +876,7 @@ def _turn_shares():
 def turn_share(part_id):
     """How often the corpus places this part turned, 0..1, or None.
 
-    None where the corpus has too few placements to say — see MIN_PLACEMENTS
+    None where the corpus has too few placements to say - see MIN_PLACEMENTS
     in build_technique_notes.py. A share from three placements is not a share.
     """
     key = (str(part_id or "").strip().lower().replace("\\", "/")
@@ -887,14 +887,14 @@ def turn_share(part_id):
 def facing_note(row):
     """One line telling the builder this part has a direction to choose.
 
-    None for a part where it does not — a brick, a plate, a round element —
+    None for a part where it does not - a brick, a plate, a round element -
     because a note on every part is a note on nothing.
     """
     if not faces_a_direction(row):
         return None
     part_id = row.get("part_id") if isinstance(row, dict) else row
     share = turn_share(part_id)
-    note = "this part faces a direction — decide which way before you place it"
+    note = "this part faces a direction - decide which way before you place it"
     if share is not None and share >= 0.5:
         note += f"; real sets turn it in {round(share * 100)}% of placements"
     return note
@@ -913,7 +913,7 @@ def is_primitive(row):
     """Whether this row is an LDraw primitive rather than a part.
 
     The library ships the shapes parts are *made of* alongside the parts
-    themselves — a cylinder, a box with four faces, the stud itself. They have
+    themselves - a cylinder, a box with four faces, the stud itself. They have
     part numbers and bounding boxes like anything else, so nothing but this
     field tells them apart, and offering one as something to build with is
     offering a wall rather than a brick.
@@ -1223,9 +1223,9 @@ def get_part(part_id):
             if worn:
                 info["worn_by_minifig"] = (
                     f"A minifigure wears this on its {worn}. Place it at the "
-                    + ("head's own position — the same coordinates as the head."
+                    + ("head's own position - the same coordinates as the head."
                        if worn == "head" else
-                       "torso's own position — the same coordinates as the torso."))
+                       "torso's own position - the same coordinates as the torso."))
             # the counted answer, not the one the bounding box guessed
             studs = top_studs(row.get("dat_name") or row.get("part_id"))
             if studs is not None:
@@ -1240,7 +1240,7 @@ def get_part(part_id):
                 for c in joins["connections"]]
             info["moves"] = joins["moves"]
             # What real sets put beside this part. For half the catalogue this
-            # is the fact that turns a lone part into a working assembly — a
+            # is the fact that turns a lone part into a working assembly - a
             # rim is a hubcap until the tyre goes on it.
             company = part_companions(row, limit=5)
             if company["used_with"]:

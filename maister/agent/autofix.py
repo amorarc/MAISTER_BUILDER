@@ -2,14 +2,14 @@
 
 Most overlaps the checker reports are near misses: a brick one stud too far
 east, a plate sunk one plate too low, a tile put down a stud away from where it
-was meant to go. Every one of those has an obvious repair — slide the part one
-position along the grid — and none of them is worth a round trip to the model,
+was meant to go. Every one of those has an obvious repair - slide the part one
+position along the grid - and none of them is worth a round trip to the model,
 which answers slowly, sometimes gets the arithmetic wrong, and has to be shown
 the file again afterwards to find out whether it worked.
 
 So the repair is tried here first. Every move considered lands back on the stud
-grid — whole studs sideways, whole plates vertically, and half a stud only for
-the round 1x1 elements that legally sit half off it — and a move is accepted
+grid - whole studs sideways, whole plates vertically, and half a stud only for
+the round 1x1 elements that legally sit half off it - and a move is accepted
 only when the part it moves comes out with no overlap of its own, creates none
 for anybody else, and is still touching the build rather than hanging in the
 air. Anything that fails those tests is left exactly as it was and handed back
@@ -24,12 +24,12 @@ it meant it to.
 
 One overlap is never repaired here, however easy the move looks: one between
 parts in two different submodels. A submodel is a sub-assembly that is correct
-in itself — its parts are placed relative to each other, and it is the whole
+in itself - its parts are placed relative to each other, and it is the whole
 thing that has been put in the wrong place. Nudging one brick of it clear of
 the neighbour it has been driven into does not move the sub-assembly, it takes
 a piece off it, and the next brick along is still buried. Run on an official
 set modelled with its head intersecting its body, the old behaviour pulled the
-head apart a brick at a time — sixteen of them, each move locally legal and
+head apart a brick at a time - sixteen of them, each move locally legal and
 the sculpture ruined. So a cross-submodel overlap is reported instead, saying
 which two assemblies are in each other and that the fix is where one of them
 sits.
@@ -46,19 +46,19 @@ STEPS_XZ = (catalog.STUD_PITCH, 2 * catalog.STUD_PITCH)
 STEPS_Y = (8.0, 16.0, 24.0)
 
 # A 1x1 round element clutches at the centre of a 2x2 cell of studs, so for
-# those — and only those — half a stud is a legal place to be.
+# those - and only those - half a stud is a legal place to be.
 HALF_STUD = catalog.STUD_PITCH / 2.0
 
 # Moves are compared in steps rather than in LDU, because a step is what a move
 # means and LDU are only what it measures: a plate is 8 and a stud is 20, so
 # anything counted in LDU thinks lifting a part onto the row above is less than
 # half the intervention of sliding it along the row it is on. It is more. A
-# vertical step is charged accordingly — a part slid along usually restores what
+# vertical step is charged accordingly - a part slid along usually restores what
 # was intended, where a part lifted onto its neighbour builds something else.
 Y_STEP_COST = 1.5
 
 # How far from where it was a part may be put: two studs along, a brick up or
-# down. That is the whole of "it was nearly right" — past it, the placement is a
+# down. That is the whole of "it was nearly right" - past it, the placement is a
 # decision rather than a slip, and decisions are not this function's to make.
 MAX_SIDEWAYS_LDU = 2 * catalog.STUD_PITCH
 MAX_VERTICAL_LDU = 24.0
@@ -69,7 +69,7 @@ TOUCH_GAP = 0.6
 
 # What a move is charged for leaving a part at a height that is not a whole
 # number of plates. Larger than any move worth making, so a part standing at an
-# odd height is always straightened rather than shuffled along still odd —
+# odd height is always straightened rather than shuffled along still odd -
 # trading an overlap for a misalignment fixes nothing.
 OFF_HEIGHT_PENALTY = 200.0
 
@@ -122,8 +122,8 @@ def _moved_instance(inst, delta):
     """The same placement, shifted. For measuring a move before taking it.
 
     A box can be shifted on its own, and for a box test that was enough. A
-    measurement of shared plastic works off the placement — the part, its
-    matrix and where it sits — so a candidate move has to be expressed as a
+    measurement of shared plastic works off the placement - the part, its
+    matrix and where it sits - so a candidate move has to be expressed as a
     placement too, or the measurement would keep answering about where the
     part still is.
     """
@@ -150,7 +150,7 @@ def _defects(flat, boxes, solid, measure=None):
 
     ``measure`` is the shared-plastic measurement the report uses. It is passed
     through so that what this repairs and what `validate_model` complains about
-    are the same set — an autofix working from the old box reading would chase
+    are the same set - an autofix working from the old box reading would chase
     overlaps the report no longer names, and leave the ones it does.
     "unchecked" is not a defect here: nothing can be measured, so nothing can
     be verified to have been improved by moving it.
@@ -173,7 +173,7 @@ def _defects(flat, boxes, solid, measure=None):
 def _still_overlaps(index, flat, boxes, solid, box, measure=None, moved=None):
     """Whether the part at `index`, placed at `box`, is inside anything.
 
-    ``moved`` is the instance as it would be after the move — the boxes are
+    ``moved`` is the instance as it would be after the move - the boxes are
     already the moved ones, but a measurement works off the placement rather
     than off a box, so it needs the part in its new position to say anything
     truthful about it.
@@ -222,11 +222,11 @@ def _alignment(box, partner_box, inst, partner_inst):
 
     Heights are whole plates in every build there is, so a part at an odd
     height is a part in the wrong place, and a move in whole plates would leave
-    it just as odd — the correction has to be folded into the move itself.
+    it just as odd - the correction has to be folded into the move itself.
 
     Only for parts that are upright, though, and measured against a partner
-    that is too. Turn a sub-assembly on its side — a shop sign facing the
-    street, a hull built lying down — and world Y is one of its *horizontal*
+    that is too. Turn a sub-assembly on its side - a shop sign facing the
+    street, a hull built lying down - and world Y is one of its *horizontal*
     axes, where the spacing is a stud and not a plate. Snapping to 8 there does
     not straighten anything; it slides the part half a plate off the lattice it
     was actually on, and the search then prefers that move because straightened
@@ -234,8 +234,8 @@ def _alignment(box, partner_box, inst, partner_inst):
     height to correct and none is applied.
 
     Sideways there is no such correction, deliberately. A part between stud
-    positions is off the lattice on purpose about as often as by accident — a
-    jumper offset, a SNOT panel, two plates making a puppy's eyes — and nothing
+    positions is off the lattice on purpose about as often as by accident - a
+    jumper offset, a SNOT panel, two plates making a puppy's eyes - and nothing
     visible from here tells the two apart. So a part that sits between studs
     keeps sitting between them, and is moved in whole studs from wherever it is:
     a real move, and one that cannot silently redesign somebody's model.
@@ -249,7 +249,7 @@ def _cost(move, step_height=8.0):
     """What a move costs, in steps.
 
     A step sideways is a stud. A step up or down is the moved part's own
-    height — a brick moved by a brick has gone one place, and calling that
+    height - a brick moved by a brick has gone one place, and calling that
     three steps because a plate happens to be a third of it would have the
     search shove bricks across the model to avoid restacking them by one.
     """
@@ -367,7 +367,7 @@ def _summary(inst):
     described = catalog.get_part(name)
     return {"line": inst.src.line_no, "part": inst.src.part_name,
             "description": (described or {}).get("description"),
-            # which sub-assembly the line lives in — the thing to move when two
+            # which sub-assembly the line lives in - the thing to move when two
             # of them are inside each other
             "submodel": getattr(inst.src, "submodel", None)}
 
@@ -382,7 +382,7 @@ def plan(path, library_root=None):
     Returns ``(moves, fixed, unfixed, not_reached, error)``. ``moves`` maps a
     source line number to the translation to add to that line, already
     expressed in the frame the line is written in. ``not_reached`` is how many
-    overlaps were still there when the round limit ran out — nought almost
+    overlaps were still there when the round limit ran out - nought almost
     always, and the difference between "there is nothing left" and "I stopped
     looking" whenever it is not.
     """
@@ -421,7 +421,7 @@ def plan(path, library_root=None):
 
         # Two sub-assemblies inside each other. Neither part is in the wrong
         # place relative to its own siblings, so neither is this function's to
-        # move — see the note at the top of the file.
+        # move - see the note at the top of the file.
         across = (getattr(flat[i].src, "submodel", None)
                   != getattr(flat[j].src, "submodel", None))
 
@@ -486,7 +486,7 @@ def plan(path, library_root=None):
                    f"somewhere else, or change the part that was put in "
                    f"its way")
         elif kind == "duplicate":
-            why = ("the same part is placed twice in one spot — one of the two "
+            why = ("the same part is placed twice in one spot - one of the two "
                    "lines has to go, and only you can say which")
         elif reused and not tried:
             why = ("this line is inside a submodel that is placed more than "
@@ -495,7 +495,7 @@ def plan(path, library_root=None):
                    "submodel of its own")
         else:
             why = ("no move of a stud or two leaves this part clear and still "
-                   "attached — it needs a different place in the build, a "
+                   "attached - it needs a different place in the build, a "
                    "different part, or deleting")
         unfixed.append({
             "a": _summary(flat[i]), "b": _summary(flat[j]),
@@ -539,7 +539,7 @@ def _rewrite(line, delta):
 
 # A model where the minority lattice is this much of the build is not a model
 # with a slip in it. Two nearly-equal halves means it was built two different
-# ways and there is no majority to join — which is a decision, not arithmetic,
+# ways and there is no majority to join - which is a decision, not arithmetic,
 # and it goes to the builder rather than being guessed at here.
 MAX_MINORITY = 0.5
 
@@ -549,7 +549,7 @@ def snap_lattice(path):
 
     The other half of what `fix` does for overlaps. A part whose studs sit half
     a stud off cannot connect to anything, and putting it right is a rigid
-    translation of ±10 LDU — arithmetic, with exactly one answer, which is the
+    translation of ±10 LDU - arithmetic, with exactly one answer, which is the
     definition of what this module exists to spare the builder.
 
     Only ever moves the minority. The model's lattice is whatever most of it
@@ -592,13 +592,13 @@ def snap_lattice(path):
         if len(info["phases"]) > 2:
             return {"changed": False, "moved": 0,
                     "note": (f"the {axis} axis is split {len(info['phases'])} "
-                            f"ways, which is not a half-stud slip — the builder "
+                            f"ways, which is not a half-stud slip - the builder "
                             f"has to decide which grid this model is on")}
         if info["minority_parts"] / judged >= MAX_MINORITY:
             return {"changed": False, "moved": 0,
                     "note": (f"{info['minority_parts']} of {judged} parts are "
                             f"off the {axis} lattice, so there is no majority "
-                            f"to join — the builder has to decide")}
+                            f"to join - the builder has to decide")}
 
     target_phase = lattice_module.dominant(placements)
     if target_phase is None:
@@ -659,7 +659,7 @@ def fix(path, library_root=None):
     if error:
         return {"error": error}
 
-    # `remaining` counts everything still wrong, listed or not — it is what the
+    # `remaining` counts everything still wrong, listed or not - it is what the
     # caller reads to decide whether the model is clear.
     report = {"file": str(target), "moved": len(fixed),
               "remaining": len(unfixed) + not_reached,

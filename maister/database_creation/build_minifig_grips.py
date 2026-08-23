@@ -14,12 +14,12 @@ in the 1,800-model Official Model Repository:
     the grip axis runs along local y, at x = 0, z = -10.5
 
 91% of held accessories sit within 5 LDU of that line. The ones that do not are
-skirts, hair and airtanks — parts *worn* by a figure standing near the hand
+skirts, hair and airtanks - parts *worn* by a figure standing near the hand
 rather than held in it, which is the distinction this file exists to draw.
 
 The output is `data/parts/minifig_held.csv`: one row per accessory a real set
 was seen holding, with where along the grip axis it was held. It is guidance
-for the agent, not a closed list — validation uses the geometric rule above, so
+for the agent, not a closed list - validation uses the geometric rule above, so
 a part that never appears here is still recognised as held if it is on the axis.
 """
 
@@ -59,8 +59,8 @@ def _local(matrix, delta):
 def _relative(hand, tool):
     """The tool's rotation in the hand's frame: ``hand^T · tool``.
 
-    Which way a tool points is mostly a pose — a figure can hold a sword up or
-    out, and the sets do both — so this is not a rule the way the grip axis is.
+    Which way a tool points is mostly a pose - a figure can hold a sword up or
+    out, and the sets do both - so this is not a rule the way the grip axis is.
     It is recorded because the *commonest* relative rotation per part is a
     sensible default, and a default beats a builder guessing at nine numbers.
     Only 1% of held tools take the hand's own rotation unchanged, so "just copy

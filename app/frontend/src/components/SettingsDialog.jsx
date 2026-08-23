@@ -26,7 +26,7 @@ function label(provider) {
  * text-only; the vision model looks at the renders of what it wrote and says
  * whether it resembles what was asked for. One id could never do both jobs.
  *
- * All of it lives on the backend — it is the backend that runs the agent, so a
+ * All of it lives on the backend - it is the backend that runs the agent, so a
  * choice kept only in this tab would be a preference the thing it configures
  * never sees.
  */
@@ -167,7 +167,7 @@ export default function SettingsDialog({ open, onClose, projectCount, onProjects
   };
 
   // a provider set by hand, or one the backend has since stopped listing, is
-  // still the one in force — show it rather than quietly dropping the selection
+  // still the one in force - show it rather than quietly dropping the selection
   const providersFor = (current) => {
     if (!data) return [];
     const list = ["", ...data.policies, ...data.providers];
@@ -197,7 +197,7 @@ export default function SettingsDialog({ open, onClose, projectCount, onProjects
           <div style={{ flex: 1 }}>
             <h2 className="modal-title">Settings</h2>
             <p className="modal-sub">
-              Two models — one builds, one looks at what was built — and what
+              Two models - one builds, one looks at what was built - and what
               the builder is allowed to borrow. Saved on the backend, so they
               survive a restart.
             </p>
@@ -268,7 +268,7 @@ export default function SettingsDialog({ open, onClose, projectCount, onProjects
 
             <div className="set-effective">
               <span className="eyebrow">SENDING AS</span>
-              <code>{effective || "—"}</code>
+              <code>{effective || "-"}</code>
             </div>
 
             <section className="set-field">
@@ -289,7 +289,7 @@ export default function SettingsDialog({ open, onClose, projectCount, onProjects
               />
               <div className="set-hint">
                 The model that <b>looks</b> at the renders and reports whether
-                the build resembles what was asked for. It must be multimodal —
+                the build resembles what was asked for. It must be multimodal -
                 a text-only id here means the agent builds blind.
               </div>
               <div className="set-picks">
@@ -326,7 +326,7 @@ export default function SettingsDialog({ open, onClose, projectCount, onProjects
 
             <div className="set-effective">
               <span className="eyebrow">LOOKING WITH</span>
-              <code>{visionEffective || "—"}</code>
+              <code>{visionEffective || "-"}</code>
             </div>
 
             {data.renderer_available === false && (
@@ -357,15 +357,15 @@ export default function SettingsDialog({ open, onClose, projectCount, onProjects
               <div className="set-hint">
                 {copyFromSet ? (
                   <>
-                    The agent can lift a whole assembly out of a released set —
-                    a wing, a wheel arch, a torso — and build on top of it.
+                    The agent can lift a whole assembly out of a released set -
+                    a wing, a wheel arch, a torso - and build on top of it.
                     Better models, faster; less of the model is its own.
                   </>
                 ) : (
                   <>
                     <b>The agent designs every part placement itself.</b> It can
                     still read the 1,800 reference sets for technique, but it
-                    cannot graft from them. Expect simpler models — this is the
+                    cannot graft from them. Expect simpler models - this is the
                     setting that shows you what it actually invents.
                   </>
                 )}
@@ -393,13 +393,13 @@ export default function SettingsDialog({ open, onClose, projectCount, onProjects
                   {erasing
                     ? "Erasing…"
                     : armed
-                      ? `Erase ${plural(projectCount, "project")} — sure?`
+                      ? `Erase ${plural(projectCount, "project")} - sure?`
                       : "Erase all projects"}
                 </button>
               </div>
               <div className="set-hint">
                 {armed
-                  ? "Click again to erase. Nothing here comes back — take the zip first."
+                  ? "Click again to erase. Nothing here comes back - take the zip first."
                   : "The zip holds one .ldr per project. Erasing cannot be undone."}
               </div>
             </section>

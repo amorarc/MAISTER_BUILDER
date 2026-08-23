@@ -1,4 +1,4 @@
-"""Which parts are used *with* which — learned from real sets.
+"""Which parts are used *with* which - learned from real sets.
 
 A part's dimensions say what it is. What they never say is what it is normally
 used *with*, and for a great many parts that is the more useful fact. A wheel
@@ -13,21 +13,21 @@ same box are two parts that go together.
 
 Two numbers are needed, and either one alone gets it wrong.
 
-**Lift** — how much more often the pair appears together than it would if sets
+**Lift** - how much more often the pair appears together than it would if sets
 were assembled at random, ``P(companion | this) / P(companion)``. This is what
 separates a habit from a coincidence: a 1x2 plate sits at a lift near 1 against
 everything in the catalogue, because it is in almost every box and so is
 "companion" to nothing. Ranking by lift alone, though, hands the top spot to
-whatever rare part happened to share a few boxes — the rarer it is, the higher
+whatever rare part happened to share a few boxes - the rarer it is, the higher
 it scores.
 
-**Share** — of the sets that use this part, how many also use that one. This is
+**Share** - of the sets that use this part, how many also use that one. This is
 the number a builder can act on, and ranking by it alone is just as wrong: it
 answers every question with the plate that is in every set.
 
 So a pair has to clear a lift floor to be believed at all, and what survives is
 ordered by share. For a turntable top, that puts its own base first, in 93% of
-the sets it appears in, at a lift of 15 — while the ubiquitous plates it also
+the sets it appears in, at a lift of 15 - while the ubiquitous plates it also
 sits beside never clear the floor. A part with nothing above both thresholds
 reports no companions, which for a 2x4 brick is the truthful answer: it is used
 with everything, so it is characteristic of nothing.
@@ -53,7 +53,7 @@ TOP_N = 12
 # Below this many sets in common, a pair is a coincidence rather than a habit.
 MIN_TOGETHER = 4
 
-# A part in fewer sets than this has no reliable companions at all — every one
+# A part in fewer sets than this has no reliable companions at all - every one
 # of them would be drawn from a handful of boxes.
 MIN_SETS = 3
 
@@ -184,7 +184,7 @@ def for_part(part_id, limit=6, with_descriptions=True):
 #
 # `total_uses` is a number in the tens of thousands and tells nobody anything
 # on its own. What a builder wants to know is whether reaching for this part is
-# ordinary or exotic — a 1x2 plate is in a third of all sets, a chrome minifig
+# ordinary or exotic - a 1x2 plate is in a third of all sets, a chrome minifig
 # trident is in two.
 # --------------------------------------------------------------------------
 
@@ -192,7 +192,7 @@ BANDS = (
     (0.10, "very common", "in more than a tenth of all sets"),
     (0.02, "common", "in a few sets in every hundred"),
     (0.004, "uncommon", "a specialist part, but a real one"),
-    (0.0, "rare", "almost never used — check there is not a plainer part "
+    (0.0, "rare", "almost never used - check there is not a plainer part "
                   "that does the same job"),
 )
 

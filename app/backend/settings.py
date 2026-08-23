@@ -3,7 +3,7 @@
 The HuggingFace router takes both halves in one string: ``org/model:provider``,
 where the provider suffix is optional and, when absent, lets the router pick.
 That is a single opaque id to everything downstream, so it is stored split in
-two here — a model and a provider are separate decisions to the person making
+two here - a model and a provider are separate decisions to the person making
 them, even though they travel as one field.
 
 Kept in ``out/settings.json`` rather than in the browser: the agent runs on the
@@ -23,7 +23,7 @@ SETTINGS_FILE = OUT_DIR / "settings.json"
 # this criterion". Listed first because they are what most people want.
 POLICIES = ["cheapest", "fastest"]
 
-# Providers that can be named directly. Not exhaustive and not enforced — the
+# Providers that can be named directly. Not exhaustive and not enforced - the
 # router gains providers faster than this list will be updated, so an unknown
 # value is passed through and the router gets to reject it.
 PROVIDERS = [
@@ -55,7 +55,7 @@ SUGGESTED_MODELS = [
 ]
 
 # The second model: the one that looks at the renders and says whether the
-# build resembles what was asked for. It must be multimodal — a text-only id
+# build resembles what was asked for. It must be multimodal - a text-only id
 # here means every critique fails and the agent builds blind.
 #
 # The first three were checked against this project's contact sheets and
@@ -110,7 +110,7 @@ _REQUIRED = ("model", "vision_model")
 # clause without one of them getting the wrong answer.
 BOOL_FIELDS = {
     # Whether the agent may lift assemblies out of released sets. Off is the
-    # setting that makes a build the agent's own work — see
+    # setting that makes a build the agent's own work - see
     # maister/agent/config.py COPY_FROM_SET_ENABLED.
     "copy_from_set": lambda: COPY_FROM_SET_ENABLED,
 }
@@ -126,7 +126,7 @@ def load():
 
     A file that has been hand-edited into nonsense is treated as absent rather
     than fatal: the agent should still start. A file written before the vision
-    model was configurable simply has no entry for it, and gets the default —
+    model was configurable simply has no entry for it, and gets the default -
     which is why each field is read on its own rather than the whole document
     being accepted or rejected together.
     """

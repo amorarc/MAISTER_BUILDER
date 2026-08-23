@@ -1,7 +1,7 @@
 """Regenerate the style baselines in maister/agent/style.py from the OMR corpus.
 
 The numbers in ``style.BASELINES`` are what real LEGO sets look like on four
-axes — distinct shapes, how much of the model the commonest part takes, colours,
+axes - distinct shapes, how much of the model the commonest part takes, colours,
 and how many parts carry a rotation. This is where they come from.
 
     python tools/style_baselines.py
@@ -10,7 +10,7 @@ It prints a table to read and the ``BASELINES`` dict to paste. It does not write
 to style.py: these numbers change what the agent is told about its own work, so
 they get looked at by a person before they land.
 
-Measurement matches style.measure exactly — type-1 lines that name a real part,
+Measurement matches style.measure exactly - type-1 lines that name a real part,
 submodel references excluded, no flattening. If you change one, change both.
 """
 
@@ -30,7 +30,7 @@ def catalogue_names():
     """Every real part name, lowercased and without .dat.
 
     A quarter of the OMR files embed part definitions inside themselves, and
-    those definitions are built out of LDraw *primitives* — `4-4cyli`, `rect3`,
+    those definitions are built out of LDraw *primitives* - `4-4cyli`, `rect3`,
     `1-8edge`, the internal geometry every part is made of. Those appear as
     type-1 lines like anything else, and counting them adds thousands of
     "distinct shapes" no designer ever chose: 6.5% of all part lines in the
@@ -123,11 +123,11 @@ def percentile(rows, key, fraction):
 
 def main():
     if not CORPUS.is_dir():
-        raise SystemExit(f"no corpus at {CORPUS} — nothing to measure")
+        raise SystemExit(f"no corpus at {CORPUS} - nothing to measure")
 
     known = catalogue_names()
     if not known:
-        print(f"warning: no catalogue at {CATALOG} — primitives will be "
+        print(f"warning: no catalogue at {CATALOG} - primitives will be "
               f"counted as parts and the numbers will be wrong")
 
     rows = []

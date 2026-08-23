@@ -1,7 +1,7 @@
 """A name for a project, taken from what was actually built in it.
 
 A project starts life as "Untitled", because at the moment it is created nobody
-knows what it will become — not the user, who has only typed a request, and not
+knows what it will become - not the user, who has only typed a request, and not
 the app. The first build is the first time there is something to name, so the
 model that built it names it.
 
@@ -16,7 +16,7 @@ SYSTEM = (
     "You name LEGO models.\n\n"
     "Reply with a name for the model described below and nothing else: two to "
     "five words, no quotes, no file extension, no full stop, no preamble.\n\n"
-    "Name it the way someone labels a drawer they will open again — what the "
+    "Name it the way someone labels a drawer they will open again - what the "
     "thing is, and the one detail that tells it apart from the others. "
     "'Red pickup truck'. 'Small castle tower'. 'Yellow biplane'.\n\n"
     "Not 'Model'. Not 'LEGO build'. Not a sentence about what you did."
@@ -25,11 +25,11 @@ SYSTEM = (
 # The default name, and the numbered variants a few of them would collect.
 _UNTITLED = re.compile(r"untitled(\s*\(?\d+\)?)?$", re.IGNORECASE)
 
-# "Name: Red pickup truck", "Title — Red pickup truck"
-_LABEL = re.compile(r"^\s*(name|title)\s*[:\-—]\s*", re.IGNORECASE)
+# "Name: Red pickup truck", "Title - Red pickup truck"
+_LABEL = re.compile(r"^\s*(name|title)\s*[:\-\u2014]\s*", re.IGNORECASE)
 
 # Quotes, markdown emphasis, list dashes and closing punctuation, at either end.
-_EDGES = re.compile(r"""^[\s"'`*_\-—.,;:!]+|[\s"'`*_\-—.,;:!]+$""")
+_EDGES = re.compile(r"""^[\s"'`*_\-\u2014.,;:!]+|[\s"'`*_\-\u2014.,;:!]+$""")
 
 _EXTENSION = re.compile(r"\.(ldr|mpd|dat)$", re.IGNORECASE)
 
@@ -42,7 +42,7 @@ def needs_title(name):
 def title_for(request, built=None, context=None, llm=None):
     """A short name for what is being built, or None if one cannot be had.
 
-    ``context`` is what the run has worked out about the model — the reference
+    ``context`` is what the run has worked out about the model - the reference
     picture as it was described, or the construction plan. A request is what
     someone typed in a hurry; the description and the plan are what the thing
     actually is, and they name it far better. "Build this" names nothing on its
@@ -86,7 +86,7 @@ DESCRIBING = (
     "It goes in a library they search months later, having forgotten the model "
     "existed, by describing the problem they are trying to solve. So write "
     "what this model would be a good starting point for, and how it is "
-    "actually built — the techniques, the parts doing the real work, the "
+    "actually built - the techniques, the parts doing the real work, the "
     "proportions. Not a retelling of the conversation, and not praise.\n\n"
     "Two to four sentences of plain prose. No markdown, no heading, no "
     "preamble, no quotes. Say what the thing is in the first few words."
@@ -97,9 +97,9 @@ def description_for(title=None, conversation=None, facts=None, model=None,
                     llm=None):
     """A catalogue entry for a finished model, or None if one cannot be had.
 
-    Written from everything the project knows about itself — what it ended up
+    Written from everything the project knows about itself - what it ended up
     being called, the whole conversation that produced it, and the model file's
-    own arithmetic — because the description is what the library is searched
+    own arithmetic - because the description is what the library is searched
     on, and a description that only repeats the title makes the library
     unsearchable exactly when it has grown big enough to need searching.
 

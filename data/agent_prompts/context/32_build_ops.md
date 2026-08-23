@@ -27,8 +27,8 @@ make while turning "five round bricks in a row" into five lines of coordinates,
 and very hard to see afterwards. Written as `{"op": "row", "count": 5}` it
 cannot happen, because there is nowhere to type the wrong number.
 
-Everything regular in a build — a course of a wall, a floor, a fence, a stack, a
-field of tiles — is that same slip waiting to happen. Use ops for all of it.
+Everything regular in a build - a course of a wall, a floor, a fence, a stack, a
+field of tiles - is that same slip waiting to happen. Use ops for all of it.
 
 ## The operations
 
@@ -45,8 +45,8 @@ field of tiles — is that same slip waiting to happen. Use ops for all of it.
 | `place` | one part, exactly there | `at` |
 
 `wall`, `box` and `fill` are the ones that lay course-work. `wall` and `box`
-choose their own bricks and take no `part`; `fill` takes `parts` — the list to
-tile with — so the palette stays yours. Everything else needs one `part`.
+choose their own bricks and take no `part`; `fill` takes `parts` - the list to
+tile with - so the palette stays yours. Everything else needs one `part`.
 
 And four more that place nothing at all. They say what happens to the ops
 **inside** them, and they are how you say *and again*, *and the same on the
@@ -74,7 +74,7 @@ This is the most common thing you do and it is wrong twice.
 ```
 
 Every course breaks in the same place. Those aligned joints run straight up the
-wall, which is precisely where a real wall comes apart — a bricklayer would call
+wall, which is precisely where a real wall comes apart - a bricklayer would call
 it unbonded and it is the one thing masonry exists to avoid. And the whole thing
 is one shape repeated twelve times, which is what makes a model read as
 assembled rather than designed.
@@ -88,11 +88,11 @@ assembled rather than designed.
 
 You give the run and the height. It takes the longest brick that fits, breaks
 the seams course to course so no joint runs through, and never strands a 1x1 in
-the middle of a run. **The lengths and the offsets are not inputs** — same rule
+the middle of a run. **The lengths and the offsets are not inputs** - same rule
 as the spacing, for the same reason. That wall is 10 parts and 3 shapes; the
 twelve 2x4s above are 12 parts and 1.
 
-`box` closes it into a rectangle — a cube, a room, a tower, a chimney, a planter:
+`box` closes it into a rectangle - a cube, a room, a tower, a chimney, a planter:
 
 ```json
 {"op": "box", "colour": 4, "at": [0, 0, 0], "size_studs": [10, 8],
@@ -103,7 +103,7 @@ It alternates which pair of walls runs corner to corner, course by course, so
 the corners interlock rather than becoming four vertical joints of their own. It
 **refuses a single-course box**, and that refusal is worth understanding: one
 course is four walls that meet at the corners with no stud between them, so it
-falls into four pieces the moment it is lifted — and nothing in the geometry says
+falls into four pieces the moment it is lifted - and nothing in the geometry says
 so. Every part is on the grid and nothing overlaps. Two courses tie it.
 
 Both take `thickness_studs` (1 or 2, default 1) and `kind` (`brick` or `plate`,
@@ -112,8 +112,8 @@ default brick).
 ### `fill` is those two with the bricks left to you
 
 `wall` and `box` pick their own parts, which is what makes them worth reaching
-for when you do not care which. Often you do care — you have a palette, a brief
-and a shape in mind — and `fill` is the same bonding with the ladder handed
+for when you do not care which. Often you do care - you have a palette, a brief
+and a shape in mind - and `fill` is the same bonding with the ladder handed
 over:
 
 ```json
@@ -123,12 +123,12 @@ over:
 
 It also does the one thing neither of the others does: a **solid** region. A
 floor, a slab, a plinth, a mass, a solid tower. That is the case you have been
-laying with `grid` — one shape repeated over a rectangle, which is the single
-biggest reason a model comes back reading as one brick — and `fill` lays the
+laying with `grid` - one shape repeated over a rectangle, which is the single
+biggest reason a model comes back reading as one brick - and `fill` lays the
 same rectangle bonded out of three.
 
 - `size_studs` is the region, `courses` how many high.
-- `hollow: true` makes it a shell of walls instead — a room, a tower — and then
+- `hollow: true` makes it a shell of walls instead - a room, a tower - and then
   it needs 2+ courses for the same reason `box` does.
 - `parts` must all be the **same width and the same height** (a course is one
   course) and each a **different length**, since the length is what there is to
@@ -136,25 +136,25 @@ same rectangle bonded out of three.
 - `axis` says which way the runs go, default x.
 
 **What they do not do is finish the model.** A wall comes out structural and
-medium with no detail in it, which is correct — detail is what goes *on* the
+medium with no detail in it, which is correct - detail is what goes *on* the
 wall. Lay the courses with these, then put the tiles, slopes and 1x1s on by
 hand. See *Three sizes, three jobs*.
 
 ## The groups: `repeat`, `reflect`, `define`, `call`
 
 The ops above each place one part, n times. Most of what you actually build is
-not one part n times — it is a *group* of ops that happens more than once, or
+not one part n times - it is a *group* of ops that happens more than once, or
 happens on both sides. Four identical courses of wall. A pair of wings. Six
 windows. Until you can say that, you write the group out by hand every time,
 and that is where the coordinates come back.
 
 **This is the commonest thing you get wrong.** Across the models on disk,
-**82% of every op written is `place`** — not because anyone wanted to type
+**82% of every op written is `place`** - not because anyone wanted to type
 coordinates, but because the thing being built was a group and there was no
 word for one. Look at what you are about to write. If two of your ops differ
 only by a fixed offset, that is a `repeat`.
 
-### `repeat` — the same ops, moved on each time
+### `repeat` - the same ops, moved on each time
 
 ```json
 {"op": "repeat", "times": 4, "step": [0, -24, 0], "note": "four courses",
@@ -168,7 +168,7 @@ moves from the one before it: `[0, -24, 0]` is one brick course up, `[80, 0, 0]`
 is one 2x4 along, `[0, -8, 0]` is one plate. `times` counts the first one.
 
 The copies cannot drift, because there is only one position written down. That
-is the whole of it — the same rule as the spacing in `row`, applied to a group
+is the whole of it - the same rule as the spacing in `row`, applied to a group
 instead of a part.
 
 `repeat` nests. A grid of windows is a `repeat` along x holding a `repeat`
@@ -176,11 +176,11 @@ down y.
 
 **One thing it does not do: bond across the joint.** `wall`, `box` and `fill`
 break their seams over *their own* courses, and a repeated one starts that
-again from scratch each copy — so two stacked 2-course boxes can put a seam
+again from scratch each copy - so two stacked 2-course boxes can put a seam
 above a seam at the join. For plain course-work give the one op more `courses`
 instead; use `repeat` for a group that genuinely repeats.
 
-### `reflect` — and the same on the other side
+### `reflect` - and the same on the other side
 
 ```json
 {"op": "reflect", "about": "x", "plane": 0, "note": "the wings",
@@ -193,7 +193,7 @@ instead; use `repeat` for a group that genuinely repeats.
 That builds the wing **and** its mirror image, each part turned so the pair
 reads as a mirror rather than as two copies facing the same way. `mirror` does
 this for one part; `reflect` does it for everything inside it, which is what
-symmetry nearly always means — a wing, an arm, a wheel arch, a whole side of a
+symmetry nearly always means - a wing, an arm, a wheel arch, a whole side of a
 building.
 
 Use it wherever the model has an axis. A detail landing a stud off on one side
@@ -204,7 +204,7 @@ side by hand is exactly how that happens.
 builds only the far side, for the rare case where you already placed the near
 one.
 
-### `define` and `call` — a shape you build more than once
+### `define` and `call` - a shape you build more than once
 
 ```json
 {"op": "define", "name": "window", "ops": [
@@ -230,7 +230,7 @@ the top of the call, not inside another op.
 ### `place` is the last of these, not the first
 
 The repeating ops are the reason this tool exists. If you are about to write two
-`place` ops for the same part in a line, that is a `row` with `count: 2` — and
+`place` ops for the same part in a line, that is a `row` with `count: 2` - and
 the row cannot be mis-spaced where the two `place` ops can.
 
 ```json
@@ -245,7 +245,7 @@ is three chances to get a number wrong, and this is none:
 {"op": "row", "part": "3024", "colour": 71, "at": [0, 0, 0], "count": 3}
 ```
 
-Keep `place` for the part that genuinely belongs to no pattern — a door, a
+Keep `place` for the part that genuinely belongs to no pattern - a door, a
 chimney, a single tile. A call made of twenty `place` ops is this tool being
 used as a typewriter, and the arithmetic has quietly moved back to you.
 
@@ -256,12 +256,12 @@ anywhere in the call, that is a `define` and two `call`s.
 
 Every op needs `part`, `colour` and `at`. Every op may take:
 
-- **`rotate`** — degrees about Y, a multiple of 90. The footprint turns with the
+- **`rotate`** - degrees about Y, a multiple of 90. The footprint turns with the
   part, so a row of 2x4 bricks rotated 90° spaces itself 40 LDU apart instead of
   80. You never adjust for it.
-- **`gap_studs`** — a deliberate gap between the parts. `0`, the default, sits
+- **`gap_studs`** - a deliberate gap between the parts. `0`, the default, sits
   them flush. Use it for a fence, a row of windows, anything meant to be spaced.
-- **`note`** — written above those parts as a comment, so the file reads like a
+- **`note`** - written above those parts as a comment, so the file reads like a
   build rather than a list.
 
 `at` is `[x, y, z]` in LDU and it is the **first** part's position; the rest
@@ -294,7 +294,7 @@ The one it will refuse most often, and the one worth understanding:
   line 17  6141.dat at [140, 0]   move x +10, z +10
 ```
 
-A part's studs sit at a fixed offset from its origin that depends on the part —
+A part's studs sit at a fixed offset from its origin that depends on the part -
 a 6x6 plate's are at ±10, ±30, ±50 from its centre, a 1x1's is at 0. So a 6x6
 plate at x = −180 and a 1x1 plate at x = 140 are both on multiples of 20 and are
 still half a stud apart. Everything in a model has to agree on one grid.
@@ -313,14 +313,14 @@ arithmetic rather than a decision. Read the offset and use it for the next call
 instead of repeating the slip.
 
 You only get a refusal when the parts need *different* moves, which is not a
-phase slip — it is two parts that disagree with each other about where the grid
+phase slip - it is two parts that disagree with each other about where the grid
 is, and only you can say which is right. Pass `allow_half_offset: true` when the
 offset is deliberate because those parts sit on jumper plates.
 
 ## What it will not do
 
 - **Angles that are not right angles.** A hinge held open at 30°, a limb posed,
-  an axe in a fist — those are `edit_model`, with the matrix written out.
+  an axe in a fist - those are `edit_model`, with the matrix written out.
 - **Moving or deleting.** Ops add parts. Changing one that is already there is
   `edit_model` on its line.
 - **Minifigures.** A figure is ten parts on neck pins and shoulder sockets, not
@@ -329,7 +329,7 @@ offset is deliberate because those parts sit on jumper plates.
 ## Working with the plan
 
 `plan_construction` returns steps. A step that says "four 2x4 bricks at x = 0,
-80, 160, 240, all at z = 0" is one `row` op with `count: 4` — and you no longer
+80, 160, 240, all at z = 0" is one `row` op with `count: 4` - and you no longer
 have to check whether 80 was the right pitch, because you are not the one
 choosing it. When a plan step already carries an `ops` list, pass it straight
 through.

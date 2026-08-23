@@ -36,7 +36,7 @@ from .tools import call_tool                      # noqa: E402
 def _create(path, content):
     """Start a model file the way the agent does: insert it all before line 1.
 
-    There is no write_model any more — a file that does not exist is an empty
+    There is no write_model any more - a file that does not exist is an empty
     file, and `edit_model` fills it. Using it here rather than reaching past it
     is deliberate: the self-test exercises the create path every time it needs
     a model on disk.
@@ -60,7 +60,7 @@ def _check_undefined():
     once, which is the only way this class of bug stops recurring.
 
     Raises AssertionError on the first one found. Skipped, with a note, when
-    pyflakes is not installed — this is a check, not a dependency.
+    pyflakes is not installed - this is a check, not a dependency.
     """
     try:
         from pyflakes import api, reporter
@@ -92,7 +92,7 @@ def _preflight():
     """What must be on disk before any of this means anything.
 
     Without it a fresh clone fails deep inside validation with `unresolved_parts`
-    and an assertion about a stack that is in fact perfectly correct — the parts
+    and an assertion about a stack that is in fact perfectly correct - the parts
     simply have no geometry to check against. That is a true report and a
     useless first experience, so the missing data is named here instead, with
     the command that fetches it.
@@ -298,7 +298,7 @@ def self_test():
         f"the run did not remember what it asked: {budget.asked_questions()[:2]}"
 
     # With no reference image attached, asking is refused without spending
-    # anything — there is nothing to look at.
+    # anything - there is nothing to look at.
     r = json.loads(call_tool("ask_about_image", {"questions": ["what colour?"]},
                              state=_RunState(project="agent_selftest")))
     print(f"   no reference image -> refused: {'error' in r}")
@@ -432,7 +432,7 @@ def self_test():
 
     print("9. undefined names across the package")
     # The general form of the bug above: a name used but never imported. No
-    # amount of exercising individual functions catches these reliably — only
+    # amount of exercising individual functions catches these reliably - only
     # the lines that happen to run get checked, and a NameError on a branch
     # nothing here reaches still ships. This reads every module instead.
     print("  ", _check_undefined())
@@ -514,7 +514,7 @@ def self_test():
         _create("agent_selftest/probe.ldr",
                                   content.replace("selftest.ldr",
                                                              "probe.ldr"))
-        # Saving is a button now, not a tool — this is what the button calls.
+        # Saving is a button now, not a tool - this is what the button calls.
         from .tools import _save_creation
 
         r = _save_creation("agent_selftest/probe.ldr", probe,
@@ -550,7 +550,7 @@ def self_test():
         assert not r.get("results"), \
             f"the relevance floor let an unrelated creation through: {r}"
 
-        # Notes are no longer something the agent files — there is no tool for
+        # Notes are no longer something the agent files - there is no tool for
         # it any more. The store is still here and still read: a note reaches a
         # build through `get_part_details`, which is the half of this that
         # matters and the half tested below.
@@ -606,7 +606,7 @@ def _buildable_check():
 
     Half of this is not obvious and is the half that rots. A checker is easy to
     make strict and easy to make quiet, and only the two together are worth
-    anything — so the cases below are paired on purpose: a part with a clip and
+    anything - so the cases below are paired on purpose: a part with a clip and
     a Technic pin, which the stud grid does not govern and which must pass;
     and a duplicate, a half-stud slip and a buried brick, which it does and
     which must fail.
@@ -649,13 +649,13 @@ def _buildable_check():
         ("the same brick placed twice", False,
          "1 4 0 0 0 1 0 0 0 1 0 0 0 1 3001.dat\n"
          "1 4 0 0 0 1 0 0 0 1 0 0 0 1 3001.dat\n"),
-        # A 6x6 plate's studs are at +-10, +-30, +-50 — never at 0.
+        # A 6x6 plate's studs are at +-10, +-30, +-50 - never at 0.
         ("a 1x1 plate between four studs", False,
          "1 4 0 0 0 1 0 0 0 1 0 0 0 1 3958.dat\n"
          "1 14 0 -8 0 1 0 0 0 1 0 0 0 1 3024.dat\n"),
         # The two that guard `classify`'s one deliberate blind spot. A part
         # that something mates with is no longer called misaligned for
-        # near-missing a different stud — see the note there — and the reason
+        # near-missing a different stud - see the note there - and the reason
         # that is safe is that a misplaced part still breaks the seating of
         # whatever it failed to sit on, so the model fails anyway. These pin
         # that. If either ever passes, the relaxation has stopped being safe
@@ -724,8 +724,8 @@ def _buildable_check():
          "1 4  0 0 0 1 0 0 0 1 0 0 0 1 3960.dat\n"
          "1 2 20 0 0 1 0 0 0 1 0 0 0 1 3960.dat\n"),
         # The other side of the same rule, and the tighter one: the smallest
-        # real defect it catches shares 562 cubic LDU and the bracket above —
-        # which must pass — shares 435. Both sit inside SHARED_SKIN_MIN_LDU3's
+        # real defect it catches shares 562 cubic LDU and the bracket above -
+        # which must pass - shares 435. Both sit inside SHARED_SKIN_MIN_LDU3's
         # 1.29x band, so any change to that number has to run these together.
         ("a round tile driven into a headlight brick's side stud", False,
          "1 15 -50 -48 -20 0 0 1 0 1 0 -1 0 0 87087.dat\n"
@@ -739,14 +739,14 @@ def _buildable_check():
     #     1 2  30  -8 -20 ... 3003.dat      a 2x2 brick, HALF A STUD OFF in z
     #     1 1  30 -32 -20 ... 3003.dat      another stacked on that one
     #
-    # This used to fail, and it failed on `overlapping_parts` — which was the
+    # This used to fail, and it failed on `overlapping_parts` - which was the
     # old collision check reporting a plate against a brick correctly sitting
     # on it. The verdict was right and the reason was a false positive, and
     # when occupancy.py removed the false positive the case stopped failing.
     #
     # Measured, the misplaced brick shares 66 cubic LDU with the plate and a
     # correctly placed one shares 36. Thirty cubic LDU is not a signal any
-    # threshold can use — the worst false positive in the corpus is 390 — and
+    # threshold can use - the worst false positive in the corpus is 390 - and
     # the reason is real rather than a limit of the method: a 2x2 brick's
     # underside is a large open cavity, so a stud landing half a stud off
     # barely grazes the tube. In real bricks it will not seat; in geometry it
@@ -755,12 +755,12 @@ def _buildable_check():
     # So this is not a collision at all, it is a SEATING fault: the brick's
     # anti-studs do not line up with the studs under it. That belongs to the
     # connectivity checker, which currently calls it UNVERIFIED rather than
-    # MISALIGNED — `classify`'s documented blind spot, whose safety argument
+    # MISALIGNED - `classify`'s documented blind spot, whose safety argument
     # was "the model fails anyway", and it was this collision false positive
     # doing the failing. Closing it means making `seat_miss` fire here.
-    # The gap that used to be recorded here — two 2x2 slopes a stud apart
+    # The gap that used to be recorded here - two 2x2 slopes a stud apart
     # sharing solid plastic and validating clean, and the same for wedges,
-    # brackets and corner plates — is closed, and it is the first three cases
+    # brackets and corner plates - is closed, and it is the first three cases
     # above. It is worth keeping the reason it was open: the check judged a
     # bounding box and then consulted a list of words about whether the box
     # could be trusted, which exempted 98% of the catalogue. See occupancy.py.
@@ -771,7 +771,7 @@ def _buildable_check():
     #     1 2 0 16 0 ... 54200.dat      a cheese slope sunk 8 LDU into it
     #
     # Unbuildable, and it validates clean. It shares 289 cubic LDU, 15.7% of
-    # the cheese slope — and a 1x1 plate *correctly* carried on a bracket's
+    # the cheese slope - and a 1x1 plate *correctly* carried on a bracket's
     # upstand (the case two above) shares 435, which is 19.7% of the plate. The
     # correct connection scores higher on both readings than the defect does,
     # so neither the volume nor the share separates them and no setting of
@@ -786,7 +786,7 @@ def _buildable_check():
     # checker's knowledge, not this one's, and joining them is the way through.
 
     # Against `validation.validate` rather than the tool, deliberately. The
-    # tool repairs before it reports — an overlap that is pure arithmetic is
+    # tool repairs before it reports - an overlap that is pure arithmetic is
     # slid back onto the grid and the model then passes, which is the tool
     # doing its job and is tested in step 4. What is being pinned here is the
     # checker's *judgement*, which has to be right before there is anything
@@ -799,7 +799,7 @@ def _buildable_check():
         path.write_text(head + body, encoding="utf-8")
         report = validate(path)
         passed = bool(report.get("passed"))
-        print(f"   {'pass' if must_pass else 'fail'} expected — {name}: "
+        print(f"   {'pass' if must_pass else 'fail'} expected - {name}: "
               f"{'PASS' if passed else 'FAIL'}")
         assert passed == must_pass, (
             f"{name}: expected {'pass' if must_pass else 'fail'}, got "
@@ -813,15 +813,15 @@ def _facing_check():
     Two halves, and the second is the one with a trap in it.
 
     **Told about.** A slope, a wedge, a bracket and a printed tile have a
-    direction, and which way they face is half of choosing them — so the
+    direction, and which way they face is half of choosing them - so the
     search result says so. A 2x4 brick does not, and must stay quiet: a note
     on four parts in five is a note on none. This is deliberately *not* read
     off the corpus rotation share, which says a plain brick is turned 70% of
-    the time — true, and only because a brick running along z carries a 90°
+    the time - true, and only because a brick running along z carries a 90°
     matrix. See catalog.faces_a_direction.
 
     **Works.** Most LDraw slopes have their origin on their back stud row
-    rather than at the centre of their footprint — `3039` runs z −30 to +10 —
+    rather than at the centre of their footprint - `3039` runs z −30 to +10 -
     so a quarter turn moves where its studs land. The same slope that needs
     z+10 unturned needs x+10 at 90°. `build_ops` is what knows that; a
     rotation encouraged into a path that could not place it would be
@@ -843,7 +843,7 @@ def _facing_check():
 
     # Every facing of every slope, asked for at the same spot, placed through
     # the tool the prompt points at. Each one has to land on the lattice and
-    # validate — including the ones whose footprint the turn moved.
+    # validate - including the ones whose footprint the turn moved.
     path = _resolve_out("agent_selftest/facing.ldr")
     path.parent.mkdir(parents=True, exist_ok=True)
     base = ("0 FILE facing.ldr\n0 Facing\n0 Name: facing.ldr\n"
@@ -882,7 +882,7 @@ def _floating_check():
     the ground is a band rather than a height, because a set whose lowest point
     is a tyre has its baseplate a plate above the ground. At the shipped
     settings the corpus reports 2.7% of sets and 0.49% of parts, and what is
-    left is genuinely raised — a crane load, animals up a tree.
+    left is genuinely raised - a crane load, animals up a tree.
     """
     from .validation import validate
 
@@ -932,7 +932,7 @@ def _critic_grounding_check():
     No vision call: both halves of this are ordinary functions over a report.
 
     The critic runs only on a model that has already **passed** the grid check,
-    which means connectivity is not an open question by the time it speaks — it
+    which means connectivity is not an open question by the time it speaks - it
     is a fact on file. That changes what its answer is worth. Before this, a
     critic that misread a thin join as a gap produced "THIS IS NOT ONE BUILD …
     must be fixed before anything else", and the builder went and reattached
@@ -940,7 +940,7 @@ def _critic_grounding_check():
 
     The rule pinned here: the measurement owns connectivity, the critic owns
     everything a measurement has no opinion about, and a check that never ran
-    claims nothing at all — which is the case that would otherwise turn this
+    claims nothing at all - which is the case that would otherwise turn this
     whole mechanism into the confident-sounding guess it exists to remove.
     """
     from .tools import _measured_facts, _reconcile
@@ -1008,7 +1008,7 @@ def _brief_sampling_check():
 
     No API call: every case here is a canned reply. What is being pinned is the
     part that decides *which* brief a build gets, and it has to hold up against
-    replies that are not the shape that was asked for — because the reply shape
+    replies that are not the shape that was asked for - because the reply shape
     is the one thing this pass cannot control, and the fallback for getting it
     wrong is silently building the median model.
 
@@ -1101,7 +1101,7 @@ def _brief_sampling_check():
         assert got == expected, \
             f"{subject!r} read as {got}, expected {expected}"
 
-    # A picture is the specification, so it is plain however it was asked for —
+    # A picture is the specification, so it is plain however it was asked for -
     # a tail brief there fills the gaps as unlike the photograph as it can.
     assert brief.licence("something creative", "", {"subject": "a car"}) == brief.PLAIN, \
         "a reference picture did not force the plain reading"
@@ -1158,26 +1158,26 @@ def _connected_check():
 
     The two halves are the whole point, and the second is the one that makes
     this hard. "Everything in the file is joined up" is trivial to check and
-    fails every scene there is — a tree beside a car is two objects that are
+    fails every scene there is - a tree beside a car is two objects that are
     *meant* not to touch, and a checker that reports it has told the builder to
     glue them together.
 
     So what an object is gets declared by the harness rather than read off the
     file, and these cases pin both readings:
 
-    * ``objects="whole"`` — a builder's own file. Everything in it belongs to
+    * ``objects="whole"`` - a builder's own file. Everything in it belongs to
       the one object it was told to make, so two clumps is a fault.
-    * ``objects="blocks"`` — an assembled scene. One block is one object; the
+    * ``objects="blocks"`` - an assembled scene. One block is one object; the
       blocks stand apart and only their insides have to hold together. It
       reports and does not fail, because "a block is an object" is an authoring
-      convention rather than a fact — the OMR sets use blocks to mean
+      convention rather than a fact - the OMR sets use blocks to mean
       *instruction step*, and on 250 of them this reading flags 6.4%.
-    * ``objects=None`` — nobody said. The check does not run at all, which is
+    * ``objects=None`` - nobody said. The check does not run at all, which is
       what keeps every existing caller exactly where it was.
 
     Measured against the corpus at those settings: None and "blocks" both leave
     the pass rate at 82.4%, unmoved. Declaring a corpus set "whole" would reject
-    20.4% of them, and that number is not a bug — it is what a *whole set* is. A
+    20.4% of them, and that number is not a bug - it is what a *whole set* is. A
     sold set is a scene, and calling it one object is a false declaration. It is
     the reason this is declared by the harness that made the file and never
     guessed from the geometry.
@@ -1189,7 +1189,7 @@ def _connected_check():
     stack = ("1 4 0   0 0 1 0 0 0 1 0 0 0 1 3001.dat\n"
              "1 4 0 -24 0 1 0 0 0 1 0 0 0 1 3001.dat\n")
     # The same two bricks plus one standing well clear of them, on the ground so
-    # that it is adrift rather than merely flying — this must fail for being
+    # that it is adrift rather than merely flying - this must fail for being
     # detached, not for being unsupported.
     split = stack + "1 2 0 0 300 1 0 0 0 1 0 0 0 1 3001.dat\n"
     # A scene: two objects, each a block, standing 200 LDU apart.
@@ -1237,7 +1237,7 @@ def _subassembly_gate_check():
 
     The model here is the case the fault checks cannot catch and this ceiling
     exists for: five 2x2 bricks in a row on the ground, each touching its
-    neighbour's wall and seated on none of its studs. Every check passes — on
+    neighbour's wall and seated on none of its studs. Every check passes - on
     the grid, nothing overlapping, nothing floating, and `objects_in_pieces`
     sees one piece because contact counts as joined there. It is still five
     loose bricks, and picking it up leaves four of them on the table.
@@ -1305,7 +1305,7 @@ def _subassembly_gate_check():
 def _requirements_check():
     """The acceptance checklist: written, stored, and what it refuses.
 
-    Offline throughout — no network and no vision model. What is pinned
+    Offline throughout - no network and no vision model. What is pinned
     here is the half that decides whether a run may end: that a vague
     criterion never reaches the list, that an unanswered one counts as
     false rather than as silence, and that `finish` can no longer end a
@@ -1488,7 +1488,7 @@ def _requirements_check():
 def _cited_parts_check():
     """Every part number the standing prompt hands out must be a real part.
 
-    The prompt tells the builder to place these **without looking them up** —
+    The prompt tells the builder to place these **without looking them up** -
     that is the whole point of the table, and it is what makes a wrong number
     there worse than no table at all: it would be placed on trust, in every
     build, until somebody noticed the renders were missing a wall.
@@ -1508,7 +1508,7 @@ def _cited_parts_check():
     # `3023` is cited on purpose, as the stub you are told *not* to use.
     CITED_AS_A_WARNING = {"3023"}
     # Not part numbers at all: `20w`, `10w` and `20g` are the arithmetic in the
-    # LDU section — 20 times the width in studs — and they match the shape of a
+    # LDU section - 20 times the width in studs - and they match the shape of a
     # part id closely enough to be picked up here.
     NOT_PART_NUMBERS = {"10w", "20w", "20g"}
 
@@ -1530,7 +1530,7 @@ def _cited_parts_check():
             if description.startswith("~") or (row or {}).get(
                     "category") in ("Moved", "Obsolete"):
                 # Retired in the catalogue but still a real file the renderer
-                # resolves — 3815/3816/3817, the classic minifig hips and legs,
+                # resolves - 3815/3816/3817, the classic minifig hips and legs,
                 # are "Obsolete" and still placed 1,075 times across 501 sets.
                 # Worth knowing about, not worth failing a build over.
                 retired.append(f"{part} ({path.name}): {description[:40]}")
@@ -1657,7 +1657,7 @@ def _source_check(R):
         [l for l in lines if l.startswith("1 ")]), stock
     reds = next(r["count"] for r in stock["by_colour"] if r["code"] == 4)
     print(f"   counted {stock['parts']} parts, {stock['distinct_colours']} "
-          f"colours, {reds} in red — exactly, from the file")
+          f"colours, {reds} in red - exactly, from the file")
 
     # Exact, and free: no model is asked anything.
     assert R.settle_source("the model uses exactly 2 colours", stock)[0]
@@ -1665,7 +1665,7 @@ def _source_check(R):
     assert R.settle_source("exactly 6 of part 3070b", stock)[0]
     print("   counts and colours settled with no model call at all")
 
-    # A criterion needing more than arithmetic is not settled by arithmetic —
+    # A criterion needing more than arithmetic is not settled by arithmetic -
     # it falls through to the model, which is shown the file and can read it.
     assert R.settle_source("the tiles sit on top of the wall", stock) is None
     print("   an arrangement criterion is left to the model, not counted")
@@ -1755,7 +1755,7 @@ def _gate_check(R, record):
             "every requirement was met and the run did not finish"
         print("   requirements met, critic still objects -> the run still ends")
 
-        # The critique is not lost by ending — it travels out with the result.
+        # The critique is not lost by ending - it travels out with the result.
         assert (it.state.critiques.get(path) or {}).get("critique"), \
             "the critique was dropped instead of being reported"
         print("   ...and the critique goes out with the result, as a remark")
@@ -1788,7 +1788,7 @@ def _side_stud_check():
     The bug this pins: `stud_map` reports a side stud in the part's OWN frame,
     where a 1x1 with a stud on one side always faces `-z`. Turn that brick a
     quarter turn and the stud faces `-x` in the model while the catalogue still
-    said `-z` — so the part built onto it went against a face that was not
+    said `-z` - so the part built onto it went against a face that was not
     there. Unrotated hosts connected and turned ones did not, which is exactly
     what it looked like from outside: "some of them connect and the others do
     not".
@@ -1798,7 +1798,7 @@ def _side_stud_check():
 
     * the facing, which is the host's rotation applied to the stud's own axis
     * the stand-off, which is the attaching part's own stacking height along
-      that facing — 8 for a plate, 24 for a brick. Its origin at the stud
+      that facing - 8 for a plate, 24 for a brick. Its origin at the stud
       instead puts it inside the host, which is what the first attempt did.
     """
     from . import catalog
@@ -1840,7 +1840,7 @@ def _side_stud_check():
         print(f"   {host} + {added}: connects at all four turns, "
               f"stud faces {', '.join(seen)}")
         assert seen[0] == expect and len(set(seen)) == 4, (
-            f"{host}: the stud faced {seen} — a turn did not move it")
+            f"{host}: the stud faced {seen} - a turn did not move it")
 
     # ...and the number that was wrong the first time. The stand-off is the
     # attaching part's height, so a brick stands three times as far out as a
@@ -1853,7 +1853,7 @@ def _side_stud_check():
           f"brick {brick['stands_off_ldu']:g} LDU")
     assert plate["stands_off_ldu"] == 8.0 and brick["stands_off_ldu"] == 24.0
 
-    # Without naming what is going on, there is no placement to give — the stud
+    # Without naming what is going on, there is no placement to give - the stud
     # position alone is where the plastic is.
     bare = catalog.side_studs_placed("87087.dat", None, (0, 0, 0))[0]
     assert "place_at" not in bare, \
@@ -1871,11 +1871,11 @@ def _pagination_check():
     invisible. A booklet missing page 43 is still a booklet, and nobody counts
     the pages of a PDF they asked for.
 
-    Two things have to hold. Every page lands in exactly one range — no gaps,
+    Two things have to hold. Every page lands in exactly one range - no gaps,
     no page rendered twice. And `page_count` has to be exact *before* anything
     is rendered: a range that runs past the end does not stop there, it pads.
     Asked for pages 5-9999 of an 18-page document, LPub3D rendered 9,995 blank
-    ones. That is what `_drop_empty_steps` is for — a step with no parts in it
+    ones. That is what `_drop_empty_steps` is for - a step with no parts in it
     makes no page, and every one of those made the count wrong by one.
     """
     import re
@@ -1917,7 +1917,7 @@ def _minifig_check():
     """A minifigure is checked against the figure, not against the stud grid.
 
     Both directions matter and only one of them is obvious. A correct figure
-    must pass and read as ONE piece — before this existed it came back as nine
+    must pass and read as ONE piece - before this existed it came back as nine
     separate subassemblies. A broken one must fail, which is the half that was
     silently missing: every arrangement of these parts used to validate, head
     floating forty LDU above the neck included.
@@ -1953,7 +1953,7 @@ def _minifig_check():
     # The figure the standing prompt tells the agent to copy, lifted out of the
     # prompt file itself and put through the checker. A worked example is a
     # promise, and one that does not validate teaches the agent to build a
-    # broken minifigure every time — so the promise is tested rather than
+    # broken minifigure every time - so the promise is tested rather than
     # proof-read.
     import re
     from .config import CONTEXT_DIR
@@ -1997,13 +1997,13 @@ def _minifig_check():
     assert armed.get("passed"), \
         f"the prompt's worked example of a held tool fails: {armed.get('verdict')}"
     assert len(grip) == 1, \
-        "the tool the prompt puts in a hand is not recognised as held — it " \
+        "the tool the prompt puts in a hand is not recognised as held - it " \
         "would show to the builder as a loose piece beside the figure"
     assert (armed.get("connectivity") or {}).get("subassemblies") == 1, \
         "a figure holding a tool does not read as one connected piece"
 
-    # The poses. The claim the prompt makes about these is precise — the part
-    # keeps its position and only its matrix changes — so a seated figure built
+    # The poses. The claim the prompt makes about these is precise - the part
+    # keeps its position and only its matrix changes - so a seated figure built
     # by following it must still read as one assembled figure. If posing broke
     # the check, every posed minifigure in every scene would fail validation.
     sitting = next((b for b in re.findall(r"```\n(1 .*?)```", doc, re.S)
@@ -2031,7 +2031,7 @@ def _minifig_check():
         bad = json.loads(call_tool("validate_model", {"path": path, "grid_only": True}))
         wrong = (bad.get("minifigures") or {}).get("misassembled_parts") or []
         print(f"   {label} -> caught: {not bad.get('passed')} "
-              f"({len(wrong)} part(s): {wrong[0]['problem'] if wrong else '—'})")
+              f"({len(wrong)} part(s): {wrong[0]['problem'] if wrong else '-'})")
         assert not bad.get("passed") and wrong, \
             f"a minifigure with its {label} validated clean"
 
@@ -2097,7 +2097,7 @@ def main():
             print(f"Vision: UNAVAILABLE\n  {exc}")
             return 2
         print(f"Vision: {result.get('vision_model') or VISION_MODEL} answered "
-              f"— {result.get('reads_as') or result.get('critique', '')[:80]}")
+              f"- {result.get('reads_as') or result.get('critique', '')[:80]}")
         return 0
 
     if args.self_test:
@@ -2128,7 +2128,7 @@ def main():
               task="build")
 
     if args.flat:
-        # One agent, one conversation, no decomposition — what this CLI did
+        # One agent, one conversation, no decomposition - what this CLI did
         # before the harness existed. Kept for comparing the two.
         agent = LDrawAgent(llm=llm, max_steps=args.max_steps,
                            include_knowledge=args.include_knowledge,

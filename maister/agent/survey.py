@@ -5,25 +5,25 @@ and hoping. That is enough to notice a file has 96 lines in it; it is not
 enough to know what those lines are. A project opened from an official set
 arrives holding a finished BrickHeadz figure, a project on its fourth turn
 holds whatever the last three left behind, and a brand new project holds
-nothing at all — and the split, the brief and the builder were all deciding
+nothing at all - and the split, the brief and the builder were all deciding
 what to do next without anyone having looked.
 
 So a run now begins here, before the request is split and before anything is
 built:
 
-* **counted** — parts, distinct shapes, colours, submodels, and the sets any of
+* **counted** - parts, distinct shapes, colours, submodels, and the sets any of
   it was grafted from, straight off the source;
-* **measured** — how wide, how deep, how many bricks tall, from the same
+* **measured** - how wide, how deep, how many bricks tall, from the same
   flattened geometry the collision checker uses;
-* **checked** — the ordinary validation report, so a run inherits its faults
+* **checked** - the ordinary validation report, so a run inherits its faults
   knowingly rather than discovering them at the end;
-* **rendered and looked at** — six views through LeoCAD and one vision call, so
+* **rendered and looked at** - six views through LeoCAD and one vision call, so
   the answer to "what is on the workbench" is a sentence rather than a line
   count.
 
 Everything degrades. No LeoCAD, no vision model, an unparseable file: the
 survey comes back with less in it and the run carries on. What it must never do
-is raise — this sits in front of every build, and a run that cannot start
+is raise - this sits in front of every build, and a run that cannot start
 because the *reading* failed would be a worse harness than the one that never
 read anything.
 """
@@ -35,7 +35,7 @@ from . import geometry, render
 from .config import OUT_DIR
 from .validation import validate
 
-# `0 // 53 parts grafted from set 8641-1 "Flame Glider", submodel …` — the
+# `0 // 53 parts grafted from set 8641-1 "Flame Glider", submodel …` - the
 # credit copy_from_set leaves behind. Worth surfacing: a build standing on
 # somebody else's set should say so before it is added to.
 _GRAFT = re.compile(
@@ -120,7 +120,7 @@ def _unique(sets):
 def survey(path, project=None, look=True, should_stop=None):
     """Everything the run should know about the model file before it starts.
 
-    ``look`` renders the model and asks the vision model what it is — the
+    ``look`` renders the model and asks the vision model what it is - the
     expensive half, and the half worth having: a builder told "96 parts, 8
     studs wide" still does not know it is holding an Iron Man.
     """
@@ -186,8 +186,8 @@ def survey(path, project=None, look=True, should_stop=None):
 def as_text(surveyed):
     """The survey as a block for a prompt, or None when there is nothing to say.
 
-    Written as what it is — a reading of the file taken before this run touched
-    anything — because that is how it stays honest once a build is under way
+    Written as what it is - a reading of the file taken before this run touched
+    anything - because that is how it stays honest once a build is under way
     and the file has moved on from it.
     """
     if not surveyed:
@@ -195,7 +195,7 @@ def as_text(surveyed):
 
     if surveyed.get("empty"):
         return ("The workbench is **empty**. The model file has no parts in it, "
-                "so nothing is being extended and nothing has to be preserved — "
+                "so nothing is being extended and nothing has to be preserved - "
                 "this is a build from nothing.")
 
     lines = ["**There is already a model on the workbench**, and this is it as "
@@ -232,7 +232,7 @@ def as_text(surveyed):
                      f"{surveyed.get('verdict')}")
         # Said out loud, because the alternative is a build that spends its
         # steps repairing somebody else's model. Official sets routinely report
-        # a tile or two off the lattice — they are real sets, they were built
+        # a tile or two off the lattice - they are real sets, they were built
         # out of real bricks, and the checker is stricter than the plastic.
         lines.append(
             "  These faults were **already here before this run started**. "
@@ -250,7 +250,7 @@ def as_text(surveyed):
 
     lines.append(
         "Work **with** this, not over it. Anything already built that the user "
-        "did not ask you to change stays exactly where it is — and if what they "
+        "did not ask you to change stays exactly where it is - and if what they "
         "asked for is an addition, it attaches to this on real studs rather "
         "than standing beside it.")
     return "\n".join(lines)

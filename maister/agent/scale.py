@@ -2,7 +2,7 @@
 
 Every build in this project has a size, and until now nothing decided it. The
 decomposer was asked for a ``size_hint`` and invented one per object, freely,
-with no default and nothing to anchor it against — so "build this bonsai!"
+with no default and nothing to anchor it against - so "build this bonsai!"
 came back as *"about 20 x 20 studs footprint, 15 bricks tall"*, which is a
 250-piece model, and the run spent eleven minutes on it and ended with the
 thing in seven pieces on the workbench.
@@ -20,7 +20,7 @@ the model for not meeting it.
 **A size that was asked for is obeyed. A size that was not asked for is small.**
 
 Small is the default and it is not a hedge. A small model finishes, and a
-finished small model is worth more than an unfinished large one — which is the
+finished small model is worth more than an unfinished large one - which is the
 same argument the orchestrator already makes for building objects one at a
 time, and the same one the trace makes for rendering every write. A build that
 comes out too small is one more request away from being right. A build that
@@ -28,7 +28,7 @@ runs out of steps at 250 pieces is nothing at all.
 
 # The bands
 
-Measured over the 1,797 OMR sets, by piece count — the same buckets
+Measured over the 1,797 OMR sets, by piece count - the same buckets
 ``style.BASELINES`` uses, since they were cut for the same reason:
 
     pieces        median longest side    median height
@@ -67,7 +67,7 @@ _WORDS = (
               r"full-size|full size|bigger|largest"),
 )
 # Deliberately absent from the list above: "detailed", "elaborate",
-# "impressive", "ornate". They read as size words and are not — they are about
+# "impressive", "ornate". They read as size words and are not - they are about
 # how much is *on* a model, not how big it is, and `brief._INVITES` already
 # takes them as licence to invent. Left in, they beat an explicit "small": "a
 # small but detailed house" came back as a 260-piece build, which is the
@@ -94,7 +94,7 @@ def requested(*texts):
     """``(band, why, exact)`` for whatever the request said about size.
 
     ``why`` is ``"asked"`` when the request stated one and ``"default"`` when
-    it did not — which is the distinction every caller actually needs, because
+    it did not - which is the distinction every caller actually needs, because
     a stated size is a requirement and a defaulted one is only a starting
     point. See ``requirements.py``: a gate that refuses a model for missing a
     size nobody asked for is a gate refusing its own invention.
@@ -105,7 +105,7 @@ def requested(*texts):
 
     # A number beats a word: "a small 40-piece house" is 40 pieces. The number
     # itself is carried out as `exact`, because snapping "under 200 pieces" to
-    # the nearest band budgets 260 — which is not what was asked and is the
+    # the nearest band budgets 260 - which is not what was asked and is the
     # one direction a budget must not move.
     pieces = _PIECES.search(text)
     if pieces:
@@ -116,7 +116,7 @@ def requested(*texts):
         across = int(studs.group(1))
         return _band_for_studs(across), "asked", {"studs": across}
 
-    # Largest wins where two size words appear — a genuine conflict, and the
+    # Largest wins where two size words appear - a genuine conflict, and the
     # bigger reading is the one that cannot be satisfied by accident.
     found = [name for name, pattern in _PATTERNS if pattern.search(text)]
     if found:
@@ -142,7 +142,7 @@ def resolve(petition, requirements=None, stated=None):
     """What size to build at, as ``(band, size_hint, max_pieces, why)``.
 
     ``stated`` is whatever the decomposer put in ``size_hint``. It is kept when
-    the request actually asked for a size and dropped when it did not — the
+    the request actually asked for a size and dropped when it did not - the
     decomposer's job is counting objects, and a size it invented on a request
     that never mentioned one is not evidence of anything.
     """

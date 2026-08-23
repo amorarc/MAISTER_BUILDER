@@ -1,7 +1,7 @@
 """Taking a real assembly out of an official set and putting it in your build.
 
 The reference tools already hand the builder the LDraw source of 1,800 released
-sets, and the source is the good part — thirty lines of real coordinates for the
+sets, and the source is the good part - thirty lines of real coordinates for the
 exact feature it is about to invent. What was missing was any way to *use* them.
 
 To copy a wing out of set 10030 the builder had to read forty lines of
@@ -17,7 +17,7 @@ This module does the transplant instead:
 * **reads** the named assembly out of the set, flattened, so a submodel that
   references other submodels comes out as plain parts rather than as a
   reference to a block that does not exist in the destination;
-* **re-anchors** it — the section arrives with its footprint centred on where
+* **re-anchors** it - the section arrives with its footprint centred on where
   you asked for it and its underside at that height, rather than at whatever
   coordinates it happened to occupy inside a 2,000-line MPD;
 * **turns** it, in right angles;
@@ -32,7 +32,7 @@ It never touches the set. The corpus is read-only reference and the only file
 written is the one being built.
 
 It is also not a way to submit someone else's model as your own: the unit is an
-assembly — a wing, a wheel arch, a cab roof — and the comment it leaves says
+assembly - a wing, a wheel arch, a cab roof - and the comment it leaves says
 where that came from. Copying an entire set wholesale is possible and is
 obviously not building anything, which is a judgement for the prompt rather than
 a rule enforceable here.
@@ -81,7 +81,7 @@ def _wanted(parts, only=None, exclude=None, matching=None):
 
     A whole assembly is often more than is wanted. Building a car, the useful
     thing in a real racer is its four wheels and its windscreen, not its
-    chassis — and taking the chassis too means deleting it afterwards, line by
+    chassis - and taking the chassis too means deleting it afterwards, line by
     line, which is the work this tool exists to avoid.
 
     So a graft can be narrowed three ways: to named part numbers, away from
@@ -139,7 +139,7 @@ def extract(set_number, submodel=None, only_parts=None, exclude_parts=None,
     rows = sets.resolve(set_number)
     if not rows:
         raise GraftError(
-            f"no official model for set '{set_number}' — find one with "
+            f"no official model for set '{set_number}' - find one with "
             f"search_reference(kind=\"sets\")")
 
     row = rows[0]
@@ -179,7 +179,7 @@ def extract(set_number, submodel=None, only_parts=None, exclude_parts=None,
     parts = _wanted(parts, only_parts, exclude_parts, matching)
     if not parts:
         raise GraftError(
-            f"nothing in '{submodel or wanted}' matched that filter — it holds "
+            f"nothing in '{submodel or wanted}' matched that filter - it holds "
             f"{whole} part(s). Read it with read_model to see what is in it, or "
             f"drop the filter and take the assembly whole.")
 
@@ -190,7 +190,7 @@ def extract(set_number, submodel=None, only_parts=None, exclude_parts=None,
     if len(parts) > MAX_PARTS:
         raise GraftError(
             f"'{submodel or wanted}' is {len(parts)} parts, over the limit of "
-            f"{MAX_PARTS} for one graft. Take a smaller assembly — "
+            f"{MAX_PARTS} for one graft. Take a smaller assembly - "
             f"get_set_details lists them with their part counts.")
 
     return parts, {"set_number": row.get("set_number"),
@@ -204,8 +204,8 @@ def extract(set_number, submodel=None, only_parts=None, exclude_parts=None,
 def _embedded_blocks(model, parts):
     """The part definitions this assembly carries inside the set's own file.
 
-    A set does not only reference catalogue parts. Printed elements — Iron
-    Man's face, a control panel, a sticker — are defined *inside* the MPD as
+    A set does not only reference catalogue parts. Printed elements - Iron
+    Man's face, a control panel, a sticker - are defined *inside* the MPD as
     their own ``0 FILE something.dat`` blocks, and `flatten_model` correctly
     leaves them as leaves rather than expanding them, because they are parts
     rather than assemblies.
@@ -213,8 +213,8 @@ def _embedded_blocks(model, parts):
     Which means a graft that copies only the placements references definitions
     that do not exist where it landed, and every one of them comes back from
     validation as a part that does not exist. So the definitions travel with
-    it, recursively — a printed tile is routinely built from a sub-block of its
-    own — and the grafted model is self-contained.
+    it, recursively - a printed tile is routinely built from a sub-block of its
+    own - and the grafted model is self-contained.
     """
     wanted, seen = [], set()
 
@@ -227,7 +227,7 @@ def _embedded_blocks(model, parts):
         if lines:
             # `block_lines` holds a block's body; the parser consumes the
             # "0 FILE" that opened it. Carried without one, the definition is
-            # not a block at all — it is loose lines appended to whatever came
+            # not a block at all - it is loose lines appended to whatever came
             # before, and the part it was meant to define still does not exist.
             wanted.append((key, [f"0 FILE {key}"] + list(lines)))
         for inst in model.blocks.get(key, []):
@@ -241,7 +241,7 @@ def _embedded_blocks(model, parts):
 def bounds(parts):
     """``((min_x, min_y, min_z), (max_x, max_y, max_z))`` over the placements.
 
-    The origins only. A part's own volume is not measured here — this exists to
+    The origins only. A part's own volume is not measured here - this exists to
     re-anchor a section, and anchoring on where the parts *sit* is both stable
     and what someone means by "put it there".
     """
@@ -284,14 +284,14 @@ def _align(delta, parts, target_phase):
     """Nudge a translation so the assembly lands on the destination's lattice.
 
     Two things have to stay true at once. The assembly's *internal* geometry is
-    a real set's and must not be disturbed by a single LDU — half-stud offsets
+    a real set's and must not be disturbed by a single LDU - half-stud offsets
     inside it are deliberate, built on jumpers, and shifting one part relative
     to another would break a design that is known to work. And the assembly as
     a whole has to sit on the grid the destination model already uses.
 
     So the whole thing moves together, and the amount it moves is rounded until
     the *body* is in phase. Anchoring on a bounding-box centre lands on a half
-    LDU as often as not — a 112-wide section centred between two parts — and
+    LDU as often as not - a 112-wide section centred between two parts - and
     that fraction is what would otherwise put every grafted part off the grid.
     """
     from . import lattice
@@ -300,7 +300,7 @@ def _align(delta, parts, target_phase):
                               position[2] + delta[2], matrix)
                              for name, _colour, position, matrix in parts])
     if here is None:
-        # Nothing measurable to align — snap to the stud grid and take it.
+        # Nothing measurable to align - snap to the stud grid and take it.
         return (round(delta[0] / 10.0) * 10.0,
                 round(delta[1] / 4.0) * 4.0,
                 round(delta[2] / 10.0) * 10.0)
@@ -319,7 +319,7 @@ def place(parts, at, rotate=0, recolour=None, anchor="bottom-centre",
     ``at`` is where the section goes, not where its original origin goes: a
     block lifted out of a 2,000-line file has coordinates that mean nothing in
     the destination, so it is re-anchored. By default the anchor is the middle
-    of its footprint and its underside — the point you would put your finger on
+    of its footprint and its underside - the point you would put your finger on
     to set it down.
     """
     if not isinstance(at, (list, tuple)) or len(at) != 3:

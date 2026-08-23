@@ -6,15 +6,15 @@ import { formatMs, plural, relativeTime } from "../format";
  * What the agent did, as a graph you can walk.
  *
  * A run is not a list of messages, it is a tree: the request at the root, the
- * phases under it, a node per *iteration* inside each phase — every turn of
- * the loop up to the moment the model was checked — and a node per tool call
- * inside each iteration. Laid out left to right, that shape is the run — one
+ * phases under it, a node per *iteration* inside each phase - every turn of
+ * the loop up to the moment the model was checked - and a node per tool call
+ * inside each iteration. Laid out left to right, that shape is the run - one
  * glance says whether it planned before it built, which subconstruction ate
  * the attempts, and where it started going in circles.
  *
  * Every node carries what went into it and what came out, whole. Clicking one
  * opens exactly that, which is the question this view exists to answer: not
- * "what happened" — the chat panel says that — but "what was it looking at
+ * "what happened" - the chat panel says that - but "what was it looking at
  * when it decided that".
  */
 
@@ -43,7 +43,7 @@ const KINDS = {
   error: { glyph: "✕", name: "error" },
   // What has to be true before the build may end, and the check that puts it
   // to the model at the end of every iteration. The check is the node that
-  // answers "why is this run still going" — it is the only thing that ends one.
+  // answers "why is this run still going" - it is the only thing that ends one.
   requirements: { glyph: "☑", name: "requirements to finish" },
   requirements_check: { glyph: "⊘", name: "requirements check" },
 };
@@ -216,7 +216,7 @@ function Section({ label, children }) {
  * The acceptance checklist, as a checklist.
  *
  * Serves both nodes. On `requirements` there are no answers yet, so every row
- * is shown plain — it is the list the build is about to be judged against. On
+ * is shown plain - it is the list the build is about to be judged against. On
  * `requirements_check` each row carries the answer and the evidence for it,
  * and the unmet ones come first because they are the reason the run is still
  * going.
@@ -238,8 +238,8 @@ function Requirements({ node }) {
       <Section
         label={
           answered
-            ? `Checked — ${met.length} met, ${unmet.length} not`
-            : `The checklist — ${plain.length} to satisfy`
+            ? `Checked - ${met.length} met, ${unmet.length} not`
+            : `The checklist - ${plain.length} to satisfy`
         }
       >
         {rows.length ? (
@@ -275,7 +275,7 @@ function Requirements({ node }) {
         ["Dropped as not asked for", out.rejected_as_not_asked_for || []],
       ].map(([label, list]) =>
         list.length ? (
-          <Section key={label} label={`${label} — ${list.length}`}>
+          <Section key={label} label={`${label} - ${list.length}`}>
             <ul className="req-list">
               {list.map((text, i) => (
                 <li key={i} className="req--dropped">
@@ -310,7 +310,7 @@ function Shots({ projectId, images }) {
               href={url}
               target="_blank"
               rel="noreferrer"
-              title={`${caption} — open full size`}
+              title={`${caption} - open full size`}
             >
               <img src={url} alt={caption} loading="lazy" />
               <em>{caption}</em>
@@ -323,7 +323,7 @@ function Shots({ projectId, images }) {
 }
 
 /**
- * Everything about one node. Inputs above outputs, always in that order —
+ * Everything about one node. Inputs above outputs, always in that order -
  * the point of the panel is reading down from what it was given to what it
  * decided.
  */
@@ -371,10 +371,10 @@ function NodeDetail({ node, view, onGo, projectId }) {
       )}
 
       {/* An iteration is fed by the one before it, so its input is a set of
-          links rather than a payload of its own — following them is the
+          links rather than a payload of its own - following them is the
           point. */}
       {stepInput?.kind === "tool_results" ? (
-        <Section label="In — what came back from the last iteration">
+        <Section label="In - what came back from the last iteration">
           {stepInput.from?.length ? (
             <div className="trace-links">
               {stepInput.from.map((id) => {
@@ -394,7 +394,7 @@ function NodeDetail({ node, view, onGo, projectId }) {
             </div>
           ) : (
             <p className="trace-none">
-              nothing — the iteration before it called no tools
+              nothing - the iteration before it called no tools
             </p>
           )}
         </Section>
@@ -413,7 +413,7 @@ function NodeDetail({ node, view, onGo, projectId }) {
 
       {/* A checklist read as JSON is a checklist nobody reads. These two nodes
           are the only ones whose payload is a list of yes/no answers, and the
-          whole value of them is scanning it — so they get ticks and crosses
+          whole value of them is scanning it - so they get ticks and crosses
           and the raw object stays available underneath. */}
       {node.kind === "requirements" || node.kind === "requirements_check" ? (
         <Requirements node={node} />
@@ -423,7 +423,7 @@ function NodeDetail({ node, view, onGo, projectId }) {
         </Section>
       )}
 
-      {/* The agent's own context — the standing prompt and the task it was
+      {/* The agent's own context - the standing prompt and the task it was
           set. Held by the run or the subbuild; a turn inherits it. */}
       {context && (
         <Section label="The context it was working from">
@@ -462,15 +462,15 @@ function NodeDetail({ node, view, onGo, projectId }) {
         <div className="trace-times">
           <div>
             <em>started</em>
-            <b>{node.at ? new Date(node.at * 1000).toLocaleTimeString() : "—"}</b>
+            <b>{node.at ? new Date(node.at * 1000).toLocaleTimeString() : "-"}</b>
           </div>
           <div>
             <em>ended</em>
-            <b>{node.ended ? new Date(node.ended * 1000).toLocaleTimeString() : "—"}</b>
+            <b>{node.ended ? new Date(node.ended * 1000).toLocaleTimeString() : "-"}</b>
           </div>
           <div>
             <em>took</em>
-            <b className="trace-took">{node.ms != null ? formatMs(node.ms) : "—"}</b>
+            <b className="trace-took">{node.ms != null ? formatMs(node.ms) : "-"}</b>
           </div>
         </div>
       </Section>
@@ -530,7 +530,7 @@ export default function TraceView({ projectId, runId }) {
   }, [projectId, loadRuns]);
 
   // A run started from the composer is the one worth watching, so it is opened
-  // rather than merely listed — this view is where the build is now read, and
+  // rather than merely listed - this view is where the build is now read, and
   // leaving the previous run on screen while a new one records would be the
   // wrong half of the answer.
   useEffect(() => {
@@ -552,7 +552,7 @@ export default function TraceView({ projectId, runId }) {
       const data = await api.traceGraph(projectId, chosen);
 
       // Which iterations are new, and marking them seen, both happen out here
-      // rather than inside the updater below — StrictMode calls an updater
+      // rather than inside the updater below - StrictMode calls an updater
       // twice, and one that had already recorded these as seen would return
       // the set unchanged the second time and leave them open.
       const fresh = newIterations(data, seeded.current);
@@ -561,7 +561,7 @@ export default function TraceView({ projectId, runId }) {
       // Graph and closed set together, deliberately: they batch into one
       // commit, so the layout is only ever computed with the two agreeing.
       // Closing the iterations in an effect *after* the graph landed left one
-      // render of the fully expanded tree in between — and that is the one
+      // render of the fully expanded tree in between - and that is the one
       // `fit` measured, scaling the camera for a graph several times the size
       // of the one actually on screen.
       setGraph(data);
@@ -610,7 +610,7 @@ export default function TraceView({ projectId, runId }) {
     });
   }, [view]);
 
-  // Fit once per run, not on every poll — a graph that re-centres itself
+  // Fit once per run, not on every poll - a graph that re-centres itself
   // under the cursor every two seconds cannot be read.
   useEffect(() => {
     if (!view || fitted.current === chosen) return;
@@ -657,7 +657,7 @@ export default function TraceView({ projectId, runId }) {
     drag.current = null;
   };
 
-  /** Centre a node and select it — how the In/Out links navigate. */
+  /** Centre a node and select it - how the In/Out links navigate. */
   const goTo = (id) => {
     setSelected(id);
     const at = view?.nodes.find((n) => n.node.id === id);
@@ -780,7 +780,7 @@ export default function TraceView({ projectId, runId }) {
                       // One click does both: shows what the node holds in the
                       // panel, and opens what it is hiding on the canvas. A
                       // closed iteration is closed because nobody has asked
-                      // about it yet — asking about it is this click. Closing
+                      // about it yet - asking about it is this click. Closing
                       // it again is the ± , so that a second click on a node
                       // you are reading does not fold it away under you.
                       onClick={() => {
@@ -815,7 +815,7 @@ export default function TraceView({ projectId, runId }) {
                           {hidden}
                         </text>
                       )}
-                      {/* there is a picture inside this one — worth saying on
+                      {/* there is a picture inside this one - worth saying on
                           the node, since it is the reason to open it */}
                       {node.images?.length > 0 && (
                         <circle className="trace-node-shot" cx={W - 8} cy="8" r="3" />
@@ -829,7 +829,7 @@ export default function TraceView({ projectId, runId }) {
             <div className="trace-blank">
               <p>{error || "No run selected."}</p>
               <p className="trace-none">
-                Ask the agent to build something — every run from now on is
+                Ask the agent to build something - every run from now on is
                 recorded here, whole.
               </p>
             </div>

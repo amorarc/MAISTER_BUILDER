@@ -43,7 +43,7 @@ export default function App() {
   const [file, setFile] = useState("model.ldr");
   const [files, setFiles] = useState([]);
 
-  // Which model fetch is the current one, and which project is open — both
+  // Which model fetch is the current one, and which project is open - both
   // read by `modelChanged` on the way back from a request it may have
   // overtaken. See the note there.
   const fetchRef = useRef(0);
@@ -80,7 +80,7 @@ export default function App() {
         await refreshProjects();
         return true;
       } catch {
-        if (!stop) setNotice("Backend is not running on :8000 — retrying…");
+        if (!stop) setNotice("Backend is not running on :8000 - retrying…");
         return false;
       }
     };
@@ -138,7 +138,7 @@ export default function App() {
       const p = await api.createProject("Untitled");
       await refreshProjects();
       // Into the trace, because that is where the composer is and a blank
-      // project has nothing to look at yet — an empty baseplate and no way to
+      // project has nothing to look at yet - an empty baseplate and no way to
       // ask for anything would be the wrong place to land.
       openProject(p.id, { force: true, view: "trace" });
     } catch (e) {
@@ -154,7 +154,7 @@ export default function App() {
    * together, and they do not come back in the order they were sent. Without a
    * ticket the *slowest* response wins and the editor ends up showing an older
    * model than the one already on disk. The project is checked on the way back
-   * too — switching away mid-fetch used to drop one project's model into
+   * too - switching away mid-fetch used to drop one project's model into
    * another's editor.
    */
   const modelChanged = async () => {
@@ -185,7 +185,7 @@ export default function App() {
     }
   };
 
-  /** Show a different file of this project — the scene, or one component. */
+  /** Show a different file of this project - the scene, or one component. */
   const openFile = async (name) => {
     if (name === file) return;
     if (!confirmDiscard()) return;
@@ -253,7 +253,7 @@ export default function App() {
 
   /**
    * The booklet is rendered on the backend, a page per build step, and takes a
-   * few seconds — hence the flag, which turns the button into its own progress
+   * few seconds - hence the flag, which turns the button into its own progress
    * report rather than leaving the click looking ignored.
    */
   const buildInstructions = async () => {
@@ -286,7 +286,7 @@ export default function App() {
       });
       setNotice(`Saved “${saved.name}” to the gallery · ${saved.total_pieces} pieces.`);
     } catch (e) {
-      setNotice(`Not saved — ${e.message}`);
+      setNotice(`Not saved - ${e.message}`);
     } finally {
       setSaving(false);
     }
@@ -305,7 +305,7 @@ export default function App() {
     setNotice(`Opened a copy of “${created.name}” as a project.`);
   };
 
-  /** A project started from an official set — a copy, on the workbench. */
+  /** A project started from an official set - a copy, on the workbench. */
   const openFromSet = async (projectId) => {
     setScreen("build");
     await refreshProjects();
@@ -323,7 +323,7 @@ export default function App() {
   };
 
   // Stable, because the dialog re-reads the settings whenever `onClose`
-  // changes identity — an inline arrow would reset it on every render of App.
+  // changes identity - an inline arrow would reset it on every render of App.
   const closeSettings = useCallback(() => setSettingsOpen(false), []);
 
   /**
@@ -331,7 +331,7 @@ export default function App() {
    *
    * The editor reports on every caret move, which is every keystroke. Keeping
    * the object it hands over would change identity each time and the viewer
-   * would tear its highlight down and build it again — twenty times a second
+   * would tear its highlight down and build it again - twenty times a second
    * while anybody is typing. The key says whether it is the same piece.
    */
   const onCursor = useCallback((ref) => {
@@ -443,7 +443,7 @@ export default function App() {
                   // the same object rather than two lists to match up by hand.
                   highlight={view === "source" ? cursorPart : null}
                   // And in the model view: the parts behind whichever build
-                  // check the mouse is resting on in the rail. Only there —
+                  // check the mouse is resting on in the rail. Only there -
                   // the two light up bricks by swapping the same materials,
                   // so letting both run over the source view would have each
                   // putting back what the other took.
@@ -455,7 +455,7 @@ export default function App() {
               )}
 
               {/* The one box the agent is spoken to through. It floats over
-                  the model and over the trace — the two views you would
+                  the model and over the trace - the two views you would
                   actually ask for a change from. Not over the source: that is
                   a text editor, and a box over it is in the way of the typing.
                   Mounted either way, so a build started here keeps being

@@ -187,7 +187,7 @@ def matches_filters(row, theme=None, year_min=None, year_max=None,
 # The agent reaches the corpus by semantic search, which is right for "a small
 # medieval house with a sloped roof" and useless for "show me what is in here".
 # A person wants the second: the shelf, sorted, filtered, and paged. This is
-# that view — the same shape as catalog.browse so the gallery in the app can be
+# that view - the same shape as catalog.browse so the gallery in the app can be
 # the parts gallery with a different noun.
 # --------------------------------------------------------------------------
 

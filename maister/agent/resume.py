@@ -2,7 +2,7 @@
 
 Stop is not cancel. A scene of four objects that is stopped after the third has
 three finished models on disk and a decomposition, a design brief and a plan
-behind each of them — and until now the next run threw all of that away, split
+behind each of them - and until now the next run threw all of that away, split
 the request again from scratch, and rebuilt what was already built.
 
 So a stopped run writes down where it got to. The snapshot holds:
@@ -126,7 +126,7 @@ def matches(record, petition):
 
     Deliberately strict. Applying a half-built scene to a request it was not
     about would silently skip work the user is now asking for, which is a far
-    worse failure than starting again — so it is the same words, or an explicit
+    worse failure than starting again - so it is the same words, or an explicit
     "carry on", and nothing else.
     """
     if not record:
